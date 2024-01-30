@@ -2,5 +2,25 @@
     "app": {
         "title": "Grade Calculator",
         "description": "A simple grade calculator for students."
+    },
+    "grades": {
+        "grade": "Grade",
+        "weight": "Weight",
+        "date": "Date",
+        "subject": "Subject",
+        "actions": "Actions",
+        "copy": "Copy"
+    },
+    "actions": {
+        "copy": {
+            "prompt": "Copy to clipboard",
+            "success": "Copied to clipboard"
+        }
+    },
+    "themes": {
+        "title": "Theme",
+        "light": "Light theme",
+        "dark": "Dark theme",
+        "system": "Use System theme"
     }
 }

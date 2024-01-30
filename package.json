@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.11.7",
     "class-variance-authority": "^0.7.0",
@@ -16,9 +17,11 @@
     "embla-carousel-react": "^8.0.0-rc19",
     "lucide-react": "^0.309.0",
     "next": "14.0.4",
+    "next-themes": "^0.2.1",
     "next-translate": "^2.6.2",
     "react": "^18",
     "react-dom": "^18",
+    "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7"
   },
