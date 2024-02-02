@@ -14,9 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { toast } from "sonner";
+import { GradeAverage } from "@/lib/entities/gradeAverage";
 
 
-export function columns(): ColumnDef<Grade>[] {
+export function columns(): ColumnDef<GradeAverage>[] {
     const { t, lang } = createTranslation('common');
 
     return [
@@ -35,7 +36,7 @@ export function columns(): ColumnDef<Grade>[] {
             },
         },
         {
-            accessorKey: "value",
+            accessorKey: "gradeAverage",
             header: ({ column }) => {
                 return (
                 <Button

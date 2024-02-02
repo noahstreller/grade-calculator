@@ -35,6 +35,15 @@ export default class Grade {
         }
     }
 
+    static getBySubject(subject: string): Grade[] {
+        let result = this.grades.filter(grade => grade.subject === subject);
+        if (result) {
+            return result;
+        } else {
+            throw new Error('No matching Grade was found');
+        }
+    }
+
     static deleteById(id: number): void {
         let index = this.grades.findIndex(grade => grade.id === id);
         if (index !== -1) {
