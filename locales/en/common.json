@@ -9,7 +9,8 @@
         "date": "Date",
         "subject": "Subject",
         "actions": "Actions",
-        "copy": "Copy"
+        "copy": "Copy",
+        "notfound": "No grades found"
     },
     "actions": {
         "copy": {

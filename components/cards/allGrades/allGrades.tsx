@@ -14,13 +14,7 @@ export function AllGrades() {
         Subjects.add("Maths");
         Subjects.add("English");
         Subjects.add("Science");
-        Subjects.add("History");
-        Subjects.add("Geography");
-        Subjects.add("PE");
-        Subjects.add("French");
-        Subjects.add("German");
-        Subjects.add("Spanish");
-        Subjects.add("Art");
+        Subjects.add("PE");;
 
         new Grade(5.3, "Maths");
         new Grade(5, "Maths");

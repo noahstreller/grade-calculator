@@ -1,3 +1,4 @@
+import appGlobals from "../app.globals";
 import GradeDTO from "./dtos/gradeDTO";
 import GradeInfo from "./gradeInfo";
 
@@ -60,5 +61,13 @@ export default class Grade {
     getGradeInformation(): string {
         let info = GradeInfo.getGradeInformation(this.toDto());
         return info;
+    }
+
+    doesGradePass(): boolean {
+        return this.getValue() >= appGlobals.passingGrade;
+    }
+
+    static doesGradePass(grade: number): boolean {
+        return grade >= appGlobals.passingGrade;
     }
 }
