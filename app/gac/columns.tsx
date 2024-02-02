@@ -2,7 +2,7 @@
 import Grade from "@/lib/entities/grade"
 import { ColumnDef } from "@tanstack/react-table"
 import createTranslation from 'next-translate/createTranslation';
-import { Copy, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, CheckCheck, Copy, MoreHorizontal } from "lucide-react"
  
 import { Button } from "@/components/ui/button"
 import {
@@ -22,15 +22,45 @@ export function columns(): ColumnDef<Grade>[] {
     return [
         {
             accessorKey: "subject",
-            header: t('grades.subject'),
+            header: ({ column }) => {
+              return (
+                <Button
+                  variant="ghost"
+                  onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                  {t('grades.subject')}
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              )
+            },
         },
         {
             accessorKey: "weight",
-            header: t('grades.weight'),
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                    {t('grades.weight')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            }
         },
         {
             accessorKey: "value",
-            header: t('grades.grade'),
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                    {t('grades.grade')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            }
         },
         {
             accessorKey: "date",
@@ -55,8 +85,8 @@ export function columns(): ColumnDef<Grade>[] {
                         toast(t("actions.copy.success"), {
                             description: gradeInfo,
                             action: {
-                              label: "Undo",
-                              onClick: () => console.log("Undo"),
+                              label: <CheckCheck className="h-5 w-5" />,
+                              onClick: () => void 0,
                             },
                           })
                     }}

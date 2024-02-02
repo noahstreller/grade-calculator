@@ -18,9 +18,10 @@
         }
     },
     "themes": {
+        "toggle": "Change Theme",
         "title": "Theme",
-        "light": "Light theme",
-        "dark": "Dark theme",
-        "system": "Use System theme"
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     }
 }

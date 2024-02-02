@@ -22,6 +22,10 @@ export default class Grade {
         return this.grades;
     }
 
+    getValue(): number {
+        return this.value;
+    }
+
     static getById(id: number): Grade {
         let result = this.grades.find(grade => grade.id === id);
         if (result) {

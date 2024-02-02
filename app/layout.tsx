@@ -31,7 +31,8 @@ export default function RootLayout({
           <main className='bg-background text-foreground h-screen flex items-center justify-center'>
             {children}
           </main>
-          <Toaster />
+          <Toaster theme='light' className='dark:hidden' />
+          <Toaster theme='dark' className='hidden dark:flex' />
         </ThemeProvider>
       </body>
     </html>

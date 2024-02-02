@@ -6,6 +6,9 @@ import Grade from '@/lib/entities/grade';
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from './columns';
 import useTranslation from 'next-translate/useTranslation';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import PassingGradesCard from '@/components/cards/passingGradesCard';
+import { BarChart } from 'lucide-react';
 
 export default function GradeAverageCalculator() {
     const { t, lang } = useTranslation('common');
@@ -37,10 +40,13 @@ export default function GradeAverageCalculator() {
 
     return (
         <div className={styles.gradeAverageCalculator}>
-            <h1>Grade Average Calculator</h1>
-
-            
-            <DataTable columns={columns()} data={data} /> 
+            <PassingGradesCard />
+            <Card>
+                <CardHeader>All Grades</CardHeader>
+                <CardContent>
+                    <DataTable columns={columns()} data={data} /> 
+                </CardContent>
+            </Card>
         </div>
     );
 }
