@@ -2,9 +2,11 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -21,6 +23,7 @@ import {
 import { Button } from "./button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React from "react";
+import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -33,7 +36,9 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   
   const [sorting, setSorting] = React.useState<SortingState>([])
-
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
   const table = useReactTable({
     data,
     columns,
@@ -41,13 +46,26 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   })
 
   return (
   <>
+    <div className="flex items-center py-4">
+      <Input
+        placeholder="Filter by subject"
+        value={(table.getColumn("subject")?.getFilterValue() as string) ?? ""}
+        onChange={(event) =>
+          table.getColumn("subject")?.setFilterValue(event.target.value)
+        }
+        className="max-w-sm"
+      />
+    </div>
     <div className="rounded-md border">
       <Table>
         <TableHeader>

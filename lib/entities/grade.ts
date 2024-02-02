@@ -3,7 +3,7 @@ import GradeDTO from "./dtos/gradeDTO";
 import GradeInfo from "./gradeInfo";
 
 export default class Grade {
-    private static grades: Grade[] = [];
+    static grades: Grade[] = [];
     private id: number;
     private value: number;
     private subject: string;
@@ -16,7 +16,22 @@ export default class Grade {
         this.subject = subject;
         this.weight = weight;
         this.date = date;
-        Grade.grades.push(this);
+        if(Grade.validate(this)){
+            Grade.grades.push(this);
+        }
+    }
+
+    static validate(grade: Grade): boolean {
+        if (grade.value < appGlobals.minimumGrade || grade.value > appGlobals.maximumGrade) {
+            throw new Error('Invalid grade value');
+        }
+        if (grade.weight < 0) {
+            throw new Error('Invalid grade weight');
+        }
+        if (grade.subject === "") {
+            throw new Error('Invalid grade subject');
+        }
+        return true;
     }
 
     static get(): Grade[] {

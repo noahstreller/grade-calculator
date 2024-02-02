@@ -5,42 +5,25 @@ import { columns } from "./columns";
 import Grade from "@/lib/entities/grade";
 import Subjects from "@/lib/entities/subject";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
-export function AllGrades() {
+export function AllGrades({ data, setData }: { data: Grade[], setData: Function }) {
 
-    const [data, setData] = useState<Grade[]>([]);
 
-    useEffect(() => {
-        Subjects.add("Maths");
-        Subjects.add("English");
-        Subjects.add("Science");
-        Subjects.add("PE");;
-
-        new Grade(5.3, "Maths");
-        new Grade(5, "Maths");
-        new Grade(4.2, "English");
-        new Grade(5, "English");
-        new Grade(5, "Science");
-        new Grade(5, "Science");
-        new Grade(2, "PE");
-        new Grade(2, "PE");
-        new Grade(2, "PE");
-        new Grade(2, "PE");
-        new Grade(2, "PE");
-        new Grade(5, "PE");
-        
-
-        const grades = Grade.get();
-        setData(grades);
-    }, []);
+    function refresh() {
+        let grades = Grade.get();
+        setData([...grades]);
+    }
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>All Grades</CardTitle>
                 <CardDescription>All recent grades are listed here</CardDescription>
+
             </CardHeader>
             <CardContent>
+                <Button onClick={() => {new Grade(1, "PE"); refresh()}}>Refresh</Button>
                 <DataTable columns={columns()} data={data} /> 
             </CardContent>
         </Card>
