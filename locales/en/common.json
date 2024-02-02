@@ -10,7 +10,8 @@
         "subject": "Subject",
         "actions": "Actions",
         "copy": "Copy",
-        "notfound": "No grades found"
+        "notfound": "No grades found",
+        "add": "Add Grade"
     },
     "actions": {
         "copy": {

@@ -16,6 +16,8 @@ import {
 import { toast } from "sonner";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
+import appGlobals from "@/lib/app.globals";
+import { round } from "@/lib/utils";
 
 
 export function columns(): ColumnDef<GradeAverage>[] {
@@ -51,15 +53,18 @@ export function columns(): ColumnDef<GradeAverage>[] {
                 )
             },
             cell: ({ row }) => {
+                let subject: string = row.getValue("subject");
+                let value: number = row.getValue("gradeAverage");
+                value = round(value, appGlobals.gradeDecimals);
 
-                if(Subjects.doesSubjectPass(row.getValue("subject"))) {
+                if(Subjects.doesSubjectPass(subject)) {
                     return (
-                        <span className="text-green-400">{row.getValue("gradeAverage")}</span>
+                        <span className="text-green-400">{value}</span>
                     )
                 }
-                if(Subjects.doesSubjectFail(row.getValue("subject"))) {
+                if(Subjects.doesSubjectFail(subject)) {
                     return (
-                        <span className="text-red-400">{row.getValue("gradeAverage")}</span>
+                        <span className="text-red-400">{value}</span>
                     )
                 }
                 return (

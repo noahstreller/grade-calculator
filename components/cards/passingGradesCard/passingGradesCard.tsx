@@ -9,14 +9,7 @@ import { columns } from "./columns";
 import { useState, useEffect } from "react";
 
 
-export default function PassingGradesCard(){
-        
-    const [data, setData] = useState<GradeAverage[]>([]);
-
-    useEffect(() => {
-        const data = Subjects.getPassingSubjects();
-        setData(data);
-    }, []);
+export default function PassingGradesCard({ data, setData }: { data: GradeAverage[], setData: Function}){
     
     return (
         <Card>

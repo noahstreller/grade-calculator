@@ -5,6 +5,8 @@ import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { round } from "@/lib/utils";
+import appGlobals from "@/lib/app.globals";
 
 
 export function columns(): ColumnDef<GradeAverage>[] {
@@ -39,8 +41,11 @@ export function columns(): ColumnDef<GradeAverage>[] {
                 )
             },
             cell: ({ row }) => {
+                let value: number = row.getValue("gradeAverage");
+                value = round(value, appGlobals.gradeDecimals);
+
                 return (
-                    <span className="text-red-400">{row.getValue("gradeAverage")}</span>
+                    <span className="text-red-400">{value}</span>
                 )
             }
         },

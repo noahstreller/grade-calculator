@@ -7,15 +7,7 @@ import Subjects from "@/lib/entities/subject";
 import { useState, useEffect } from "react";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 
-export function AllSubjects() {
-
-    const [data, setData] = useState<GradeAverage[]>([]);
-
-    useEffect(() => {
-        let averages = GradeAverage.get();
-        setData(averages);
-    }, []);
-
+export function AllSubjects({ data, setData }: { data: GradeAverage[], setData: Function }) {
     return (
         <Card>
             <CardHeader>

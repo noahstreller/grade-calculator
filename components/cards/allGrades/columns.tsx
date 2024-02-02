@@ -6,6 +6,9 @@ import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { ReactNode } from "react";
+import appGlobals from "@/lib/app.globals";
+import { round } from "@/lib/utils";
 
 
 export function columns(): ColumnDef<Grade>[] {
@@ -54,14 +57,16 @@ export function columns(): ColumnDef<Grade>[] {
                 )
             },
             cell: ({ row }) => {
+                let value: number = row.getValue("value");
+                value = round(value, appGlobals.gradeDecimals);
 
-                if(Grade.doesGradePass(row.getValue("value"))) {
+                if(Grade.doesGradePass(value)) {
                     return (
-                        <span className="text-green-400">{row.getValue("value")}</span>
+                        <span className="text-green-400">{value}</span>
                     )
                 }
                 return (
-                    <span className="text-red-400">{row.getValue("value")}</span>
+                    <span className="text-red-400">{value}</span>
                 )
             }
         },
