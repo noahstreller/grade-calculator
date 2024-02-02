@@ -1,3 +1,6 @@
+import appGlobals from "../app.globals";
+import { GradeAverage } from "./gradeAverage";
+
 export default class Subjects {
     private static subjects: Set<string> = new Set<string>();
 
@@ -20,4 +23,35 @@ export default class Subjects {
         return !this.subjects.has(subject);
     }
 
+    static doesSubjectPass (subject: string) {
+        let average = GradeAverage.getSubjectAverage(subject);
+        return average >= appGlobals.passingGrade;
+    }
+
+    static doesSubjectFail (subject: string) {
+        let average = GradeAverage.getSubjectAverage(subject);
+        return average < appGlobals.passingGrade;
+    }
+
+    static getFailingSubjects () {
+        let subjects: Set<string> = Subjects.get();
+        let failing: GradeAverage[] = [];
+        subjects.forEach(subject => {
+            if (this.doesSubjectFail(subject)) {
+                failing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), false));
+            }
+        }, subjects);
+        return failing;
+    }
+
+    static getPassingSubjects () {
+        let subjects: Set<string> = Subjects.get();
+        let passing: GradeAverage[] = [];
+        subjects.forEach(subject => {
+            if (this.doesSubjectPass(subject)) {
+                passing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), true));
+            }
+        }, subjects);
+        return passing;
+    }
 }

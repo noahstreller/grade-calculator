@@ -1,8 +1,9 @@
+import appGlobals from "../app.globals";
 import GradeDTO from "./dtos/gradeDTO";
 import GradeInfo from "./gradeInfo";
 
 export default class Grade {
-    private static grades: Grade[] = [];
+    static grades: Grade[] = [];
     private id: number;
     private value: number;
     private subject: string;
@@ -15,11 +16,30 @@ export default class Grade {
         this.subject = subject;
         this.weight = weight;
         this.date = date;
-        Grade.grades.push(this);
+        if(Grade.validate(this)){
+            Grade.grades.push(this);
+        }
+    }
+
+    static validate(grade: Grade): boolean {
+        if (grade.value < appGlobals.minimumGrade || grade.value > appGlobals.maximumGrade) {
+            throw new Error('Invalid grade value');
+        }
+        if (grade.weight < 0) {
+            throw new Error('Invalid grade weight');
+        }
+        if (grade.subject === "") {
+            throw new Error('Invalid grade subject');
+        }
+        return true;
     }
 
     static get(): Grade[] {
         return this.grades;
+    }
+
+    getValue(): number {
+        return this.value;
     }
 
     static getById(id: number): Grade {
@@ -28,6 +48,15 @@ export default class Grade {
             return result;
         } else {
             throw new Error('Grade not found');
+        }
+    }
+
+    static getBySubject(subject: string): Grade[] {
+        let result = this.grades.filter(grade => grade.subject === subject);
+        if (result) {
+            return result;
+        } else {
+            throw new Error('No matching Grade was found');
         }
     }
 
@@ -47,5 +76,13 @@ export default class Grade {
     getGradeInformation(): string {
         let info = GradeInfo.getGradeInformation(this.toDto());
         return info;
+    }
+
+    doesGradePass(): boolean {
+        return this.getValue() >= appGlobals.passingGrade;
+    }
+
+    static doesGradePass(grade: number): boolean {
+        return grade >= appGlobals.passingGrade;
     }
 }

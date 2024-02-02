@@ -1,46 +1,66 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import styles from './gac.module.css';
-import Subjects from '@/lib/entities/subject';
+"use client";
+import { AllGrades } from '@/components/cards/allGrades/allGrades';
+import { AllSubjects } from '@/components/cards/allSubjects/allSubjects';
+import FailingGradesCard from '@/components/cards/failingGradesCard/failingGradesCard';
+import PassingGradesCard from '@/components/cards/passingGradesCard/passingGradesCard';
+import { CardBoard } from '@/components/ui/cardboard/cardboard';
 import Grade from '@/lib/entities/grade';
-import { DataTable } from '@/components/ui/data-table';
-import { columns } from './columns';
+import { GradeAverage } from '@/lib/entities/gradeAverage';
+import Subjects from '@/lib/entities/subject';
 import useTranslation from 'next-translate/useTranslation';
+import { useEffect, useState } from 'react';
 
 export default function GradeAverageCalculator() {
     const { t, lang } = useTranslation('common');
-    
-    const [data, setData] = useState<Grade[]>([]);
+
+    const [gradeData, setGradeData] = useState<Grade[]>([]);
+    const [subjectData, setSubjectData] = useState<GradeAverage[]>([]);
+    const [failingData, setFailingData] = useState<GradeAverage[]>([]);
+    const [passingData, setPassingData] = useState<GradeAverage[]>([]);
+
+    function refreshGrades() {
+        let grades = Grade.get();
+        setGradeData([...grades]);
+        console.log(gradeData);
+    }
+
+    function refreshSubjects() {
+        let averages = GradeAverage.get();
+        setSubjectData([...averages]);
+        console.log(subjectData);
+    }
+
+    function refreshFailing() {
+        let subjects = Subjects.getFailingSubjects();
+        setFailingData([...subjects]);
+        console.log(failingData);
+    }
+
+    function refreshPassing() {
+        let subjects = Subjects.getPassingSubjects();
+        setPassingData([...subjects]);
+        console.log(passingData);
+    }
+
+    function refreshAll() {
+        refreshGrades();
+        refreshSubjects();
+        refreshFailing();
+        refreshPassing();
+    }
 
     useEffect(() => {
-        Subjects.add("Maths");
-        Subjects.add("English");
-        Subjects.add("Science");
-        Subjects.add("History");
-        Subjects.add("Geography");
         Subjects.add("PE");
-        Subjects.add("French");
-        Subjects.add("German");
-        Subjects.add("Spanish");
-        Subjects.add("Art");
-
-        new Grade(5.3, "Maths");
-        new Grade(5, "Maths");
-        new Grade(4.2, "English");
-        new Grade(5, "English");
-        new Grade(5, "Science");
-        new Grade(5, "Science");
-
-        const grades = Grade.get();
-        setData(grades);
-    }, [data]);
+    }, []);
 
     return (
-        <div className={styles.gradeAverageCalculator}>
-            <h1>Grade Average Calculator</h1>
-
-            
-            <DataTable columns={columns()} data={data} /> 
-        </div>
+        <CardBoard row>
+            <CardBoard>
+                <PassingGradesCard data={passingData} setData={setPassingData} />
+                <FailingGradesCard data={failingData} setData={setFailingData} />
+            </CardBoard>
+            <AllSubjects data={subjectData} setData={setSubjectData} />
+            <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
+        </CardBoard>
     );
 }

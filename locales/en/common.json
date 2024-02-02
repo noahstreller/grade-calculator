@@ -9,7 +9,9 @@
         "date": "Date",
         "subject": "Subject",
         "actions": "Actions",
-        "copy": "Copy"
+        "copy": "Copy",
+        "notfound": "No grades found",
+        "add": "Add Grade"
     },
     "actions": {
         "copy": {
@@ -18,9 +20,10 @@
         }
     },
     "themes": {
+        "toggle": "Change Theme",
         "title": "Theme",
-        "light": "Light theme",
-        "dark": "Dark theme",
-        "system": "Use System theme"
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     }
 }
