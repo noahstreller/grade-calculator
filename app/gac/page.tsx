@@ -51,6 +51,8 @@ export default function GradeAverageCalculator() {
 
     useEffect(() => {
         Subjects.add("Naturwissenschaften und Technik");
+        Subjects.add("Mathematik");
+        Subjects.add("Englisch");
     }, []);
 
     return (

@@ -14,10 +14,11 @@ export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: 
             <CardHeader>
                 <CardTitle>All Grades</CardTitle>
                 <CardDescription>All recent grades are listed here</CardDescription>
-
+                <Button onClick={() => {new Grade(Math.random() + 3.5, "Naturwissenschaften und Technik"); refresh();}}>{t("grades.add") + " nt"}</Button>
+                <Button onClick={() => {new Grade(Math.random() + 3.5, "Mathematik"); refresh();}}>{t("grades.add") + " ma"}</Button>
+                <Button onClick={() => {new Grade(Math.random() + 3.5, "Englisch"); refresh();}}>{t("grades.add") + " en"}</Button>
             </CardHeader>
             <CardContent>
-                <Button onClick={() => {new Grade(Math.random() + 3.5, "Naturwissenschaften und Technik"); refresh();}}>{t("grades.add")}</Button>
                 <DataTable columns={columns()} data={data} /> 
             </CardContent>
         </Card>

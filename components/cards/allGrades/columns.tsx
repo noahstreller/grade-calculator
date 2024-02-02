@@ -52,7 +52,7 @@ export function columns(): ColumnDef<Grade>[] {
                     )
                 }
                 return (
-                    <span>{subject}</span>
+                    <p className="ml-4">{subject}</p>
                 )
             }
         },

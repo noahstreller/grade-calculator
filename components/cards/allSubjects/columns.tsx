@@ -56,7 +56,7 @@ export function columns(): ColumnDef<GradeAverage>[] {
                     )
                 }
                 return (
-                    <span>{subject}</span>
+                    <p className="ml-4">{subject}</p>
                 )
             }
         },
