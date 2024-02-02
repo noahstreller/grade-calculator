@@ -1,48 +1,31 @@
+"use client"
+import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
+import { GradeAverage } from "@/lib/entities/gradeAverage";
+import Subjects from "@/lib/entities/subject";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { DataTable } from "../../ui/data-table";
 import { columns } from "./columns";
-import appGlobals from "@/lib/app.globals";
-import Subjects from "@/lib/entities/subject";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { useState, useEffect } from "react";
 
 
 export default function PassingGradesCard(){
-    function doesGradePass (grade: Grade): boolean {
-        return grade.getValue() >= appGlobals.passingGrade;
-    }
+        
+    const [data, setData] = useState<GradeAverage[]>([]);
 
-    function getSubjectAverage (subject: string) {
-        let grades = Grade.getBySubject(subject);
-        let count = grades.length;
-        let sum = 0;
-        for (let grade of grades) {
-            sum += grade.getValue();
-        }
-        return sum / count;
-    }
-
-    function doesSubjectPass (subject: string) {
-        let average = getSubjectAverage(subject);
-        return average >= appGlobals.passingGrade;
-    }
-
-    function getPassingSubjects () {
-        let subjects: Set<string> = Subjects.get();
-        let passing: GradeAverage[] = [];
-        subjects.forEach(subject => {
-            if (doesSubjectPass(subject)) {
-                passing.push(new GradeAverage(subject, getSubjectAverage(subject), true));
-            }
-        }, subjects);
-        return passing;
-    }
-
+    useEffect(() => {
+        const data = Subjects.getPassingSubjects();
+        setData(data);
+    }, [data]);
+    
     return (
         <Card>
-            <CardHeader>Passing Subjects</CardHeader>
+            <CardHeader>
+                <CardTitle>Passing Subjects</CardTitle>
+                <CardDescription>These are the subjects you are passing</CardDescription>
+            </CardHeader>
             <CardContent>
-                <DataTable columns={columns()} data={getPassingSubjects()} />
+                <DataTable columns={columns()} data={data} />
             </CardContent>
         </Card>
     )

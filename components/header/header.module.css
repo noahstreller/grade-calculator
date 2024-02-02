@@ -3,4 +3,11 @@
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  background-color: transparent;
+  backdrop-filter: blur(10px); 
+  z-index: 100;
 }

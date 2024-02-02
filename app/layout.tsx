@@ -28,7 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <HeaderComponent />
-          <main className='bg-background text-foreground h-screen flex items-center justify-center'>
+          <main className='bg-background text-foreground h-screen flex justify-center mt-[5rem]'>
             {children}
           </main>
           <Toaster theme='light' className='dark:hidden' />

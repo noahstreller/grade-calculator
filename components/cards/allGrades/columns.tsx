@@ -66,7 +66,7 @@ export function columns(): ColumnDef<Grade>[] {
             accessorKey: "date",
             header: t('grades.date'),
             cell: ({ row }) => {
-                return new Date(row.getValue("date")).toLocaleDateString(lang);
+                return new Date(row.getValue("date")).toLocaleString(lang);
             }
         },
         {

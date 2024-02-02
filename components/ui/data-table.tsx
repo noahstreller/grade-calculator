@@ -92,7 +92,9 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
-    <div className="flex items-center justify-end space-x-2 py-4">
+    {
+      table.getPageCount() > 1 ?
+      <div className="flex items-center justify-end space-x-2 py-4">
       <Button
         variant="outline"
         size="sm"
@@ -112,7 +114,9 @@ export function DataTable<TData, TValue>({
       >
         <ArrowRight size={16} />
       </Button>
-    </div>
+      </div> : null
+    }
+    
   </>
   )
 }

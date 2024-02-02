@@ -1,0 +1,18 @@
+.cardBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.cardBoard > * {
+    margin: 10px;
+}
+
+.cardBoard > .cardBoard {
+    margin: 0;
+}

@@ -1,19 +1,9 @@
 "use client"
-import Grade from "@/lib/entities/grade"
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 import createTranslation from 'next-translate/createTranslation';
-import { ArrowUpDown, CheckCheck, Copy, MoreHorizontal } from "lucide-react"
  
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 
 
@@ -46,6 +36,11 @@ export function columns(): ColumnDef<GradeAverage>[] {
                     {t('grades.grade')}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
+                )
+            },
+            cell: ({ row }) => {
+                return (
+                    <span className="text-green-400">{row.getValue("gradeAverage")}</span>
                 )
             }
         },
