@@ -13,7 +13,7 @@ export function AllSubjects() {
     useEffect(() => {
         const grades = Grade.get();
         setData(grades);
-    }, [data]);
+    }, []);
 
     return (
         <Card>

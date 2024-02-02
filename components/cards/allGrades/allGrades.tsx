@@ -38,7 +38,7 @@ export function AllGrades() {
 
         const grades = Grade.get();
         setData(grades);
-    }, [data]);
+    }, []);
 
     return (
         <Card>

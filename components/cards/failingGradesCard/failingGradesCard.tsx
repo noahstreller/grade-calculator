@@ -16,7 +16,7 @@ export default function FailingGradesCard (){
     useEffect(() => {
         const data = Subjects.getFailingSubjects();
         setData(data);
-    }, [data]);
+    }, []);
 
     return (
         <Card>

@@ -16,7 +16,7 @@ export default function PassingGradesCard(){
     useEffect(() => {
         const data = Subjects.getPassingSubjects();
         setData(data);
-    }, [data]);
+    }, []);
     
     return (
         <Card>
