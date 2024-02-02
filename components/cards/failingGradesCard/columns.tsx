@@ -5,8 +5,10 @@ import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
 import appGlobals from "@/lib/app.globals";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 
 
 export function columns(): ColumnDef<GradeAverage>[] {
@@ -26,6 +28,27 @@ export function columns(): ColumnDef<GradeAverage>[] {
                 </Button>
                 )
             },
+            cell: ({ row }) => {
+                let subject: string = row.getValue("subject");
+                let truncated: boolean = truncateText(subject, 20).truncated;
+                let truncatedSubject: string = truncateText(subject, 20).text;
+
+                if(truncated) {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{subject}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )
+                }
+                return (
+                    <span>{subject}</span>
+                )
+            }
         },
         {
             accessorKey: "gradeAverage",
@@ -45,7 +68,7 @@ export function columns(): ColumnDef<GradeAverage>[] {
                 value = round(value, appGlobals.gradeDecimals);
 
                 return (
-                    <span className="text-red-400">{value}</span>
+                    <p className="text-red-400 ml-4">{value}</p>
                 )
             }
         },
