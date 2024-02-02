@@ -8,7 +8,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ReactNode } from "react";
 import appGlobals from "@/lib/app.globals";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from "@/components/ui/tooltip"
 
 
 export function columns(): ColumnDef<Grade>[] {
@@ -28,6 +34,27 @@ export function columns(): ColumnDef<Grade>[] {
                 </Button>
               )
             },
+            cell: ({ row }) => {
+                let subject: string = row.getValue("subject");
+                let truncated: boolean = truncateText(subject, 20).truncated;
+                let truncatedSubject: string = truncateText(subject, 20).text;
+
+                if(truncated) {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>{truncatedSubject}</TooltipTrigger>
+                                <TooltipContent>
+                                <p>{subject}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )
+                }
+                return (
+                    <span>{subject}</span>
+                )
+            }
         },
         {
             accessorKey: "weight",
@@ -72,7 +99,17 @@ export function columns(): ColumnDef<Grade>[] {
         },
         {
             accessorKey: "date",
-            header: t('grades.date'),
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                    {t('grades.date')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
             cell: ({ row }) => {
                 return new Date(row.getValue("date")).toLocaleString(lang);
             }

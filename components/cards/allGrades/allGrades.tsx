@@ -1,10 +1,10 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
 import Grade from "@/lib/entities/grade";
 import { columns } from "./columns";
 import useTranslation from "next-translate/useTranslation";
+import { DataTable } from "./data-table";
 
 export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: Function, refresh: Function}) {
     const { t, lang } = useTranslation('common');
@@ -17,7 +17,7 @@ export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: 
 
             </CardHeader>
             <CardContent>
-                <Button onClick={() => {new Grade(Math.random() + 3.5, "PE"); refresh();}}>{t("grades.add")}</Button>
+                <Button onClick={() => {new Grade(Math.random() + 3.5, "Naturwissenschaften und Technik"); refresh();}}>{t("grades.add")}</Button>
                 <DataTable columns={columns()} data={data} /> 
             </CardContent>
         </Card>

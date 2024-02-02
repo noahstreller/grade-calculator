@@ -50,7 +50,7 @@ export default function GradeAverageCalculator() {
     }
 
     useEffect(() => {
-        Subjects.add("PE");
+        Subjects.add("Naturwissenschaften und Technik");
     }, []);
 
     return (
