@@ -1,6 +1,7 @@
 import appGlobals from "../app.globals";
 import GradeDTO from "./dtos/gradeDTO";
 import GradeInfo from "./gradeInfo";
+import Subjects from "./subject";
 
 export default class Grade {
     static grades: Grade[] = [];
@@ -18,6 +19,7 @@ export default class Grade {
         this.date = date;
         if(Grade.validate(this)){
             Grade.grades.push(this);
+            localStorage.setItem('grades', JSON.stringify(Grade.grades));
         }
     }
 
@@ -38,8 +40,20 @@ export default class Grade {
         return this.grades;
     }
 
-    getValue(): number {
-        return this.value;
+    delete() {
+        Grade.deleteById(this.id);
+    }
+
+    save() {
+        Grade.grades.push(this);
+        localStorage.setItem('grades', JSON.stringify(Grade.grades));
+    }
+
+
+    static load(): Grade[] {
+        let grades: GradeDTO[] = JSON.parse(localStorage.getItem('grades') || '[]');
+        this.grades = grades.map(grade => new Grade(grade.value, grade.subject, grade.weight, new Date(grade.date)));
+        return this.grades;
     }
 
     static getById(id: number): Grade {
@@ -49,6 +63,10 @@ export default class Grade {
         } else {
             throw new Error('Grade not found');
         }
+    }
+
+    getValue(): number {
+        return this.value;
     }
 
     static getBySubject(subject: string): Grade[] {
@@ -64,6 +82,7 @@ export default class Grade {
         let index = this.grades.findIndex(grade => grade.id === id);
         if (index !== -1) {
             this.grades.splice(index, 1);
+            localStorage.setItem('grades', JSON.stringify(this.grades));
         } else {
             throw new Error('Grade not found');
         }

@@ -25,6 +25,9 @@
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
     --radius: 0.75rem;
+    --scrollbars-hex: #bbb;
+    --scrollbars-background: #fff;
+    --scrollbars-hex-hover: #888;
   }
 
   .dark {
@@ -47,6 +50,9 @@
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
+    --scrollbars-hex: #575764;
+    --scrollbars-hex-hover: #7b7b86;
+    --scrollbars-background: #030712;
   }
 }
 
@@ -58,4 +64,24 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbars-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbars-hex);
+  border-radius: 10px;
+  transition: all 0.3s;
+  border: solid var(--scrollbars-background) 3px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbars-hex-hover);
 }

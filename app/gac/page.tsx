@@ -9,6 +9,7 @@ import { GradeAverage } from '@/lib/entities/gradeAverage';
 import Subjects from '@/lib/entities/subject';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 export default function GradeAverageCalculator() {
     const { t, lang } = useTranslation('common');
@@ -21,25 +22,21 @@ export default function GradeAverageCalculator() {
     function refreshGrades() {
         let grades = Grade.get();
         setGradeData([...grades]);
-        console.log(gradeData);
     }
 
     function refreshSubjects() {
         let averages = GradeAverage.get();
         setSubjectData([...averages]);
-        console.log(subjectData);
     }
 
     function refreshFailing() {
         let subjects = Subjects.getFailingSubjects();
         setFailingData([...subjects]);
-        console.log(failingData);
     }
 
     function refreshPassing() {
         let subjects = Subjects.getPassingSubjects();
         setPassingData([...subjects]);
-        console.log(passingData);
     }
 
     function refreshAll() {
@@ -50,11 +47,21 @@ export default function GradeAverageCalculator() {
     }
 
     useEffect(() => {
-        Subjects.add("Naturwissenschaften und Technik");
-        Subjects.add("Mathematik");
-        Subjects.add("Englisch");
+        Subjects.load();
+        Grade.load();
         refreshAll();
     }, []);
+
+    if(isMobile) {
+        return (
+            <CardBoard>
+                <PassingGradesCard data={passingData} setData={setPassingData} />
+                <FailingGradesCard data={failingData} setData={setFailingData} />
+                <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
+            </CardBoard>
+        );
+    }
 
     return (
         <CardBoard row>
@@ -62,7 +69,7 @@ export default function GradeAverageCalculator() {
                 <PassingGradesCard data={passingData} setData={setPassingData} />
                 <FailingGradesCard data={failingData} setData={setFailingData} />
             </CardBoard>
-            <AllSubjects data={subjectData} setData={setSubjectData} />
+            <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
             <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
         </CardBoard>
     );

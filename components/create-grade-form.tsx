@@ -1,19 +1,18 @@
-"use client"
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { any, string, z } from "zod";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { string, z } from "zod"
-
-import { cn, truncateText } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn, truncateText } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Form,
   FormControl,
@@ -22,131 +21,201 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import useTranslation from "next-translate/useTranslation"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
-import Grade from "@/lib/entities/grade"
-import { Input } from "./ui/input"
-import appGlobals from "@/lib/app.globals"
+} from "@/components/ui/popover";
+import useTranslation from "next-translate/useTranslation";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
+import { toast } from "sonner";
+import Grade from "@/lib/entities/grade";
+import { Input } from "./ui/input";
+import appGlobals from "@/lib/app.globals";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { useCommandState } from "cmdk";
+import { Asterisk } from "./ui/asterisk";
+import { addGradeToast } from "@/lib/toasts";
 
-export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, refresh: Function}) {
-    const { t, lang } = useTranslation('common');
+export function CreateGradeForm({
+  subjectSet,
+  refresh,
+}: {
+  subjectSet: Set<string>;
+  refresh: Function;
+}) {
+  const { t, lang } = useTranslation("common");
 
-    const initial: string[] = [];
+  const initial: string[] = [];
 
-    const [subjects, setSubjects] = useState(initial);
-    const [open, setOpen] = useState(false);
+  const [subjects, setSubjects] = useState(initial);
+  const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        subjectSet.forEach(subj => {
-            setSubjects(subjects => [...subjects, subj])
-        });
-    }, [subjectSet]);
-    
-    const FormSchema = z.object({
-        subject: z.string({
-            required_error: t("errors.required"),
-        }),
-        grade: z.number({
-            invalid_type_error: t("errors.invalid-type.number"),
-            required_error: t("errors.required"),
-        }).gte(appGlobals.minimumGrade).lte(appGlobals.maximumGrade),
-    })
+  useEffect(() => {
+    subjectSet.forEach((subj) => {
+      setSubjects((subjects) => [...subjects, subj]);
+    });
+  }, [subjectSet]);
 
-    const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-    })
+  const FormSchema = z.object({
+    subject: z.string({
+      required_error: t("errors.required"),
+    }),
+    grade: z
+      .number({
+        invalid_type_error: t("errors.invalid-type.number"),
+        required_error: t("errors.required"),
+      })
+      .gte(appGlobals.minimumGrade)
+      .lte(appGlobals.maximumGrade),
+    weight: z
+      .number({
+        invalid_type_error: t("errors.invalid-type.number"),
+      })
+      .gte(0)
+      .optional(),
+  });
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        const gradeAsNumber = Number(data.grade);
-        new Grade(gradeAsNumber, data.subject);
-        toast(t("grades.add-success"));
-        refresh();
-    }
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
 
-    return (
-        <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-            control={form.control}
-            name="subject"
-            render={({ field }) => (
-                <FormItem className="flex flex-col">
-                <FormLabel>Subject</FormLabel>
-                <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                    <FormControl>
-                        <Button
-                        variant="outline"
-                        role="combobox"
-                        className={cn(
-                            "w-[200px] justify-between",
-                            !field.value && "text-muted-foreground"
-                        )}
-                        >
-                        {field.value
-                        ? truncateText(subjects.find((subject) => subject === field.value) ?? "", 20).text
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    const gradeAsNumber = Number(data.grade);
+    const weightAsNumber = Number(data.weight) || 1;
+
+    let grade = new Grade(gradeAsNumber, data.subject, weightAsNumber);
+    addGradeToast(grade);
+    refresh();
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>
+                {t("subjects.subject")}
+                <Asterisk className="ml-1" />
+              </FormLabel>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-[200px] justify-between",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value
+                        ? truncateText(
+                            subjects.find(
+                              (subject) => subject === field.value
+                            ) ?? "",
+                            20
+                          ).text
                         : "Select subject"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[200px] p-0">
-                    <Command>
-                        <CommandInput placeholder={t("subjects.search")} />
-                        <CommandEmpty>No subject found.</CommandEmpty>
-                        <CommandGroup>
-                        {subjects.map((subject) => (
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    <CommandInput placeholder={t("subjects.search")} />
+                    <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
+                      <CommandGroup>
+                        {subjects.length === 0 ? (
+                          <CommandItem disabled>No subjects found</CommandItem>
+                        ) : (
+                          subjects.map((subject) => (
                             <CommandItem
-                            value={subject}
-                            key={subject}
-                            onSelect={() => {
+                              value={subject}
+                              key={subject}
+                              onSelect={() => {
                                 form.setValue("subject", subject);
-                                setOpen(false)
-                            }}
+                                setOpen(false);
+                              }}
                             >
-                            <Check
+                              <Check
                                 className={cn(
-                                "mr-2 h-4 w-4",
-                                subject === field.value
+                                  "mr-2 h-4 w-4",
+                                  subject === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
-                            />
-                            {subject}
+                              />
+                              {subject}
                             </CommandItem>
-                        ))}
-                        </CommandGroup>
-                    </Command>
-                    </PopoverContent>
-                </Popover>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-            
-            <FormField
-            control={form.control}
-            name="grade"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Grade</FormLabel>
-                <FormControl>
-                    <Input type="number" step="any" placeholder={t("grades.add-placeholder")} {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
+                          ))
+                        )}
+                      </CommandGroup>
+                    </ScrollArea>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-            <Button type="submit">Submit</Button>
-        </form>
-        </Form>
-    )
+        <FormField
+          control={form.control}
+          name="grade"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("grades.grade")}
+                <Asterisk className="ml-1" />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  step="any"
+                  placeholder={t("grades.add-placeholder")}
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="weight"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("grades.weight")}</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  step="any"
+                  placeholder={t("grades.weight-placeholder")}
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button className="w-full" type="submit">
+          Submit
+        </Button>
+      </form>
+    </Form>
+  );
 }

@@ -6,24 +6,50 @@
     "grades": {
         "grade": "Grade",
         "weight": "Weight",
+        "weight-placeholder": "Enter weight (optional)",
         "date": "Date",
         "subject": "Subject",
         "actions": "Actions",
         "copy": "Copy",
         "notfound": "No grades found",
         "add": "Add Grade",
-        "add-desc": "Add a new grade to the list here",
+        "add-desc": "Add a new grade to the list",
         "add-success": "The grade was added",
-        "add-placeholder": "Enter grade"
+        "add-placeholder": "Enter grade",
+        "all-grades": "All Grades",
+        "all-grades-desc": "All recent grades are listed here"
     },
     "subjects" : {
+        "subject": "Subject",
         "add": "Add Subject",
-        "search": "Search Subjects"
+        "add-desc": "Add a new subject to the list",
+        "add-success": "The subject was added",
+        "add-placeholder": "Enter subject",
+        "notfound": "No subjects found",
+        "search": "Search Subjects",
+        "all-subjects": "All Subjects",
+        "all-subjects-desc": "All subjects are listed here"
     },
     "actions": {
         "copy": {
             "prompt": "Copy to clipboard",
             "success": "Copied to clipboard"
+        },
+        "delete": {
+            "prompt": "Delete",
+            "success": "The item was deleted"
+        },
+        "edit": {
+            "prompt": "Edit",
+            "success": "The item was edited"
+        },
+        "danger-continue": "I understand, continue",
+        "cancel": "Cancel",
+        "ok": "Got it",
+        "undo": "Undo",
+        "clear-data": {
+            "prompt": "Clear all data",
+            "message": "Are you sure you want to clear all data? This action cannot be undone."
         }
     },
     "themes": {
