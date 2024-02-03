@@ -1,5 +1,4 @@
 "use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -34,8 +33,9 @@ import { toast } from "sonner"
 import Grade from "@/lib/entities/grade"
 import { Input } from "./ui/input"
 import appGlobals from "@/lib/app.globals"
+import { ScrollArea } from "./ui/scroll-area"
 
-export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, refresh: Function}) {
+export function CreateGradeForm({subjectSet, refresh} : {subjectSet: Set<string>, refresh: Function}) {
     const { t, lang } = useTranslation('common');
 
     const initial: string[] = [];
@@ -72,7 +72,7 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
 
     return (
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
             <FormField
             control={form.control}
             name="subject"
@@ -101,28 +101,30 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
                     <Command>
                         <CommandInput placeholder={t("subjects.search")} />
                         <CommandEmpty>No subject found.</CommandEmpty>
-                        <CommandGroup>
-                        {subjects.map((subject) => (
-                            <CommandItem
-                            value={subject}
-                            key={subject}
-                            onSelect={() => {
-                                form.setValue("subject", subject);
-                                setOpen(false)
-                            }}
-                            >
-                            <Check
-                                className={cn(
-                                "mr-2 h-4 w-4",
-                                subject === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                            />
-                            {subject}
-                            </CommandItem>
-                        ))}
-                        </CommandGroup>
+                        <ScrollArea className="max-h-[30dvh] overflow-y-auto">
+                            <CommandGroup>
+                            {subjects.map((subject) => (
+                                <CommandItem
+                                value={subject}
+                                key={subject}
+                                onSelect={() => {
+                                    form.setValue("subject", subject);
+                                    setOpen(false)
+                                }}
+                                >
+                                <Check
+                                    className={cn(
+                                    "mr-2 h-4 w-4",
+                                    subject === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                />
+                                {subject}
+                                </CommandItem>
+                            ))}
+                            </CommandGroup>
+                        </ScrollArea>
                     </Command>
                     </PopoverContent>
                 </Popover>
@@ -145,7 +147,7 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
             )}
             />
 
-            <Button type="submit">Submit</Button>
+            <Button className="w-full" type="submit">Submit</Button>
         </form>
         </Form>
     )

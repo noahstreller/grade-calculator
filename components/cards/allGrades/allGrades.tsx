@@ -10,7 +10,7 @@ import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, Drawer
 import {  Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader } from "@/components/ui/dialog";
 import { useState } from "react";
 import {isMobile} from 'react-device-detect';
-import { ComboboxForm } from "@/components/create-grade-form";
+import { CreateGradeForm } from "@/components/create-grade-form";
 import Subjects from "@/lib/entities/subject";
 
 export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: Function, refresh: Function}) {
@@ -35,7 +35,7 @@ export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: 
                         <DialogDescription>{t("grades.add-desc")}</DialogDescription>
                     </DialogHeader>
 
-                    <ComboboxForm refresh={refresh} subjectSet={Subjects.get()} />
+                    <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} />
 
                     </DialogContent>
                 </Dialog>
@@ -61,7 +61,7 @@ export function AllGrades({ data, setData, refresh }: { data: Grade[], setData: 
             Make changes to your profile here. Click save when youre done.
           </DrawerDescription>
         </DrawerHeader>
-        Hello
+        <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>

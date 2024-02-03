@@ -53,6 +53,25 @@ export default function GradeAverageCalculator() {
         Subjects.add("Naturwissenschaften und Technik");
         Subjects.add("Mathematik");
         Subjects.add("Englisch");
+        Subjects.add("Deutsch");
+        Subjects.add("Geschichte");
+        Subjects.add("Geographie");
+        Subjects.add("Biologie");
+        Subjects.add("Physik");
+        Subjects.add("Chemie");
+        Subjects.add("Informatik");
+        Subjects.add("Kunst");
+        Subjects.add("Musik");
+        Subjects.add("Sport");
+        Subjects.add("Religion");
+        Subjects.add("Ethik");
+        Subjects.add("Politik");
+        Subjects.add("Wirtschaft");
+        Subjects.add("Gesundheit");
+        Subjects.add("Sozialkunde");
+        Subjects.add("Philosophie");
+        Subjects.add("Psychologie");
+
         refreshAll();
     }, []);
 
