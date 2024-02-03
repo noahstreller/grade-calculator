@@ -1,6 +1,7 @@
 "use client";
 import { AllGrades } from '@/components/cards/allGrades/allGrades';
 import { AllSubjects } from '@/components/cards/allSubjects/allSubjects';
+import { CardSkeleton } from '@/components/cards/card-skeleton';
 import FailingGradesCard from '@/components/cards/failingGradesCard/failingGradesCard';
 import PassingGradesCard from '@/components/cards/passingGradesCard/passingGradesCard';
 import { CardBoard } from '@/components/ui/cardboard/cardboard';
@@ -8,16 +9,14 @@ import Grade from '@/lib/entities/grade';
 import { GradeAverage } from '@/lib/entities/gradeAverage';
 import Subjects from '@/lib/entities/subject';
 import { isMobileDevice } from '@/lib/utils';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 
 export default function GradeAverageCalculator() {
-    const { t, lang } = useTranslation('common');
-
     const [gradeData, setGradeData] = useState<Grade[]>([]);
     const [subjectData, setSubjectData] = useState<GradeAverage[]>([]);
     const [failingData, setFailingData] = useState<GradeAverage[]>([]);
     const [passingData, setPassingData] = useState<GradeAverage[]>([]);
+    const [loaded, setLoaded] = useState(false);
 
     function refreshGrades() {
         let grades = Grade.get();
@@ -50,6 +49,7 @@ export default function GradeAverageCalculator() {
         Subjects.load();
         Grade.load();
         refreshAll();
+        setLoaded(true);
     }, []);
 
     if(isMobileDevice()) {
@@ -64,7 +64,8 @@ export default function GradeAverageCalculator() {
     }
 
     return (
-        <CardBoard row>
+        loaded 
+        ? <CardBoard row>
             <CardBoard>
                 <PassingGradesCard data={passingData} setData={setPassingData} />
                 <FailingGradesCard data={failingData} setData={setFailingData} />
@@ -72,5 +73,13 @@ export default function GradeAverageCalculator() {
             <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
             <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
         </CardBoard>
+        : <CardBoard row>
+            <CardBoard>
+                <CardSkeleton variant='small' />
+                <CardSkeleton variant='small' />
+            </CardBoard>
+            <CardSkeleton variant='medium' />
+            <CardSkeleton variant='large' />
+        </CardBoard>    
     );
 }
