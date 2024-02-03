@@ -2,38 +2,36 @@
 import { CreateSubjectForm } from "@/components/create-subject-form";
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
-import Subjects from "@/lib/entities/subject";
+import { isMobileDevice } from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 import { columns } from "./columns";
-import { isMobileDevice } from "@/lib/utils";
 
 export function AllSubjects({
   data,
@@ -64,7 +62,7 @@ export function AllSubjects({
                     <DialogDescription>{t("subjects.add-desc")}</DialogDescription>
                 </DialogHeader>
 
-                <CreateSubjectForm refresh={refresh} />
+                <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
                 </DialogContent>
             </Dialog>
         </CardHeader>
@@ -90,7 +88,7 @@ export function AllSubjects({
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
 
-            <CreateSubjectForm refresh={refresh} />
+            <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
 
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>

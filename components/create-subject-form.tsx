@@ -12,14 +12,14 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+import appGlobals from "@/lib/app.globals";
 import Subjects from "@/lib/entities/subject";
+import { addSubjectToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
-import { toast } from "sonner";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
-import { addSubjectToast } from "@/lib/toasts";
 
-export function CreateSubjectForm({ refresh }: { refresh: Function }) {
+export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, setOpen: Function}) {
   const { t, lang } = useTranslation("common");
 
   type FormValues = {
@@ -50,6 +50,7 @@ export function CreateSubjectForm({ refresh }: { refresh: Function }) {
     form.setFocus("subject");
     addSubjectToast(data.subject);
     refresh();
+    if (!appGlobals.newEntitySheetShouldStayOpen) setOpen(false);
   }
 
   return (
@@ -73,7 +74,7 @@ export function CreateSubjectForm({ refresh }: { refresh: Function }) {
         />
 
         <Button className="w-full" type="submit">
-          Submit
+          {t("actions.submit")}
         </Button>
       </form>
     </Form>

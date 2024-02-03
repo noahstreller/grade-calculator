@@ -46,6 +46,7 @@
         "danger-continue": "I understand, continue",
         "cancel": "Cancel",
         "ok": "Got it",
+        "submit": "Submit",
         "undo": "Undo",
         "clear-data": {
             "prompt": "Clear all data",

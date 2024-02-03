@@ -2,53 +2,49 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { any, string, z } from "zod";
+import { z } from "zod";
 
-import { cn, truncateText } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
+  CommandItem
 } from "@/components/ui/command";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import appGlobals from "@/lib/app.globals";
+import Grade from "@/lib/entities/grade";
+import { addGradeToast } from "@/lib/toasts";
+import { cn, truncateText } from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import {
-  ComponentPropsWithoutRef,
-  forwardRef,
   useEffect,
-  useState,
+  useState
 } from "react";
-import { toast } from "sonner";
-import Grade from "@/lib/entities/grade";
-import { Input } from "./ui/input";
-import appGlobals from "@/lib/app.globals";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { useCommandState } from "cmdk";
 import { Asterisk } from "./ui/asterisk";
-import { addGradeToast } from "@/lib/toasts";
+import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
 
 export function CreateGradeForm({
   subjectSet,
   refresh,
+  setDrawerOpen
 }: {
   subjectSet: Set<string>;
   refresh: Function;
+  setDrawerOpen: Function;
 }) {
   const { t, lang } = useTranslation("common");
 
@@ -93,6 +89,7 @@ export function CreateGradeForm({
     let grade = new Grade(gradeAsNumber, data.subject, weightAsNumber);
     addGradeToast(grade);
     refresh();
+    if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
 
   return (
@@ -213,7 +210,7 @@ export function CreateGradeForm({
         />
 
         <Button className="w-full" type="submit">
-          Submit
+          {t("actions.submit")}
         </Button>
       </form>
     </Form>

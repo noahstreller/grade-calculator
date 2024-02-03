@@ -64,7 +64,7 @@ export function AllGrades({
                 <DialogDescription>{t("grades.add-desc")}</DialogDescription>
               </DialogHeader>
 
-              <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} />
+              <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} setDrawerOpen={setOpen} />
             </DialogContent>
           </Dialog>
         </CardHeader>
@@ -90,7 +90,7 @@ export function AllGrades({
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
 
-            <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} />
+            <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} setDrawerOpen={setOpen} />
 
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
