@@ -7,9 +7,9 @@ import { CardBoard } from '@/components/ui/cardboard/cardboard';
 import Grade from '@/lib/entities/grade';
 import { GradeAverage } from '@/lib/entities/gradeAverage';
 import Subjects from '@/lib/entities/subject';
+import { isMobileDevice } from '@/lib/utils';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 
 export default function GradeAverageCalculator() {
     const { t, lang } = useTranslation('common');
@@ -52,7 +52,7 @@ export default function GradeAverageCalculator() {
         refreshAll();
     }, []);
 
-    if(isMobile) {
+    if(isMobileDevice()) {
         return (
             <CardBoard>
                 <PassingGradesCard data={passingData} setData={setPassingData} />

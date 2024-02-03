@@ -28,9 +28,9 @@ import {
 } from "@/components/ui/drawer";
 import Grade from "@/lib/entities/grade";
 import Subjects from "@/lib/entities/subject";
+import { isMobileDevice } from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -46,7 +46,7 @@ export function AllGrades({
   const { t, lang } = useTranslation("common");
 
   const [open, setOpen] = useState(false);
-  const isDesktop = !isMobile;
+  const isDesktop = !isMobileDevice();
 
   if (isDesktop) {
     return (

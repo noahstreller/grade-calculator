@@ -33,6 +33,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { columns } from "./columns";
+import { isMobileDevice } from "@/lib/utils";
 
 export function AllSubjects({
   data,
@@ -44,7 +45,7 @@ export function AllSubjects({
   refresh: Function;
 }) {
   const { t, lang } = useTranslation("common");
-  const isDesktop = !isMobile;
+  const isDesktop = !isMobileDevice();
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {

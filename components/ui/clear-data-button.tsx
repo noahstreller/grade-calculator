@@ -13,8 +13,6 @@ export function ClearDataButton() {
         window.location.reload();
     }
 
-
-
     return (
       <div className="mr-2">
         <AlertDialog>
