@@ -43,9 +43,14 @@
             "prompt": "Edit",
             "success": "The item was edited"
         },
+        "danger-continue": "I understand, continue",
         "cancel": "Cancel",
         "ok": "Got it",
-        "undo": "Undo"
+        "undo": "Undo",
+        "clear-data": {
+            "prompt": "Clear all data",
+            "message": "Are you sure you want to clear all data? This action cannot be undone."
+        }
     },
     "themes": {
         "toggle": "Change Theme",
