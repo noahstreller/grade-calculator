@@ -1,44 +1,29 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { string, z } from "zod";
+import { DefaultValues, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { cn, truncateText } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import useTranslation from "next-translate/useTranslation";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import Grade from "@/lib/entities/grade";
-import { Input } from "./ui/input";
-import appGlobals from "@/lib/app.globals";
-import { ScrollArea } from "./ui/scroll-area";
 import Subjects from "@/lib/entities/subject";
+import useTranslation from "next-translate/useTranslation";
+import { toast } from "sonner";
 import { Asterisk } from "./ui/asterisk";
+import { Input } from "./ui/input";
 
 export function CreateSubjectForm({ refresh }: { refresh: Function }) {
   const { t, lang } = useTranslation("common");
+
+  type FormValues = {
+    subject: string;
+  }
 
   const FormSchema = z.object({
     subject: z
@@ -50,14 +35,25 @@ export function CreateSubjectForm({ refresh }: { refresh: Function }) {
       .max(255),
   });
 
+  const defaultValues: DefaultValues<FormValues> = {
+    subject: ""
+  };
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     Subjects.add(data.subject);
-    //toast(t("grades.add-success"));
-    toast(data.subject);
+    form.reset(defaultValues);
+    form.setFocus("subject");
+    toast(t("actions.copy.success"), {
+      description: "a",
+      action: {
+        label: "Got it",
+        onClick: () => void 0,
+      },
+    })
     refresh();
   }
 

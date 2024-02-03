@@ -38,7 +38,7 @@ import { toast } from "sonner";
 import Grade from "@/lib/entities/grade";
 import { Input } from "./ui/input";
 import appGlobals from "@/lib/app.globals";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { useCommandState } from "cmdk";
 import { Asterisk } from "./ui/asterisk";
 
@@ -132,7 +132,7 @@ export function CreateGradeForm({
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput placeholder={t("subjects.search")} />
-                    <ScrollArea className="max-h-[30lvh] overflow-y-auto">
+                    <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {subjects.length === 0 ? (
                           <CommandItem disabled>No subjects found</CommandItem>

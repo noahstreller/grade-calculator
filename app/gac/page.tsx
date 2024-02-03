@@ -46,6 +46,21 @@ export default function GradeAverageCalculator() {
     }
 
     useEffect(() => {
+        Subjects.add('Math');
+        Subjects.add('Science');
+        Subjects.add('English');
+        Subjects.add('History');
+        Subjects.add('Art');
+        Subjects.add('Physical Education');
+        Subjects.add('Music');
+        Subjects.add('Computer Science');
+        Subjects.add('Spanish');
+        Subjects.add('French');
+        Subjects.add('German');
+        Subjects.add('Italian');
+        Subjects.add('Chinese');
+        Subjects.add('Japanese');
+
         refreshAll();
     }, []);
 

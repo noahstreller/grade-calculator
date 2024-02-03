@@ -144,7 +144,7 @@ export function columns(): ColumnDef<Grade>[] {
                               label: <CheckCheck className="h-5 w-5" />,
                               onClick: () => void 0,
                             },
-                          })
+                        })
                     }}
                     >
                         <span className="sr-only">Copy</span>
