@@ -53,6 +53,7 @@ export default function GradeAverageCalculator() {
         Subjects.add("Naturwissenschaften und Technik");
         Subjects.add("Mathematik");
         Subjects.add("Englisch");
+        refreshAll();
     }, []);
 
     return (
