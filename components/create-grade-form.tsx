@@ -41,6 +41,7 @@ import appGlobals from "@/lib/app.globals";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { useCommandState } from "cmdk";
 import { Asterisk } from "./ui/asterisk";
+import { addGradeToast } from "@/lib/toasts";
 
 export function CreateGradeForm({
   subjectSet,
@@ -89,8 +90,8 @@ export function CreateGradeForm({
     const gradeAsNumber = Number(data.grade);
     const weightAsNumber = Number(data.weight) || 1;
 
-    new Grade(gradeAsNumber, data.subject, weightAsNumber);
-    toast(t("grades.add-success"));
+    let grade = new Grade(gradeAsNumber, data.subject, weightAsNumber);
+    addGradeToast(grade);
     refresh();
   }
 

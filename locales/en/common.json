@@ -35,7 +35,17 @@
             "prompt": "Copy to clipboard",
             "success": "Copied to clipboard"
         },
-        "cancel": "Cancel"
+        "delete": {
+            "prompt": "Delete",
+            "success": "The item was deleted"
+        },
+        "edit": {
+            "prompt": "Edit",
+            "success": "The item was edited"
+        },
+        "cancel": "Cancel",
+        "ok": "Got it",
+        "undo": "Undo"
     },
     "themes": {
         "toggle": "Change Theme",

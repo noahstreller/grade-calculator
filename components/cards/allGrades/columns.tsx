@@ -1,7 +1,7 @@
 "use client"
 import Grade from "@/lib/entities/grade";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, CheckCheck, Copy } from "lucide-react";
+import { ArrowUpDown, CheckCheck, Copy, Trash } from "lucide-react";
 import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,10 @@ import {
     TooltipProvider,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
+import { addGradeToast, copySuccessToast, deleteGradeToast } from "@/lib/toasts";
 
 
-export function columns(): ColumnDef<Grade>[] {
+export function columns(refresh: Function): ColumnDef<Grade>[] {
     const { t, lang } = createTranslation('common');
 
     return [
@@ -132,24 +133,33 @@ export function columns(): ColumnDef<Grade>[] {
                 const gradeInfo = grade.getGradeInformation()
             
                 return (
+                    <>
                     <Button
-                    
                     variant="ghost"
                     className="h-8 w-8 p-0" 
                     onClick={() => {
                         navigator.clipboard.writeText(gradeInfo);
-                        toast(t("actions.copy.success"), {
-                            description: gradeInfo,
-                            action: {
-                              label: <CheckCheck className="h-5 w-5" />,
-                              onClick: () => void 0,
-                            },
-                        })
+                        copySuccessToast(gradeInfo);
                     }}
                     >
-                        <span className="sr-only">Copy</span>
+                        <span className="sr-only">{t("actions.copy.prompt")}</span>
                         <Copy className="h-4 w-4" />
                     </Button>
+
+                    <Button
+                    variant="ghost"
+                    className="h-8 w-8 p-0" 
+                    onClick={() => {
+                        let gradeCopy = grade;
+                        grade.delete();
+                        deleteGradeToast(gradeCopy, refresh);
+                        refresh();
+                    }}
+                    >
+                        <span className="sr-only">{t("actions.delete.prompt")}</span>
+                        <Trash className="h-4 w-4" />
+                    </Button>
+                    </>
                 )
             },
         },

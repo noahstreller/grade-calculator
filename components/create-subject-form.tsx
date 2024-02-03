@@ -17,6 +17,7 @@ import useTranslation from "next-translate/useTranslation";
 import { toast } from "sonner";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
+import { addSubjectToast } from "@/lib/toasts";
 
 export function CreateSubjectForm({ refresh }: { refresh: Function }) {
   const { t, lang } = useTranslation("common");
@@ -47,13 +48,7 @@ export function CreateSubjectForm({ refresh }: { refresh: Function }) {
     Subjects.add(data.subject);
     form.reset(defaultValues);
     form.setFocus("subject");
-    toast(t("actions.copy.success"), {
-      description: "a",
-      action: {
-        label: "Got it",
-        onClick: () => void 0,
-      },
-    })
+    addSubjectToast(data.subject);
     refresh();
   }
 

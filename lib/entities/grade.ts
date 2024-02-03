@@ -40,6 +40,16 @@ export default class Grade {
         return this.grades;
     }
 
+    delete() {
+        Grade.deleteById(this.id);
+    }
+
+    save() {
+        Grade.grades.push(this);
+        localStorage.setItem('grades', JSON.stringify(Grade.grades));
+    }
+
+
     static load(): Grade[] {
         let grades: GradeDTO[] = JSON.parse(localStorage.getItem('grades') || '[]');
         this.grades = grades.map(grade => new Grade(grade.value, grade.subject, grade.weight, new Date(grade.date)));

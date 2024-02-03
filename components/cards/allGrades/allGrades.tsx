@@ -69,7 +69,7 @@ export function AllGrades({
           </Dialog>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns()} data={data} />
+          <DataTable columns={columns(refresh)} data={data} />
         </CardContent>
       </Card>
     );
@@ -101,7 +101,7 @@ export function AllGrades({
         </Drawer>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns()} data={data} />
+        <DataTable columns={columns(refresh)} data={data} />
       </CardContent>
     </Card>
   );
