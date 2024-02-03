@@ -8,7 +8,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ReactNode } from "react";
 import appGlobals from "@/lib/app.globals";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from "@/components/ui/tooltip"
 
 
 export function columns(): ColumnDef<Grade>[] {
@@ -28,18 +34,25 @@ export function columns(): ColumnDef<Grade>[] {
                 </Button>
               )
             },
-        },
-        {
-            accessorKey: "weight",
-            header: ({ column }) => {
+            cell: ({ row }) => {
+                let subject: string = row.getValue("subject");
+                let truncated: boolean = truncateText(subject, 20).truncated;
+                let truncatedSubject: string = truncateText(subject, 20).text;
+
+                if(truncated) {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipContent>
+                                <p>{subject}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )
+                }
                 return (
-                    <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    >
-                    {t('grades.weight')}
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </Button>
+                    <p className="ml-4">{subject}</p>
                 )
             }
         },
@@ -62,19 +75,54 @@ export function columns(): ColumnDef<Grade>[] {
 
                 if(Grade.doesGradePass(value)) {
                     return (
-                        <span className="text-green-400">{value}</span>
+                        <p className="text-green-400 ml-4">{value}</p>
                     )
                 }
                 return (
-                    <span className="text-red-400">{value}</span>
+                    <p className="text-red-400 ml-4">{value}</p>
+                )
+            }
+        },
+        {
+            accessorKey: "weight",
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                    {t('grades.weight')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => {
+                let weight: number = row.getValue("weight");
+
+                return (
+                    <p className="ml-4">{weight}</p>
                 )
             }
         },
         {
             accessorKey: "date",
-            header: t('grades.date'),
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                    {t('grades.date')}
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
             cell: ({ row }) => {
-                return new Date(row.getValue("date")).toLocaleString(lang);
+                let date = new Date(row.getValue("date")).toLocaleString(lang);
+
+                return (
+                    <p className="ml-4">{date}</p>
+                )
             }
         },
         {
@@ -86,7 +134,7 @@ export function columns(): ColumnDef<Grade>[] {
                 return (
                     <Button
                     
-                    variant="outline"
+                    variant="ghost"
                     className="h-8 w-8 p-0" 
                     onClick={() => {
                         navigator.clipboard.writeText(gradeInfo);
@@ -99,7 +147,7 @@ export function columns(): ColumnDef<Grade>[] {
                           })
                     }}
                     >
-                        <span className="sr-only">Open menu</span>
+                        <span className="sr-only">Copy</span>
                         <Copy className="h-4 w-4" />
                     </Button>
                 )

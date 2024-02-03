@@ -17,14 +17,14 @@ import { toast } from "sonner";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
 import appGlobals from "@/lib/app.globals";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 export function columns(): ColumnDef<GradeAverage>[] {
     const { t, lang } = createTranslation('common');
 
     return [
-        
         {
             accessorKey: "subject",
             header: ({ column }) => {
@@ -38,6 +38,27 @@ export function columns(): ColumnDef<GradeAverage>[] {
                 </Button>
                 )
             },
+            cell: ({ row }) => {
+                let subject: string = row.getValue("subject");
+                let truncated: boolean = truncateText(subject, 20).truncated;
+                let truncatedSubject: string = truncateText(subject, 20).text;
+
+                if(truncated) {
+                    return (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{subject}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )
+                }
+                return (
+                    <p className="ml-4">{subject}</p>
+                )
+            }
         },
         {
             accessorKey: "gradeAverage",
@@ -59,16 +80,16 @@ export function columns(): ColumnDef<GradeAverage>[] {
 
                 if(Subjects.doesSubjectPass(subject)) {
                     return (
-                        <span className="text-green-400">{value}</span>
+                        <p className="text-green-400 ml-4">{value}</p>
                     )
                 }
                 if(Subjects.doesSubjectFail(subject)) {
                     return (
-                        <span className="text-red-400">{value}</span>
+                        <p className="text-red-400 ml-4">{value}</p>
                     )
                 }
                 return (
-                    <span className="text-gray-600">{t("grades.notfound")}</span>
+                    <p className="text-gray-600 ml-4">{t("grades.notfound")}</p>
                 )
             }
         },
