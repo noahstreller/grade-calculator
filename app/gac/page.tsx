@@ -21,25 +21,21 @@ export default function GradeAverageCalculator() {
     function refreshGrades() {
         let grades = Grade.get();
         setGradeData([...grades]);
-        console.log(gradeData);
     }
 
     function refreshSubjects() {
         let averages = GradeAverage.get();
         setSubjectData([...averages]);
-        console.log(subjectData);
     }
 
     function refreshFailing() {
         let subjects = Subjects.getFailingSubjects();
         setFailingData([...subjects]);
-        console.log(failingData);
     }
 
     function refreshPassing() {
         let subjects = Subjects.getPassingSubjects();
         setPassingData([...subjects]);
-        console.log(passingData);
     }
 
     function refreshAll() {
@@ -50,28 +46,6 @@ export default function GradeAverageCalculator() {
     }
 
     useEffect(() => {
-        Subjects.add("Naturwissenschaften und Technik");
-        Subjects.add("Mathematik");
-        Subjects.add("Englisch");
-        Subjects.add("Deutsch");
-        Subjects.add("Geschichte");
-        Subjects.add("Geographie");
-        Subjects.add("Biologie");
-        Subjects.add("Physik");
-        Subjects.add("Chemie");
-        Subjects.add("Informatik");
-        Subjects.add("Kunst");
-        Subjects.add("Musik");
-        Subjects.add("Sport");
-        Subjects.add("Religion");
-        Subjects.add("Ethik");
-        Subjects.add("Politik");
-        Subjects.add("Wirtschaft");
-        Subjects.add("Gesundheit");
-        Subjects.add("Sozialkunde");
-        Subjects.add("Philosophie");
-        Subjects.add("Psychologie");
-
         refreshAll();
     }, []);
 
@@ -81,7 +55,7 @@ export default function GradeAverageCalculator() {
                 <PassingGradesCard data={passingData} setData={setPassingData} />
                 <FailingGradesCard data={failingData} setData={setFailingData} />
             </CardBoard>
-            <AllSubjects data={subjectData} setData={setSubjectData} />
+            <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
             <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
         </CardBoard>
     );
