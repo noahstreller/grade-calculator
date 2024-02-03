@@ -14,7 +14,9 @@
         "add": "Add Grade",
         "add-desc": "Add a new grade to the list here",
         "add-success": "The grade was added",
-        "add-placeholder": "Enter grade"
+        "add-placeholder": "Enter grade",
+        "all-grades": "All Grades",
+        "all-grades-desc": "All recent grades are listed here"
     },
     "subjects" : {
         "add": "Add Subject",
