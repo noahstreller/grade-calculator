@@ -32,6 +32,8 @@ import useTranslation from "next-translate/useTranslation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import Grade from "@/lib/entities/grade"
+import { Input } from "./ui/input"
+import appGlobals from "@/lib/app.globals"
 
 export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, refresh: Function}) {
     const { t, lang } = useTranslation('common');
@@ -51,6 +53,10 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
         subject: z.string({
             required_error: t("errors.required"),
         }),
+        grade: z.number({
+            invalid_type_error: t("errors.invalid-type.number"),
+            required_error: t("errors.required"),
+        }).gte(appGlobals.minimumGrade).lte(appGlobals.maximumGrade),
     })
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -58,7 +64,8 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
     })
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        new Grade(3, data.subject);
+        const gradeAsNumber = Number(data.grade);
+        new Grade(gradeAsNumber, data.subject);
         toast(t("grades.add-success"));
         refresh();
     }
@@ -92,7 +99,7 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
                     </PopoverTrigger>
                     <PopoverContent className="w-[200px] p-0">
                     <Command>
-                        <CommandInput placeholder="Search subject..." />
+                        <CommandInput placeholder={t("subjects.search")} />
                         <CommandEmpty>No subject found.</CommandEmpty>
                         <CommandGroup>
                         {subjects.map((subject) => (
@@ -123,6 +130,21 @@ export function ComboboxForm({subjectSet, refresh} : {subjectSet: Set<string>, r
                 </FormItem>
             )}
             />
+            
+            <FormField
+            control={form.control}
+            name="grade"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Grade</FormLabel>
+                <FormControl>
+                    <Input type="number" step="any" placeholder={t("grades.add-placeholder")} {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
+                </FormControl>
+                <FormMessage />
+                </FormItem>
+            )}
+            />
+
             <Button type="submit">Submit</Button>
         </form>
         </Form>

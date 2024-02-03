@@ -13,7 +13,12 @@
         "notfound": "No grades found",
         "add": "Add Grade",
         "add-desc": "Add a new grade to the list here",
-        "add-success": "The grade was added"
+        "add-success": "The grade was added",
+        "add-placeholder": "Enter grade"
+    },
+    "subjects" : {
+        "add": "Add Subject",
+        "search": "Search Subjects"
     },
     "actions": {
         "copy": {
@@ -30,6 +35,9 @@
     },
     "errors": {
         "required": "This field is required",
-        "message": "An error occurred"
+        "message": "An error occurred",
+        "invalid-type": {
+            "number": "This field must be a number"
+        }
     }
 }
