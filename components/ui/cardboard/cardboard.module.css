@@ -12,6 +12,7 @@
 .cardBoard > * {
     margin: 10px;
     width: calc(100% - 20px);
+    max-width: 90vw;
 }
 
 .cardBoard > .cardBoard {

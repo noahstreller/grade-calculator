@@ -81,7 +81,7 @@ export function AllSubjects({
         <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <Button variant="outline">{t("grades.add")}</Button>
+            <Button variant="outline">{t("subjects.add")}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">

@@ -9,6 +9,7 @@ import { GradeAverage } from '@/lib/entities/gradeAverage';
 import Subjects from '@/lib/entities/subject';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 export default function GradeAverageCalculator() {
     const { t, lang } = useTranslation('common');
@@ -50,6 +51,17 @@ export default function GradeAverageCalculator() {
         Grade.load();
         refreshAll();
     }, []);
+
+    if(isMobile) {
+        return (
+            <CardBoard>
+                <PassingGradesCard data={passingData} setData={setPassingData} />
+                <FailingGradesCard data={failingData} setData={setFailingData} />
+                <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
+            </CardBoard>
+        );
+    }
 
     return (
         <CardBoard row>
