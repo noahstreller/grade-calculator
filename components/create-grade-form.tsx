@@ -181,7 +181,10 @@ export function CreateGradeForm({
                   step="any"
                   placeholder={t("grades.add-placeholder")}
                   {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  onChange={(e) => {
+                    if (e.target.value === "") field.onChange("");
+                    else field.onChange(Number(e.target.value));
+                  }}
                 />
               </FormControl>
               <FormMessage />
