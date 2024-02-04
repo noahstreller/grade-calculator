@@ -1,10 +1,11 @@
 "use client";
+import { ClearDataTranslations } from "@/lib/translationObjects";
 import { Trash2 } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./alert-dialog";
 import { Button } from "./button";
 
-export function ClearDataButton() {
+export function ClearDataButton({translations}: {translations: ClearDataTranslations}) {
     const { t, lang } = useTranslation('common');
 
     function clearData() {
@@ -24,14 +25,12 @@ export function ClearDataButton() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t("actions.clear-data.prompt")}</AlertDialogTitle>
-              <AlertDialogDescription>
-              {t("actions.clear-data.message")}
-              </AlertDialogDescription>
+              <AlertDialogTitle>{translations.prompt}</AlertDialogTitle>
+              <AlertDialogDescription>{translations.message}</AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t("actions.cancel")}</AlertDialogCancel>
-              <AlertDialogAction onClick={clearData}>{t("actions.danger-continue")}</AlertDialogAction>
+              <AlertDialogCancel>{translations.cancel}</AlertDialogCancel>
+              <AlertDialogAction onClick={clearData}>{translations.dangerContinue}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

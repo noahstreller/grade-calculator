@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { ClearDataTranslations } from "@/lib/translationObjects";
 import useTranslation from "next-translate/useTranslation";
 import Link from 'next/link';
 import { ThemeSwitcher } from "./theme-switcher";
@@ -6,6 +7,14 @@ import { ClearDataButton } from "./ui/clear-data-button";
 
 export default function HeaderComponent() {
     const { t, lang } = useTranslation('common');
+
+    const translations : ClearDataTranslations = {
+        "prompt": t("actions.clear-data.prompt"),
+        "message": t("actions.clear-data.message"),
+        "cancel": t("actions.cancel"),
+        "dangerContinue": t("actions.danger-continue")
+    }
+
     return (
         <header className="h-[64px] py-[10px] px-[20px] flex justify-between fixed top-0 left-0 w-[100dvw] bg-transparent z-[1000] backdrop-blur-[20px]">
             <Link href="/" className="flex items-center text-center opacity-80 gap-1 hover:opacity-100 hover:translate-x-[10px] transition-all">
@@ -13,7 +22,7 @@ export default function HeaderComponent() {
                 <h1 className={"hidden md:inline-block xl:inline-block lg:inline-block sm:inline-block text-3xl font-bold text-foreground whitespace-nowrap select-none"}>{t('app.title')}</h1>
             </Link>
             <div className="flex">
-                <ClearDataButton />
+                <ClearDataButton translations={translations} />
                 <ThemeSwitcher />
             </div>
         </header>
