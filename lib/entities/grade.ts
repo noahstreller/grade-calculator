@@ -1,7 +1,6 @@
 import appGlobals from "../app.globals";
 import GradeDTO from "./dtos/gradeDTO";
 import GradeInfo from "./gradeInfo";
-import Subjects from "./subject";
 
 export default class Grade {
     static grades: Grade[] = [];
@@ -67,6 +66,18 @@ export default class Grade {
 
     getValue(): number {
         return this.value;
+    }
+
+    getSubject(): string {
+        return this.subject;
+    }
+
+    getWeight(): number {
+        return this.weight;
+    }
+
+    getDate(): Date {
+        return this.date;
     }
 
     static getBySubject(subject: string): Grade[] {
