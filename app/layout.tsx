@@ -1,10 +1,11 @@
-import HeaderComponent from '@/components/header'
-import { ThemeProvider } from '@/components/theme-provider'
-import { cn } from '@/lib/utils'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Toaster } from 'sonner'
-import '../styles/globals.css'
+import HeaderComponent from '@/components/header';
+import { ThemeProvider } from '@/components/theme-provider';
+import { cn } from '@/lib/utils';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Toaster } from 'sonner';
+import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <Toaster theme='light' className='dark:hidden' />
           <Toaster theme='dark' className='hidden dark:flex' />
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
