@@ -52,27 +52,26 @@ export default function GradeAverageCalculator() {
         setLoaded(true);
     }, []);
 
-    if(isMobileDevice()) {
-        return (
-            <CardBoard>
+    
+
+
+    return (
+        loaded 
+        ? isMobileDevice()
+            ? <CardBoard>
                 <PassingGradesCard data={passingData} setData={setPassingData} />
                 <FailingGradesCard data={failingData} setData={setFailingData} />
                 <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
                 <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
             </CardBoard>
-        );
-    }
-
-    return (
-        loaded 
-        ? <CardBoard row>
-            <CardBoard>
-                <PassingGradesCard data={passingData} setData={setPassingData} />
-                <FailingGradesCard data={failingData} setData={setFailingData} />
+            : <CardBoard row>
+                <CardBoard>
+                    <PassingGradesCard data={passingData} setData={setPassingData} />
+                    <FailingGradesCard data={failingData} setData={setFailingData} />
+                </CardBoard>
+                <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
             </CardBoard>
-            <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
-            <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
-        </CardBoard>
         : <CardBoard row>
             <CardBoard>
                 <CardSkeleton variant='small' />
