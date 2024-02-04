@@ -25,7 +25,7 @@
         "add-desc": "Add a new subject to the list",
         "add-success": "The subject was added",
         "add-placeholder": "Enter subject",
-        "notfound": "No subjects found",
+        "notfound": "No subjects found, please add a subject first",
         "search": "Search Subjects",
         "all-subjects": "All Subjects",
         "all-subjects-desc": "All subjects are listed here"

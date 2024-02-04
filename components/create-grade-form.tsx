@@ -133,7 +133,7 @@ export function CreateGradeForm({
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {subjects.length === 0 ? (
-                          <CommandItem disabled>No subjects found</CommandItem>
+                          <CommandItem disabled>{t("subjects.notfound")}</CommandItem>
                         ) : (
                           subjects.map((subject) => (
                             <CommandItem
