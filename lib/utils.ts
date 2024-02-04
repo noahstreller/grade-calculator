@@ -33,3 +33,18 @@ export function isMobileDevice() {
   }
   return false;
 }
+
+export function isToday(date: Date) {
+  const today = new Date();
+  return date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear();
+}
+
+export function getDateOrTime(date: Date) {
+  if (isToday(date)) {
+    return date.toLocaleTimeString();
+  } else {
+    return date.toLocaleDateString();
+  }
+}

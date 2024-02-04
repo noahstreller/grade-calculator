@@ -3,6 +3,7 @@ import { AllGrades } from '@/components/cards/allGrades/allGrades';
 import { AllSubjects } from '@/components/cards/allSubjects/allSubjects';
 import { CardSkeleton } from '@/components/cards/card-skeleton';
 import FailingGradesCard from '@/components/cards/failingGradesCard/failingGradesCard';
+import { GradesOverTimeGraph } from '@/components/cards/gradesOverTimeGraph';
 import PassingGradesCard from '@/components/cards/passingGradesCard/passingGradesCard';
 import { CardBoard } from '@/components/ui/cardboard';
 import Grade from '@/lib/entities/grade';
@@ -59,13 +60,17 @@ export default function GradeAverageCalculator() {
                 <FailingGradesCard data={failingData} setData={setFailingData} />
                 <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
                 <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
+                <GradesOverTimeGraph data={gradeData} />
             </CardBoard>
             <CardBoard row className='hidden xl:flex'>
                 <CardBoard>
                     <PassingGradesCard data={passingData} setData={setPassingData} />
                     <FailingGradesCard data={failingData} setData={setFailingData} />
                 </CardBoard>
-                <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                <CardBoard>
+                    <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                    <GradesOverTimeGraph data={gradeData} />
+                </CardBoard>
                 <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
             </CardBoard>
         </>
