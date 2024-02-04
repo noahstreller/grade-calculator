@@ -51,40 +51,16 @@ export default function GradeAverageCalculator() {
         setLoaded(true);
     }, []);
 
-    
-
-
-    // return (
-    //     loaded 
-    //     ? isMobileDevice()
-    //         ? <CardBoard>
-    //             <PassingGradesCard data={passingData} setData={setPassingData} />
-    //             <FailingGradesCard data={failingData} setData={setFailingData} />
-    //             <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
-    //             <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
-    //         </CardBoard>
-    //         : <CardBoard row className=''>
-    //             <CardBoard>
-    //                 <PassingGradesCard data={passingData} setData={setPassingData} />
-    //                 <FailingGradesCard data={failingData} setData={setFailingData} />
-    //             </CardBoard>
-    //             <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
-    //             <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
-    //         </CardBoard>
-    //     : <CardBoard row>
-    //         <CardBoard>
-    //             <CardSkeleton variant='small' />
-    //             <CardSkeleton variant='small' />
-    //         </CardBoard>
-    //         <CardSkeleton variant='medium' />
-    //         <CardSkeleton variant='large' />
-    //     </CardBoard>    
-    // );
-
     return (
         loaded 
         ? <>
-            <CardBoard row>
+            <CardBoard className='flex xl:hidden'>
+                <PassingGradesCard data={passingData} setData={setPassingData} />
+                <FailingGradesCard data={failingData} setData={setFailingData} />
+                <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
+                <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
+            </CardBoard>
+            <CardBoard row className='hidden xl:flex'>
                 <CardBoard>
                     <PassingGradesCard data={passingData} setData={setPassingData} />
                     <FailingGradesCard data={failingData} setData={setFailingData} />
@@ -93,13 +69,21 @@ export default function GradeAverageCalculator() {
                 <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
             </CardBoard>
         </>
-        : <CardBoard row>
-            <CardBoard>
-                <CardSkeleton variant='small' />
-                <CardSkeleton variant='small' />
-            </CardBoard>
-            <CardSkeleton variant='medium' />
-            <CardSkeleton variant='large' />
-        </CardBoard>    
+        : <>
+            <CardBoard className='flex xl:hidden'>
+                <CardSkeleton wide variant='small' />
+                <CardSkeleton wide variant='small' />
+                <CardSkeleton wide variant='medium' />
+                <CardSkeleton wide variant='large' />
+            </CardBoard>    
+            <CardBoard row className='hidden xl:flex'>
+                <CardBoard>
+                    <CardSkeleton variant='small' />
+                    <CardSkeleton variant='small' />
+                </CardBoard>
+                <CardSkeleton variant='medium' />
+                <CardSkeleton variant='large' />
+            </CardBoard> 
+        </>
     );
 }
