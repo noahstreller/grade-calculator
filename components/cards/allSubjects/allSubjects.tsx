@@ -13,6 +13,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -28,7 +29,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
+import Subjects from "@/lib/entities/subject";
+import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
+import { DialogClose } from "@radix-ui/react-dialog";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { columns } from "./columns";
@@ -45,29 +49,61 @@ export function AllSubjects({
   const { t, lang } = useTranslation("common");
   const isDesktop = !isMobileDevice();
   const [open, setOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [subjectToDelete, setSubjectToDelete] = useState<string | null>(null);
 
   if (isDesktop) {
     return (
       <Card>
         <CardHeader>
-            <CardTitle>{t("subjects.all-subjects")}</CardTitle>
-            <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                <Button variant="outline">{t("subjects.add")}</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>{t("subjects.add")}</DialogTitle>
-                    <DialogDescription>{t("subjects.add-desc")}</DialogDescription>
-                </DialogHeader>
+          <CardTitle>{t("subjects.all-subjects")}</CardTitle>
+          <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">{t("subjects.add")}</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{t("subjects.add")}</DialogTitle>
+                <DialogDescription>{t("subjects.add-desc")}</DialogDescription>
+              </DialogHeader>
 
-                <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
-                </DialogContent>
-            </Dialog>
+              <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
+            </DialogContent>
+          </Dialog>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns()} data={data} />
+          <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>{t("subjects.delete.prompt")}</DialogTitle>
+                <DialogDescription>
+                  {t("subjects.delete.message")}
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
+                </DialogClose>
+                <DialogClose asChild>
+                  <Button
+                    onClick={() => {
+                      if (subjectToDelete) {
+                        Subjects.remove(subjectToDelete);
+                        deleteSubjectToast(subjectToDelete);
+                        setSubjectToDelete(null);
+                      }
+                      refresh();
+                    }}
+                    variant="destructive"
+                  >
+                    {t("actions.danger-continue")}
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+            <DataTable columns={columns(setSubjectToDelete)} data={data} />
+          </Dialog>
         </CardContent>
       </Card>
     );
@@ -87,9 +123,7 @@ export function AllSubjects({
               <DrawerTitle>{t("grades.add")}</DrawerTitle>
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
-
             <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
-
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">{t("actions.cancel")}</Button>
@@ -99,7 +133,37 @@ export function AllSubjects({
         </Drawer>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns()} data={data} />
+        <Drawer open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+          <DrawerContent>
+            <DrawerHeader className="text-left">
+              <DrawerTitle>{t("subjects.delete.prompt")}</DrawerTitle>
+              <DrawerDescription>
+                {t("subjects.delete.message")}
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter className="pt-2">
+              <DrawerClose asChild>
+                <Button
+                  onClick={() => {
+                    if (subjectToDelete) {
+                      Subjects.remove(subjectToDelete);
+                      deleteSubjectToast(subjectToDelete);
+                      setSubjectToDelete(null);
+                    }
+                    refresh();
+                  }}
+                  variant="destructive"
+                >
+                  {t("actions.danger-continue")}
+                </Button>
+              </DrawerClose>
+              <DrawerClose asChild>
+                <Button variant="outline">{t("actions.cancel")}</Button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+          <DataTable columns={columns(setSubjectToDelete)} data={data} />
+        </Drawer>
       </CardContent>
     </Card>
   );

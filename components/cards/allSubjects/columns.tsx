@@ -1,27 +1,20 @@
 "use client"
-import Grade from "@/lib/entities/grade"
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, Trash } from "lucide-react";
 import createTranslation from 'next-translate/createTranslation';
-import { ArrowUpDown, CheckCheck, Copy, MoreHorizontal } from "lucide-react"
  
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { DrawerTrigger } from "@/components/ui/drawer";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import appGlobals from "@/lib/app.globals";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
-import appGlobals from "@/lib/app.globals";
 import { round, truncateText } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { isMobile } from "react-device-detect";
 
 
-export function columns(): ColumnDef<GradeAverage>[] {
+export function columns(setSubjectToDelete: any): ColumnDef<GradeAverage>[] {
     const { t, lang } = createTranslation('common');
 
     return [
@@ -92,6 +85,28 @@ export function columns(): ColumnDef<GradeAverage>[] {
                     <p className="text-gray-600 ml-4">{t("grades.notfound")}</p>
                 )
             }
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => {
+                let gradeAverage: GradeAverage = row.original;
+                let isDesktop: boolean = !isMobile
+
+                if (isDesktop) {
+                    return (
+                        <DialogTrigger asChild>
+                          <Button onClick={()=>setSubjectToDelete(gradeAverage.subject)} className="h-8 w-8 p-0" variant="ghost"><Trash className="h-4 w-4" /></Button>
+                        </DialogTrigger>
+                    );
+                    }
+                
+                return (
+                    <DrawerTrigger asChild>
+                        <Button onClick={()=>setSubjectToDelete(gradeAverage.subject)} className="h-8 w-8 p-0" variant="ghost"><Trash className="h-4 w-4" /></Button>
+                    </DrawerTrigger>
+                    
+                );
+            },
         },
     ]
 
