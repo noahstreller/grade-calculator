@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import { Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
-export function GradesOverTimeGraph({ data }: { data: Grade[] }) {
+export function GradeOverview({ data }: { data: Grade[] }) {
 
   const { t } = useTranslation("common");
   
