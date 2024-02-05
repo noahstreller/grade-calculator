@@ -35,7 +35,11 @@
         "passing-subjects": "Passing Subjects",
         "passing-subjects-desc": "These are the subjects you are passing. Keep up the good work!",
         "failing-subjects": "Failing Subjects",
-        "failing-subjects-desc": "These are the subjects you are failing. These are the subjects you should focus on."
+        "failing-subjects-desc": "These are the subjects you are failing. These are the subjects you should focus on.",
+        "delete": {
+            "prompt": "Delete",
+            "message": "Are you sure you want to delete this subject? This will also delete all grades associated. This action cannot be undone."
+        }
     },
     "actions": {
         "copy": {

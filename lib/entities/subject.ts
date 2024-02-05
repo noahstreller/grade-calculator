@@ -1,4 +1,5 @@
 import appGlobals from "../app.globals";
+import Grade from "./grade";
 import { GradeAverage } from "./gradeAverage";
 
 export default class Subjects {
@@ -33,6 +34,7 @@ export default class Subjects {
     }
 
     static remove(subject: string): boolean {
+        Grade.deleteAllBySubject(subject);
         this.subjects.delete(subject);
         localStorage.setItem('subjects', JSON.stringify(Array.from(this.subjects)));
         return !this.subjects.has(subject);

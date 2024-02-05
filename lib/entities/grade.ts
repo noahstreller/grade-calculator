@@ -99,6 +99,15 @@ export default class Grade {
         }
     }
 
+    static deleteAllBySubject(subject: string): void {
+        let index = this.grades.findIndex(grade => grade.subject === subject);
+        while (index !== -1) {
+            this.grades.splice(index, 1);
+            index = this.grades.findIndex(grade => grade.subject === subject);
+        }
+        localStorage.setItem('grades', JSON.stringify(this.grades));
+    }
+
     toDto(): GradeDTO {
         return new GradeDTO(this.id, this.value, this.subject, this.weight, this.date);
     }

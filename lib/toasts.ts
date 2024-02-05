@@ -1,7 +1,7 @@
 
+import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
 import Grade from "./entities/grade";
-import createTranslation from "next-translate/createTranslation";
 
 function t(key: string) {
   const {t} = createTranslation("common");
@@ -53,6 +53,16 @@ export function deleteGradeToast(grade: Grade, refresh: Function){
         addGradeToast(grade);
         refresh();
       },
+    },
+  });
+}
+
+export function deleteSubjectToast(subject: string){
+  toast(t("actions.delete.success"), {
+    description: subject,
+    action: {
+      label: t("actions.ok"),
+      onClick: () => void 0,
     },
   });
 }
