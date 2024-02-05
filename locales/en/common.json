@@ -17,13 +17,16 @@
         "add-success": "The grade was added",
         "add-placeholder": "Enter grade",
         "all-grades": "All Grades",
-        "all-grades-desc": "All recent grades are listed here"
+        "all-grades-desc": "All recent grades are listed here",
+        "passing-grades": "Passing Grades",
+        "failing-grades": "Failing Grades"
+        
     },
     "subjects" : {
         "subject": "Subject",
         "add": "Add Subject",
         "add-desc": "Add a new subject to the list",
-        "add-success": "The subject was added",
+        "add-success": "The subject was added or already existed",
         "add-placeholder": "Enter subject",
         "notfound": "No subjects found, please add a subject first",
         "search": "Search Subjects",

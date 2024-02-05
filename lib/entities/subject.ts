@@ -5,6 +5,12 @@ export default class Subjects {
     private static subjects: Set<string> = new Set<string>();
 
     static add(subject: string): string {
+        for (let value of Subjects.subjects) {
+            if (value.toLowerCase() === subject.toLowerCase()) {
+                return value;
+            }
+        }
+
         this.subjects.add(subject);
         localStorage.setItem('subjects', JSON.stringify(Array.from(this.subjects)));
         return subject;

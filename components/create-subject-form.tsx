@@ -45,10 +45,10 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    Subjects.add(data.subject);
+    let subject = Subjects.add(data.subject);
     form.reset(defaultValues);
     form.setFocus("subject");
-    addSubjectToast(data.subject);
+    addSubjectToast(subject);
     refresh();
     if (!appGlobals.newEntitySheetShouldStayOpen) setOpen(false);
   }
