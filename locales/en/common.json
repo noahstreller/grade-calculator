@@ -28,7 +28,11 @@
         "notfound": "No subjects found, please add a subject first",
         "search": "Search Subjects",
         "all-subjects": "All Subjects",
-        "all-subjects-desc": "All subjects are listed here"
+        "all-subjects-desc": "All subjects are listed here",
+        "passing-subjects": "Passing Subjects",
+        "passing-subjects-desc": "These are the subjects you are passing. Keep up the good work!",
+        "failing-subjects": "Failing Subjects",
+        "failing-subjects-desc": "These are the subjects you are failing. These are the subjects you should focus on."
     },
     "actions": {
         "copy": {
@@ -66,5 +70,9 @@
         "invalid-type": {
             "number": "This field must be a number"
         }
+    },
+    "overview": {
+        "title": "Overview",
+        "description": "Here you can see an overview of your grades and subjects"
     }
 }
