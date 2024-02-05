@@ -99,25 +99,25 @@ export function GradeOverview({
             <Card>
               <CardHeader>{t("subjects.passing-subjects")}</CardHeader>
               <CardContent>
-                <span className="text-4xl text-center text-green-400">
+                <b className="block text-5xl text-center items-center self-center text-green-400">
                   {
                     passingData.filter((gradeAverage) =>
                       gradeAverage.passing
                     ).length
                   }
-                </span>
+                </b>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>{t("subjects.failing-subjects")}</CardHeader>
               <CardContent>
-                <span className="text-4xl text-center text-red-400">
+                <b className="block text-5xl text-center items-center self-center text-red-400">
                   {
                     failingData.filter((gradeAverage) =>
                       !gradeAverage.passing
                     ).length
                   }
-                </span>
+                </b>
               </CardContent>
             </Card>
           </CardBoard>
@@ -125,25 +125,25 @@ export function GradeOverview({
             <Card>
               <CardHeader>{t("grades.passing-grades")}</CardHeader>
               <CardContent>
-                <span className="text-4xl text-center text-green-400">
+                <b className="block text-5xl text-center items-center self-center text-green-400">
                   {
                     data.filter((grade) =>
                       Grade.doesGradePass(grade.getValue())
                     ).length
                   }
-                </span>
+                </b>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>{t("grades.failing-grades")}</CardHeader>
               <CardContent>
-                <span className="text-4xl text-center text-red-400">
+                <b className="block text-5xl text-center items-center self-center text-red-400">
                   {
                     data.filter(
                       (grade) => !Grade.doesGradePass(grade.getValue())
                     ).length
                   }
-                </span>
+                </b>
               </CardContent>
             </Card>
           </CardBoard>
