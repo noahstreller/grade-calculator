@@ -15,7 +15,7 @@ export function ClearDataButton({translations}: {translations: ClearDataTranslat
     }
 
     return (
-      <div className="mr-2">
+      <div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button size="icon" variant="outline" className="hover:text-red-400">
