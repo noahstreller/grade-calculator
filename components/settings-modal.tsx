@@ -60,17 +60,13 @@ export function SettingsModalForm({
     maximumGrade: appGlobals.maximumGrade,
   };
 
-  const FormSchema = z
-    .object({
-      gradeDecimals: z.number({}),
-      newEntitySheetShouldStayOpen: z.boolean({}),
-      passingGrade: z.number({}),
-      minimumGrade: z.number({}),
-      maximumGrade: z.number({}),
-    })
-    .refine((data) => {
-      data.minimumGrade < data.maximumGrade;
-    });
+  const FormSchema = z.object({
+    gradeDecimals: z.number({}),
+    newEntitySheetShouldStayOpen: z.boolean({}),
+    passingGrade: z.number({}),
+    minimumGrade: z.number({}),
+    maximumGrade: z.number({}),
+  });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -256,16 +252,19 @@ export function SettingsModalForm({
                   onChange={(e) => {
                     if (e.target.value === "") field.onChange("");
                     else {
-                      field.onChange(Number(e.target.value))
-                      if (Number(e.target.value) > form.getValues().maximumGrade)
+                      field.onChange(Number(e.target.value));
+                      if (
+                        Number(e.target.value) > form.getValues().maximumGrade
+                      )
                         setPassGtMax(true);
                       else setPassGtMax(false);
 
-                      if (Number(e.target.value) < form.getValues().minimumGrade)
+                      if (
+                        Number(e.target.value) < form.getValues().minimumGrade
+                      )
                         setPassLtMin(true);
                       else setPassLtMin(false);
-                    };
-
+                    }
                   }}
                 />
               </FormControl>
@@ -273,11 +272,19 @@ export function SettingsModalForm({
             </FormItem>
           )}
         />
-        {passLtMin ? <FormMessage>{t("errors.pass-lt-min")}</FormMessage> : null}
-        {passGtMax ? <FormMessage>{t("errors.pass-gt-max")}</FormMessage> : null}
+        {passLtMin ? (
+          <FormMessage>{t("errors.pass-lt-min")}</FormMessage>
+        ) : null}
+        {passGtMax ? (
+          <FormMessage>{t("errors.pass-gt-max")}</FormMessage>
+        ) : null}
 
         <Separator />
-        <Button className="w-full" type="submit">
+        <Button
+          disabled={passGtMax || passLtMin || maxLtMin}
+          className="w-full"
+          type="submit"
+        >
           {t("actions.save")}
         </Button>
         <SheetClose asChild>
@@ -303,11 +310,11 @@ export function SettingsModal({
         </Button>
       </SheetTrigger>
       <SheetContent className="overflow-y-auto">
-          <SheetHeader>
-            <SheetTitle>{translations.title}</SheetTitle>
-            <SheetDescription>{translations.description}</SheetDescription>
-          </SheetHeader>
-          <SettingsModalForm translations={translations} />
+        <SheetHeader>
+          <SheetTitle>{translations.title}</SheetTitle>
+          <SheetDescription>{translations.description}</SheetDescription>
+        </SheetHeader>
+        <SettingsModalForm translations={translations} />
       </SheetContent>
     </Sheet>
   );
