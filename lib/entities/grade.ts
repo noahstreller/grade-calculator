@@ -68,6 +68,11 @@ export default class Grade {
         return this.value;
     }
 
+    setValue(value: number): void {
+        this.value = value;
+        localStorage.setItem('grades', JSON.stringify(Grade.grades));
+    }
+
     getSubject(): string {
         return this.subject;
     }
