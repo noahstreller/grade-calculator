@@ -103,5 +103,11 @@
     "overview": {
         "title": "Overview",
         "description": "Here you can see an overview of your grades and subjects"
+    },
+    "subject-overview": {
+        "title": "Subject Overview",
+        "description": "Here you can see an overview of your subjects",
+        "subject-average": "Subject Average",
+        "grade-average": "Grade Average"
     }
 }

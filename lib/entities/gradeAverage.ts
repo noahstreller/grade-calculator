@@ -2,11 +2,11 @@ import Grade from "./grade";
 import Subjects from "./subject";
 
 export class GradeAverage {
-    passing: boolean;
-    subject: string;
+    passing: boolean | "unknown";
+    subject: string | null;
     gradeAverage: number;
 
-    constructor(subject: string, gradeAverage: number, passing: boolean = false) {
+    constructor(subject: string | null = null, gradeAverage: number, passing: boolean | "unknown" = "unknown") {
         this.passing = passing;
         this.gradeAverage = gradeAverage;
         this.subject = subject;
@@ -33,5 +33,31 @@ export class GradeAverage {
             averages.push(average);
         }, subjects);
         return averages;
+    }
+
+    static getAverageFromGradeAverages(averages: GradeAverage[]): GradeAverage {
+        if (averages.length === 0) {
+            return new GradeAverage(null, 0);
+        }
+        let sum = 0;
+        let count = 0;
+        for (let average of averages) {
+            sum += average.gradeAverage;
+            count++;
+        }
+        return new GradeAverage(null, sum / count);
+    }
+
+    static getAverageFromGrades(grades: Grade[]): GradeAverage {
+        if (grades.length === 0) {
+            return new GradeAverage(null, 0);
+        }
+        let sum = 0;
+        let count = 0;
+        for (let grade of grades) {
+            sum += grade.getValue();
+            count++;
+        }
+        return new GradeAverage(null, sum / count);
     }
 }
