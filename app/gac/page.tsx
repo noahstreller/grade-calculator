@@ -1,6 +1,7 @@
 "use client";
 import { AllGrades } from '@/components/cards/allGrades/allGrades';
 import { AllSubjects } from '@/components/cards/allSubjects/allSubjects';
+import { AverageOverview } from '@/components/cards/average-overview';
 import { CardSkeleton } from '@/components/cards/card-skeleton';
 import FailingGradesCard from '@/components/cards/failingGradesCard/failingGradesCard';
 import { GradeOverview } from '@/components/cards/grade-overview';
@@ -60,12 +61,14 @@ export default function GradeAverageCalculator() {
                 <AllGrades data={gradeData} setData={setGradeData} refresh={refreshAll} />
                 <PassingGradesCard data={passingData} setData={setPassingData} />
                 <FailingGradesCard data={failingData} setData={setFailingData} />
+                <AverageOverview data={gradeData} averageData={[...passingData, ...failingData]} />
                 <GradeOverview data={gradeData} passingData={passingData} failingData={failingData} />
             </CardBoard>
             <CardBoard row className='hidden xl:flex'>
                 <CardBoard>
                     <PassingGradesCard data={passingData} setData={setPassingData} />
                     <FailingGradesCard data={failingData} setData={setFailingData} />
+                    <AverageOverview data={gradeData} averageData={[...passingData, ...failingData]} />
                 </CardBoard>
                 <CardBoard>
                     <AllSubjects data={subjectData} setData={setSubjectData} refresh={refreshAll} />
@@ -76,17 +79,21 @@ export default function GradeAverageCalculator() {
         </>
         : <>
             <CardBoard className='flex xl:hidden'>
-                <CardSkeleton wide variant='small' />
-                <CardSkeleton wide variant='small' />
                 <CardSkeleton wide variant='medium' />
                 <CardSkeleton wide variant='large' />
+                <CardSkeleton wide variant='small' />
+                <CardSkeleton wide variant='small' />
             </CardBoard>    
             <CardBoard row className='hidden xl:flex'>
                 <CardBoard>
                     <CardSkeleton variant='small' />
                     <CardSkeleton variant='small' />
+                    <CardSkeleton variant='medium' />
                 </CardBoard>
-                <CardSkeleton variant='medium' />
+                <CardBoard>
+                    <CardSkeleton variant='medium' />
+                    <CardSkeleton variant='medium' />
+                </CardBoard>
                 <CardSkeleton variant='large' />
             </CardBoard> 
         </>
