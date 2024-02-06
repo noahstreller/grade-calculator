@@ -1,6 +1,7 @@
 import HeaderComponent from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
+import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Toaster theme='dark' className='hidden dark:flex' />
         </ThemeProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
