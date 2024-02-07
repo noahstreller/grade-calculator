@@ -11,8 +11,8 @@ import '../styles/globals.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Rechner',
-  description: 'Notenrechner',
+  title: 'Grade Calculator',
+  description: 'This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects.',
 }
 
 export default function RootLayout({
