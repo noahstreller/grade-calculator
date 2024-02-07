@@ -10,7 +10,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -19,20 +19,23 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "./button";
+} from "@/components/ui/table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React from "react";
+import { Button } from "./button";
 import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  pageSize?: number
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  pageSize = 6
+
 }: DataTableProps<TData, TValue>) {
   
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -40,6 +43,11 @@ export function DataTable<TData, TValue>({
     []
   )
   const table = useReactTable({
+    initialState: {
+      pagination: {
+        pageSize: pageSize,
+      },
+    },
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
