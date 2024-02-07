@@ -86,7 +86,7 @@ export function CreateGradeForm({
     const gradeAsNumber = Number(data.grade);
     const weightAsNumber = Number(data.weight) || 1;
 
-    let grade = new Grade(gradeAsNumber, data.subject, weightAsNumber);
+    let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber);
     addGradeToast(grade);
     refresh();
     if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);

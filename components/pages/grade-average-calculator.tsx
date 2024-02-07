@@ -67,7 +67,10 @@ export default function GradeAverageCalculator() {
           setData={setGradeData}
           refresh={refreshAll}
         />
-        <RequiredGrades gradeData={gradeData} averageData={[...passingData, ...failingData]} />
+        <RequiredGrades
+          gradeData={gradeData}
+          averageData={[...passingData, ...failingData]}
+        />
         <PassingGradesCard data={passingData} setData={setPassingData} />
         <FailingGradesCard data={failingData} setData={setFailingData} />
         <AverageOverview
@@ -107,7 +110,10 @@ export default function GradeAverageCalculator() {
             setData={setGradeData}
             refresh={refreshAll}
           />
-          <RequiredGrades gradeData={gradeData} averageData={[...passingData, ...failingData]} />
+          <RequiredGrades
+            gradeData={gradeData}
+            averageData={[...passingData, ...failingData]}
+          />
         </CardBoard>
       </CardBoard>
     </>

@@ -85,7 +85,7 @@
         "save": "Save",
         "clear-data": {
             "prompt": "Clear all data",
-            "message": "Are you sure you want to clear all data? This action cannot be undone."
+            "message": "Are you sure you want to clear all data? This action cannot be undone. Don't worry, your preferences will be kept."
         }
     },
     "themes": {
@@ -104,8 +104,10 @@
         "no-data-yet": "No data yet",
         "no-data-yet-desc": "Add some subjects and grades first :>",
         "not-enough-data-yet": "Not enough data yet",
-        "not-enough-data-yet-desc_1": "Add at least one grade to view graph",
-        "not-enough-data-yet-desc_3": "Add at least one grade from 3 different subjects to view graph",
+        "not-enough-data-yet-desc_1": "Add at least one grade to view this graph",
+        "not-enough-data-yet-desc_3": "Add at least one grade from 3 different subjects to view this graph",
+        "not-enough-data-yet-grade_1": "Add at least one grade to view this table",
+        "not-enough-data-yet-subject_1": "Add at least one subject to view this table",
         "max-lt-min": "The maximum value must be greater than the minimum value",
         "pass-gt-max": "The passing grade must be less than the maximum grade",
         "pass-lt-min": "The passing grade must be greater than the minimum grade"

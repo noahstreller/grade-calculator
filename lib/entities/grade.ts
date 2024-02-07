@@ -10,8 +10,8 @@ export default class Grade {
     private weight: number;
     private date: Date;
 
-    constructor(value: number, subject: string, weight: number = 1, date: Date = new Date()){
-        this.id = Grade.grades.length + 1;
+    constructor(id: number = Grade.grades.length + 1, value: number, subject: string, weight: number = 1, date: Date = new Date()){
+        this.id = id;
         this.value = value;
         this.subject = subject;
         this.weight = weight;
@@ -44,6 +44,9 @@ export default class Grade {
     }
 
     save() {
+        if(Grade.grades.find(grade => grade.id === this.id)) {
+            return;
+        }
         Grade.grades.push(this);
         localStorage.setItem('grades', JSON.stringify(Grade.grades));
     }
@@ -51,7 +54,12 @@ export default class Grade {
 
     static load(): Grade[] {
         let grades: GradeDTO[] = JSON.parse(localStorage.getItem('grades') || '[]');
-        this.grades = grades.map(grade => new Grade(grade.value, grade.subject, grade.weight, new Date(grade.date)));
+        this.grades = grades.map(grade => {
+            if (Grade.grades.find(g => g.id === grade.id)) {
+                return Grade.grades.find(g => g.id === grade.id) as Grade;
+            }
+           return new Grade(grade.id, grade.value, grade.subject, grade.weight, new Date(grade.date))
+        });
         return this.grades;
     }
 

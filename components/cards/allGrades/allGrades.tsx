@@ -1,5 +1,6 @@
 "use client";
 import { CreateGradeForm } from "@/components/create-grade-form";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,6 +30,7 @@ import {
 import Grade from "@/lib/entities/grade";
 import Subjects from "@/lib/entities/subject";
 import { isMobileDevice } from "@/lib/utils";
+import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { columns } from "./columns";
@@ -63,13 +65,26 @@ export function AllGrades({
                 <DialogTitle>{t("grades.add")}</DialogTitle>
                 <DialogDescription>{t("grades.add-desc")}</DialogDescription>
               </DialogHeader>
-
-              <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} setDrawerOpen={setOpen} />
+              <CreateGradeForm
+                refresh={refresh}
+                subjectSet={Subjects.get()}
+                setDrawerOpen={setOpen}
+              />
             </DialogContent>
           </Dialog>
         </CardHeader>
         <CardContent>
-          <DataTable columns={columns(refresh)} data={data} />
+          {data.length === 0 ? (
+            <Alert>
+              <Bird className="h-4 w-4" />
+              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+              <AlertDescription>
+                {t("errors.not-enough-data-yet-grade", { count: 1 })}
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <DataTable columns={columns(refresh)} data={data} />
+          )}
         </CardContent>
       </Card>
     );
@@ -89,9 +104,11 @@ export function AllGrades({
               <DrawerTitle>{t("grades.add")}</DrawerTitle>
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
-
-            <CreateGradeForm refresh={refresh} subjectSet={Subjects.get()} setDrawerOpen={setOpen} />
-
+            <CreateGradeForm
+              refresh={refresh}
+              subjectSet={Subjects.get()}
+              setDrawerOpen={setOpen}
+            />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -101,7 +118,18 @@ export function AllGrades({
         </Drawer>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns(refresh)} data={data} />
+        {
+          data.length === 0 ? (
+            <Alert>
+              <Bird className="h-4 w-4" />
+              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+              <AlertDescription>
+                {t("errors.not-enough-data-yet-grade", { count: 1 })}
+              </AlertDescription>
+            </Alert>
+          ) : <DataTable columns={columns(refresh)} data={data} />
+        }
+        
       </CardContent>
     </Card>
   );
