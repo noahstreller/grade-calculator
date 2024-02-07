@@ -103,6 +103,9 @@
         },
         "no-data-yet": "No data yet",
         "no-data-yet-desc": "Add some subjects and grades first :>",
+        "not-enough-data-yet": "Not enough data yet",
+        "not-enough-data-yet-desc_1": "Add at least one grade to view graph",
+        "not-enough-data-yet-desc_3": "Add at least one grade from 3 different subjects to view graph",
         "max-lt-min": "The maximum value must be greater than the minimum value",
         "pass-gt-max": "The passing grade must be less than the maximum grade",
         "pass-lt-min": "The passing grade must be greater than the minimum grade"

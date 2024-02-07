@@ -1,6 +1,7 @@
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
   Line,
@@ -11,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
   Card,
   CardContent,
@@ -83,42 +85,79 @@ export function GradeOverview({
         <CardTitle>{t("overview.title")}</CardTitle>
         <CardDescription>{t("overview.description")}</CardDescription>
       </CardHeader>
-      <CardContent className="w-full h-72">
-        <ResponsiveContainer>
-          <LineChart data={data}>
-            <Line dataKey={getGrade} stroke="#000000" className="dark:invert" />
-            <Tooltip content={<CustomTooltip />} />
-            <YAxis reversed={appGlobals.passingInverse} tickCount={6} domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]} />
-            <XAxis tick={false} />
-            <ReferenceLine y={appGlobals.passingGrade} strokeDasharray="3 5" stroke="grey" />
-          </LineChart>
-        </ResponsiveContainer>
-      </CardContent>
+      {data.length === 0 ? (
+        <CardContent>
+          <Alert>
+            <Bird className="h-4 w-4" />
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertDescription>
+              {t("errors.not-enough-data-yet-desc", { count: 1 })}
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      ) : (
+        <CardContent className="w-full h-72">
+          <ResponsiveContainer>
+            <LineChart data={data}>
+              <Line
+                dataKey={getGrade}
+                stroke="#000000"
+                className="dark:invert"
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <YAxis
+                reversed={appGlobals.passingInverse}
+                tickCount={6}
+                domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]}
+              />
+              <XAxis tick={false} />
+              <ReferenceLine
+                y={appGlobals.passingGrade}
+                strokeDasharray="3 5"
+                stroke="grey"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      )}
       <CardContent>
         <CardBoard>
           <CardBoard row>
             <Card>
               <CardHeader>{t("subjects.passing-subjects")}</CardHeader>
               <CardContent>
-                <b className="block text-5xl text-center items-center self-center text-green-400">
-                  {
-                    passingData.filter((gradeAverage) =>
-                      gradeAverage.passing
-                    ).length
-                  }
-                </b>
+                {passingData.filter((gradeAverage) => gradeAverage.passing)
+                  .length > 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-green-400">
+                    {
+                      passingData.filter((gradeAverage) => gradeAverage.passing)
+                        .length
+                    }
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                )}
               </CardContent>
             </Card>
             <Card>
               <CardHeader>{t("subjects.failing-subjects")}</CardHeader>
               <CardContent>
-                <b className="block text-5xl text-center items-center self-center text-red-400">
-                  {
-                    failingData.filter((gradeAverage) =>
-                      !gradeAverage.passing
-                    ).length
-                  }
-                </b>
+                {failingData.filter((gradeAverage) => !gradeAverage.passing)
+                  .length > 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-red-400">
+                    {
+                      failingData.filter(
+                        (gradeAverage) => !gradeAverage.passing
+                      ).length
+                    }
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                )}
               </CardContent>
             </Card>
           </CardBoard>
@@ -126,25 +165,39 @@ export function GradeOverview({
             <Card>
               <CardHeader>{t("grades.passing-grades")}</CardHeader>
               <CardContent>
-                <b className="block text-5xl text-center items-center self-center text-green-400">
-                  {
-                    data.filter((grade) =>
-                      Grade.doesGradePass(grade.getValue())
-                    ).length
-                  }
-                </b>
+                {data.filter((grade) => Grade.doesGradePass(grade.getValue()))
+                  .length > 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-green-400">
+                    {
+                      data.filter((grade) =>
+                        Grade.doesGradePass(grade.getValue())
+                      ).length
+                    }
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                )}
               </CardContent>
             </Card>
             <Card>
               <CardHeader>{t("grades.failing-grades")}</CardHeader>
               <CardContent>
-                <b className="block text-5xl text-center items-center self-center text-red-400">
-                  {
-                    data.filter(
-                      (grade) => !Grade.doesGradePass(grade.getValue())
-                    ).length
-                  }
-                </b>
+                {data.filter((grade) => !Grade.doesGradePass(grade.getValue()))
+                  .length > 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-red-400">
+                    {
+                      data.filter(
+                        (grade) => !Grade.doesGradePass(grade.getValue())
+                      ).length
+                    }
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                )}
               </CardContent>
             </Card>
           </CardBoard>

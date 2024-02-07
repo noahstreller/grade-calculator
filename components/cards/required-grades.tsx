@@ -2,6 +2,7 @@
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
+import Subjects from "@/lib/entities/subject";
 import { round } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -96,7 +97,12 @@ function RequiredGradesBody({
               <Card key={index}>
                 <CardHeader>
                   <h2>
-                    {average.subject}{" "}
+                    {average.subject &&
+                    Subjects.doesSubjectPass(average.subject) ? (
+                      <span className="text-green-400">{average.subject}</span>
+                    ) : (
+                      <span className="text-red-400">{average.subject}</span>
+                    )}{" "}
                     <Badge variant="secondary">
                       {average.grades.length}{" "}
                       {t("grades.grades", { count: average.grades.length })}
