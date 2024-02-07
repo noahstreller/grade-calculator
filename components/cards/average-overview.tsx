@@ -127,10 +127,15 @@ export function AverageOverview({
                 </Popover>
               </CardHeader>
               <CardContent>
-                {Grade.doesGradePass(
-                  GradeAverage.getAverageFromGradeAverages(averageData)
-                    .gradeAverage
-                ) ? (
+                {GradeAverage.getAverageFromGradeAverages(averageData)
+                  .gradeAverage === 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                ) : Grade.doesGradePass(
+                    GradeAverage.getAverageFromGradeAverages(averageData)
+                      .gradeAverage
+                  ) ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {round(
                       GradeAverage.getAverageFromGradeAverages(averageData)
@@ -162,9 +167,13 @@ export function AverageOverview({
                 </Popover>
               </CardHeader>
               <CardContent>
-                {Grade.doesGradePass(
-                  GradeAverage.getAverageFromGrades(data).gradeAverage
-                ) ? (
+                {GradeAverage.getAverageFromGrades(data).gradeAverage === 0 ? (
+                  <b className="block text-5xl text-center items-center self-center text-gray-400">
+                    -
+                  </b>
+                ) : Grade.doesGradePass(
+                    GradeAverage.getAverageFromGrades(data).gradeAverage
+                  ) ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {round(
                       GradeAverage.getAverageFromGrades(data).gradeAverage,
