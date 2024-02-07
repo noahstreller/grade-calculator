@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import appGlobals, { updateAppGlobals } from "@/lib/app.globals";
+import appGlobals, { defaultAppGlobals, updateAppGlobals } from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { PreferencesTranslations } from "@/lib/translationObjects";
 import { Settings } from "lucide-react";
@@ -82,6 +82,11 @@ export function SettingsModalForm({
 
     updateAppGlobals(data);
     window.location.reload();
+  }
+
+  function onReset(event: any) {
+    event.preventDefault();
+    form.reset(defaultAppGlobals)
   }
 
   useEffect(() => {
@@ -286,6 +291,10 @@ export function SettingsModalForm({
           type="submit"
         >
           {t("actions.save")}
+        </Button>
+
+        <Button className="w-full" variant="outline" onClick={onReset}>
+          {t("actions.reset")}
         </Button>
         <SheetClose asChild>
           <Button variant="outline" className="w-full">
