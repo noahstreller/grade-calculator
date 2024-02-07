@@ -2,6 +2,7 @@ import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import { round } from "@/lib/utils";
+import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
   PolarAngleAxis,
@@ -11,6 +12,7 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from "recharts";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
 import {
   Card,
@@ -111,7 +113,17 @@ export function AverageOverview({
             </RadarChart>
           </ResponsiveContainer>
         </CardContent>
-      ) : null}
+      ) : (
+        <CardContent>
+          <Alert>
+            <Bird className="h-4 w-4" />
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertDescription>
+              {t("errors.not-enough-data-yet-desc", { count: 3 })}
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      )}
       <CardContent>
         <CardBoard>
           <CardBoard column={false} className="flex-col sm:flex-row ">
