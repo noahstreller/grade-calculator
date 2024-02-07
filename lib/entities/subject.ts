@@ -42,11 +42,13 @@ export default class Subjects {
 
     static doesSubjectPass (subject: string) {
         let average = GradeAverage.getSubjectAverage(subject);
+        if (appGlobals.passingInverse) return average <= appGlobals.passingGrade;
         return average >= appGlobals.passingGrade;
     }
 
     static doesSubjectFail (subject: string) {
         let average = GradeAverage.getSubjectAverage(subject);
+        if (appGlobals.passingInverse) return average > appGlobals.passingGrade;
         return average < appGlobals.passingGrade;
     }
 

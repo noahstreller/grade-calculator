@@ -22,4 +22,6 @@ export type PreferencesTranslations = {
   passingGrade: string,
   passingGradeDescription: string,
   passingGradePlaceholder: string,
+  passingInverse: string,
+  passingInverseDescription: string,
 }

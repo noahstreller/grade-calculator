@@ -47,6 +47,7 @@ export function SettingsModalForm({
   type FormValues = {
     gradeDecimals: number;
     newEntitySheetShouldStayOpen: boolean;
+    passingInverse: boolean;
     passingGrade: number;
     minimumGrade: number;
     maximumGrade: number;
@@ -55,6 +56,7 @@ export function SettingsModalForm({
   const defaultValues: DefaultValues<FormValues> = {
     gradeDecimals: appGlobals.gradeDecimals,
     newEntitySheetShouldStayOpen: appGlobals.newEntitySheetShouldStayOpen,
+    passingInverse: appGlobals.passingInverse,
     passingGrade: appGlobals.passingGrade,
     minimumGrade: appGlobals.minimumGrade,
     maximumGrade: appGlobals.maximumGrade,
@@ -63,6 +65,7 @@ export function SettingsModalForm({
   const FormSchema = z.object({
     gradeDecimals: z.number({}),
     newEntitySheetShouldStayOpen: z.boolean({}),
+    passingInverse: z.boolean({}),
     passingGrade: z.number({}),
     minimumGrade: z.number({}),
     maximumGrade: z.number({}),
@@ -283,6 +286,28 @@ export function SettingsModalForm({
         {passGtMax ? (
           <FormMessage>{t("errors.pass-gt-max")}</FormMessage>
         ) : null}
+        
+        <FormField
+          control={form.control}
+          name="passingInverse"
+          render={({ field }) => (
+            <FormItem>
+              <div className="space-y-0.5">
+                <FormLabel>{translations.passingInverse}</FormLabel>
+                <FormDescription>
+                  {translations.passingInverseDescription}
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Separator />
         <Button
