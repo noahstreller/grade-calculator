@@ -11,6 +11,7 @@ import {
   RadarChart,
   ResponsiveContainer,
 } from "recharts";
+import { Badge } from "../ui/badge";
 import {
   Card,
   CardContent,
@@ -19,11 +20,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { CardBoard } from "../ui/cardboard";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export function AverageOverview({
   data,
@@ -89,7 +86,7 @@ export function AverageOverview({
   };
 
   return (
-    <Card>
+    <Card className="">
       <CardHeader>
         <CardTitle>{t("subject-overview.title")}</CardTitle>
         <CardDescription>{t("subject-overview.description")}</CardDescription>
@@ -116,71 +113,74 @@ export function AverageOverview({
       ) : null}
       <CardContent>
         <CardBoard>
-          <CardBoard row>
-            <HoverCard>
-              <HoverCardTrigger>
-                <Card>
-                  <CardHeader>
-                    {t("subject-overview.subject-average")}
-                  </CardHeader>
-                  <CardContent>
-                    {Grade.doesGradePass(
+          <CardBoard column={false} className="flex-col sm:flex-row ">
+            <Card>
+              <CardHeader className="flex-row gap-3">
+                {t("subject-overview.subject-average")}
+                <Popover>
+                  <PopoverTrigger>
+                    <Badge variant="outline">?</Badge>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    {t("subject-overview.subject-average-desc")}
+                  </PopoverContent>
+                </Popover>
+              </CardHeader>
+              <CardContent>
+                {Grade.doesGradePass(
+                  GradeAverage.getAverageFromGradeAverages(averageData)
+                    .gradeAverage
+                ) ? (
+                  <b className="block text-5xl text-center items-center self-center text-green-400">
+                    {round(
                       GradeAverage.getAverageFromGradeAverages(averageData)
-                        .gradeAverage
-                    ) ? (
-                      <b className="block text-5xl text-center items-center self-center text-green-400">
-                        {round(
-                          GradeAverage.getAverageFromGradeAverages(averageData)
-                            .gradeAverage,
-                          2
-                        )}
-                      </b>
-                    ) : (
-                      <b className="block text-5xl text-center items-center self-center text-red-400">
-                        {round(
-                          GradeAverage.getAverageFromGradeAverages(averageData)
-                            .gradeAverage,
-                          2
-                        )}
-                      </b>
+                        .gradeAverage,
+                      2
                     )}
-                  </CardContent>
-                </Card>
-              </HoverCardTrigger>
-              <HoverCardContent>
-                {t("subject-overview.subject-average-desc")}
-              </HoverCardContent>
-            </HoverCard>
-
-            <HoverCard>
-              <HoverCardTrigger>
-                <Card>
-                  <CardHeader>{t("subject-overview.grade-average")}</CardHeader>
-                  <CardContent>
-                    {Grade.doesGradePass(
-                      GradeAverage.getAverageFromGrades(data).gradeAverage
-                    ) ? (
-                      <b className="block text-5xl text-center items-center self-center text-green-400">
-                        {round(
-                          GradeAverage.getAverageFromGrades(data).gradeAverage,
-                          2
-                        )}
-                      </b>
-                    ) : (
-                      <b className="block text-5xl text-center items-center self-center text-red-400">
-                        {round(
-                          GradeAverage.getAverageFromGrades(data).gradeAverage,
-                          2
-                        )}
-                      </b>
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-red-400">
+                    {round(
+                      GradeAverage.getAverageFromGradeAverages(averageData)
+                        .gradeAverage,
+                      2
                     )}
-                  </CardContent>
-                </Card>
-              </HoverCardTrigger>
-              <HoverCardContent>
-                {t("subject-overview.grade-average-desc")}
-              </HoverCardContent>
-            </HoverCard>
+                  </b>
+                )}
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex-row gap-3">
+                {t("subject-overview.grade-average")}
+                <Popover>
+                  <PopoverTrigger>
+                    <Badge variant="outline">?</Badge>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    {t("subject-overview.grade-average-desc")}
+                  </PopoverContent>
+                </Popover>
+              </CardHeader>
+              <CardContent>
+                {Grade.doesGradePass(
+                  GradeAverage.getAverageFromGrades(data).gradeAverage
+                ) ? (
+                  <b className="block text-5xl text-center items-center self-center text-green-400">
+                    {round(
+                      GradeAverage.getAverageFromGrades(data).gradeAverage,
+                      2
+                    )}
+                  </b>
+                ) : (
+                  <b className="block text-5xl text-center items-center self-center text-red-400">
+                    {round(
+                      GradeAverage.getAverageFromGrades(data).gradeAverage,
+                      2
+                    )}
+                  </b>
+                )}
+              </CardContent>
+            </Card>
           </CardBoard>
         </CardBoard>
       </CardContent>
