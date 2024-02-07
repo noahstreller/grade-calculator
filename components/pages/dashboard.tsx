@@ -94,24 +94,18 @@ export default function Dashboard() {
   ) : (
     <>
       <CardBoard className="flex xl:hidden">
+        <CardSkeleton wide variant="small" />
+        <CardSkeleton wide variant="small" />
         <CardSkeleton wide variant="medium" />
         <CardSkeleton wide variant="large" />
-        <CardSkeleton wide variant="small" />
-        <CardSkeleton wide variant="small" />
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-        <CardBoard>
-          <CardSkeleton variant="small" />
-          <CardSkeleton variant="small" />
           <CardSkeleton variant="medium" />
-        </CardBoard>
-        <CardBoard>
-          <CardSkeleton variant="medium" />
-          <CardSkeleton variant="medium" />
-        </CardBoard>
-        <CardBoard>
           <CardSkeleton variant="large" />
-          <CardSkeleton variant="medium" />
+          <CardSkeleton variant="small" />
+        <CardBoard>
+          <CardSkeleton variant="small" />
+          <CardSkeleton variant="small" />
         </CardBoard>
       </CardBoard>
     </>
