@@ -5,6 +5,8 @@
     },
     "grades": {
         "grade": "Grade",
+        "grades_one": "Grade",
+        "grades_other": "Grades",
         "weight": "Weight",
         "weight-placeholder": "Enter weight (optional)",
         "date": "Date",
@@ -97,6 +99,8 @@
         "invalid-type": {
             "number": "This field must be a number"
         },
+        "no-data-yet": "No data yet",
+        "no-data-yet-desc": "Add some subjects and grades first :>",
         "max-lt-min": "The maximum value must be greater than the minimum value",
         "pass-gt-max": "The passing grade must be less than the maximum grade",
         "pass-lt-min": "The passing grade must be greater than the minimum grade"
@@ -112,5 +116,12 @@
         "grade-average": "Grade Average",
         "grade-average-desc": "The grade average is the average of all your grades.",
         "subject-average-desc": "The subject average is the average of all your subjects (not all your grades)."
+    },
+    "required-grades": {
+        "title": "Required Grades",
+        "description": "The grades you need to pass your subjects",
+        "required": "to pass",
+        "passed": "to keep passing",
+        "required-to-pass": "You need at least"
     }
 }
