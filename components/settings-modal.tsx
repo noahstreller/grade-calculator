@@ -112,12 +112,12 @@ export function SettingsModalForm({
                 <FormControl>
                   <Input
                     type="number"
-                    step="any"
+                    step="1"
                     placeholder={translations.gradeDecimalsPlaceholder}
                     {...field}
                     onChange={(e) => {
                       if (e.target.value === "") field.onChange("");
-                      else field.onChange(Number(e.target.value));
+                      else field.onChange(Math.floor(Number(e.target.value)));
                     }}
                   />
                 </FormControl>
