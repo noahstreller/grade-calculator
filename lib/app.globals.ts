@@ -6,7 +6,7 @@ export type AppGlobalsType = {
     newEntitySheetShouldStayOpen: boolean;
 };
 
-let defaults: AppGlobalsType = {
+export const defaultAppGlobals: AppGlobalsType = {
     passingGrade: 4,
     minimumGrade: 1,
     maximumGrade: 6,
@@ -14,7 +14,7 @@ let defaults: AppGlobalsType = {
     newEntitySheetShouldStayOpen: false,
 };
 
-let appGlobals = loadAppGlobals() || defaults;
+let appGlobals = loadAppGlobals() || defaultAppGlobals;
 
 export function updateAppGlobals(newGlobals: AppGlobalsType) {
     if (typeof window !== 'undefined') {

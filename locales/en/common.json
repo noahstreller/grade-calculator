@@ -43,7 +43,7 @@
     },
     "preferences": {
         "title": "Preferences",
-        "description": "Your changes will be discarded if you close this sheet. If grades conflict with your new preferences, they will be adjusted accordingly.",
+        "description": "Make sure to save your changes below! Your changes will be discarded if you close this sheet. If grades conflict with your new preferences, they will be adjusted accordingly.",
         "grade-decimals": "Grade Decimals",
         "grade-decimals-description": "How many decimals you want to see in your grades",
         "grade-decimals-placeholder": "Enter number of decimals",
@@ -77,6 +77,7 @@
         "ok": "Got it",
         "submit": "Submit",
         "undo": "Undo",
+        "reset": "Reset",
         "save": "Save",
         "clear-data": {
             "prompt": "Clear all data",
