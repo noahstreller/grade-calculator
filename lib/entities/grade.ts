@@ -123,10 +123,32 @@ export default class Grade {
     }
 
     doesGradePass(): boolean {
+        if (appGlobals.passingInverse) return this.getValue() <= appGlobals.passingGrade;
         return this.getValue() >= appGlobals.passingGrade;
     }
 
     static doesGradePass(grade: number): boolean {
+        if (appGlobals.passingInverse) return grade <= appGlobals.passingGrade;
         return grade >= appGlobals.passingGrade;
+    }
+
+    doesGradeFail(): boolean {
+        if (appGlobals.passingInverse) return this.getValue() > appGlobals.passingGrade;
+        return this.getValue() < appGlobals.passingGrade;
+    }
+
+    static doesGradeFail(grade: number): boolean {
+        if (appGlobals.passingInverse) return grade > appGlobals.passingGrade;
+        return grade < appGlobals.passingGrade;
+    }
+
+    doesGradeFailOrEqual(): boolean {
+        if (appGlobals.passingInverse) return this.getValue() >= appGlobals.passingGrade;
+        return this.getValue() <= appGlobals.passingGrade;
+    }
+
+    static doesGradeFailOrEqual(grade: number): boolean {
+        if (appGlobals.passingInverse) return grade >= appGlobals.passingGrade;
+        return grade <= appGlobals.passingGrade;
     }
 }

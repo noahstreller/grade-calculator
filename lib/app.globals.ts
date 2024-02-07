@@ -4,6 +4,7 @@ export type AppGlobalsType = {
     maximumGrade: number;
     gradeDecimals: number;
     newEntitySheetShouldStayOpen: boolean;
+    passingInverse: boolean;
 };
 
 export const defaultAppGlobals: AppGlobalsType = {
@@ -12,6 +13,7 @@ export const defaultAppGlobals: AppGlobalsType = {
     maximumGrade: 6,
     gradeDecimals: 3,
     newEntitySheetShouldStayOpen: false,
+    passingInverse: false,
 };
 
 let appGlobals = loadAppGlobals() || defaultAppGlobals;

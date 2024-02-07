@@ -101,6 +101,7 @@ export function AverageOverview({
                 tickCount={6}
                 angle={0}
                 domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]}
+                reversed={appGlobals.passingInverse}
               />
               <Radar
                 dataKey={subjectAverage}

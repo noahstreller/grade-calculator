@@ -8,7 +8,13 @@ import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { CardBoard } from "../ui/cardboard";
 
 function RequiredGradesBody({
@@ -18,7 +24,7 @@ function RequiredGradesBody({
   gradeData: Grade[];
   averageData: GradeAverage[];
 }) {
-  const {t} = useTranslation("common");
+  const { t } = useTranslation("common");
   const chunkIntoPieces = (data: Array<any>, amount: number = 2) => {
     const result = [];
     for (let i = 0; i < data.length; i += amount) {
@@ -34,6 +40,7 @@ function RequiredGradesBody({
     let count = 1;
     let passing = appGlobals.passingGrade;
     let max = appGlobals.maximumGrade;
+    let min = appGlobals.minimumGrade;
     let result = 0;
     let maxCounts = 0;
     for (let grade of average.grades) {
@@ -41,21 +48,29 @@ function RequiredGradesBody({
       count++;
     }
     result = passing * count - sum;
+    if (appGlobals.passingInverse) {
+      while (result < min) {
+        count++;
+        sum += min;
+        result = passing * count - sum;
+        maxCounts++;
+      }
+      return { result, maxCounts };
+    }
     while (result > max) {
       count++;
       sum += max;
       result = passing * count - sum;
       maxCounts++;
     }
-    console.log(maxCounts);
-
     return { result, maxCounts };
   };
 
   const getMaxGradeOverflowString = (maxCounts: number) => {
     let result = "";
     for (let i = 0; i < maxCounts; i++) {
-      result += ` + ${appGlobals.maximumGrade}`;
+      if (appGlobals.passingInverse) result += ` + ${appGlobals.minimumGrade}`;
+      else result += ` + ${appGlobals.maximumGrade}`;
     }
     return result;
   };
@@ -72,9 +87,7 @@ function RequiredGradesBody({
         <Alert>
           <Bird className="h-4 w-4" />
           <AlertTitle>{t("errors.no-data-yet")}</AlertTitle>
-          <AlertDescription>
-            {t("errors.no-data-yet-desc")}
-          </AlertDescription>
+          <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
         </Alert>
       ) : (
         chunkPairs.map((pair, index) => (
@@ -84,11 +97,14 @@ function RequiredGradesBody({
                 <CardHeader>
                   <h2>
                     {average.subject}{" "}
-                    <Badge variant="secondary">{average.grades.length} {t("grades.grades", {count: average.grades.length})}</Badge>
+                    <Badge variant="secondary">
+                      {average.grades.length}{" "}
+                      {t("grades.grades", { count: average.grades.length })}
+                    </Badge>
                   </h2>
                 </CardHeader>
                 <CardContent>
-                  <h1 className="text-2xl text-gray-400"> 
+                  <h1 className="text-2xl text-gray-400">
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
                     </b>
@@ -98,11 +114,11 @@ function RequiredGradesBody({
                         )
                       : null}
                     <br />
-                    {
-                      getRequiredGradeToPass(average).result < appGlobals.passingGrade
+                    {Grade.doesGradeFailOrEqual(
+                      getRequiredGradeToPass(average).result
+                    )
                       ? t("required-grades.passed")
-                      : t("required-grades.required")
-                    }
+                      : t("required-grades.required")}
                   </h1>
                 </CardContent>
               </Card>
@@ -121,7 +137,7 @@ export function RequiredGrades({
   gradeData: Grade[];
   averageData: GradeAverage[];
 }) {
-  const {t} = useTranslation("common");
+  const { t } = useTranslation("common");
   return (
     <Card>
       <CardHeader>

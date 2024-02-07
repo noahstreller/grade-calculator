@@ -58,8 +58,10 @@
         "maximum-grade-description": "The highest grade you can get",
         "maximum-grade-placeholder": "Enter maximum grade",
         "passing-grade": "Passing Grade",
-        "passing-grade-description": "The lowest grade you need to pass",
-        "passing-grade-placeholder": "Enter passing grade"
+        "passing-grade-description": "The grade you need to pass",
+        "passing-grade-placeholder": "Enter passing grade",
+        "passing-inverse": "Inverse Grade System",
+        "passing-inverse-description": "If enabled, the lower grades are considered better"
     },
     "actions": {
         "copy": {

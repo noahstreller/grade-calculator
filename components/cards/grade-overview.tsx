@@ -88,7 +88,7 @@ export function GradeOverview({
           <LineChart data={data}>
             <Line dataKey={getGrade} stroke="#000000" className="dark:invert" />
             <Tooltip content={<CustomTooltip />} />
-            <YAxis tickCount={6} domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]} />
+            <YAxis reversed={appGlobals.passingInverse} tickCount={6} domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]} />
             <XAxis tick={false} />
             <ReferenceLine y={appGlobals.passingGrade} strokeDasharray="3 5" stroke="grey" />
           </LineChart>
