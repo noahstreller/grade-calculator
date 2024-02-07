@@ -22,6 +22,6 @@ export default class GradeDTO {
     }
 
     fromDto(): Grade {
-        return new Grade(this.value, this.subject, this.weight, this.date);
+        return new Grade(this.id, this.value, this.subject, this.weight, this.date);
     }
 }

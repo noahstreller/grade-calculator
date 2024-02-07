@@ -1,5 +1,6 @@
 "use client";
 import { CreateSubjectForm } from "@/components/create-subject-form";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -33,6 +34,7 @@ import Subjects from "@/lib/entities/subject";
 import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { columns } from "./columns";
@@ -60,14 +62,13 @@ export function AllSubjects({
           <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button variant="outline">{t("subjects.add")}</Button>
+              <Button variant="secondary">{t("subjects.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>{t("subjects.add")}</DialogTitle>
                 <DialogDescription>{t("subjects.add-desc")}</DialogDescription>
               </DialogHeader>
-
               <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
             </DialogContent>
           </Dialog>
@@ -102,7 +103,17 @@ export function AllSubjects({
                 </DialogClose>
               </DialogFooter>
             </DialogContent>
-            <DataTable columns={columns(setSubjectToDelete)} data={data} />
+            {data.length === 0 ? (
+              <Alert>
+                <Bird className="h-4 w-4" />
+                <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+                <AlertDescription>
+                  {t("errors.not-enough-data-yet-subject", { count: 1 })}
+                </AlertDescription>
+              </Alert>
+            ) : (
+              <DataTable columns={columns(setSubjectToDelete)} data={data} />
+            )}
           </Dialog>
         </CardContent>
       </Card>
@@ -116,7 +127,7 @@ export function AllSubjects({
         <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <Button variant="outline">{t("subjects.add")}</Button>
+            <Button variant="secondary">{t("subjects.add")}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
@@ -162,7 +173,17 @@ export function AllSubjects({
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
-          <DataTable columns={columns(setSubjectToDelete)} data={data} />
+          {data.length === 0 ? (
+            <Alert>
+              <Bird className="h-4 w-4" />
+              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+              <AlertDescription>
+                {t("errors.not-enough-data-yet-subject", { count: 1 })}
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <DataTable columns={columns(setSubjectToDelete)} data={data} />
+          )}
         </Drawer>
       </CardContent>
     </Card>

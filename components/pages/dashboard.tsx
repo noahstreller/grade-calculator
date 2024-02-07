@@ -100,9 +100,9 @@ export default function Dashboard() {
         <CardSkeleton wide variant="large" />
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-          <CardSkeleton variant="medium" />
-          <CardSkeleton variant="large" />
-          <CardSkeleton variant="small" />
+        <CardSkeleton variant="medium" />
+        <CardSkeleton variant="large" />
+        <CardSkeleton variant="small" />
         <CardBoard>
           <CardSkeleton variant="small" />
           <CardSkeleton variant="small" />
