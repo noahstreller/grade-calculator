@@ -5,11 +5,13 @@ export class GradeAverage {
     passing: boolean | "unknown";
     subject: string | null;
     gradeAverage: number;
+    grades: Grade[];
 
-    constructor(subject: string | null = null, gradeAverage: number, passing: boolean | "unknown" = "unknown") {
+    constructor(subject: string | null = null, gradeAverage: number, passing: boolean | "unknown" = "unknown", grades: Grade[] = []) {
         this.passing = passing;
         this.gradeAverage = gradeAverage;
         this.subject = subject;
+        this.grades = grades;
     }
     
     static getSubjectAverage (subject: string) {
@@ -26,7 +28,7 @@ export class GradeAverage {
         let subjects: Set<string> = Subjects.get();
         let averages: GradeAverage[] = [];
         subjects.forEach(subject => {
-            let average = new GradeAverage(subject, this.getSubjectAverage(subject), false);
+            let average = new GradeAverage(subject, this.getSubjectAverage(subject), false, Grade.getBySubject(subject));
             if (Subjects.doesSubjectPass(subject)) {
                 average.passing = true;
             }

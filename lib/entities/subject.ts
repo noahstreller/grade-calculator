@@ -55,7 +55,7 @@ export default class Subjects {
         let failing: GradeAverage[] = [];
         subjects.forEach(subject => {
             if (this.doesSubjectFail(subject)) {
-                failing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), false));
+                failing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), false, Grade.getBySubject(subject)));
             }
         }, subjects);
         return failing;
@@ -66,7 +66,7 @@ export default class Subjects {
         let passing: GradeAverage[] = [];
         subjects.forEach(subject => {
             if (this.doesSubjectPass(subject)) {
-                passing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), true));
+                passing.push(new GradeAverage(subject, GradeAverage.getSubjectAverage(subject), true, Grade.getBySubject(subject)));
             }
         }, subjects);
         return passing;
