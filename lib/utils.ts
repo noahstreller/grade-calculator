@@ -20,6 +20,15 @@ export function truncateText(text: string, maxLength: number) {
   }
 }
 
+export function truncateTextWithoutDots(text: string, maxLength: number) {
+  if (text.length > maxLength) {
+    let truncated = text.substring(0, maxLength - 3);
+    return {text: truncated, truncated: true}
+  } else {
+    return {text: text, truncated: false};
+  }
+}
+
 export function isMobileUserAgent() {
   if (typeof navigator === 'undefined') return false;
   let check = false;
