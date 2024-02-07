@@ -2,6 +2,7 @@
 import { ClearDataTranslations, PreferencesTranslations } from "@/lib/translationObjects";
 import useTranslation from "next-translate/useTranslation";
 import Link from 'next/link';
+import { DashboardButton } from "./dashboard-button";
 import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
 import { ClearDataButton } from "./ui/clear-data-button";
@@ -44,6 +45,7 @@ export default function HeaderComponent() {
                 <h1 className={"hidden md:inline-block xl:inline-block lg:inline-block sm:inline-block text-3xl font-bold text-foreground whitespace-nowrap select-none"}>{t('app.title')}</h1>
             </Link>
             <div className="flex gap-3">
+                <DashboardButton />
                 <ClearDataButton translations={clearDataTranslations} />
                 <SettingsModal translations={preferencesTranslations} />
                 <ThemeSwitcher />
