@@ -1,9 +1,6 @@
-import useTranslation from 'next-translate/useTranslation';
-import GradeAverageCalculator from './gac/page';
+import GradeAverageCalculator from '@/components/pages/grade-average-calculator';
 
 export default function Home() {
-  const { t, lang } = useTranslation('common');
-
   return (
     <div>
       <GradeAverageCalculator />
