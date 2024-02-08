@@ -4,11 +4,11 @@ import { GradeAverage } from "@/lib/entities/gradeAverage";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "../../ui/card";
 import { DataTable } from "../../ui/data-table";
 import { columns } from "./columns";
@@ -34,7 +34,7 @@ export default function PassingGradesCard({
             <Bird className="h-4 w-4" />
             <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-grade", { count: 1 })}
+              {t("errors.not-enough-data-yet-passing", { count: 0 })}
             </AlertDescription>
           </Alert>
         ) : (
