@@ -34,7 +34,7 @@ export default function FailingGradesCard({
             <Bird className="h-4 w-4" />
             <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-grade", { count: 1 })}
+              {t("errors.not-enough-data-yet-failing", { count: 0 })}
             </AlertDescription>
           </Alert>
         ) : (

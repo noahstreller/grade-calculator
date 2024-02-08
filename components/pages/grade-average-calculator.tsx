@@ -52,6 +52,7 @@ export default function GradeAverageCalculator() {
     Grade.load();
     refreshAll();
     setLoaded(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return loaded ? (
