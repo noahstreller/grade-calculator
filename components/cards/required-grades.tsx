@@ -36,40 +36,41 @@ function RequiredGradesBody({
 
   const getRequiredGradeToPass = (
     average: GradeAverage
-  ): { result: number; maxCounts: number } => {
+  ): { result: number; overflowCounts: number } => {
     let sum = 0;
     let count = 1;
     let passing = appGlobals.passingGrade;
     let max = appGlobals.maximumGrade;
     let min = appGlobals.minimumGrade;
     let result = 0;
-    let maxCounts = 0;
+    let overflowCounts = 0;
     for (let grade of average.grades) {
       sum += grade.getValue();
       count++;
     }
     result = passing * count - sum;
-    if (appGlobals.passingInverse) {
-      while (result < min) {
-        count++;
-        sum += min;
-        result = passing * count - sum;
-        maxCounts++;
-      }
-      return { result, maxCounts };
-    }
-    while (result > max) {
+    while (result > max || result < min) {
       count++;
-      sum += max;
+      if (result > max) sum += max;
+      if (result < min) sum += min;
       result = passing * count - sum;
-      maxCounts++;
+      if (result > max) overflowCounts++;
+      if (result < min) overflowCounts--;
     }
-    return { result, maxCounts };
+    return { result, overflowCounts };
   };
 
-  const getMaxGradeOverflowString = (maxCounts: number) => {
+  const getGradeOverflowString = (overflowCounts: number ) => {
     let result = "";
-    for (let i = 0; i < maxCounts; i++) {
+    if(overflowCounts < 0){
+      for (let i = 0; i >= overflowCounts; i--) {
+        if (appGlobals.passingInverse) result += ` + ${appGlobals.maximumGrade}`;
+        else result += ` + ${appGlobals.minimumGrade}`;
+      }
+      return result;
+    }
+
+    for (let i = 0; i < overflowCounts; i++) {
       if (appGlobals.passingInverse) result += ` + ${appGlobals.minimumGrade}`;
       else result += ` + ${appGlobals.maximumGrade}`;
     }
@@ -114,11 +115,11 @@ function RequiredGradesBody({
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
                     </b>
-                    {getRequiredGradeToPass(average).maxCounts > 0
-                      ? getMaxGradeOverflowString(
-                          getRequiredGradeToPass(average).maxCounts
+                    {getRequiredGradeToPass(average).overflowCounts != 0
+                      ? getGradeOverflowString(
+                          getRequiredGradeToPass(average).overflowCounts
                         )
-                      : null}
+                      : getRequiredGradeToPass(average).overflowCounts}
                     <br />
                     {Grade.doesGradeFailOrEqual(
                       getRequiredGradeToPass(average).result
