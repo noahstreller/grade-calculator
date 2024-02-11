@@ -45,7 +45,7 @@
     },
     "preferences": {
         "title": "Preferences",
-        "description": "Make sure to save your changes below! Your changes will be discarded if you close this sheet. If grades conflict with your new preferences, they will be adjusted accordingly.",
+        "description": "If grades conflict with your new preferences, they will be adjusted accordingly.",
         "grade-decimals": "Grade Decimals",
         "grade-decimals-description": "How many decimals you want to see in your grades",
         "grade-decimals-placeholder": "Enter number of decimals",
@@ -61,7 +61,9 @@
         "passing-grade-description": "The grade you need to pass",
         "passing-grade-placeholder": "Enter passing grade",
         "passing-inverse": "Inverse Grade System",
-        "passing-inverse-description": "If enabled, the lower grades are considered better"
+        "passing-inverse-description": "If enabled, the lower grades are considered better",
+        "alert-title": "Important!",
+        "alert-description": "Unsaved changes will be discarded if you close this sheet, please save them below."
     },
     "actions": {
         "copy": {

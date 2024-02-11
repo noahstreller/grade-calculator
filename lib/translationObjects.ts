@@ -24,4 +24,6 @@ export type PreferencesTranslations = {
   passingGradePlaceholder: string,
   passingInverse: string,
   passingInverseDescription: string,
+  alertTitle: string,
+  alertDescription: string,
 }
