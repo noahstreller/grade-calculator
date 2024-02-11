@@ -11,13 +11,13 @@ export function DashboardButton() {
     return pathname === "/dashboard";
   }
 
-  const getDahsboardUrl = () => { 
+  const getDashboardUrl = () => { 
     if (pathname === "/dashboard") return "/";
     return "/dashboard";
   }
 
   return (
-    <Link href={getDahsboardUrl()} className={buttonVariants({ variant: "secondary", size: "icon" })}>
+    <Link href={getDashboardUrl()} className={buttonVariants({ variant: "secondary", size: "icon" })}>
 
       {
         isDashboard(pathname) ?
