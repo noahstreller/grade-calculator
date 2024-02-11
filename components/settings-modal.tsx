@@ -13,12 +13,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import appGlobals, { defaultAppGlobals, updateAppGlobals } from "@/lib/app.globals";
+import appGlobals, {
+  defaultAppGlobals,
+  updateAppGlobals,
+} from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { PreferencesTranslations } from "@/lib/translationObjects";
-import { Settings } from "lucide-react";
+import { AlertCircle, Settings } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import {
@@ -38,7 +42,7 @@ export function SettingsModalForm({
 }: {
   translations: PreferencesTranslations;
 }) {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
@@ -89,7 +93,7 @@ export function SettingsModalForm({
 
   function onReset(event: any) {
     event.preventDefault();
-    form.reset(defaultAppGlobals)
+    form.reset(defaultAppGlobals);
   }
 
   useEffect(() => {
@@ -286,7 +290,7 @@ export function SettingsModalForm({
         {passGtMax ? (
           <FormMessage>{t("errors.pass-gt-max")}</FormMessage>
         ) : null}
-        
+
         <FormField
           control={form.control}
           name="passingInverse"
@@ -347,6 +351,15 @@ export function SettingsModal({
         <SheetHeader>
           <SheetTitle>{translations.title}</SheetTitle>
           <SheetDescription>{translations.description}</SheetDescription>
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>
+              {translations.alertTitle}
+            </AlertTitle>
+            <AlertDescription>
+              {translations.alertDescription}
+            </AlertDescription>
+          </Alert>
         </SheetHeader>
         <SettingsModalForm translations={translations} />
       </SheetContent>

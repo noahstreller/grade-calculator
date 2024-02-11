@@ -36,6 +36,8 @@ export default function HeaderComponent() {
         maximumGradePlaceholder: t("preferences.maximum-grade-placeholder"),
         passingInverse: t("preferences.passing-inverse"),
         passingInverseDescription: t("preferences.passing-inverse-description"),
+        alertTitle: t("preferences.alert-title"),
+        alertDescription: t("preferences.alert-description"),
     }
 
     return (
