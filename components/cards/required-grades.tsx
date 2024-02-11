@@ -51,11 +51,15 @@ function RequiredGradesBody({
     result = passing * count - sum;
     while (result > max || result < min) {
       count++;
-      if (result > max) sum += max;
-      if (result < min) sum += min;
+      if (result > max){
+        sum += max;
+        overflowCounts++;
+      }
+      else {
+        sum += min;
+        overflowCounts--;
+      }
       result = passing * count - sum;
-      if (result > max) overflowCounts++;
-      if (result < min) overflowCounts--;
     }
     return { result, overflowCounts };
   };
@@ -63,16 +67,14 @@ function RequiredGradesBody({
   const getGradeOverflowString = (overflowCounts: number ) => {
     let result = "";
     if(overflowCounts < 0){
-      for (let i = 0; i >= overflowCounts; i--) {
-        if (appGlobals.passingInverse) result += ` + ${appGlobals.maximumGrade}`;
-        else result += ` + ${appGlobals.minimumGrade}`;
+      for (let i = 0; i > overflowCounts; i--) {
+        result += ` + ${appGlobals.minimumGrade}`;
       }
       return result;
     }
 
     for (let i = 0; i < overflowCounts; i++) {
-      if (appGlobals.passingInverse) result += ` + ${appGlobals.minimumGrade}`;
-      else result += ` + ${appGlobals.maximumGrade}`;
+      result += ` + ${appGlobals.maximumGrade}`;
     }
     return result;
   };
@@ -119,7 +121,7 @@ function RequiredGradesBody({
                       ? getGradeOverflowString(
                           getRequiredGradeToPass(average).overflowCounts
                         )
-                      : getRequiredGradeToPass(average).overflowCounts}
+                      : null}
                     <br />
                     {Grade.doesGradeFailOrEqual(
                       getRequiredGradeToPass(average).result
