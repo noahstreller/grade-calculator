@@ -2,8 +2,8 @@
 import { ClearDataTranslations } from "@/lib/translationObjects";
 import { Trash2 } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./alert-dialog";
-import { Button } from "./button";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
+import { Button } from "./ui/button";
 
 export function ClearDataButton({translations}: {translations: ClearDataTranslations}) {
     const { t, lang } = useTranslation('common');
@@ -21,7 +21,7 @@ export function ClearDataButton({translations}: {translations: ClearDataTranslat
             <Button size="icon" variant="outline" className="hover:text-red-400">
               <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
               <span className="sr-only">Delete all data</span>
-              </Button>
+            </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { DashboardButton } from "./dashboard-button";
 import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
-import { ClearDataButton } from "./ui/clear-data-button";
+import { ClearDataButton } from "./clear-data-button";
+import { ImportExportButton } from "./import-export-button";
 
 export default function HeaderComponent() {
     const { t, lang } = useTranslation('common');
@@ -49,6 +50,7 @@ export default function HeaderComponent() {
             <div className="flex gap-3">
                 <DashboardButton />
                 <ClearDataButton translations={clearDataTranslations} />
+                <ImportExportButton translations={clearDataTranslations} />
                 <SettingsModal translations={preferencesTranslations} />
                 <ThemeSwitcher />
             </div>
