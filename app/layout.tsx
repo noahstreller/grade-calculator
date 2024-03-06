@@ -1,3 +1,4 @@
+import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
 import HeaderComponent from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
@@ -33,6 +34,7 @@ export default function RootLayout({
           <main className='bg-background text-foreground h-screen flex justify-center mt-[5rem]'>
             {children}
           </main>
+          <CorruptedDataDialog />
           <Toaster theme='light' className='dark:hidden' />
           <Toaster theme='dark' className='hidden dark:flex' />
         </ThemeProvider>
