@@ -31,7 +31,6 @@ export function ImportExportButton({ translations }: { translations: ClearDataTr
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem onClick={()=>importFromText()}>Text (Clipboard)</DropdownMenuItem>
-                <DropdownMenuItem>JSON File</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -40,7 +39,6 @@ export function ImportExportButton({ translations }: { translations: ClearDataTr
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem onClick={()=>{exportToText()}}>Text (Clipboard)</DropdownMenuItem>
-                <DropdownMenuItem>JSON File</DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>

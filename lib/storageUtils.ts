@@ -1,3 +1,4 @@
+import { exportToast, importFailedToast } from "@/lib/toasts";
 import { AppGlobalsType, getAppGlobals } from "./app.globals";
 import Grade from "./entities/grade";
 
@@ -58,7 +59,7 @@ export const importFromText = async() => {
     let results: ExportableType = JSON.parse(data) as ExportableType;
     setData(results);
   } catch (e) {
-    console.error(e);
+    importFailedToast();
   }
 }
 
@@ -69,10 +70,12 @@ export const importFromJSON = () => {
 
 export const exportToText = () => {
   let data = getData();
+  exportToast("clipboard");
   navigator.clipboard.writeText(JSON.stringify(data));
   return JSON.stringify(data);
 }
 
 export const exportToJSON = () => {
   console.log("Exporting to JSON");
+  exportToast("json");
 }

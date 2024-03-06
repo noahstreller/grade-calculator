@@ -66,3 +66,17 @@ export function deleteSubjectToast(subject: string){
     },
   });
 }
+
+export function exportToast(method: "json" | "clipboard"){
+  toast(t("actions.export.success"), {
+    description: t(`actions.export.description-${method}`),
+    action: {
+      label: t("actions.ok"),
+      onClick: () => void 0,
+    },
+  });
+}
+
+export function importFailedToast(){
+  toast.error(t("errors.import-failed"));
+}
