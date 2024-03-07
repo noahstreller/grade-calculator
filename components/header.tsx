@@ -73,7 +73,7 @@ export default function HeaderComponent() {
             <span className="sr-only">Delete all data</span>
           </Button>
         </ClearDataButton>
-        <ImportExportButton translations={clearDataTranslations} />
+        <ImportExportButton />
         <SettingsModal translations={preferencesTranslations} />
         <ThemeSwitcher />
       </div>
