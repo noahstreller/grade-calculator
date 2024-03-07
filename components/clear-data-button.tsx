@@ -1,6 +1,5 @@
 "use client";
 import { ClearDataTranslations } from "@/lib/translationObjects";
-import { Trash2 } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,12 +11,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { Button } from "./ui/button";
 
 export function ClearDataButton({
   translations,
+  children
 }: {
   translations: ClearDataTranslations;
+  children: React.ReactNode;
 }) {
   function clearData() {
     localStorage.removeItem("grades");
@@ -29,10 +29,7 @@ export function ClearDataButton({
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button size="icon" variant="outline" className="hover:text-red-400">
-            <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
-            <span className="sr-only">Delete all data</span>
-          </Button>
+          {children}
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
