@@ -53,7 +53,7 @@ export const restoreBackup = () => {
 }
 
 export const importFromText = async() => {
-  backup(getData())
+  backup(getData());
   const data = await navigator.clipboard.readText();
   try {
     let results: ExportableType = JSON.parse(data) as ExportableType;
@@ -64,8 +64,28 @@ export const importFromText = async() => {
 }
 
 export const importFromJSON = () => {
-  backup(getData())
-  console.log("Importing from JSON");
+  backup(getData());
+  let element = document.createElement('input');
+  element.setAttribute('type', 'file');
+  element.setAttribute('accept', '.json');
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  element.addEventListener('change', async () => {
+    let file = element.files?.item(0);
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          let results: ExportableType = JSON.parse(e.target?.result as string) as ExportableType;
+          setData(results);
+        } catch (e) {
+          importFailedToast();
+        }
+      }
+      reader.readAsText(file);
+    }
+  });
 }
 
 export const exportToText = () => {
@@ -75,7 +95,13 @@ export const exportToText = () => {
   return JSON.stringify(data);
 }
 
-export const exportToJSON = () => {
-  console.log("Exporting to JSON");
+export const exportToJSONFile = () => {
+  let data = getData();
   exportToast("json");
+  let element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(data)));
+  element.setAttribute('download', 'grades.json');
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
 }

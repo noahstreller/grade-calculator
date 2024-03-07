@@ -46,6 +46,10 @@ export function getAppGlobals() {
 
 export function validatePreferences(globals: AppGlobalsType): boolean {
   try {
+    if(globals.passingGrade === undefined || globals.minimumGrade === undefined || globals.maximumGrade === undefined || globals.gradeDecimals === undefined || globals.newEntitySheetShouldStayOpen === undefined || globals.passingInverse === undefined) {
+      throw new InvalidPreferenceError();
+    }
+
     if (globals.minimumGrade > globals.maximumGrade) {
       throw new InvalidPreferenceError();
     }

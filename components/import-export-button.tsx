@@ -1,23 +1,37 @@
 "use client";
-import { ClearDataButton } from "@/components/clear-data-button";
 import { AppGlobalsType } from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
-import { exportToText, importFromText } from "@/lib/storageUtils";
+import {
+  exportToJSONFile,
+  exportToText,
+  importFromJSON,
+  importFromText,
+} from "@/lib/storageUtils";
 import { ClearDataTranslations } from "@/lib/translationObjects";
 import { Database } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { Button } from "./ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export type ExportableType = {
-  preferences: AppGlobalsType,
-  subjects: string[],
-  grades: Grade[]
-}
+  preferences: AppGlobalsType;
+  subjects: string[];
+  grades: Grade[];
+};
 
 export function ImportExportButton() {
-  const {t} = useTranslation("common");
-  
+  const { t } = useTranslation("common");
+
   const clearDataTranslations: ClearDataTranslations = {
     prompt: t("actions.clear-data.prompt"),
     message: t("actions.clear-data.message"),
@@ -40,7 +54,12 @@ export function ImportExportButton() {
             <DropdownMenuSubTrigger>Import data</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={()=>importFromText()}>Text (Clipboard)</DropdownMenuItem>
+                <DropdownMenuItem onClick={importFromText}>
+                  Text (Clipboard)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={importFromJSON}>
+                  JSON (File)
+                </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -48,16 +67,17 @@ export function ImportExportButton() {
             <DropdownMenuSubTrigger>Export data</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={()=>{exportToText()}}>Text (Clipboard)</DropdownMenuItem>
+                <DropdownMenuItem onClick={exportToText}>
+                  Text (Clipboard)
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={exportToJSONFile}>
+                  JSON (File)
+                </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <ClearDataButton translations={clearDataTranslations}>
-            <DropdownMenuItem>Clear</DropdownMenuItem>
-          </ClearDataButton>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }
-
