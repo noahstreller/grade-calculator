@@ -73,4 +73,8 @@ export default class Subjects {
         }, subjects);
         return passing;
     }
+
+    static doesSubjectExist (subject: string) {
+        return this.subjects.has(subject);
+    }
 }

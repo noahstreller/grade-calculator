@@ -1,3 +1,4 @@
+import Subjects from "@/lib/entities/subject";
 import appGlobals from "../app.globals";
 import { InvalidGradeError } from "../errors";
 import GradeDTO from "./dtos/gradeDTO";
@@ -31,6 +32,10 @@ export default class Grade {
 
   static validate(grade: Grade): boolean {
     try {
+      if(!Subjects.doesSubjectExist(grade.subject)) {
+        Subjects.add(grade.subject);
+      }
+
       if (
         grade.value < appGlobals.minimumGrade ||
         grade.value > appGlobals.maximumGrade
