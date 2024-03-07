@@ -1,6 +1,7 @@
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { getDateOrTime } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -37,6 +38,8 @@ export function GradeOverview({
     return grade.getValue();
   };
 
+  
+
   const CustomTooltip = ({
     active,
     payload,
@@ -48,30 +51,39 @@ export function GradeOverview({
   }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-transparent rounded-xl border-solid border-2 border-border p-3 backdrop-blur-[8px]">
-          {Grade.doesGradePass(payload[0].value) ? (
-            <p>
-              <b>Grade: </b>
-              <span className="text-green-400">{`${payload[0].value}`}</span>
-            </p>
-          ) : (
-            <p>
-              <b>Grade: </b>
-              <span className="text-red-400">{`${payload[0].value}`}</span>
-            </p>
-          )}
-          <p>
-            <b>Subject: </b>
-            {label
-              ? data[Number(label)].getSubject()
-              : data[Number(0)].getSubject()}
-          </p>
-          <p>
-            <b>Date: </b>
-            {label
-              ? data[Number(label)].getDate().toLocaleString()
-              : data[Number(0)].getDate().toLocaleString()}
-          </p>
+        <div className="rounded-lg border bg-background p-2 shadow-sm">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Grade
+              </span>
+              {Grade.doesGradePass(payload[0].value) ? (
+                <span className="text-green-400 font-bold">{`${payload[0].value}`}</span>
+              ) : (
+                <span className="text-red-400 font-bold">{`${payload[0].value}`}</span>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Subject
+              </span>
+              <span className="font-bold text-muted-foreground">
+                {label
+                  ? data[Number(label)].getSubject()
+                  : data[Number(0)].getSubject()}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Date
+              </span>
+              <span className="font-bold text-muted-foreground">
+                {label
+                  ? getDateOrTime(data[Number(label)].getDate())
+                  : getDateOrTime(data[Number(0)].getDate())}
+              </span>
+            </div>
+          </div>
         </div>
       );
     }

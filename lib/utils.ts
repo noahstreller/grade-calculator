@@ -57,3 +57,11 @@ export function getDateOrTime(date: Date) {
     return date.toLocaleDateString();
   }
 }
+
+export function getDateOrDateTime(date: Date) {
+  if (isToday(date)) {
+    return date.toLocaleTimeString();
+  } else {
+    return date.toLocaleString();
+  }
+}
