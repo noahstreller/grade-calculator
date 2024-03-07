@@ -1,9 +1,11 @@
 "use client";
+import { ClearDataButton } from "@/components/clear-data-button";
 import { AppGlobalsType } from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { exportToText, importFromText } from "@/lib/storageUtils";
 import { ClearDataTranslations } from "@/lib/translationObjects";
 import { Database } from "lucide-react";
+import useTranslation from "next-translate/useTranslation";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
@@ -13,7 +15,15 @@ export type ExportableType = {
   grades: Grade[]
 }
 
-export function ImportExportButton({ translations }: { translations: ClearDataTranslations }) {
+export function ImportExportButton() {
+  const {t} = useTranslation("common");
+  
+  const clearDataTranslations: ClearDataTranslations = {
+    prompt: t("actions.clear-data.prompt"),
+    message: t("actions.clear-data.message"),
+    cancel: t("actions.cancel"),
+    dangerContinue: t("actions.danger-continue"),
+  };
 
   return (
     <div>
@@ -42,7 +52,9 @@ export function ImportExportButton({ translations }: { translations: ClearDataTr
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem>Clear</DropdownMenuItem>
+          <ClearDataButton translations={clearDataTranslations}>
+            <DropdownMenuItem>Clear</DropdownMenuItem>
+          </ClearDataButton>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
