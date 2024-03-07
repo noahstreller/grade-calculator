@@ -1,7 +1,7 @@
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
-import { getDateOrTime } from "@/lib/utils";
+import { getDateOrTime, truncateText } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -68,9 +68,11 @@ export function GradeOverview({
                 Subject
               </span>
               <span className="font-bold text-muted-foreground">
-                {label
-                  ? data[Number(label)].getSubject()
-                  : data[Number(0)].getSubject()}
+                {
+                  label
+                  ? truncateText(data[Number(label)].getSubject(), 20).text
+                  : truncateText(data[Number(0)].getSubject(), 20).text
+                }
               </span>
             </div>
             <div className="flex flex-col">
