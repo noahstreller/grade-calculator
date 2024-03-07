@@ -1,21 +1,19 @@
 "use client"
 import Grade from "@/lib/entities/grade";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, CheckCheck, Copy, Trash } from "lucide-react";
+import { ArrowUpDown, Copy, Trash } from "lucide-react";
 import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { ReactNode } from "react";
-import appGlobals from "@/lib/app.globals";
-import { round, truncateText } from "@/lib/utils";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-  } from "@/components/ui/tooltip"
-import { addGradeToast, copySuccessToast, deleteGradeToast } from "@/lib/toasts";
+} from "@/components/ui/tooltip";
+import appGlobals from "@/lib/app.globals";
+import { copySuccessToast, deleteGradeToast } from "@/lib/toasts";
+import { getDateOrDateTime, round, truncateText } from "@/lib/utils";
 
 
 export function columns(refresh: Function): ColumnDef<Grade>[] {
@@ -119,7 +117,7 @@ export function columns(refresh: Function): ColumnDef<Grade>[] {
                 )
             },
             cell: ({ row }) => {
-                let date = new Date(row.getValue("date")).toLocaleString(lang);
+                let date = getDateOrDateTime(new Date(row.getValue("date")));
 
                 return (
                     <p className="ml-4">{date}</p>

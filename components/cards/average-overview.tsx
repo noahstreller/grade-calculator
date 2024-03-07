@@ -45,50 +45,8 @@ export function AverageOverview({
     return gradeAverage.subject;
   };
 
-  const CustomTooltip = ({
-    active,
-    payload,
-    label,
-  }: {
-    active?: any;
-    payload?: any;
-    label?: any;
-  }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-transparent rounded-xl border-solid border-2 border-border p-3 backdrop-blur-[8px]">
-          {Grade.doesGradePass(payload[0].value) ? (
-            <p>
-              <b>Grade: </b>
-              <span className="text-green-400">{`${payload[0].value}`}</span>
-            </p>
-          ) : (
-            <p>
-              <b>Grade: </b>
-              <span className="text-red-400">{`${payload[0].value}`}</span>
-            </p>
-          )}
-          <p>
-            <b>Subject: </b>
-            {label
-              ? data[Number(label)].getSubject()
-              : data[Number(0)].getSubject()}
-          </p>
-          <p>
-            <b>Date: </b>
-            {label
-              ? data[Number(label)].getDate().toLocaleString()
-              : data[Number(0)].getDate().toLocaleString()}
-          </p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
-    <Card className="">
+    <Card>
       <CardHeader>
         <CardTitle>{t("subject-overview.title")}</CardTitle>
         <CardDescription>{t("subject-overview.description")}</CardDescription>
