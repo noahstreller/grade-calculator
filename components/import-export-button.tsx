@@ -30,15 +30,6 @@ export type ExportableType = {
 };
 
 export function ImportExportButton() {
-  const { t } = useTranslation("common");
-
-  const clearDataTranslations: ClearDataTranslations = {
-    prompt: t("actions.clear-data.prompt"),
-    message: t("actions.clear-data.message"),
-    cancel: t("actions.cancel"),
-    dangerContinue: t("actions.danger-continue"),
-  };
-
   return (
     <div>
       <DropdownMenu>
