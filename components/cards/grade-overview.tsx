@@ -57,11 +57,11 @@ export function GradeOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Grade
               </span>
-              {Grade.doesGradePass(payload[0].value) ? (
-                <span className="text-green-400 font-bold">{`${payload[0].value}`}</span>
-              ) : (
+              {
+                Grade.doesGradePass(payload[0].value) ? 
+                <span className="text-green-400 font-bold">{`${payload[0].value}`}</span> : 
                 <span className="text-red-400 font-bold">{`${payload[0].value}`}</span>
-              )}
+              }
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
