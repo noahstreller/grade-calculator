@@ -1,7 +1,7 @@
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -11,6 +11,7 @@ import {
   Radar,
   RadarChart,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
@@ -45,6 +46,53 @@ export function AverageOverview({
     return gradeAverage.subject;
   };
 
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: {
+    active?: any;
+    payload?: any;
+    label?: any;
+  }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="rounded-lg border bg-background p-2 shadow-sm">
+          <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Grade
+              </span>
+              {Grade.doesGradePass(payload[0].value) ? (
+                <span className="text-green-400 font-bold">{`${payload[0].value}`}</span>
+              ) : (
+                <span className="text-red-400 font-bold">{`${payload[0].value}`}</span>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Subject
+              </span>
+              <span className="font-bold text-muted-foreground">
+                {truncateText(payload[0].payload.subject, 20).text}
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[0.70rem] uppercase text-muted-foreground">
+                Grade Count
+              </span>
+              <span className="font-bold text-muted-foreground">
+                {payload[0].payload.grades.length}
+              </span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -68,6 +116,7 @@ export function AverageOverview({
                 className="fill-foreground stroke-foreground stroke-2"
                 fillOpacity={0.6}
               />
+              <Tooltip content={<CustomTooltip />} />
             </RadarChart>
           </ResponsiveContainer>
         </CardContent>
