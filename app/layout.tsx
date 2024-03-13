@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import '../styles/globals.css';
@@ -12,9 +12,26 @@ import '../styles/globals.css';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Grade Calculator',
-  description: 'This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects.',
-}
+  applicationName: "Grades",
+  title: {
+    default: "Grade Calculator",
+    template: "%s - Grades",
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Grade Calculator",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  description:
+    "This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
+};
 
 export default function RootLayout({
   children,
@@ -23,6 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <head />
       <body className={cn(inter.className)}>
         <ThemeProvider
           attribute="class"
