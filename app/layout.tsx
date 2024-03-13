@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Grade Calculator",
   },
   formatDetection: {
@@ -28,9 +28,8 @@ export const metadata: Metadata = {
   description:
     "This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects.",
 };
-
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#030712",
 };
 
 export default function RootLayout({
