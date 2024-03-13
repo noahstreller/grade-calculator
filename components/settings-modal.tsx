@@ -67,7 +67,7 @@ export function SettingsModalForm({
   };
 
   const FormSchema = z.object({
-    gradeDecimals: z.number({}),
+    gradeDecimals: z.number().gte(0),
     newEntitySheetShouldStayOpen: z.boolean({}),
     passingInverse: z.boolean({}),
     passingGrade: z.number({}),
