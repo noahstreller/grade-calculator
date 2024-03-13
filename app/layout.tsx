@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'sonner';
 import '../styles/globals.css';
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
   description:
     "This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects.",
 };
-export const viewport: Viewport = {
-  themeColor: "#030712",
-};
+// export const viewport: Viewport = {
+//   themeColor: "#030712",
+// };
 
 export default function RootLayout({
   children,
