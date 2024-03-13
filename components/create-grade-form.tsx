@@ -1,10 +1,11 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Command,
   CommandGroup,
@@ -24,10 +25,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { TimePicker } from "@/components/ui/time-picker";
 import appGlobals from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { addGradeToast } from "@/lib/toasts";
 import { cn, truncateText } from "@/lib/utils";
+import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
 import {
   useEffect,
@@ -52,6 +55,7 @@ export function CreateGradeForm({
 
   const [subjects, setSubjects] = useState(initial);
   const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>();
 
   useEffect(() => {
     subjectSet.forEach((subj) => {
@@ -76,6 +80,7 @@ export function CreateGradeForm({
       })
       .gte(0)
       .optional(),
+    date: z.date().optional(),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -86,7 +91,7 @@ export function CreateGradeForm({
     const gradeAsNumber = Number(data.grade);
     const weightAsNumber = Number(data.weight) || 1;
 
-    let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber);
+    let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
     addGradeToast(grade);
     refresh();
     if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
@@ -133,7 +138,9 @@ export function CreateGradeForm({
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {subjects.length === 0 ? (
-                          <CommandItem disabled>{t("subjects.notfound")}</CommandItem>
+                          <CommandItem disabled>
+                            {t("subjects.notfound")}
+                          </CommandItem>
                         ) : (
                           subjects.map((subject) => (
                             <CommandItem
@@ -206,6 +213,60 @@ export function CreateGradeForm({
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("grades.date")}</FormLabel>
+              <br />
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "max-w-full justify-start text-left font-normal",
+                        !date && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+                      {date ? (
+                        format(date, "PPP HH:mm:ss")
+                      ) : (
+                        <span>Pick a date (optional)</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      {...field}
+                      mode="single"
+                      selected={date}
+                      onSelect={(value) => {
+                        setDate(value);
+                        field.onChange(value);
+                      }}
+                      initialFocus
+                    />
+                    <div className="p-3 border-t border-border">
+                      <TimePicker
+                        {...field}
+                        setDate={(value) => {
+                          setDate(value);
+                          field.onChange(value);
+                        }}
+                        date={date}
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </FormControl>
               <FormMessage />
             </FormItem>
