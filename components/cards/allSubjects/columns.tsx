@@ -40,7 +40,7 @@ export function columns(setSubjectToDelete: any): ColumnDef<GradeAverage>[] {
                     return (
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipTrigger className="ml-4 text-left">{truncatedSubject}</TooltipTrigger>
                                 <TooltipContent>
                                     <p>{subject}</p>
                                 </TooltipContent>

@@ -42,7 +42,7 @@ export function columns(refresh: Function): ColumnDef<Grade>[] {
                     return (
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipTrigger className="text-left ml-4">{truncatedSubject}</TooltipTrigger>
                                 <TooltipContent>
                                 <p>{subject}</p>
                                 </TooltipContent>

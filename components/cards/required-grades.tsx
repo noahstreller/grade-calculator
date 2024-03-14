@@ -1,9 +1,9 @@
 "use client";
-import appGlobals from "@/lib/app.globals";
+import appGlobals, { getAppGlobals } from "@/lib/app.globals";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
-import { round } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -67,17 +67,24 @@ function RequiredGradesBody({
   const getGradeOverflowString = (overflowCounts: number ) => {
     let result = "";
     if(overflowCounts < 0){
+      if(overflowCounts < -10) return ` + ${-overflowCounts} × ${getAppGlobals().minimumGrade}`;
       for (let i = 0; i > overflowCounts; i--) {
         result += ` + ${appGlobals.minimumGrade}`;
       }
       return result;
     }
 
+    if(overflowCounts > 10) return ` + ${overflowCounts} × ${getAppGlobals().maximumGrade}`;
     for (let i = 0; i < overflowCounts; i++) {
       result += ` + ${appGlobals.maximumGrade}`;
     }
     return result;
   };
+
+  const truncateForPage = (subject:string | null ): string => {
+    if(subject === null) return "";
+    return truncateText(subject, 20).text;
+  }
 
   const [chunkPairs, setChunkPairs] = useState<Array<any>>([]);
 
@@ -102,9 +109,13 @@ function RequiredGradesBody({
                   <h2>
                     {average.subject &&
                     Subjects.doesSubjectPass(average.subject) ? (
-                      <span className="text-green-400">{average.subject}</span>
+                      <span className="text-green-400">
+                        {truncateForPage(average.subject)}
+                      </span>
                     ) : (
-                      <span className="text-red-400">{average.subject}</span>
+                      <span className="text-red-400">
+                        {truncateForPage(average.subject)}
+                      </span>
                     )}{" "}
                     <Badge variant="secondary">
                       {average.grades.length}{" "}
@@ -114,6 +125,9 @@ function RequiredGradesBody({
                 </CardHeader>
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
+                    <span className="text-muted-foreground text-4xl">
+                      {getAppGlobals().passingInverse ? "<" : ">"}
+                    </span>
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
                     </b>
