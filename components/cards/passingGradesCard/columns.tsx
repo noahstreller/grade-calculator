@@ -4,10 +4,10 @@ import { ArrowUpDown } from "lucide-react";
 import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
-import appGlobals from "@/lib/app.globals";
-import { round, truncateText } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import appGlobals from "@/lib/app.globals";
+import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { round, truncateText } from "@/lib/utils";
 
 
 export function columns(): ColumnDef<GradeAverage>[] {
@@ -36,7 +36,7 @@ export function columns(): ColumnDef<GradeAverage>[] {
                     return (
                         <TooltipProvider>
                             <Tooltip>
-                                <TooltipTrigger className="ml-4">{truncatedSubject}</TooltipTrigger>
+                                <TooltipTrigger className="ml-4 text-left">{truncatedSubject}</TooltipTrigger>
                                 <TooltipContent>
                                     <p>{subject}</p>
                                 </TooltipContent>

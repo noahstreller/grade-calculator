@@ -18,7 +18,7 @@ export const defaultAppGlobals: AppGlobalsType = {
   passingInverse: false,
 };
 
-let appGlobals = loadAppGlobals() || defaultAppGlobals;
+let appGlobals: AppGlobalsType = loadAppGlobals() || defaultAppGlobals;
 
 export function updateAppGlobals(newGlobals: AppGlobalsType) {
   if (typeof window !== "undefined") {
@@ -40,7 +40,7 @@ export function loadAppGlobals() {
   return false;
 }
 
-export function getAppGlobals() {
+export function getAppGlobals(): AppGlobalsType {
   return appGlobals;
 }
 
