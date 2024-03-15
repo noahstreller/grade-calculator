@@ -22,9 +22,13 @@ export default class Subjects {
     }
 
     static load(): Set<string> {
-        let subjects: string[] = JSON.parse(localStorage.getItem('subjects') || '[]');
-        this.subjects = new Set<string>(subjects);
-        return this.subjects;
+        let data = localStorage.getItem("subjects");
+        if (data == "{}" || data == "undefined" || data == "null" || !data) return this.subjects;
+        else {
+            let subjects: string[] = JSON.parse(data);
+            this.subjects = new Set<string>(subjects);
+            return this.subjects;
+        }
     }
 
     static clear(): Set<string> {
