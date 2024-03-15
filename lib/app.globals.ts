@@ -32,8 +32,14 @@ export function updateAppGlobals(newGlobals: AppGlobalsType) {
 export function loadAppGlobals() {
   if (typeof window !== "undefined") {
     let preferences = localStorage.getItem("preferences");
-    if (preferences) {
-      if(validatePreferences(JSON.parse(preferences))) return JSON.parse(preferences);
+    if (
+      preferences &&
+      preferences !== "{}" &&
+      preferences !== "null" &&
+      preferences !== "undefined"
+    ) {
+      if (validatePreferences(JSON.parse(preferences)))
+        return JSON.parse(preferences);
       return false;
     }
   }
@@ -46,21 +52,30 @@ export function getAppGlobals(): AppGlobalsType {
 
 export function validatePreferences(globals: AppGlobalsType): boolean {
   try {
-    if(globals.passingGrade === undefined || globals.minimumGrade === undefined || globals.maximumGrade === undefined || globals.gradeDecimals === undefined || globals.newEntitySheetShouldStayOpen === undefined || globals.passingInverse === undefined) {
+    if (
+      globals.passingGrade === undefined ||
+      globals.minimumGrade === undefined ||
+      globals.maximumGrade === undefined ||
+      globals.gradeDecimals === undefined ||
+      globals.newEntitySheetShouldStayOpen === undefined ||
+      globals.passingInverse === undefined
+    ) {
       throw new InvalidPreferenceError();
     }
 
     if (globals.minimumGrade > globals.maximumGrade) {
       throw new InvalidPreferenceError();
     }
-    if (globals.passingGrade < globals.minimumGrade || globals.passingGrade > globals.maximumGrade) {
+    if (
+      globals.passingGrade < globals.minimumGrade ||
+      globals.passingGrade > globals.maximumGrade
+    ) {
       throw new InvalidPreferenceError();
     }
     if (globals.passingGrade < 1 || globals.passingGrade > 6) {
       throw new InvalidPreferenceError();
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.error(e);
     return false;
   }
