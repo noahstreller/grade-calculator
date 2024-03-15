@@ -72,7 +72,9 @@ export default class Grade {
   }
 
   static load(): Grade[] {
-    let grades: GradeDTO[] = JSON.parse(localStorage.getItem("grades") || "[]");
+    let data = localStorage.getItem("grades");
+    if (data == "{}" || data == "undefined" || data == "null" || !data) return this.grades;
+    let grades: GradeDTO[] = JSON.parse(data);
     this.grades = grades.map((grade) => {
       if (Grade.grades.find((g) => g.id === grade.id)) {
         return Grade.grades.find((g) => g.id === grade.id) as Grade;
