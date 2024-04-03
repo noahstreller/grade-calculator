@@ -9,6 +9,7 @@ import { CardBoard } from "@/components/ui/cardboard";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
+import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { useEffect, useState } from "react";
 
@@ -53,7 +54,7 @@ export default function Dashboard() {
     setLoaded(true);
 
     const a =async () => {
-      console.log(await quickCreateSubject("hallo"))
+      console.log(catchProblem(await quickCreateSubject("hallo")))
     }
     a()
   }, []);

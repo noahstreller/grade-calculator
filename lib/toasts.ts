@@ -1,4 +1,5 @@
 
+import { Problem } from "@/lib/problem";
 import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
 import Grade from "./entities/grade";
@@ -79,4 +80,14 @@ export function exportToast(method: "json" | "clipboard"){
 
 export function importFailedToast(){
   toast.error(t("errors.import-failed"));
+}
+
+export function toastProblem(problem: Problem) {
+  toast(problem.finalMessage, {
+    description: problem.errorMessage,
+    action: {
+      label: t("actions.ok"),
+      onClick: () => void 0,
+    },
+  });
 }

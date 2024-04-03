@@ -8,24 +8,48 @@ import {
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
-export async function getAllSubjects(): Promise<Subject[]> {
-  const userId = await getUserId();
-  return await getAllSubjectsFromDb(userId);
+export async function getAllSubjects(): Promise<Subject[] | Problem> {
+  try {
+    const userId = await getUserId();
+    return await getAllSubjectsFromDb(userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
 }
 
-export async function getSubjectById(subjectId: number): Promise<Subject> {
-  const userId = await getUserId();
-  return await getSubjectByIdFromDb(subjectId, userId);
+export async function getSubjectById(subjectId: number): Promise<Subject | Problem> {
+  try {
+    const userId = await getUserId();
+    return await getSubjectByIdFromDb(subjectId, userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
 }
 
-export async function addSubject(newSubject: NewSubject): Promise<number> {
-  newSubject = await setUserId(newSubject);
-  return await addSubjectToDb(newSubject);
+export async function addSubject(newSubject: NewSubject): Promise<number | Problem> {
+  try{
+    newSubject = await setUserId(newSubject);
+    return await addSubjectToDb(newSubject);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
 }
 
 export async function quickCreateSubject(name: string): Promise<number | Problem> {
-  const userId = await getUserId();
   try {
+    const userId = await getUserId();
     const newSubject: NewSubject = {
       name,
       weight: 1,
@@ -34,7 +58,7 @@ export async function quickCreateSubject(name: string): Promise<number | Problem
     return await addSubject(newSubject);
   } catch (e: any) {
     return getProblem({
-      message: e.message,
+      errorMessage: e.message,
       errorCode: e.code,
       detail: e.detail,
     }) satisfies Problem;

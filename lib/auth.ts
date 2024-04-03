@@ -39,5 +39,7 @@ export function auth(
     | [NextApiRequest, NextApiResponse]
     | []
 ) {
-  return getServerSession(...args, config);
+  const session = getServerSession(...args, config);
+  if (session) return session;
+  else throw new Error("401")
 }
