@@ -26,7 +26,7 @@ export async function addGrade(newGrade: NewGrade): Promise<number | Problem> {
       errorMessage: e.message,
       errorCode: e.code,
       detail: e.detail,
-      e
+      e: JSON.stringify(e)
     }) satisfies Problem;
   }
 }

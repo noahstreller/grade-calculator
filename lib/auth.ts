@@ -40,6 +40,5 @@ export function auth(
     | []
 ) {
   const session = getServerSession(...args, config);
-  if (session) return session;
-  else throw new Error("401")
+  return session;
 }

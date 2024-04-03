@@ -5,6 +5,7 @@ import {
   addSubjectToDb,
   getAllSubjectsFromDb,
   getSubjectByIdFromDb,
+  getSubjectByNameFromDb,
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
@@ -33,6 +34,22 @@ export async function getSubjectById(subjectId: number): Promise<Subject | Probl
     }) satisfies Problem;
   }
 }
+
+export async function getSubjectByName(
+  subjectName: string
+): Promise<Subject | Problem> {
+  try {
+    const userId = await getUserId();
+    return await getSubjectByNameFromDb(subjectName, userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
 
 export async function addSubject(newSubject: NewSubject): Promise<number | Problem> {
   try{

@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import appGlobals from "@/lib/app.globals";
 import Subjects from "@/lib/entities/subject";
+import { catchProblem } from "@/lib/problem";
+import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
 import { Asterisk } from "./ui/asterisk";
@@ -44,8 +46,11 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     let subject = Subjects.add(data.subject);
+
+    catchProblem(await quickCreateSubject(subject));
+
     form.reset(defaultValues);
     form.setFocus("subject");
     addSubjectToast(subject);

@@ -24,6 +24,15 @@ export async function getSubjectByIdFromDb(
   return result[0] satisfies Subject;
 }
 
+export async function getSubjectByNameFromDb(subjectName: string, userId: string) {
+  const result = await db
+    .select()
+    .from(subjects)
+    .where(and(eq(subjects.name, subjectName), eq(subjects.userId, userId)))
+    .execute();
+  return result[0] satisfies Subject;
+}
+
 export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
   const result = await db
     .insert(subjects)

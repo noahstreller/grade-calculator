@@ -13,7 +13,7 @@ export async function getAllGradesFromDb(userId: string): Promise<Grade[]> {
   return result;
 }
 
-export async function addGradeToDb(newGrade: NewGrade) {
+export async function addGradeToDb(newGrade: NewGrade): Promise<number> {
   const result = await db
     .insert(grades)
     .values(newGrade)

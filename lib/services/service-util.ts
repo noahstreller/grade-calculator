@@ -9,6 +9,7 @@ export const getUser = async () => {
 export const getUserId = async (): Promise<string> => {
   const uid = (await getUser())?.uid
   if (uid) return uid;
+  
   const error: any = new Error("Not authorized");
   error.code = "GC401";
   throw error;

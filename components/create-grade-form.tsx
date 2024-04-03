@@ -26,9 +26,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TimePicker } from "@/components/ui/time-picker";
+import { NewGrade, Subject } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
-import { addGradeToast } from "@/lib/toasts";
+import { catchProblem } from "@/lib/problem";
+import { addGrade } from "@/lib/services/grade-service";
+import { getAllSubjects } from "@/lib/services/subject-service";
 import { cn, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
@@ -51,20 +53,27 @@ export function CreateGradeForm({
 }) {
   const { t, lang } = useTranslation("common");
 
-  const initial: string[] = [];
-
-  const [subjects, setSubjects] = useState(initial);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
 
+  // useEffect(() => {
+  //   subjectSet.forEach((subj) => {
+  //     setSubjects((subjects) => [...subjects, subj]);
+  //   });
+  // }, [subjectSet]);
+
   useEffect(() => {
-    subjectSet.forEach((subj) => {
-      setSubjects((subjects) => [...subjects, subj]);
-    });
-  }, [subjectSet]);
+    const fetchData = async() => {
+      const data = catchProblem(await getAllSubjects());
+      console.table(data)
+      setSubjects([...data])
+    }
+    fetchData();
+  }, []);
 
   const FormSchema = z.object({
-    subject: z.string({
+    subject: z.number({
       required_error: t("errors.required"),
     }),
     grade: z
@@ -87,12 +96,22 @@ export function CreateGradeForm({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     const gradeAsNumber = Number(data.grade);
     const weightAsNumber = Number(data.weight) || 1;
 
-    let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
-    addGradeToast(grade);
+    const gradeIguess: NewGrade = {
+      date: data.date,
+      weight: data.weight,
+      value: data.grade,
+      subject_fk: data.subject
+    };
+
+    catchProblem(await addGrade(gradeIguess));
+
+
+    // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
+    // addGradeToast(grade);
     refresh();
     if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
@@ -123,8 +142,8 @@ export function CreateGradeForm({
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject === field.value
-                            ) ?? "",
+                              (subject) => subject.id === field.value
+                            )?.name ?? "",
                             20
                           ).text
                         : "Select subject"}
@@ -144,22 +163,22 @@ export function CreateGradeForm({
                         ) : (
                           subjects.map((subject) => (
                             <CommandItem
-                              value={subject}
-                              key={subject}
+                              value={subject.name!}
+                              key={subject.id}
                               onSelect={() => {
-                                form.setValue("subject", subject);
+                                form.setValue("subject", subject.id!);
                                 setOpen(false);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  subject === field.value
+                                  subject.id === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {subject}
+                              {subject.name}
                             </CommandItem>
                           ))
                         )}
