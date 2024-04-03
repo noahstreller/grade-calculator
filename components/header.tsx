@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import LoginButton from "@/components/login-button";
 import { Button } from "@/components/ui/button";
 import {
-    ClearDataTranslations,
-    PreferencesTranslations,
+  ClearDataTranslations,
+  PreferencesTranslations,
 } from "@/lib/translationObjects";
 import { Trash2 } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -76,6 +77,7 @@ export default function HeaderComponent() {
         <ImportExportButton />
         <SettingsModal translations={preferencesTranslations} />
         <ThemeSwitcher />
+        <LoginButton />
       </div>
     </header>
   );

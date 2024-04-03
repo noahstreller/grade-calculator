@@ -1,6 +1,6 @@
+import Providers from '@/app/providers';
 import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
 import HeaderComponent from '@/components/header';
-import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -89,25 +89,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html>
+    <html lang='en'>
       <body className={cn(inter.className)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <HeaderComponent />
-          <main className='bg-background text-foreground h-screen flex justify-center mt-[5rem]'>
+          <main className="bg-background text-foreground h-screen flex justify-center mt-[5rem]">
             {children}
           </main>
           <CorruptedDataDialog />
-          <Toaster theme='light' className='dark:hidden' />
-          <Toaster theme='dark' className='hidden dark:flex' />
-        </ThemeProvider>
+          <Toaster theme="light" className="dark:hidden dark:size-0" />
+          <Toaster theme="dark" className="hidden dark:flex" />
+        </Providers>
         <SpeedInsights />
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

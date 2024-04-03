@@ -1,4 +1,6 @@
+import { NewGrade, NewSubject } from "@/db/schema";
 import Subjects from "@/lib/entities/subject";
+import { getAllGrades } from "@/lib/services/grade-service";
 import appGlobals from "../app.globals";
 import { InvalidGradeError } from "../errors";
 import GradeDTO from "./dtos/gradeDTO";
@@ -25,6 +27,22 @@ export default class Grade {
     this.weight = weight;
     this.date = date;
     if (Grade.validate(this)) {
+      getAllGrades();
+
+      const newSubject: NewSubject = {
+        name: subject,
+      } satisfies NewSubject;
+
+      const newGrade: NewGrade = {
+        date,
+        value,
+        subject_fk: 1,
+        weight
+      } satisfies NewGrade;
+
+      //addSubject(newSubject);
+      // addGrade(newGrade);
+
       Grade.grades.push(this);
       localStorage.setItem("grades", JSON.stringify(Grade.grades));
     }

@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1712055772087,
+      "tag": "0000_cheerful_juggernaut",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1712062363142,
+      "tag": "0001_powerful_the_initiative",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1712135081417,
+      "tag": "0002_cloudy_angel",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1712135256556,
+      "tag": "0003_nifty_captain_cross",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1712135545724,
+      "tag": "0004_white_war_machine",
+      "breakpoints": true
+    }
+  ]
+}
