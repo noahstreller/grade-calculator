@@ -1,23 +1,40 @@
 import type { AdapterAccount } from "@auth/core/adapters";
-import { boolean, doublePrecision, integer, pgTable, primaryKey, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  doublePrecision,
+  integer,
+  pgTable,
+  primaryKey,
+  serial,
+  text,
+  timestamp,
+  unique,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const grades = pgTable("grades", {
   id: serial("id").primaryKey(),
   value: integer("value"),
   subject_fk: integer("subject_fk").references(() => subjects.id),
   weight: doublePrecision("weight").default(1),
-  date: timestamp("date", { mode: "date", withTimezone: true }).default(new Date()),
-  userId: text("userId")
-    .references(() => users.id, { onDelete: "cascade" }),
+  date: timestamp("date", { mode: "date", withTimezone: true }).default(
+    new Date()
+  ),
+  userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
 });
 
-export const subjects = pgTable("subjects", {
-  id: serial("id").primaryKey(),
-  name: varchar("name").unique(),
-  weight: doublePrecision("weight").default(1),
-  userId: text("userId")
-    .references(() => users.id, { onDelete: "cascade" }),
-});
+export const subjects = pgTable(
+  "subjects",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name"),
+    weight: doublePrecision("weight").default(1),
+    userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
+  },
+  (t) => ({
+    unq: unique().on(t.userId, t.name),
+  })
+);
 
 export const preferences = pgTable("preferences", {
   id: serial("id").primaryKey(),
@@ -29,15 +46,17 @@ export const preferences = pgTable("preferences", {
     false
   ),
   passingInverse: boolean("passingInverse").default(false),
-  userId: text("userId")
-    .references(() => users.id, { onDelete: "cascade" }),
+  userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
   email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date", withTimezone: true }),
+  emailVerified: timestamp("emailVerified", {
+    mode: "date",
+    withTimezone: true,
+  }),
   image: text("image"),
 });
 

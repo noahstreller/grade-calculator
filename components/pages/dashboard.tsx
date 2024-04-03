@@ -9,6 +9,7 @@ import { CardBoard } from "@/components/ui/cardboard";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
+import { quickCreateSubject } from "@/lib/services/subject-service";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
@@ -50,6 +51,11 @@ export default function Dashboard() {
     Grade.load();
     refreshAll();
     setLoaded(true);
+
+    const a =async () => {
+      console.log(await quickCreateSubject("hallo"))
+    }
+    a()
   }, []);
 
   return loaded ? (
