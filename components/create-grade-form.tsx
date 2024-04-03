@@ -10,7 +10,7 @@ import {
   Command,
   CommandGroup,
   CommandInput,
-  CommandItem
+  CommandItem,
 } from "@/components/ui/command";
 import {
   Form,
@@ -18,13 +18,14 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { TimePicker } from "@/components/ui/time-picker";
 import { NewGrade, Subject } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
@@ -34,10 +35,7 @@ import { getAllSubjects } from "@/lib/services/subject-service";
 import { cn, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
-import {
-  useEffect,
-  useState
-} from "react";
+import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
@@ -45,7 +43,7 @@ import { ScrollArea } from "./ui/scroll-area";
 export function CreateGradeForm({
   subjectSet,
   refresh,
-  setDrawerOpen
+  setDrawerOpen,
 }: {
   subjectSet: Set<string>;
   refresh: Function;
@@ -56,6 +54,7 @@ export function CreateGradeForm({
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
+  const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
   //   subjectSet.forEach((subj) => {
@@ -64,11 +63,15 @@ export function CreateGradeForm({
   // }, [subjectSet]);
 
   useEffect(() => {
-    const fetchData = async() => {
-      const data = catchProblem(await getAllSubjects());
-      console.table(data)
-      setSubjects([...data])
-    }
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = catchProblem(await getAllSubjects());
+        setSubjects([...data]);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 
@@ -104,11 +107,10 @@ export function CreateGradeForm({
       date: data.date,
       weight: data.weight,
       value: data.grade,
-      subject_fk: data.subject
+      subject_fk: data.subject,
     };
 
     catchProblem(await addGrade(gradeIguess));
-
 
     // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
     // addGradeToast(grade);
@@ -129,16 +131,23 @@ export function CreateGradeForm({
                 <Asterisk className="ml-1" />
               </FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger disabled asChild>
                   <FormControl>
                     <Button
                       variant="outline"
                       role="combobox"
+                      disabled={loading}
                       className={cn(
                         "w-[200px] justify-between",
                         !field.value && "text-muted-foreground"
                       )}
                     >
+                      {loading && (
+                        <div className="flex flex-row gap-2 items-center">
+                          <LoadingSpinner />
+                          Loading...
+                        </div>
+                      )}
                       {field.value
                         ? truncateText(
                             subjects.find(
@@ -146,7 +155,7 @@ export function CreateGradeForm({
                             )?.name ?? "",
                             20
                           ).text
-                        : "Select subject"}
+                        : loading ? null : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
