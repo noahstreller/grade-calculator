@@ -82,6 +82,7 @@ export function columns(refresh: Function): ColumnDef<Grade>[] {
       }
     },
     {
+      id: "date",
       accessorKey: "date",
       header: ({ column }) => {
         return (
