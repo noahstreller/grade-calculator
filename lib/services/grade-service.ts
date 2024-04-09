@@ -49,9 +49,7 @@ export async function getGradeAverageBySubject(
         subjectId: grades[0].subject_fk!,
         gradeAverage: sum / grades.length,
         gradeAmount: grades.length,
-        passing: () => {
-          return true;
-        },
+        passing: true
       } satisfies Average;
     };
     return average();
@@ -67,13 +65,18 @@ export async function getGradeAverageBySubject(
 export async function getAllGradeAverages(): Promise<Average[] | Problem> {
   try {
     const subjects: Subject[] = catchProblem(await getAllSubjects());
-    const average = () => {
-      let averages: Average[] = [];
-      subjects.map(async (subject) => {
-        averages = [...averages, ...catchProblem(await getGradeAverageBySubject(subject))];
+    const average = async () => {
+      let promises = subjects.map((subject) =>
+        getGradeAverageBySubject(subject)
+      );
+      let resolved: (Average | Problem)[] = await Promise.all(promises);
+      let averages: Average[] = resolved.map((res) => {
+        return catchProblem(res);
       });
+      console.warn(averages);
       return averages;
-    }
+    };
+
     return average();
   } catch (e: any) {
     return getProblem({

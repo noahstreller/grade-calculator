@@ -3,9 +3,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 
+import { SubjectNameRow } from "@/components/cards/allSubjects/subject-name-row";
 import { Button } from "@/components/ui/button";
 import appGlobals from "@/lib/app.globals";
-import Subjects from "@/lib/entities/subject";
 import { round } from "@/lib/utils";
 import { Average } from "@/types/types";
 
@@ -26,6 +26,10 @@ export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
           </Button>
         );
       },
+      cell: ({ row }) => {
+        const original = row.original;
+        return <SubjectNameRow row={original} />;
+      }
       // cell: ({ row }) => {
       //   let subject: Subject = catchProblem(await getSubjectById(row.original.subjectId));
       //   let truncated: boolean = truncateText(subject.name!, 20).truncated;
@@ -66,12 +70,14 @@ export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
         let value: number = row.getValue("gradeAverage");
         value = round(value, appGlobals.gradeDecimals);
 
-        if (Subjects.doesSubjectPass(subject)) {
-          return <p className="text-green-400 ml-4">{value}</p>;
-        }
-        if (Subjects.doesSubjectFail(subject)) {
-          return <p className="text-red-400 ml-4">{value}</p>;
-        }
+        // if (Subjects.doesSubjectPass(subject)) {
+        //   return <p className="text-green-400 ml-4">{value}</p>;
+        // }
+        // if (Subjects.doesSubjectFail(subject)) {
+        //   return <p className="text-red-400 ml-4">{value}</p>;
+        // }
+        return <p className="text-red-400 ml-4">{value}</p>;
+
         return <p className="text-gray-600 ml-4">{t("grades.notfound")}</p>;
       },
     },

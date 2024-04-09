@@ -23,7 +23,7 @@ export default function GradeAverageCalculator() {
 
   const refreshAverages = async () => {
     let averages = catchProblem(await getAllGradeAverages())
-    // setAverageData([...averages]);
+    setAverageData([...averages]);
   }
 
   // function refreshFailing() {

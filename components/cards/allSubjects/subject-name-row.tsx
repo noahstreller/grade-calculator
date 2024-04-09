@@ -1,13 +1,14 @@
 "use client"
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Grade, Subject } from "@/db/schema";
+import { Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { getSubjectById } from "@/lib/services/subject-service";
 import { truncateText } from "@/lib/utils";
+import { Average } from "@/types/types";
 import { useEffect, useState } from "react";
 
-export function SubjectNameRow({row}: {row: Grade}) {
+export function SubjectNameRow({row}: {row: Average}) {
 
   const [subject, setSubject] = useState<Subject>()
   const [truncated, setTruncated] = useState<{truncated: boolean, text: string}>()
@@ -17,7 +18,7 @@ export function SubjectNameRow({row}: {row: Grade}) {
     const getSubject = async () => {
       try {
         setLoading(true)
-        const subj = catchProblem(await getSubjectById(row.subject_fk!));
+        const subj = catchProblem(await getSubjectById(row.subjectId!));
         setSubject(subj);
         setTruncated(truncateText(subj.name!, 20))
       }
@@ -26,7 +27,7 @@ export function SubjectNameRow({row}: {row: Grade}) {
       }
     };
     getSubject()
-  }, [row.subject_fk])
+  }, [row.subjectId])
 
   return (
     loading ? 
