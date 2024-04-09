@@ -1,3 +1,4 @@
+import { NewPreferences, Preferences } from "@/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { isMobile } from "react-device-detect"
 import { twMerge } from "tailwind-merge"
@@ -64,4 +65,17 @@ export function getDateOrDateTime(date: Date) {
   } else {
     return date.toLocaleString();
   }
+}
+
+export function getDefaultPreferences(): Preferences {
+  return {
+    gradeDecimals: 3,
+    newEntitySheetShouldStayOpen: false,
+    passingInverse: false,
+    passingGrade: 4,
+    minimumGrade: 1,
+    maximumGrade: 6,
+    id: 0,
+    userId: null
+  } satisfies NewPreferences;
 }

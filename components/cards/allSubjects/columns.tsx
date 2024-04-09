@@ -30,27 +30,6 @@ export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
         const original = row.original;
         return <SubjectNameRow row={original} />;
       }
-      // cell: ({ row }) => {
-      //   let subject: Subject = catchProblem(await getSubjectById(row.original.subjectId));
-      //   let truncated: boolean = truncateText(subject.name!, 20).truncated;
-      //   let truncatedSubject: string = truncateText(subject.name!, 20).text;
-
-      //   if (truncated) {
-      //     return (
-      //       <TooltipProvider>
-      //         <Tooltip>
-      //           <TooltipTrigger className="ml-4 text-left">
-      //             {truncatedSubject}
-      //           </TooltipTrigger>
-      //           <TooltipContent>
-      //             <p>{subject.name}</p>
-      //           </TooltipContent>
-      //         </Tooltip>
-      //       </TooltipProvider>
-      //     );
-      //   }
-      //   return <p className="ml-4">{subject.name}</p>;
-      // },
     },
     {
       accessorKey: "gradeAverage",

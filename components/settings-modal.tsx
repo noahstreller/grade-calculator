@@ -13,12 +13,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import appGlobals, {
-  defaultAppGlobals,
-  updateAppGlobals,
-} from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
+import { NewPreferences } from "@/db/schema";
+import appGlobals, { defaultAppGlobals } from "@/lib/app.globals";
+import { getPreferencesElseGetDefault, savePreferences } from "@/lib/services/preferences-service";
 import { PreferencesTranslations } from "@/lib/translationObjects";
+import { Empty } from "@/types/types";
 import { AlertCircle, Settings } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -49,7 +48,7 @@ export function SettingsModalForm({
   const [decimals, setDecimals] = useState(appGlobals.gradeDecimals);
 
   type FormValues = {
-    gradeDecimals: number;
+    gradeDecimals: number | Empty;
     newEntitySheetShouldStayOpen: boolean;
     passingInverse: boolean;
     passingGrade: number;
@@ -57,14 +56,7 @@ export function SettingsModalForm({
     maximumGrade: number;
   };
 
-  const defaultValues: DefaultValues<FormValues> = {
-    gradeDecimals: appGlobals.gradeDecimals,
-    newEntitySheetShouldStayOpen: appGlobals.newEntitySheetShouldStayOpen,
-    passingInverse: appGlobals.passingInverse,
-    passingGrade: appGlobals.passingGrade,
-    minimumGrade: appGlobals.minimumGrade,
-    maximumGrade: appGlobals.maximumGrade,
-  };
+  const defaultValues: DefaultValues<FormValues> = async () => await getPreferencesElseGetDefault() as FormValues;
 
   const FormSchema = z.object({
     gradeDecimals: z.number().gte(0),
@@ -80,15 +72,24 @@ export function SettingsModalForm({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    Grade.get().forEach((grade) => {
-      if (grade.getValue() < data.minimumGrade)
-        grade.setValue(data.minimumGrade);
-      if (grade.getValue() > data.maximumGrade)
-        grade.setValue(data.maximumGrade);
-    });
+    // Grade.get().forEach((grade) => {
+    //   if (grade.getValue() < data.minimumGrade)
+    //     grade.setValue(data.minimumGrade);
+    //   if (grade.getValue() > data.maximumGrade)
+    //     grade.setValue(data.maximumGrade);
+    // });
 
-    updateAppGlobals(data);
-    window.location.reload();
+    // updateAppGlobals(data);
+
+    const newPreferences = {
+      gradeDecimals: data.gradeDecimals,
+      newEntitySheetShouldStayOpen: data.newEntitySheetShouldStayOpen,
+      passingInverse: data.passingInverse,
+      passingGrade: data.passingGrade,
+      minimumGrade: data.minimumGrade,
+      maximumGrade: data.maximumGrade,
+    } satisfies NewPreferences;
+    savePreferences(newPreferences).then(() => window.location.reload());
   }
 
   function onReset(event: any) {
@@ -97,7 +98,7 @@ export function SettingsModalForm({
   }
 
   useEffect(() => {
-    form.reset(defaultValues);
+    form.reset(defaultValues as any);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -353,12 +354,8 @@ export function SettingsModal({
           <SheetDescription>{translations.description}</SheetDescription>
           <Alert>
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>
-              {translations.alertTitle}
-            </AlertTitle>
-            <AlertDescription>
-              {translations.alertDescription}
-            </AlertDescription>
+            <AlertTitle>{translations.alertTitle}</AlertTitle>
+            <AlertDescription>{translations.alertDescription}</AlertDescription>
           </Alert>
         </SheetHeader>
         <SettingsModalForm translations={translations} />

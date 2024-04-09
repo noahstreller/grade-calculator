@@ -73,7 +73,6 @@ export async function getAllGradeAverages(): Promise<Average[] | Problem> {
       let averages: Average[] = resolved.map((res) => {
         return catchProblem(res);
       });
-      console.warn(averages);
       return averages;
     };
 
