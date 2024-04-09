@@ -32,6 +32,7 @@ import appGlobals from "@/lib/app.globals";
 import { catchProblem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
+import { addGradeToast } from "@/lib/toasts";
 import { cn, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
@@ -103,17 +104,17 @@ export function CreateGradeForm({
     const gradeAsNumber = Number(data.grade);
     const weightAsNumber = Number(data.weight) || 1;
 
-    const gradeIguess: NewGrade = {
+    const grade: NewGrade = {
       date: data.date,
       weight: data.weight,
       value: data.grade,
       subject_fk: data.subject,
     };
 
-    catchProblem(await addGrade(gradeIguess));
+    catchProblem(await addGrade(grade));
 
     // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
-    // addGradeToast(grade);
+    addGradeToast(grade);
     refresh();
     if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }

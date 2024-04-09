@@ -14,6 +14,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import {
   Table,
   TableBody,
@@ -28,13 +29,15 @@ import React from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  pageSize?: number
+  pageSize?: number,
+  loading?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  pageSize = 6
+  pageSize = 6,
+  loading = false
 }: DataTableProps<TData, TValue>) {
   
   const [sorting, setSorting] = React.useState<SortingState>([
@@ -96,7 +99,15 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          { loading ? (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                <LoadingSpinner />
+              </TableCell>
+            </TableRow>
+          ) :
+          
+          table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}

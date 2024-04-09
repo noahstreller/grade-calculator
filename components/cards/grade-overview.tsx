@@ -1,7 +1,7 @@
+import { Grade } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
-import { getDateOrTime, truncateText } from "@/lib/utils";
+import { getDateOrTime } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -35,7 +35,7 @@ export function GradeOverview({
   const { t } = useTranslation("common");
 
   let getGrade = (grade: Grade) => {
-    return grade.getValue();
+    return grade.value;
   };
 
   
@@ -58,7 +58,8 @@ export function GradeOverview({
                 Grade
               </span>
               {
-                Grade.doesGradePass(payload[0].value) ? 
+                // Grade.doesGradePass(payload[0].value) ? 
+                true ?
                 <span className="text-green-400 font-bold">{`${payload[0].value}`}</span> : 
                 <span className="text-red-400 font-bold">{`${payload[0].value}`}</span>
               }
@@ -67,13 +68,13 @@ export function GradeOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Subject
               </span>
-              <span className="font-bold text-muted-foreground">
+              {/* <span className="font-bold text-muted-foreground">
                 {
                   label
-                  ? truncateText(data[Number(label)].getSubject(), 20).text
-                  : truncateText(data[Number(0)].getSubject(), 20).text
+                  ? truncateText(data[Number(label)].subject_fk!, 20).text
+                  : truncateText(data[Number(0)].subject_fk!, 20).text
                 }
-              </span>
+              </span> */}
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
@@ -81,8 +82,8 @@ export function GradeOverview({
               </span>
               <span className="font-bold text-muted-foreground">
                 {label
-                  ? getDateOrTime(data[Number(label)].getDate())
-                  : getDateOrTime(data[Number(0)].getDate())}
+                  ? getDateOrTime(data[Number(label)].date!)
+                  : getDateOrTime(data[Number(0)].date!)}
               </span>
             </div>
           </div>

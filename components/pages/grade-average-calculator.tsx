@@ -1,57 +1,62 @@
 "use client";
 import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
-import { AverageOverview } from "@/components/cards/average-overview";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
-import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
-import { GradeOverview } from "@/components/cards/grade-overview";
-import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
-import { RequiredGrades } from "@/components/cards/required-grades";
 import { CardBoard } from "@/components/ui/cardboard";
-import Grade from "@/lib/entities/grade";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
-import Subjects from "@/lib/entities/subject";
+import { Grade } from "@/db/schema";
+import { catchProblem } from "@/lib/problem";
+import { getAllGradeAverages, getAllGrades } from "@/lib/services/grade-service";
+import { Average } from "@/types/types";
 import { useEffect, useState } from "react";
 
 export default function GradeAverageCalculator() {
   const [gradeData, setGradeData] = useState<Grade[]>([]);
-  const [subjectData, setSubjectData] = useState<GradeAverage[]>([]);
-  const [failingData, setFailingData] = useState<GradeAverage[]>([]);
-  const [passingData, setPassingData] = useState<GradeAverage[]>([]);
+  const [averageData, setAverageData] = useState<Average[]>([]);
+  // const [failingData, setFailingData] = useState<GradeAverage[]>([]);
+  // const [passingData, setPassingData] = useState<GradeAverage[]>([]);
   const [loaded, setLoaded] = useState(false);
 
-  function refreshGrades() {
-    let grades = Grade.get();
+  const refreshGrades = async () => {
+    let grades = catchProblem(await getAllGrades());
     setGradeData([...grades]);
   }
 
-  function refreshSubjects() {
-    let averages = GradeAverage.get();
-    setSubjectData([...averages]);
+  const refreshAverages = async () => {
+    let averages = catchProblem(await getAllGradeAverages())
+    // setAverageData([...averages]);
   }
 
-  function refreshFailing() {
-    let subjects = Subjects.getFailingSubjects();
-    setFailingData([...subjects]);
-  }
+  // function refreshFailing() {
+  //   let subjects = Subjects.getFailingSubjects();
+  //   setFailingData([...subjects]);
+  // }
 
-  function refreshPassing() {
-    let subjects = Subjects.getPassingSubjects();
-    setPassingData([...subjects]);
-  }
+  // function refreshPassing() {
+  //   let subjects = Subjects.getPassingSubjects();
+  //   setPassingData([...subjects]);
+  // }
 
   function refreshAll() {
     refreshGrades();
-    refreshSubjects();
-    refreshFailing();
-    refreshPassing();
+    refreshAverages();
+    // refreshFailing();
+    // refreshPassing();
   }
 
   useEffect(() => {
-    Subjects.load();
-    Grade.load();
-    refreshAll();
-    setLoaded(true);
+  //   Subjects.load();
+  //   Grade.load();
+  //   refreshAll();
+  // setLoaded(true);
+
+    try {
+      refreshAll()
+    }
+    finally {
+      setLoaded(true)
+    }
+
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,8 +64,8 @@ export default function GradeAverageCalculator() {
     <>
       <CardBoard className="flex xl:hidden">
         <AllSubjects
-          data={subjectData}
-          setData={setSubjectData}
+          data={averageData}
+          setData={setAverageData}
           refresh={refreshAll}
         />
         <AllGrades
@@ -68,7 +73,7 @@ export default function GradeAverageCalculator() {
           setData={setGradeData}
           refresh={refreshAll}
         />
-        <RequiredGrades
+        {/* <RequiredGrades
           gradeData={gradeData}
           averageData={[...passingData, ...failingData]}
         />
@@ -82,28 +87,28 @@ export default function GradeAverageCalculator() {
           data={gradeData}
           passingData={passingData}
           failingData={failingData}
-        />
+        /> */}
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-        <CardBoard>
+        {/* <CardBoard>
           <PassingGradesCard data={passingData} setData={setPassingData} />
           <FailingGradesCard data={failingData} setData={setFailingData} />
           <AverageOverview
             data={gradeData}
             averageData={[...passingData, ...failingData]}
           />
-        </CardBoard>
+        </CardBoard> */}
         <CardBoard>
           <AllSubjects
-            data={subjectData}
-            setData={setSubjectData}
+            data={averageData}
+            setData={setAverageData}
             refresh={refreshAll}
           />
-          <GradeOverview
+          {/* <GradeOverview
             data={gradeData}
             passingData={passingData}
             failingData={failingData}
-          />
+          /> */}
         </CardBoard>
         <CardBoard>
           <AllGrades
@@ -111,10 +116,10 @@ export default function GradeAverageCalculator() {
             setData={setGradeData}
             refresh={refreshAll}
           />
-          <RequiredGrades
+          {/* <RequiredGrades
             gradeData={gradeData}
             averageData={[...passingData, ...failingData]}
-          />
+          /> */}
         </CardBoard>
       </CardBoard>
     </>

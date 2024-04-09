@@ -27,7 +27,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import Grade from "@/lib/entities/grade";
+import { Grade } from "@/db/schema";
 import Subjects from "@/lib/entities/subject";
 import { isMobileDevice } from "@/lib/utils";
 import { Bird } from "lucide-react";

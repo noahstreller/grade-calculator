@@ -1,8 +1,9 @@
 
+import { Grade, NewGrade } from "@/db/schema";
 import { Problem } from "@/lib/problem";
+import { addGrade } from "@/lib/services/grade-service";
 import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
-import Grade from "./entities/grade";
 
 function t(key: string) {
   const {t} = createTranslation("common");
@@ -14,9 +15,9 @@ function lang() {
   return lang;
 }
 
-export function addGradeToast(grade: Grade) {
+export function addGradeToast(grade: NewGrade) {
   toast(t("grades.add-success"), {
-    description: grade.getGradeInformation(),
+    description: grade.value,
     action: {
       label: t("actions.ok"),
       onClick: () => void 0,
@@ -46,11 +47,11 @@ export function copySuccessToast(copiedContent: string) {
 
 export function deleteGradeToast(grade: Grade, refresh: Function){
   toast(t("actions.delete.success"), {
-    description: grade.getGradeInformation(),
+    description: grade.value,
     action: {
       label: t("actions.undo"),
-      onClick: () => {
-        grade.save();
+      onClick: async () => {
+        await addGrade(grade);
         addGradeToast(grade);
         refresh();
       },

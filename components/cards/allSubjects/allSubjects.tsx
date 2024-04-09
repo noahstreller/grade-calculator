@@ -1,4 +1,5 @@
 "use client";
+import { columns } from "@/components/cards/allSubjects/columns";
 import { CreateSubjectForm } from "@/components/create-subject-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -29,22 +30,21 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
 import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
+import { Average } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { columns } from "./columns";
 
 export function AllSubjects({
   data,
   setData,
   refresh,
 }: {
-  data: GradeAverage[];
+  data: Average[];
   setData: Function;
   refresh: Function;
 }) {
