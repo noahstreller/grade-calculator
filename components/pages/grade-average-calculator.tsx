@@ -3,26 +3,26 @@ import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import { CardBoard } from "@/components/ui/cardboard";
-import { Grade } from "@/db/schema";
+import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
-import { getAllGradeAverages, getAllGrades } from "@/lib/services/grade-service";
-import { Average } from "@/types/types";
+import { getAllGradeAveragesWithSubject, getAllGradesWithSubject } from "@/lib/services/grade-service";
+import { AverageWithSubject } from "@/types/types";
 import { useEffect, useState } from "react";
 
 export default function GradeAverageCalculator() {
-  const [gradeData, setGradeData] = useState<Grade[]>([]);
-  const [averageData, setAverageData] = useState<Average[]>([]);
+  const [gradeData, setGradeData] = useState<GradeWithSubject[]>([]);
+  const [averageData, setAverageData] = useState<AverageWithSubject[]>([]);
   // const [failingData, setFailingData] = useState<GradeAverage[]>([]);
   // const [passingData, setPassingData] = useState<GradeAverage[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   const refreshGrades = async () => {
-    let grades = catchProblem(await getAllGrades());
+    let grades = catchProblem(await getAllGradesWithSubject());
     setGradeData([...grades]);
   }
 
   const refreshAverages = async () => {
-    let averages = catchProblem(await getAllGradeAverages())
+    let averages = catchProblem(await getAllGradeAveragesWithSubject())
     setAverageData([...averages]);
   }
 

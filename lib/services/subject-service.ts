@@ -1,6 +1,6 @@
 "use server";
 import { NewSubject, Subject } from "@/db/schema";
-import { Problem, getProblem } from "@/lib/problem";
+import { Problem, catchProblem, getProblem } from "@/lib/problem";
 import {
   addSubjectToDb,
   getAllSubjectsFromDb,
@@ -73,6 +73,26 @@ export async function quickCreateSubject(name: string): Promise<number | Problem
       userId,
     } satisfies NewSubject;
     return await addSubject(newSubject);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function getSubjectByIdByNameBySubject(
+  subject: string | number | Subject,
+): Promise<Subject | Problem> {
+  try {
+    if (typeof subject === "string") {
+      return catchProblem(await getSubjectByName(subject));
+    }
+    if (typeof subject === "number") {
+      return catchProblem(await getSubjectById(subject));
+    }
+    return subject;
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

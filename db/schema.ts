@@ -103,6 +103,10 @@ export const verificationTokens = pgTable(
 );
 
 export type Grade = typeof grades.$inferSelect;
+export type GradeWithSubject = {
+  grades: Grade;
+  subjects: Subject;
+};
 export type NewGrade = typeof grades.$inferInsert;
 
 export type Subject = typeof subjects.$inferSelect;

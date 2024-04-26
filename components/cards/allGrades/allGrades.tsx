@@ -27,7 +27,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Grade } from "@/db/schema";
+import { GradeWithSubject } from "@/db/schema";
 import Subjects from "@/lib/entities/subject";
 import { isMobileDevice } from "@/lib/utils";
 import { Bird } from "lucide-react";
@@ -41,7 +41,7 @@ export function AllGrades({
   setData,
   refresh,
 }: {
-  data: Grade[];
+  data: GradeWithSubject[];
   setData: Function;
   refresh: Function;
 }) {

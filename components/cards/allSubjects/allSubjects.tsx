@@ -33,7 +33,7 @@ import {
 import Subjects from "@/lib/entities/subject";
 import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
-import { Average } from "@/types/types";
+import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -44,7 +44,7 @@ export function AllSubjects({
   setData,
   refresh,
 }: {
-  data: Average[];
+  data: AverageWithSubject[];
   setData: Function;
   refresh: Function;
 }) {

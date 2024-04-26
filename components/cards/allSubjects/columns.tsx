@@ -3,18 +3,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 
-import { SubjectNameRow } from "@/components/cards/allSubjects/subject-name-row";
+import { ColoredGrade } from "@/components/colored-grade";
 import { Button } from "@/components/ui/button";
-import appGlobals from "@/lib/app.globals";
-import { round } from "@/lib/utils";
-import { Average } from "@/types/types";
+import { AverageWithSubject, Empty } from "@/types/types";
+;
 
-export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
+export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[] {
   const { t, lang } = createTranslation("common");
 
   return [
     {
-      accessorKey: "subjectId",
+      id: "subjectName",
+      accessorKey: "subject.name",
       header: ({ column }) => {
         return (
           <Button
@@ -25,14 +25,10 @@ export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
-      },
-      cell: ({ row }) => {
-        const original = row.original;
-        return <SubjectNameRow row={original} />;
       }
     },
     {
-      accessorKey: "gradeAverage",
+      accessorKey: "average.gradeAverage",
       header: ({ column }) => {
         return (
           <Button
@@ -45,19 +41,10 @@ export function columns(setSubjectToDelete: any): ColumnDef<Average>[] {
         );
       },
       cell: ({ row }) => {
-        let subject: string = row.getValue("subject");
-        let value: number = row.getValue("gradeAverage");
-        value = round(value, appGlobals.gradeDecimals);
 
-        // if (Subjects.doesSubjectPass(subject)) {
-        //   return <p className="text-green-400 ml-4">{value}</p>;
-        // }
-        // if (Subjects.doesSubjectFail(subject)) {
-        //   return <p className="text-red-400 ml-4">{value}</p>;
-        // }
-        return <p className="text-red-400 ml-4">{value}</p>;
-
-        return <p className="text-gray-600 ml-4">{t("grades.notfound")}</p>;
+        let value: number | Empty = row.original.average?.gradeAverage;
+        // value = round(value, appGlobals.gradeDecimals);
+        return <ColoredGrade grade={value} />;
       },
     },
     {

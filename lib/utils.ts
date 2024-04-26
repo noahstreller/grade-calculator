@@ -76,6 +76,10 @@ export function getDefaultPreferences(): Preferences {
     minimumGrade: 1,
     maximumGrade: 6,
     id: 0,
-    userId: null
+    userId: null,
   } satisfies NewPreferences;
+}
+
+export function mockPreferences(): Preferences {
+  return getDefaultPreferences();
 }
