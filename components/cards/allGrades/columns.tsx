@@ -3,11 +3,12 @@ import { ColumnDef } from "@tanstack/react-table";
 import createTranslation from 'next-translate/createTranslation';
  
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { GradeWithSubject } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
-import { getDateOrDateTime, round } from "@/lib/utils";
+import { getDateOrDateTime, round, truncateText } from "@/lib/utils";
 import { ArrowUpDown, Copy, Trash } from "lucide-react";
 
 
@@ -28,6 +29,27 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
+      },
+      cell: ({ row }) => {
+        let subject: string = row.original.subjects.name!;
+        let truncated: boolean = truncateText(subject, 20).truncated;
+        let truncatedSubject: string = truncateText(subject, 20).text;
+
+        if (truncated) {
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="text-left ml-4">
+                  {truncatedSubject}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{subject}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        }
+        return <p className="ml-4">{subject}</p>;
       },
     },
     {
