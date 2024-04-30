@@ -1,6 +1,7 @@
 import Providers from '@/app/providers';
 import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
 import HeaderComponent from '@/components/header';
+import { LoadingScreen } from '@/components/loadingscreen';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -89,11 +90,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body className={cn(inter.className)}>
         <Providers>
           <HeaderComponent />
           <main className="bg-background text-foreground h-screen flex justify-center mt-[5rem]">
+            <LoadingScreen />
             {children}
           </main>
           <CorruptedDataDialog />

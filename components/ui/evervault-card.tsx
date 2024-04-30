@@ -1,32 +1,71 @@
 "use client";
+import useWindowDimensions from "@/components/ui/window-dimensions";
 import { cn } from "@/lib/utils";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export const EvervaultCard = ({
   text,
   className,
+  element,
 }: {
   text?: string;
   className?: string;
+  element?: ReactNode;
 }) => {
   let mouseX = useMotionValue(0);
   let mouseY = useMotionValue(0);
 
   const [randomString, setRandomString] = useState("");
+  const windowDimensions = useWindowDimensions();
+
+  const getStringSizeNeeded = ({
+    height = windowDimensions.height,
+    width = windowDimensions.width,
+  }: {
+    height?: number;
+    width?: number;
+  }) => {
+    const size = (height * width) / 300;
+    console.log(size);
+    return size;
+  };
+
+  const maxSize = 50000;
 
   useEffect(() => {
-    let str = generateRandomString(1500);
+    const getStringSizeNeeded = ({
+      height = windowDimensions.height,
+      width = windowDimensions.width,
+    }: {
+      height?: number;
+      width?: number;
+    }) => {
+      const size = (height * width) / 300;
+      console.log(size);
+      return size;
+    };
+    let str = generateRandomString(
+      getStringSizeNeeded({
+        height: windowDimensions.height,
+        width: windowDimensions.width,
+      })
+    );
     setRandomString(str);
-  }, []);
+  }, [windowDimensions]);
 
   function onMouseMove({ currentTarget, clientX, clientY }: any) {
     let { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
-
-    const str = generateRandomString(1500);
-    setRandomString(str);
+    let size = getStringSizeNeeded({
+      height: windowDimensions.height,
+      width: windowDimensions.width,
+    })
+    if (size <= maxSize) {
+      const str = generateRandomString(size);
+      setRandomString(str);
+    }
   }
 
   return (
@@ -47,8 +86,9 @@ export const EvervaultCard = ({
         />
         <div className="relative z-10 flex items-center justify-center">
           <div className="relative h-44 w-44  rounded-full flex items-center justify-center text-white font-bold text-4xl">
-            <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm rounded-full" />
-            <span className="dark:text-white text-black z-20">{text}</span>
+            {/* <div className="absolute w-full h-full bg-white/[0.8] dark:bg-black/[0.8] blur-sm rounded-full" /> */}
+            {text && <span className="dark:text-white text-black z-20">{text}</span>}
+            {element && element}
           </div>
         </div>
       </div>
@@ -57,7 +97,7 @@ export const EvervaultCard = ({
 };
 
 export function CardPattern({ mouseX, mouseY, randomString }: any) {
-  let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  let maskImage = useMotionTemplate`radial-gradient(500px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
@@ -71,7 +111,7 @@ export function CardPattern({ mouseX, mouseY, randomString }: any) {
         className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay  group-hover/card:opacity-100"
         style={style}
       >
-        <p className="absolute inset-x-0 text-xs h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
+        <p className="absolute inset-x-0 text-xl h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
           {randomString}
         </p>
       </motion.div>

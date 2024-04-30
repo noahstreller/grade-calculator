@@ -25,7 +25,7 @@ export function ColoredGrade({grade}: {grade: number | Empty}) {
 
   return (
     <>
-      {isPassing === null && <p className="text-gray-600 ml-4">-</p>}
+      {isPassing === null && <p className="text-muted-foreground ml-4">-</p>}
       {isPassing === false && <p className="text-red-400 ml-4">{grade}</p>}
       {isPassing === true && <p className="text-green-400 ml-4">{grade}</p>}
     </>

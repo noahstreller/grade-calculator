@@ -8,13 +8,15 @@ export default function LoginButton() {
 
   return (
     <div className="items-center justify-center flex">
-    {
-      session.status === "authenticated" ?
-      <Button onClick={() => signOut()}>Sign out {session.data.user.uid}</Button> : session.status ===
-      "loading" ?
-      <LoadingSpinner /> :<Button onClick={() => signIn()}>Sign in</Button>
-    }
+      {session.status === "authenticated" ? (
+        <Button onClick={() => signOut()}>
+          Sign out {session.data.user.uid}
+        </Button>
+      ) : session.status === "loading" ? (
+        <LoadingSpinner />
+      ) : (
+        <Button onClick={() => signIn()}>Sign in</Button>
+      )}
     </div>
-    
   );
 }

@@ -41,3 +41,14 @@ export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
     .execute();
   return result[0].newId satisfies number;
 }
+
+export async function deleteSubjectFromDb(subject: Subject, userId: string): Promise<string> {
+  const result = await db
+    .delete(subjects)
+    .where(and(eq(subjects.id, subject.id), eq(subjects.userId, userId)))
+    .returning({ oldId: subjects.id, oldName: subjects.name })
+    .execute();
+
+    console.log(result[0].oldName);
+  return (result[0].oldName || "") satisfies string;
+}

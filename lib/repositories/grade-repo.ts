@@ -21,8 +21,6 @@ export async function getAllGradesWithSubjectFromDb(userId: string): Promise<Gra
     .innerJoin(subjects, eq(grades.subject_fk, subjects.id))
     .where(eq(grades.userId, userId))
     .execute();
-
-    console.log(result)
   return result;
 }
 
@@ -94,4 +92,30 @@ export async function addGradeToDb(newGrade: NewGrade): Promise<number> {
     .returning({ newId: grades.id })
     .execute();
   return result[0].newId;
+}
+
+export async function deleteGradeFromDb(
+  grade: Grade,
+  userId: string
+): Promise<number> {
+  const result = await db
+    .delete(grades)
+    .where(and(eq(grades.id, grade.id), eq(grades.userId, userId)))
+    .returning({ oldId: grades.id, oldGrade: grades.value })
+    .execute();
+
+  return (result[0].oldGrade || 0) as number;
+}
+
+export async function deleteGradeByIdFromDb(
+  gradeId: number,
+  userId: string
+): Promise<number> {
+  const result = await db
+    .delete(grades)
+    .where(and(eq(grades.id, gradeId), eq(grades.userId, userId)))
+    .returning({ oldId: grades.id, oldGrade: grades.value })
+    .execute();
+
+  return (result[0].oldGrade || 0) as number;
 }

@@ -1,11 +1,15 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Trash } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { DrawerTrigger } from "@/components/ui/drawer";
+import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
+import { isMobile } from "react-device-detect";
 ;
 
 export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[] {
@@ -14,7 +18,6 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
   return [
     {
       id: "subjectName",
-      accessorKey: "subject.name",
       header: ({ column }) => {
         return (
           <Button
@@ -25,7 +28,12 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
-      }
+      },
+      cell: ({ row }) => {
+        let value: string = row.original.subject?.name || "";
+        let truncated = truncateText(value, 20);
+        return <span>{truncated.text}</span>;
+      },
     },
     {
       accessorKey: "average.gradeAverage",
@@ -43,42 +51,41 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
       cell: ({ row }) => {
 
         let value: number | Empty = row.original.average?.gradeAverage;
-        // value = round(value, appGlobals.gradeDecimals);
         return <ColoredGrade grade={value} />;
       },
     },
     {
       id: "actions",
-      // cell: ({ row }) => {
-      //   let gradeAverage: Average = row.original;
-      //   let isDesktop: boolean = !isMobile;
+      cell: ({ row }) => {
+        let average: AverageWithSubject = row.original;
+        let isDesktop: boolean = !isMobile;
 
-      //   if (isDesktop) {
-      //     return (
-      //       <DialogTrigger asChild>
-      //         <Button
-      //           onClick={() => setSubjectToDelete(gradeAverage.subject)}
-      //           className="h-8 w-8 p-0"
-      //           variant="ghost"
-      //         >
-      //           <Trash className="h-4 w-4" />
-      //         </Button>
-      //       </DialogTrigger>
-      //     );
-      //   }
+        if (isDesktop) {
+          return (
+            <DialogTrigger asChild>
+              <Button
+                onClick={() => setSubjectToDelete(average.subject)}
+                className="h-8 w-8 p-0"
+                variant="ghost"
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+          );
+        }
 
-      //   return (
-      //     <DrawerTrigger asChild>
-      //       <Button
-      //         onClick={() => setSubjectToDelete(gradeAverage.subject)}
-      //         className="h-8 w-8 p-0"
-      //         variant="ghost"
-      //       >
-      //         <Trash className="h-4 w-4" />
-      //       </Button>
-      //     </DrawerTrigger>
-      //   );
-      // },
+        return (
+          <DrawerTrigger asChild>
+            <Button
+              onClick={() => setSubjectToDelete(average.subject)}
+              className="h-8 w-8 p-0"
+              variant="ghost"
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
+          </DrawerTrigger>
+        );
+      },
     },
   ];
 }

@@ -1,6 +1,6 @@
 {
-  "id": "93131d8a-7a9e-4b90-adf7-0fc39ea13a2c",
-  "prevId": "d599d971-6268-4955-b71d-d86441e94d16",
+  "id": "97612553-3142-4d1f-a519-e08ea6742328",
+  "prevId": "5a66a311-554f-4324-a0f9-80956b58619f",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -136,7 +136,7 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false,
-          "default": "'2024-04-09T08:30:55.764Z'"
+          "default": "now()"
         },
         "userId": {
           "name": "userId",
@@ -157,7 +157,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "grades_userId_user_id_fk": {

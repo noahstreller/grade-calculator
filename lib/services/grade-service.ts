@@ -1,7 +1,7 @@
 "use server"
 import { Grade, GradeWithSubject, NewGrade, Subject } from "@/db/schema";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
-import { addGradeToDb, getAllGradesFromDb, getAllGradesWithSubjectFromDb, getGradesBySubjectFromDb, getGradesBySubjectWithSubjectFromDb } from "@/lib/repositories/grade-repo";
+import { addGradeToDb, deleteGradeByIdFromDb, deleteGradeFromDb, getAllGradesFromDb, getAllGradesWithSubjectFromDb, getGradesBySubjectFromDb, getGradesBySubjectWithSubjectFromDb } from "@/lib/repositories/grade-repo";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { getPreferencesElseGetDefault } from "@/lib/services/preferences-service";
 import { getUserId, setUserId } from "@/lib/services/service-util";
@@ -171,6 +171,38 @@ export async function addGrade(newGrade: NewGrade): Promise<number | Problem> {
   try {
     newGrade = await setUserId(newGrade);
     return await addGradeToDb(newGrade);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+      e: JSON.stringify(e),
+    }) satisfies Problem;
+  }
+}
+
+export async function deleteGradeByGrade(
+  grade: Grade
+): Promise<number | Problem> {
+  try {
+    const userId = await getUserId();
+    return catchProblem(await deleteGradeFromDb(grade, userId));
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+      e: JSON.stringify(e),
+    }) satisfies Problem;
+  }
+}
+
+export async function deleteGradeById(
+  gradeId: number
+): Promise<number | Problem> {
+  try {
+    const userId = await getUserId();
+    return catchProblem(await deleteGradeByIdFromDb(gradeId, userId));
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

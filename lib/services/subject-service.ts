@@ -3,6 +3,7 @@ import { NewSubject, Subject } from "@/db/schema";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
 import {
   addSubjectToDb,
+  deleteSubjectFromDb,
   getAllSubjectsFromDb,
   getSubjectByIdFromDb,
   getSubjectByNameFromDb,
@@ -93,6 +94,20 @@ export async function getSubjectByIdByNameBySubject(
       return catchProblem(await getSubjectById(subject));
     }
     return subject;
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function deleteSubject(subject: string | number | Subject): Promise<string | Problem> {
+  try {
+    let resolvedSubject = catchProblem(await getSubjectByIdByNameBySubject(subject));
+    const userId = await getUserId();
+    return await deleteSubjectFromDb(resolvedSubject, userId)
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

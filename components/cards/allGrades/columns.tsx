@@ -5,6 +5,7 @@ import createTranslation from 'next-translate/createTranslation';
 import { Button } from "@/components/ui/button";
 import { GradeWithSubject } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
+import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { getDateOrDateTime, round } from "@/lib/utils";
 import { ArrowUpDown, Copy, Trash } from "lucide-react";
@@ -117,6 +118,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
               onClick={() => {
                 let gradeCopy = grade.grades;
                 // grade.delete();
+                deleteGradeByGrade(grade.grades);
                 deleteGradeToast(gradeCopy, refresh);
                 refresh();
               }}
