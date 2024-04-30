@@ -2,13 +2,13 @@
 import { ColumnDef } from "@tanstack/react-table";
 import createTranslation from 'next-translate/createTranslation';
  
+import { ColoredGrade } from "@/components/colored-grade";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { GradeWithSubject } from "@/db/schema";
-import appGlobals from "@/lib/app.globals";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
-import { getDateOrDateTime, round, truncateText } from "@/lib/utils";
+import { getDateOrDateTime, truncateText } from "@/lib/utils";
 import { ArrowUpDown, Copy, Trash } from "lucide-react";
 
 
@@ -53,7 +53,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       },
     },
     {
-      accessorKey: "value",
+      accessorKey: "grades.value",
       header: ({ column }) => {
         return (
           <Button
@@ -67,12 +67,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       },
       cell: ({ row }) => {
         let value: number = row.original.grades.value!;
-        value = round(value, appGlobals.gradeDecimals);
-
-        if (true) {
-          return <p className="text-green-400 ml-4">{value}</p>;
-        }
-        return <p className="text-red-400 ml-4">{value}</p>;
+        return <ColoredGrade grade={value} />
       },
     },
     {

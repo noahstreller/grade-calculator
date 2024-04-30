@@ -101,9 +101,6 @@ export function CreateGradeForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const gradeAsNumber = Number(data.grade);
-    const weightAsNumber = Number(data.weight) || 1;
-
     const grade: NewGrade = {
       date: data.date,
       weight: data.weight,
@@ -188,7 +185,7 @@ export function CreateGradeForm({
                                     : "opacity-0"
                                 )}
                               />
-                              {subject.name}
+                              {truncateText(subject.name!, 20).text}
                             </CommandItem>
                           ))
                         )}
