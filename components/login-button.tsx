@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function LoginButton() {
+export default function LoginButton({children = "Sign in", className = ""}: {children?: React.ReactNode, className?: string}) {
   const session = useSession();
 
   return (
@@ -15,7 +15,7 @@ export default function LoginButton() {
       ) : session.status === "loading" ? (
         <LoadingSpinner />
       ) : (
-        <Button onClick={() => signIn()}>Sign in</Button>
+        <Button className={className} onClick={() => signIn()}>{children}</Button>
       )}
     </div>
   );

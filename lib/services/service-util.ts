@@ -6,6 +6,7 @@ export const getUser = async () => {
   const session = await auth();
   return session?.user
 };
+
 export const getUserId = async (): Promise<string> => {
   const uid = (await getUser())?.uid
   if (uid) return uid;
