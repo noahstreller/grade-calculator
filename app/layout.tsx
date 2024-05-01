@@ -20,7 +20,7 @@ const authors: Author[] = [
 ]
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://grades.nstr.dev"),
+  metadataBase: new URL("https://legacy.grades.nstr.dev"),
   applicationName: "Grades",
   title: {
     default: "Grade Calculator - nstr.dev",
