@@ -4,6 +4,7 @@ import { ArrowUpDown, Trash } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
+import { SubjectGradeBadge } from "@/components/subject-grade-badge";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { DrawerTrigger } from "@/components/ui/drawer";
@@ -38,8 +39,13 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
         if (truncated) {
           return (
             <TooltipProvider>
+              <SubjectGradeBadge
+                average={row.original}
+                className="mr-2 ml-2"
+                hideText
+              />
               <Tooltip>
-                <TooltipTrigger className="text-left ml-4">
+                <TooltipTrigger className="text-left">
                   {truncatedSubject}
                 </TooltipTrigger>
                 <TooltipContent>
@@ -49,7 +55,16 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
             </TooltipProvider>
           );
         }
-        return <p className="ml-4">{subject}</p>;
+        return (
+          <p className="ml-2">
+            <SubjectGradeBadge
+              average={row.original}
+              className="mr-2"
+              hideText
+            />
+            {subject}
+          </p>
+        );
       },
     },
     {

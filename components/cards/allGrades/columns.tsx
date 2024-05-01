@@ -92,7 +92,8 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
     },
     {
       id: "date",
-      accessorKey: "date",
+      sortingFn: "datetime",
+      accessorKey: "grades.date",
       header: ({ column }) => {
         return (
           <Button

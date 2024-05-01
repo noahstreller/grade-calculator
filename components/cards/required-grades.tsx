@@ -1,5 +1,6 @@
 "use client";
 import { usePreferences } from "@/components/preferences-provider";
+import { SubjectGradeBadge } from "@/components/subject-grade-badge";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { round, truncateText } from "@/lib/utils";
@@ -8,7 +9,6 @@ import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Badge } from "../ui/badge";
 import {
   Card,
   CardContent,
@@ -27,14 +27,6 @@ function RequiredGradesBody({
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences;
-
-  const chunkIntoPieces = (data: Array<any>, amount: number = 2) => {
-    const result = [];
-    for (let i = 0; i < data.length; i += amount) {
-      result.push(data.slice(i, i + amount));
-    }
-    return result;
-  };
 
   const getRequiredGradeToPass = (
     average: AverageWithSubject
@@ -86,8 +78,24 @@ function RequiredGradesBody({
   const [chunkPairs, setChunkPairs] = useState<Array<any>>([]);
 
   useEffect(() => {
+
+    const chunkIntoPieces = (data: Array<any>, amount: number = 2) => {
+      let filteredData = data.filter((average) => shouldBeShown(average));
+      let result = [];
+      for (let i = 0; i < filteredData.length; i += amount) {
+        result.push(filteredData.slice(i, i + amount));
+      }
+      return result;
+    };
+
+    const shouldBeShown = (average: AverageWithSubject) => {
+      return (
+        (average.average?.passing === false || showPassing) && average.average
+      );
+    };
+    
     setChunkPairs([...chunkIntoPieces(averageData)]);
-  }, [averageData]);
+  }, [averageData, showPassing]);
 
   return (
     <CardBoard>
@@ -100,7 +108,7 @@ function RequiredGradesBody({
       ) : (
         chunkPairs.map((pair, index) => (
           <CardBoard row key={index}>
-            {pair.map((average: AverageWithSubject, index: number) => (!average.average?.passing || showPassing) && average.average ? (
+            {pair.map((average: AverageWithSubject, index: number) => (
               <Card key={index}>
                 <CardHeader>
                   <h2>
@@ -112,13 +120,8 @@ function RequiredGradesBody({
                       <span className="text-red-400">
                         {truncateForPage(average.subject.name)}
                       </span>
-                    )}{" "}
-                    <Badge variant="secondary">
-                      {average.average?.gradeAmount}{" "}
-                      {t("grades.grades", {
-                        count: average.average?.gradeAmount,
-                      })}
-                    </Badge>
+                    )}
+                    <SubjectGradeBadge average={average} className="ml-2" />
                   </h2>
                 </CardHeader>
                 <CardContent>
@@ -141,7 +144,7 @@ function RequiredGradesBody({
                   </h1>
                 </CardContent>
               </Card>
-            ): null)}
+            ))}
           </CardBoard>
         ))
       )}
