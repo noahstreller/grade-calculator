@@ -10,6 +10,7 @@ import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { getDateOrDateTime, truncateText } from "@/lib/utils";
 import { ArrowUpDown, Copy, Trash } from "lucide-react";
+import { isMobile } from "react-device-detect";
 
 
 export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject[]): ColumnDef<GradeWithSubject>[] {
@@ -32,14 +33,14 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       },
       cell: ({ row }) => {
         let subject: string = row.original.subjects.name!;
-        let truncated: boolean = truncateText(subject, 20).truncated;
-        let truncatedSubject: string = truncateText(subject, 20).text;
+        let truncated: boolean = truncateText(subject, isMobile ? 20 : 10).truncated;
+        let truncatedSubject: string = truncateText(subject, isMobile ? 20 : 10).text;
 
         if (truncated) {
           return (
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="text-left ml-4">
+                <TooltipTrigger className="text-left ml-2">
                   {truncatedSubject}
                 </TooltipTrigger>
                 <TooltipContent>
@@ -49,7 +50,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
             </TooltipProvider>
           );
         }
-        return <p className="ml-4">{subject}</p>;
+        return <p className="ml-2">{subject}</p>;
       },
     },
     {
@@ -68,7 +69,6 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       cell: ({ row }) => {
         let value: number = row.original.grades.value!;
         return <ColoredGrade grade={value} />
-        // return value
       },
     },
     {

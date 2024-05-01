@@ -8,13 +8,18 @@ import { SubjectGradeBadge } from "@/components/subject-grade-badge";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { DrawerTrigger } from "@/components/ui/drawer";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import { isMobile } from "react-device-detect";
-;
-
-export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[] {
+export function columns(
+  setSubjectToDelete: any
+): ColumnDef<AverageWithSubject>[] {
   const { t, lang } = createTranslation("common");
 
   return [
@@ -33,15 +38,21 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
       },
       cell: ({ row }) => {
         let subject: string = row.original.subject.name || "";
-        let truncated: boolean = truncateText(subject, 20).truncated;
-        let truncatedSubject: string = truncateText(subject, 20).text;
+        let truncated: boolean = truncateText(
+          subject,
+          isMobile ? 20 : 10
+        ).truncated;
+        let truncatedSubject: string = truncateText(
+          subject,
+          isMobile ? 20 : 10
+        ).text;
 
         if (truncated) {
           return (
             <TooltipProvider>
               <SubjectGradeBadge
                 average={row.original}
-                className="mr-2 ml-2"
+                className="mr-2"
                 hideText
               />
               <Tooltip>
@@ -56,14 +67,14 @@ export function columns(setSubjectToDelete: any): ColumnDef<AverageWithSubject>[
           );
         }
         return (
-          <p className="ml-2">
+          <>
             <SubjectGradeBadge
               average={row.original}
               className="mr-2"
               hideText
             />
             {subject}
-          </p>
+          </>
         );
       },
     },
