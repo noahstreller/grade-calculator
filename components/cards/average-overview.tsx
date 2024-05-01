@@ -1,7 +1,6 @@
 import { ColoredGrade } from "@/components/colored-grade";
 import { usePreferences } from "@/components/preferences-provider";
 import { GradeWithSubject } from "@/db/schema";
-import appGlobals from "@/lib/app.globals";
 import { doesGradePass, getSubjectAverages, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
@@ -58,7 +57,6 @@ export function AverageOverview({
     payload?: any;
     label?: any;
   }) => {
-    console.log(payload);
     if (active && payload && payload.length) {
       return (
         <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -105,14 +103,20 @@ export function AverageOverview({
       {averageData.length >= 3 ? (
         <CardContent className="w-full h-72">
           <ResponsiveContainer>
-            <RadarChart innerRadius={10} data={averageData}>
+            <RadarChart
+              innerRadius={10}
+              data={averageData.filter(
+                (average) =>
+                  average.average?.gradeAmount && average.average?.gradeAmount !== 0
+              )}
+            >
               <PolarGrid />
               <PolarAngleAxis dataKey={averageSubject} />
               <PolarRadiusAxis
                 tickCount={6}
                 angle={0}
-                domain={[appGlobals.minimumGrade, appGlobals.maximumGrade]}
-                reversed={appGlobals.passingInverse}
+                domain={[preferences.minimumGrade!, preferences.maximumGrade!]}
+                reversed={preferences.passingInverse!}
               />
               <Radar
                 dataKey={subjectAverage}
@@ -182,21 +186,13 @@ export function AverageOverview({
                   <b className="block text-5xl text-center items-center self-center text-gray-400">
                     -
                   </b>
-                ) : doesGradePass(
-                    gradeAverages, preferences
-                  ) ? (
+                ) : doesGradePass(gradeAverages, preferences) ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
-                    {round(
-                      gradeAverages,
-                      2
-                    )}
+                    {round(gradeAverages, 2)}
                   </b>
                 ) : (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
-                    {round(
-                      gradeAverages,
-                      2
-                    )}
+                    {round(gradeAverages, 2)}
                   </b>
                 )}
               </CardContent>
