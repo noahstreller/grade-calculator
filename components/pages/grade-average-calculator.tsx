@@ -3,6 +3,7 @@ import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
+import { GradeOverview } from "@/components/cards/grade-overview";
 import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { RequiredGrades } from "@/components/cards/required-grades";
 import { CardBoard } from "@/components/ui/cardboard";
@@ -113,11 +114,11 @@ export default function GradeAverageCalculator() {
             setData={setAverageData}
             refresh={refreshAll}
           />
-          {/* <GradeOverview
+          <GradeOverview
             data={gradeData}
             passingData={passingData}
             failingData={failingData}
-          /> */}
+          />
         </CardBoard>
         <CardBoard>
           <AllGrades
