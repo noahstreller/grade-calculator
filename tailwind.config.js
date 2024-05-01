@@ -5,10 +5,10 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -78,16 +78,16 @@ module.exports = {
   },
   plugins: [
     plugin(function ({ addUtilities }) {
-			addUtilities({
-				'.drag-none': {
-					'-webkit-user-drag': 'none',
-					'-khtml-user-drag': 'none',
-					'-moz-user-drag': 'none',
-					'-o-user-drag': 'none',
-					'user-drag': 'none'
-				}
-			});
-		}),
+      addUtilities({
+        ".drag-none": {
+          "-webkit-user-drag": "none",
+          "-khtml-user-drag": "none",
+          "-moz-user-drag": "none",
+          "-o-user-drag": "none",
+          "user-drag": "none",
+        },
+      });
+    }),
     require("tailwindcss-animate"),
   ],
-}
+};
