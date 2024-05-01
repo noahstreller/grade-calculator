@@ -67,8 +67,10 @@ export function AverageOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Grade
               </span>
-              <ColoredGrade noMargin grade={payload[0].payload.average.gradeAverage} />
-
+              <ColoredGrade
+                className="text-left font-bold"
+                grade={payload[0].payload.average.gradeAverage}
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">

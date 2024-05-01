@@ -59,7 +59,7 @@ export function GradeOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Grade
               </span>
-              <ColoredGrade grade={payload[0].value} />
+              <ColoredGrade grade={payload[0].value} className="text-left font-bold" />
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
