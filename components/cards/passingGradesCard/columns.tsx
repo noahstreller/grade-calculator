@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
+import { isMobile } from "react-device-detect";
 export function columns(): ColumnDef<AverageWithSubject>[] {
   const { t, lang } = createTranslation("common");
 
@@ -33,15 +34,15 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
       },
       cell: ({ row }) => {
         let subject: string = row.original.subject.name || "";
-        let truncated: boolean = truncateText(subject, 20).truncated;
-        let truncatedSubject: string = truncateText(subject, 20).text;
+        let truncated: boolean = truncateText(subject, isMobile ? 20 : 10).truncated;
+        let truncatedSubject: string = truncateText(subject, isMobile ? 20 : 10).text;
 
         if (truncated) {
           return (
             <TooltipProvider>
               <SubjectGradeBadge
                 average={row.original}
-                className="mr-2 ml-2"
+                className="mr-2"
                 hideText
               />
               <Tooltip>
@@ -56,14 +57,14 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
           );
         }
         return (
-          <p className="ml-2">
+          <>
             <SubjectGradeBadge
               average={row.original}
               className="mr-2"
               hideText
             />
             {subject}
-          </p>
+          </>
         );
       },
     },
