@@ -79,7 +79,3 @@ export function getDefaultPreferences(): Preferences {
     userId: null,
   } satisfies NewPreferences;
 }
-
-export function mockPreferences(): Preferences {
-  return getDefaultPreferences();
-}

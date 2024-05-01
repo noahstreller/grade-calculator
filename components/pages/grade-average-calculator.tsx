@@ -3,6 +3,7 @@ import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
+import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
@@ -14,7 +15,7 @@ export default function GradeAverageCalculator() {
   const [gradeData, setGradeData] = useState<GradeWithSubject[]>([]);
   const [averageData, setAverageData] = useState<AverageWithSubject[]>([]);
   const [failingData, setFailingData] = useState<AverageWithSubject[]>([]);
-  // const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
+  const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   const refreshGrades = async () => {
@@ -25,7 +26,6 @@ export default function GradeAverageCalculator() {
 
   const refreshAverages = async () => {
     let averages = catchProblem(await getAllGradeAveragesWithSubject());
-    console.table(averages);
     setAverageData([...averages]);
     return averages;
   };
@@ -35,22 +35,25 @@ export default function GradeAverageCalculator() {
     let failing = allAverages.filter(
       (average: AverageWithSubject) => average.average?.passing === false
     );
-    console.table(failing);
     setFailingData([...failing]);
     return failing;
   }
 
-  // function refreshPassing() {
-  //   let subjects = Subjects.getPassingSubjects();
-  //   setPassingData([...subjects]);
-  // }
+  function refreshPassing(averages: AverageWithSubject[]) {
+    let allAverages = averages;
+    let passing = allAverages.filter(
+      (average: AverageWithSubject) => average.average?.passing
+    );
+    setPassingData([...passing]);
+    return passing;
+  }
 
   function refreshAll() {
     refreshGrades();
     refreshAverages().then((averages: AverageWithSubject[]) => {
       refreshFailing(averages);
+      refreshPassing(averages);
     });
-    // refreshPassing();
   }
 
   useEffect(() => {
@@ -84,9 +87,9 @@ export default function GradeAverageCalculator() {
         {/* <RequiredGrades
           gradeData={gradeData}
           averageData={[...passingData, ...failingData]}
-        />
-        <PassingGradesCard data={passingData} setData={setPassingData} /> */}
-        <FailingGradesCard data={failingData} setData={setFailingData} />
+        /> */}
+        <PassingGradesCard data={passingData} />
+        <FailingGradesCard data={failingData} />
         {/* <FailingGradesCard data={failingData} setData={setFailingData} />
         <AverageOverview
           data={gradeData}
@@ -100,8 +103,8 @@ export default function GradeAverageCalculator() {
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
         <CardBoard>
-          {/* <PassingGradesCard data={passingData} setData={setPassingData} /> */}
-          <FailingGradesCard data={failingData} setData={setFailingData} />
+          <PassingGradesCard data={passingData} />
+          <FailingGradesCard data={failingData} />
           {/* <AverageOverview
             data={gradeData}
             averageData={[...passingData, ...failingData]}

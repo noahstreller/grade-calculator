@@ -1,6 +1,6 @@
 "use client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -13,13 +13,7 @@ import {
 import { DataTable } from "../../ui/data-table";
 import { columns } from "./columns";
 
-export default function PassingGradesCard({
-  data,
-  setData,
-}: {
-  data: GradeAverage[];
-  setData: Function;
-}) {
+export default function PassingGradesCard({ data }: { data: AverageWithSubject[] }) {
   const { t } = useTranslation("common");
 
   return (
