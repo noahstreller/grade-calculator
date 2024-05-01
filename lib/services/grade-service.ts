@@ -69,6 +69,7 @@ export async function getGradeAverageWithSubjectBySubject(
         average: {
           subjectId: grades[0].grades.subject_fk!,
           gradeAverage: sum / grades.length,
+          gradeSum: sum,
           gradeAmount: grades.length,
           passing: doesGradePass(
             sum / grades.length,
@@ -103,6 +104,7 @@ export async function getGradeAverageBySubject(
         subjectId: grades[0].subject_fk!,
         gradeAverage: sum / grades.length,
         gradeAmount: grades.length,
+        gradeSum: sum,
         passing: doesGradePass(
           sum / grades.length,
           catchProblem(await getPreferencesElseGetDefault())

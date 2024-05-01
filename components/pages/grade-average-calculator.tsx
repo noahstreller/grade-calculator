@@ -4,6 +4,7 @@ import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
 import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
+import { RequiredGrades } from "@/components/cards/required-grades";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
@@ -84,14 +85,10 @@ export default function GradeAverageCalculator() {
           setData={setGradeData}
           refresh={refreshAll}
         />
-        {/* <RequiredGrades
-          gradeData={gradeData}
-          averageData={[...passingData, ...failingData]}
-        /> */}
+        <RequiredGrades averageData={averageData} />
         <PassingGradesCard data={passingData} />
         <FailingGradesCard data={failingData} />
-        {/* <FailingGradesCard data={failingData} setData={setFailingData} />
-        <AverageOverview
+        {/* <AverageOverview
           data={gradeData}
           averageData={[...passingData, ...failingData]}
         />
@@ -128,10 +125,7 @@ export default function GradeAverageCalculator() {
             setData={setGradeData}
             refresh={refreshAll}
           />
-          {/* <RequiredGrades
-            gradeData={gradeData}
-            averageData={[...passingData, ...failingData]}
-          /> */}
+          <RequiredGrades averageData={averageData} />
         </CardBoard>
       </CardBoard>
     </>

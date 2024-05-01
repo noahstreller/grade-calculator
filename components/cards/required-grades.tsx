@@ -1,9 +1,9 @@
 "use client";
-import appGlobals, { getAppGlobals } from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
-import Subjects from "@/lib/entities/subject";
+import { usePreferences } from "@/components/preferences-provider";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { round, truncateText } from "@/lib/utils";
+import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -19,13 +19,15 @@ import {
 import { CardBoard } from "../ui/cardboard";
 
 function RequiredGradesBody({
-  gradeData,
   averageData,
+  showPassing
 }: {
-  gradeData: Grade[];
-  averageData: GradeAverage[];
+  averageData: AverageWithSubject[];
+  showPassing: boolean;
 }) {
   const { t } = useTranslation("common");
+  const preferences = usePreferences().preferences;
+
   const chunkIntoPieces = (data: Array<any>, amount: number = 2) => {
     const result = [];
     for (let i = 0; i < data.length; i += amount) {
@@ -35,20 +37,15 @@ function RequiredGradesBody({
   };
 
   const getRequiredGradeToPass = (
-    average: GradeAverage
+    average: AverageWithSubject
   ): { result: number; overflowCounts: number } => {
-    let sum = 0;
-    let count = 1;
-    let passing = appGlobals.passingGrade;
-    let max = appGlobals.maximumGrade;
-    let min = appGlobals.minimumGrade;
-    let result = 0;
+    let sum = average.average?.gradeSum!;
+    let count = average.average?.gradeAmount! + 1;
+    let passing = preferences?.passingGrade!;
+    let max = preferences?.maximumGrade!;
+    let min = preferences?.minimumGrade!;
+    let result = passing * count - sum;;
     let overflowCounts = 0;
-    for (let grade of average.grades) {
-      sum += grade.getValue();
-      count++;
-    }
-    result = passing * count - sum;
     while (result > max || result < min) {
       count++;
       if (result > max){
@@ -67,16 +64,16 @@ function RequiredGradesBody({
   const getGradeOverflowString = (overflowCounts: number ) => {
     let result = "";
     if(overflowCounts < 0){
-      if(overflowCounts < -10) return ` + ${-overflowCounts} × ${getAppGlobals().minimumGrade}`;
+      if(overflowCounts < -10) return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
       for (let i = 0; i > overflowCounts; i--) {
-        result += ` + ${appGlobals.minimumGrade}`;
+        result += ` + ${preferences?.minimumGrade}`;
       }
       return result;
     }
 
-    if(overflowCounts > 10) return ` + ${overflowCounts} × ${getAppGlobals().maximumGrade}`;
+    if(overflowCounts > 10) return ` + ${overflowCounts} × ${preferences?.maximumGrade}`;
     for (let i = 0; i < overflowCounts; i++) {
-      result += ` + ${appGlobals.maximumGrade}`;
+      result += ` + ${preferences?.maximumGrade}`;
     }
     return result;
   };
@@ -103,30 +100,31 @@ function RequiredGradesBody({
       ) : (
         chunkPairs.map((pair, index) => (
           <CardBoard row key={index}>
-            {pair.map((average: GradeAverage, index: number) => (
+            {pair.map((average: AverageWithSubject, index: number) => (!average.average?.passing || showPassing) && average.average ? (
               <Card key={index}>
                 <CardHeader>
                   <h2>
-                    {average.subject &&
-                    Subjects.doesSubjectPass(average.subject) ? (
+                    {average.subject && average.average?.passing ? (
                       <span className="text-green-400">
-                        {truncateForPage(average.subject)}
+                        {truncateForPage(average.subject.name)}
                       </span>
                     ) : (
                       <span className="text-red-400">
-                        {truncateForPage(average.subject)}
+                        {truncateForPage(average.subject.name)}
                       </span>
                     )}{" "}
                     <Badge variant="secondary">
-                      {average.grades.length}{" "}
-                      {t("grades.grades", { count: average.grades.length })}
+                      {average.average?.gradeAmount}{" "}
+                      {t("grades.grades", {
+                        count: average.average?.gradeAmount,
+                      })}
                     </Badge>
                   </h2>
                 </CardHeader>
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
                     <span className="text-muted-foreground text-4xl">
-                      {getAppGlobals().passingInverse ? "<" : ">"}
+                      {preferences?.passingInverse ? "<" : ">"}
                     </span>
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
@@ -137,15 +135,13 @@ function RequiredGradesBody({
                         )
                       : null}
                     <br />
-                    {Grade.doesGradeFailOrEqual(
-                      getRequiredGradeToPass(average).result
-                    )
+                    {average.average?.passing
                       ? t("required-grades.passed")
                       : t("required-grades.required")}
                   </h1>
                 </CardContent>
               </Card>
-            ))}
+            ): null)}
           </CardBoard>
         ))
       )}
@@ -154,21 +150,32 @@ function RequiredGradesBody({
 }
 
 export function RequiredGrades({
-  gradeData,
   averageData,
 }: {
-  gradeData: Grade[];
-  averageData: GradeAverage[];
+  averageData: AverageWithSubject[];
 }) {
   const { t } = useTranslation("common");
+  const [showPassing, setShowPassing] = useState<boolean>(false);
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{t("required-grades.title")}</CardTitle>
-        <CardDescription>{t("required-grades.description")}</CardDescription>
+      <CardHeader className="flex-row justify-between">
+        <div>
+          <CardTitle>{t("required-grades.title")}</CardTitle>
+          <CardDescription>{t("required-grades.description")}</CardDescription>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch checked={showPassing} onCheckedChange={setShowPassing} />
+          <Label>
+            Show <span className="text-green-400">passing</span> grades
+          </Label>
+        </div>
       </CardHeader>
       <CardContent>
-        <RequiredGradesBody gradeData={gradeData} averageData={averageData} />
+        <RequiredGradesBody
+          averageData={averageData}
+          showPassing={showPassing}
+        />
       </CardContent>
     </Card>
   );

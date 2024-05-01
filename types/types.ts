@@ -5,6 +5,7 @@ export type Average = {
   subjectId: number,
   gradeAverage: number | Empty,
   gradeAmount: number,
+  gradeSum: number | Empty,
   passing: boolean | Empty,
 }
 
