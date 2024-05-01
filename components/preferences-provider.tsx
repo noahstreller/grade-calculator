@@ -1,6 +1,7 @@
 import { Preferences } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
-import { getPreferences } from "@/lib/services/preferences-service";
+import { getPreferencesElseGetDefault } from "@/lib/services/preferences-service";
+import { getDefaultPreferences } from "@/lib/utils";
 import { createContext, useContext, useEffect, useState } from "react";
 
 
@@ -19,11 +20,11 @@ const defaultContextValue: PreferencesContextType = {
 const PreferencesContext = createContext(defaultContextValue);
 
 export function PreferencesProvider({ children }: { children: React.ReactNode }) {
-  const [preferences, setPreferences] = useState<Preferences>();
+  const [preferences, setPreferences] = useState<Preferences>(getDefaultPreferences());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPreferences().then((result): void => {
+    getPreferencesElseGetDefault().then((result): void => {
       setPreferences(catchProblem(result));
       setLoading(false);
     });

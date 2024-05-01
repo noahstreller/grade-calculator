@@ -9,12 +9,12 @@ import {
   text,
   timestamp,
   unique,
-  varchar,
+  varchar
 } from "drizzle-orm/pg-core";
 
 export const grades = pgTable("grades", {
   id: serial("id").primaryKey(),
-  value: integer("value"),
+  value: doublePrecision("value"),
   subject_fk: integer("subject_fk").references(() => subjects.id, {
     onDelete: "cascade",
   }),
@@ -38,9 +38,9 @@ export const subjects = pgTable(
 
 export const preferences = pgTable("preferences", {
   id: serial("id").primaryKey(),
-  passingGrade: integer("passingGrade").default(4),
-  minimumGrade: integer("minimumGrade").default(1),
-  maximumGrade: integer("maximumGrade").default(6),
+  passingGrade: doublePrecision("passingGrade").default(4),
+  minimumGrade: doublePrecision("minimumGrade").default(1),
+  maximumGrade: doublePrecision("maximumGrade").default(6),
   gradeDecimals: integer("gradeDecimals").default(3),
   newEntitySheetShouldStayOpen: boolean("newEntitySheetShouldStayOpen").default(
     false

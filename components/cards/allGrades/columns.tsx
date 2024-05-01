@@ -68,6 +68,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       cell: ({ row }) => {
         let value: number = row.original.grades.value!;
         return <ColoredGrade grade={value} />
+        // return value
       },
     },
     {

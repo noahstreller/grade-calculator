@@ -4,6 +4,7 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -28,12 +29,11 @@ import {
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { TimePicker } from "@/components/ui/time-picker";
 import { NewGrade, Subject } from "@/db/schema";
-import appGlobals from "@/lib/app.globals";
 import { catchProblem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
 import { addGradeToast } from "@/lib/toasts";
-import { cn, truncateText } from "@/lib/utils";
+import { cn, getDefaultPreferences, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -56,6 +56,9 @@ export function CreateGradeForm({
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
   const [loading, setLoading] = useState(true);
+
+  const preferences = usePreferences().preferences;
+  const defaultPreferences = getDefaultPreferences();
 
   // useEffect(() => {
   //   subjectSet.forEach((subj) => {
@@ -85,8 +88,8 @@ export function CreateGradeForm({
         invalid_type_error: t("errors.invalid-type.number"),
         required_error: t("errors.required"),
       })
-      .gte(appGlobals.minimumGrade)
-      .lte(appGlobals.maximumGrade),
+      .gte(preferences?.minimumGrade ?? defaultPreferences.minimumGrade!)
+      .lte(preferences?.maximumGrade ?? defaultPreferences.maximumGrade!),
     weight: z
       .number({
         invalid_type_error: t("errors.invalid-type.number"),
@@ -113,7 +116,7 @@ export function CreateGradeForm({
     // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
     addGradeToast(grade);
     refresh();
-    if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
+    if (!preferences?.newEntitySheetShouldStayOpen ?? !defaultPreferences.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
 
   return (

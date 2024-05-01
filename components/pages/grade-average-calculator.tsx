@@ -2,6 +2,7 @@
 import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
+import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
@@ -12,24 +13,32 @@ import { useEffect, useState } from "react";
 export default function GradeAverageCalculator() {
   const [gradeData, setGradeData] = useState<GradeWithSubject[]>([]);
   const [averageData, setAverageData] = useState<AverageWithSubject[]>([]);
-  // const [failingData, setFailingData] = useState<GradeAverage[]>([]);
-  // const [passingData, setPassingData] = useState<GradeAverage[]>([]);
+  const [failingData, setFailingData] = useState<AverageWithSubject[]>([]);
+  // const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   const refreshGrades = async () => {
     let grades = catchProblem(await getAllGradesWithSubject());
     setGradeData([...grades]);
-  }
+    return grades;
+  };
 
   const refreshAverages = async () => {
-    let averages = catchProblem(await getAllGradeAveragesWithSubject())
+    let averages = catchProblem(await getAllGradeAveragesWithSubject());
+    console.table(averages);
     setAverageData([...averages]);
-  }
+    return averages;
+  };
 
-  // function refreshFailing() {
-  //   let subjects = Subjects.getFailingSubjects();
-  //   setFailingData([...subjects]);
-  // }
+  function refreshFailing(averages: AverageWithSubject[]) {
+    let allAverages = averages;
+    let failing = allAverages.filter(
+      (average: AverageWithSubject) => average.average?.passing === false
+    );
+    console.table(failing);
+    setFailingData([...failing]);
+    return failing;
+  }
 
   // function refreshPassing() {
   //   let subjects = Subjects.getPassingSubjects();
@@ -38,26 +47,25 @@ export default function GradeAverageCalculator() {
 
   function refreshAll() {
     refreshGrades();
-    refreshAverages();
-    // refreshFailing();
+    refreshAverages().then((averages: AverageWithSubject[]) => {
+      refreshFailing(averages);
+    });
     // refreshPassing();
   }
 
   useEffect(() => {
-  //   Subjects.load();
-  //   Grade.load();
-  //   refreshAll();
-  // setLoaded(true);
+    //   Subjects.load();
+    //   Grade.load();
+    //   refreshAll();
+    // setLoaded(true);
 
     try {
-      refreshAll()
-    }
-    finally {
-      setLoaded(true)
+      refreshAll();
+    } finally {
+      setLoaded(true);
     }
 
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return loaded ? (
@@ -77,8 +85,9 @@ export default function GradeAverageCalculator() {
           gradeData={gradeData}
           averageData={[...passingData, ...failingData]}
         />
-        <PassingGradesCard data={passingData} setData={setPassingData} />
+        <PassingGradesCard data={passingData} setData={setPassingData} /> */}
         <FailingGradesCard data={failingData} setData={setFailingData} />
+        {/* <FailingGradesCard data={failingData} setData={setFailingData} />
         <AverageOverview
           data={gradeData}
           averageData={[...passingData, ...failingData]}
@@ -90,14 +99,14 @@ export default function GradeAverageCalculator() {
         /> */}
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-        {/* <CardBoard>
-          <PassingGradesCard data={passingData} setData={setPassingData} />
+        <CardBoard>
+          {/* <PassingGradesCard data={passingData} setData={setPassingData} /> */}
           <FailingGradesCard data={failingData} setData={setFailingData} />
-          <AverageOverview
+          {/* <AverageOverview
             data={gradeData}
             averageData={[...passingData, ...failingData]}
-          />
-        </CardBoard> */}
+          /> */}
+        </CardBoard>
         <CardBoard>
           <AllSubjects
             data={averageData}

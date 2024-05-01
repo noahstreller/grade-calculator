@@ -50,6 +50,13 @@
       "when": 1714141273793,
       "tag": "0006_short_puck",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1714546549247,
+      "tag": "0007_wandering_triathlon",
+      "breakpoints": true
     }
   ]
 }

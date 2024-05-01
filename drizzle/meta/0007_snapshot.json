@@ -1,6 +1,6 @@
 {
-  "id": "5a66a311-554f-4324-a0f9-80956b58619f",
-  "prevId": "93131d8a-7a9e-4b90-adf7-0fc39ea13a2c",
+  "id": "2aa23593-1fa1-4095-8c1f-8f089f08a173",
+  "prevId": "5a66a311-554f-4324-a0f9-80956b58619f",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -114,7 +114,7 @@
         },
         "value": {
           "name": "value",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": false
         },
@@ -157,7 +157,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "grades_userId_user_id_fk": {
@@ -189,21 +189,21 @@
         },
         "passingGrade": {
           "name": "passingGrade",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": false,
           "default": 4
         },
         "minimumGrade": {
           "name": "minimumGrade",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": false,
           "default": 1
         },
         "maximumGrade": {
           "name": "maximumGrade",
-          "type": "integer",
+          "type": "double precision",
           "primaryKey": false,
           "notNull": false,
           "default": 6

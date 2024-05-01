@@ -22,7 +22,7 @@ export async function getPreferencesElseGetDefault(): Promise<Preferences | Prob
   try {
     const userId = await getUserId();
     let result = await getPreferencesFromDb(userId);
-    if (result.length === 0) {
+    if (result.length === 1) {
       return result[0];
     }
     return getDefaultPreferences();
