@@ -6,7 +6,7 @@ import { round } from "@/lib/utils";
 import { Empty } from "@/types/types";
 import { useEffect, useState } from "react";
 
-export function ColoredGrade({grade}: {grade: number | Empty}) {
+export function ColoredGrade({grade, noMargin}: {grade: number | Empty, noMargin?: boolean}) {
 
   const [isPassing, setIsPassing] = useState<boolean | null>(null);
   const preferences = usePreferences();
@@ -26,7 +26,7 @@ export function ColoredGrade({grade}: {grade: number | Empty}) {
 
   return (
     <>
-      {isPassing === null && <p className="text-muted-foreground ml-4">-</p>}
+      {isPassing === null && <p className={noMargin ? "text-muted-foreground" : "text-muted-foreground ml-4"}>-</p>}
       {isPassing === false && (
         <p className="text-red-400 ml-4">
           {round(grade ?? 0, preferences.preferences?.gradeDecimals!)}

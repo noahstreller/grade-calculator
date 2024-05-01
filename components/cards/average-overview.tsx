@@ -1,7 +1,10 @@
+import { ColoredGrade } from "@/components/colored-grade";
+import { usePreferences } from "@/components/preferences-provider";
+import { GradeWithSubject } from "@/db/schema";
 import appGlobals from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
+import { doesGradePass, getSubjectAverages, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
+import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
@@ -29,22 +32,22 @@ export function AverageOverview({
   data,
   averageData,
 }: {
-  data: Grade[];
-  averageData: GradeAverage[];
+  data: GradeWithSubject[];
+  averageData: AverageWithSubject[];
 }) {
   const { t } = useTranslation("common");
+  const preferences = usePreferences().preferences!;
 
-  let getGrade = (grade: Grade) => {
-    return grade.getValue();
+  let subjectAverage = (gradeAverage: AverageWithSubject) => {
+    return gradeAverage.average?.gradeAverage!;
   };
 
-  let subjectAverage = (gradeAverage: GradeAverage) => {
-    return gradeAverage.gradeAverage;
+  let averageSubject = (gradeAverage: AverageWithSubject) => {
+    return gradeAverage.subject.name!;
   };
 
-  let averageSubject = (gradeAverage: GradeAverage) => {
-    return gradeAverage.subject;
-  };
+  const subjectAverages = getSubjectAverages(averageData);
+  const gradeAverages = getTotalGradeAverages(data);
 
   const CustomTooltip = ({
     active,
@@ -55,6 +58,7 @@ export function AverageOverview({
     payload?: any;
     label?: any;
   }) => {
+    console.log(payload);
     if (active && payload && payload.length) {
       return (
         <div className="rounded-lg border bg-background p-2 shadow-sm">
@@ -63,18 +67,15 @@ export function AverageOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Grade
               </span>
-              {Grade.doesGradePass(payload[0].value) ? (
-                <span className="text-green-400 font-bold">{`${payload[0].value}`}</span>
-              ) : (
-                <span className="text-red-400 font-bold">{`${payload[0].value}`}</span>
-              )}
+              <ColoredGrade noMargin grade={payload[0].payload.average.gradeAverage} />
+
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Subject
               </span>
               <span className="font-bold text-muted-foreground">
-                {truncateText(payload[0].payload.subject, 20).text}
+                {truncateText(payload[0].payload.subject.name, 20).text}
               </span>
             </div>
             <div className="flex flex-col">
@@ -82,7 +83,7 @@ export function AverageOverview({
                 Grade Count
               </span>
               <span className="font-bold text-muted-foreground">
-                {payload[0].payload.grades.length}
+                {payload[0].payload.average.gradeAmount}
               </span>
             </div>
           </div>
@@ -147,29 +148,17 @@ export function AverageOverview({
                 </Popover>
               </CardHeader>
               <CardContent>
-                {GradeAverage.getAverageFromGradeAverages(averageData)
-                  .gradeAverage === 0 ? (
+                {subjectAverages === 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-gray-400">
                     -
                   </b>
-                ) : Grade.doesGradePass(
-                    GradeAverage.getAverageFromGradeAverages(averageData)
-                      .gradeAverage
-                  ) ? (
+                ) : doesGradePass(subjectAverages, preferences) ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
-                    {round(
-                      GradeAverage.getAverageFromGradeAverages(averageData)
-                        .gradeAverage,
-                      2
-                    )}
+                    {round(subjectAverages, 2)}
                   </b>
                 ) : (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
-                    {round(
-                      GradeAverage.getAverageFromGradeAverages(averageData)
-                        .gradeAverage,
-                      2
-                    )}
+                    {round(subjectAverages, 2)}
                   </b>
                 )}
               </CardContent>
@@ -187,23 +176,23 @@ export function AverageOverview({
                 </Popover>
               </CardHeader>
               <CardContent>
-                {GradeAverage.getAverageFromGrades(data).gradeAverage === 0 ? (
+                {gradeAverages === 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-gray-400">
                     -
                   </b>
-                ) : Grade.doesGradePass(
-                    GradeAverage.getAverageFromGrades(data).gradeAverage
+                ) : doesGradePass(
+                    gradeAverages, preferences
                   ) ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {round(
-                      GradeAverage.getAverageFromGrades(data).gradeAverage,
+                      gradeAverages,
                       2
                     )}
                   </b>
                 ) : (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
                     {round(
-                      GradeAverage.getAverageFromGrades(data).gradeAverage,
+                      gradeAverages,
                       2
                     )}
                   </b>

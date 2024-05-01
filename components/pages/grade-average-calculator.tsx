@@ -1,6 +1,7 @@
 "use client";
 import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
+import { AverageOverview } from "@/components/cards/average-overview";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
 import { GradeOverview } from "@/components/cards/grade-overview";
@@ -89,24 +90,24 @@ export default function GradeAverageCalculator() {
         <RequiredGrades averageData={averageData} />
         <PassingGradesCard data={passingData} />
         <FailingGradesCard data={failingData} />
-        {/* <AverageOverview
+        <AverageOverview
           data={gradeData}
-          averageData={[...passingData, ...failingData]}
+          averageData={averageData}
         />
         <GradeOverview
           data={gradeData}
           passingData={passingData}
           failingData={failingData}
-        /> */}
+        />
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
         <CardBoard>
           <PassingGradesCard data={passingData} />
           <FailingGradesCard data={failingData} />
-          {/* <AverageOverview
+          <AverageOverview
             data={gradeData}
-            averageData={[...passingData, ...failingData]}
-          /> */}
+            averageData={averageData}
+          />
         </CardBoard>
         <CardBoard>
           <AllSubjects
