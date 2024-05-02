@@ -124,11 +124,13 @@ export function GradeOverview({
               />
               <Tooltip content={<CustomTooltip />} />
               <YAxis
-                reversed={preferences.passingInverse!}
                 tickCount={6}
                 domain={[preferences.minimumGrade!, preferences.maximumGrade!]}
               />
-              <XAxis tick={false} />
+              <XAxis
+                tick={false}
+                label={preferences.passingInverse ? "Lower is better" : "Higher is better"}
+              />
               <ReferenceLine
                 y={preferences.passingGrade!}
                 label={<Label value="Passing Grade" dx={-120} dy={-12} />}

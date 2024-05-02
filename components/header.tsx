@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import LoginButton from "@/components/login-button";
+import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
   ClearDataTranslations,
@@ -92,7 +92,7 @@ export default function HeaderComponent() {
           clearDataTranslations={clearDataTranslations}
           translations={preferencesTranslations}
         />
-        <LoginButton className="hidden md:flex" />
+        <LoggedInAvatar />
       </div>
     </header>
   );

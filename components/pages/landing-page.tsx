@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardStack, Highlight } from "@/components/ui/card-stack";
 import { CardBoard } from "@/components/ui/cardboard";
 import { Separator } from "@/components/ui/separator";
-import { Github } from "lucide-react";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -108,7 +108,7 @@ export function LandingPage() {
                     <Link
                       href={"https://github.com/noahstreller/notenrechner-next"}
                     >
-                      <Github className="size-4 m-2" />
+                      <SiGithub className="size-4 m-2" />
                       View on GitHub
                     </Link>
                   </Button>
@@ -206,7 +206,7 @@ export function LandingPage() {
                   <Link
                     href={"https://github.com/noahstreller/notenrechner-next"}
                   >
-                    <Github className="size-4 m-2" />
+                    <SiGithub className="size-4 m-2" />
                     View on GitHub
                   </Link>
                 </Button>

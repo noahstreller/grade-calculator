@@ -108,7 +108,7 @@ function RequiredGradesBody({
             <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
           ) : (
             <AlertDescription>
-              {t("errors.not-enough-data-yet-failing_0")}
+              {t("errors.not-enough-subjects-yet-failing_0")}
             </AlertDescription>
           )}
         </Alert>

@@ -13,17 +13,33 @@ export function round(value: number, precision: number) {
 }
 
 export function truncateText(text: string, maxLength: number) {
-  if (text.length > maxLength) {
-    let truncated = text.substring(0, maxLength - 3) + '...';
-    return {text: truncated, truncated: true}
-  } else {
-    return {text: text, truncated: false};
+  try {
+    if (text.length > maxLength) {
+      let truncated = text.substring(0, maxLength) + "..."
+      return { text: truncated, truncated: true }
+    } else {
+      return { text, truncated: false }
+    }
+  } catch {
+    return { text, truncated: false };
+  }
+}
+
+export function truncateEmail(email: string, maxLengthBeforeDomain: number, maxLengthAfterDomain: number = maxLengthBeforeDomain) {
+  try {
+    let [username, domain] = email.split("@");
+    let truncatedUsername = truncateText(username, maxLengthBeforeDomain);
+    let truncatedDomain = truncateText(domain, maxLengthAfterDomain);
+    return truncatedUsername.text + "@" + truncatedDomain.text;
+  }
+  catch {
+    return email;
   }
 }
 
 export function truncateTextWithoutDots(text: string, maxLength: number) {
   if (text.length > maxLength) {
-    let truncated = text.substring(0, maxLength - 3);
+    let truncated = text.substring(0, maxLength);
     return {text: truncated, truncated: true}
   } else {
     return {text: text, truncated: false};
