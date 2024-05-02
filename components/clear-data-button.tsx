@@ -1,4 +1,5 @@
 "use client";
+import { clearUserSubjectsGrades } from "@/lib/services/user-service";
 import { ClearDataTranslations } from "@/lib/translationObjects";
 import { useSession } from "next-auth/react";
 import {
@@ -21,8 +22,7 @@ export function ClearDataButton({
   children: React.ReactNode;
 }) {
   function clearData() {
-    localStorage.removeItem("grades");
-    localStorage.removeItem("subjects");
+    clearUserSubjectsGrades();
     window.location.reload();
   }
   const session = useSession();

@@ -104,7 +104,13 @@ function RequiredGradesBody({
         <Alert>
           <Bird className="h-4 w-4" />
           <AlertTitle>{t("errors.no-data-yet")}</AlertTitle>
-          <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
+          {showPassing ? (
+            <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
+          ) : (
+            <AlertDescription>
+              {t("errors.not-enough-data-yet-failing_0")}
+            </AlertDescription>
+          )}
         </Alert>
       ) : (
         chunkPairs.map((pair, index) => (

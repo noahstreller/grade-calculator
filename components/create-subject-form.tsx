@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,8 +13,6 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import appGlobals from "@/lib/app.globals";
-import Subjects from "@/lib/entities/subject";
 import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
@@ -23,6 +22,7 @@ import { Input } from "./ui/input";
 
 export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, setOpen: Function}) {
   const { t, lang } = useTranslation("common");
+  const preferences = usePreferences().preferences!;
 
   type FormValues = {
     subject: string;
@@ -47,15 +47,14 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    let subject = Subjects.add(data.subject);
-
-    catchProblem(await quickCreateSubject(subject));
+    const subject = data.subject
+    let insertedId: number | undefined = catchProblem(await quickCreateSubject(subject));
 
     form.reset(defaultValues);
     form.setFocus("subject");
-    addSubjectToast(subject);
+    if (insertedId) addSubjectToast(subject);
     refresh();
-    if (!appGlobals.newEntitySheetShouldStayOpen) setOpen(false);
+    if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
   }
 
   return (
