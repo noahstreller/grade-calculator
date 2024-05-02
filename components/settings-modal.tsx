@@ -6,7 +6,6 @@ import { z } from "zod";
 import { AccountSection } from "@/components/account-section";
 import { ClearDataButton } from "@/components/clear-data-button";
 import { ImportExportButton } from "@/components/import-export-button";
-import LoginButton from "@/components/login-button";
 import { usePreferences } from "@/components/preferences-provider";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -358,7 +357,6 @@ export function SettingsModal({
               <span className="sr-only">Delete all data</span>
             </Button>
           </ClearDataButton>
-          <LoginButton className="hidden md:flex" />
         </div>
         <Separator />
         <AccountSection />
