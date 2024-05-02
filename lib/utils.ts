@@ -67,6 +67,13 @@ export function getDateOrDateTime(date: Date) {
   }
 }
 
+export function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((word) => word[0])
+    .join("");
+}
+
 export function getDefaultPreferences(): Preferences {
   return {
     gradeDecimals: 3,

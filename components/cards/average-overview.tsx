@@ -100,14 +100,18 @@ export function AverageOverview({
         <CardTitle>{t("subject-overview.title")}</CardTitle>
         <CardDescription>{t("subject-overview.description")}</CardDescription>
       </CardHeader>
-      {averageData.length >= 3 ? (
+      {averageData.filter(
+        (average) =>
+          average.average?.gradeAmount && average.average?.gradeAmount !== 0
+      ).length >= 3 ? (
         <CardContent className="w-full h-72">
           <ResponsiveContainer>
             <RadarChart
               innerRadius={10}
               data={averageData.filter(
                 (average) =>
-                  average.average?.gradeAmount && average.average?.gradeAmount !== 0
+                  average.average?.gradeAmount &&
+                  average.average?.gradeAmount !== 0
               )}
             >
               <PolarGrid />
@@ -154,7 +158,7 @@ export function AverageOverview({
                 </Popover>
               </CardHeader>
               <CardContent>
-                {subjectAverages === 0 ? (
+                {subjectAverages === 0 || !subjectAverages ? (
                   <b className="block text-5xl text-center items-center self-center text-gray-400">
                     -
                   </b>

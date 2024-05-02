@@ -3,13 +3,13 @@ import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
 import { Footer } from '@/components/footer';
 import HeaderComponent from '@/components/header';
 import { LoadingScreen } from '@/components/loadingscreen';
+import { ToasterWrapper } from '@/components/toaster-wrapper';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Author } from 'next/dist/lib/metadata/types/metadata-types';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -108,8 +108,7 @@ export default function RootLayout({
           </div>
           <LoadingScreen />
           <CorruptedDataDialog />
-          <Toaster theme="light" className="dark:hidden dark:size-0" />
-          <Toaster theme="dark" className="hidden dark:flex" />
+          <ToasterWrapper />
         </Providers>
         <SpeedInsights />
         <Analytics />

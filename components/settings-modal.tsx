@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { AccountSection } from "@/components/account-section";
 import { ClearDataButton } from "@/components/clear-data-button";
 import { ImportExportButton } from "@/components/import-export-button";
 import LoginButton from "@/components/login-button";
@@ -92,7 +93,7 @@ export function SettingsModalForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
         <FormField
           control={form.control}
           name="gradeDecimals"
@@ -359,6 +360,9 @@ export function SettingsModal({
           </ClearDataButton>
           <LoginButton className="hidden md:flex" />
         </div>
+        <Separator />
+        <AccountSection />
+        <Separator />
         <SettingsModalForm translations={translations} />
       </SheetContent>
     </Sheet>

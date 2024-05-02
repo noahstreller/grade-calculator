@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
-import { doesGradePass } from "@/lib/services/notAsyncLogic";
+import { doesGradePass, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
 import { getDateOrTime, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import {
+  Label,
   Line,
   LineChart,
   ReferenceLine,
@@ -130,8 +131,19 @@ export function GradeOverview({
               <XAxis tick={false} />
               <ReferenceLine
                 y={preferences.passingGrade!}
+                label={<Label value="Passing Grade" dx={-120} dy={-12} />}
                 strokeDasharray="3 5"
                 stroke="grey"
+              />
+              <ReferenceLine
+                y={getTotalGradeAverages(data)}
+                label={<Label value="Your Average" dx={-120} dy={12} />}
+                strokeDasharray="10 4"
+                stroke={
+                  doesGradePass(getTotalGradeAverages(data), preferences)
+                    ? "#4ade80"
+                    : "#f87171"
+                }
               />
             </LineChart>
           </ResponsiveContainer>

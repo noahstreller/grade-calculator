@@ -85,7 +85,7 @@ export function importFailedToast(){
 
 export function toastProblem(problem: Problem) {
   toast(problem.finalMessage, {
-    description: problem.errorMessage,
+    description: problem.solution,
     action: {
       label: t("actions.ok"),
       onClick: () => void 0,

@@ -1,5 +1,4 @@
 "use client";
-import LoginButton from "@/components/login-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardStack, Highlight } from "@/components/ui/card-stack";
@@ -79,9 +78,9 @@ export function LandingPage() {
                     </a>
                   </Highlight>
                   <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
-                    <LoginButton className="shadow-xl">
-                      Continue to the app
-                    </LoginButton>
+                    <Button className="w-full shadow-md" asChild>
+                      <Link href={"/login"}>Continue to the app</Link>
+                    </Button>
                     <Button
                       className="w-full shadow-md"
                       variant={"secondary"}
@@ -143,9 +142,9 @@ export function LandingPage() {
                     </a>
                   </Highlight>
                   <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
-                    <LoginButton className="shadow-xl">
-                      Continue to the app
-                    </LoginButton>
+                    <Button className="w-full shadow-md" asChild>
+                      <Link href={"/login"}>Continue to the app</Link>
+                    </Button>
                     <Button
                       className="w-full shadow-md"
                       variant={"secondary"}
