@@ -88,7 +88,7 @@ export function SignInPageComponent() {
           </CardContent>
         </Card>
       ) : (
-        <Card className="h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 transition-all">
+        <Card className="transition-all">
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
             <CardDescription>
