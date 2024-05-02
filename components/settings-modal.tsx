@@ -3,6 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { ClearDataButton } from "@/components/clear-data-button";
+import { ImportExportButton } from "@/components/import-export-button";
+import LoginButton from "@/components/login-button";
+import { usePreferences } from "@/components/preferences-provider";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,14 +20,12 @@ import {
 } from "@/components/ui/form";
 import { NewPreferences } from "@/db/schema";
 import appGlobals, { defaultAppGlobals } from "@/lib/app.globals";
-import { getPreferencesElseGetDefault, savePreferences } from "@/lib/services/preferences-service";
-import { PreferencesTranslations } from "@/lib/translationObjects";
-import { Empty } from "@/types/types";
-import { AlertCircle, Settings } from "lucide-react";
+import { savePreferences } from "@/lib/services/preferences-service";
+import { ClearDataTranslations, PreferencesTranslations } from "@/lib/translationObjects";
+import { Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
 import {
@@ -47,17 +50,10 @@ export function SettingsModalForm({
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
   const [decimals, setDecimals] = useState(appGlobals.gradeDecimals);
+  const preferences = usePreferences();
 
-  type FormValues = {
-    gradeDecimals: number | Empty;
-    newEntitySheetShouldStayOpen: boolean;
-    passingInverse: boolean;
-    passingGrade: number;
-    minimumGrade: number;
-    maximumGrade: number;
-  };
-
-  const defaultValues: DefaultValues<FormValues> = async () => await getPreferencesElseGetDefault() as FormValues;
+  type FormValues = NewPreferences;
+  const defaultValues: DefaultValues<FormValues> = preferences.preferences as FormValues;
 
   const FormSchema = z.object({
     gradeDecimals: z.number().gte(0),
@@ -73,15 +69,6 @@ export function SettingsModalForm({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    // Grade.get().forEach((grade) => {
-    //   if (grade.getValue() < data.minimumGrade)
-    //     grade.setValue(data.minimumGrade);
-    //   if (grade.getValue() > data.maximumGrade)
-    //     grade.setValue(data.maximumGrade);
-    // });
-
-    // updateAppGlobals(data);
-
     const newPreferences = {
       gradeDecimals: data.gradeDecimals,
       newEntitySheetShouldStayOpen: data.newEntitySheetShouldStayOpen,
@@ -105,7 +92,7 @@ export function SettingsModalForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="gradeDecimals"
@@ -339,8 +326,10 @@ export function SettingsModalForm({
 
 export function SettingsModal({
   translations,
+  clearDataTranslations,
 }: {
   translations: PreferencesTranslations;
+  clearDataTranslations: ClearDataTranslations;
 }) {
   const session = useSession();
   return session.status === "authenticated" ? (
@@ -354,12 +343,22 @@ export function SettingsModal({
         <SheetHeader>
           <SheetTitle>{translations.title}</SheetTitle>
           <SheetDescription>{translations.description}</SheetDescription>
-          <Alert>
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>{translations.alertTitle}</AlertTitle>
-            <AlertDescription>{translations.alertDescription}</AlertDescription>
-          </Alert>
         </SheetHeader>
+        <div className="mt-4 mb-5 flex gap-2 justify-start">
+          <ThemeSwitcher />
+          <ImportExportButton />
+          <ClearDataButton translations={clearDataTranslations}>
+            <Button
+              size="icon"
+              variant="outline"
+              className="hover:text-red-400"
+            >
+              <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
+              <span className="sr-only">Delete all data</span>
+            </Button>
+          </ClearDataButton>
+          <LoginButton className="hidden md:flex" />
+        </div>
         <SettingsModalForm translations={translations} />
       </SheetContent>
     </Sheet>

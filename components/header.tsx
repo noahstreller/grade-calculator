@@ -65,19 +65,34 @@ export default function HeaderComponent() {
         >
           {t("app.title")}
         </h1>
+        <h1
+          className={
+            "inline-block md:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
+          }
+        >Grades
+        </h1>
       </Link>
       <div className="flex gap-3">
         <DashboardButton />
-        <ClearDataButton translations={clearDataTranslations}>
-          <Button size="icon" variant="outline" className="hover:text-red-400">
-            <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
-            <span className="sr-only">Delete all data</span>
-          </Button>
-        </ClearDataButton>
-        <ImportExportButton />
-        <SettingsModal translations={preferencesTranslations} />
-        <ThemeSwitcher />
-        <LoginButton />
+        <div className="hidden md:flex gap-3">
+          <ClearDataButton translations={clearDataTranslations}>
+            <Button
+              size="icon"
+              variant="outline"
+              className="hover:text-red-400"
+            >
+              <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
+              <span className="sr-only">Delete all data</span>
+            </Button>
+          </ClearDataButton>
+          <ImportExportButton />
+          <ThemeSwitcher />
+        </div>
+        <SettingsModal
+          clearDataTranslations={clearDataTranslations}
+          translations={preferencesTranslations}
+        />
+        <LoginButton className="hidden md:flex" />
       </div>
     </header>
   );
