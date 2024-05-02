@@ -1,1 +1,0 @@
-ALTER TABLE "grades" ALTER COLUMN "date" SET DEFAULT now();

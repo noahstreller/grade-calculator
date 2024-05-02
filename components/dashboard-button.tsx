@@ -1,11 +1,13 @@
 "use client";
 import { Home, LayoutDashboard } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "./ui/button";
 
 export function DashboardButton() {
   const pathname = usePathname();
+  const session = useSession();
 
   const isDashboard = (pathname: string) => {
     return pathname === "/dashboard";
@@ -17,6 +19,7 @@ export function DashboardButton() {
   }
 
   return (
+    session.status === "authenticated" ? 
     <Link href={getDashboardUrl()} className={buttonVariants({ variant: "secondary", size: "icon" })}>
 
       {
@@ -26,6 +29,6 @@ export function DashboardButton() {
           <LayoutDashboard className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
       }
       <span className="sr-only">Dashboard switcher</span>
-    </Link>
+    </Link> : null
   );
 }

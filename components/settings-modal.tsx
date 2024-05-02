@@ -19,6 +19,7 @@ import { getPreferencesElseGetDefault, savePreferences } from "@/lib/services/pr
 import { PreferencesTranslations } from "@/lib/translationObjects";
 import { Empty } from "@/types/types";
 import { AlertCircle, Settings } from "lucide-react";
+import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -341,7 +342,8 @@ export function SettingsModal({
 }: {
   translations: PreferencesTranslations;
 }) {
-  return (
+  const session = useSession();
+  return session.status === "authenticated" ? (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
@@ -361,5 +363,5 @@ export function SettingsModal({
         <SettingsModalForm translations={translations} />
       </SheetContent>
     </Sheet>
-  );
+  ) : null;
 }

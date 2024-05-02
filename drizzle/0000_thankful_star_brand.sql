@@ -15,20 +15,22 @@ CREATE TABLE IF NOT EXISTS "account" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "grades" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"value" integer,
+	"value" double precision,
 	"subject_fk" integer,
 	"weight" double precision DEFAULT 1,
-	"date" date DEFAULT '2024-04-02'
+	"date" timestamp with time zone DEFAULT now(),
+	"userId" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "preferences" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"passingGrade" integer DEFAULT 4,
-	"minimumGrade" integer DEFAULT 1,
-	"maximumGrade" integer DEFAULT 6,
+	"passingGrade" double precision DEFAULT 4,
+	"minimumGrade" double precision DEFAULT 1,
+	"maximumGrade" double precision DEFAULT 6,
 	"gradeDecimals" integer DEFAULT 3,
 	"newEntitySheetShouldStayOpen" boolean DEFAULT false,
-	"passingInverse" boolean DEFAULT false
+	"passingInverse" boolean DEFAULT false,
+	"userId" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "session" (
@@ -40,14 +42,16 @@ CREATE TABLE IF NOT EXISTS "session" (
 CREATE TABLE IF NOT EXISTS "subjects" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar,
-	"weight" double precision DEFAULT 1
+	"weight" double precision DEFAULT 1,
+	"userId" text,
+	CONSTRAINT "subjects_userId_name_unique" UNIQUE("userId","name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text,
 	"email" text NOT NULL,
-	"emailVerified" timestamp,
+	"emailVerified" timestamp with time zone,
 	"image" text
 );
 --> statement-breakpoint
@@ -65,13 +69,31 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "grades" ADD CONSTRAINT "grades_subject_fk_subjects_id_fk" FOREIGN KEY ("subject_fk") REFERENCES "subjects"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "grades" ADD CONSTRAINT "grades_subject_fk_subjects_id_fk" FOREIGN KEY ("subject_fk") REFERENCES "subjects"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "grades" ADD CONSTRAINT "grades_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "preferences" ADD CONSTRAINT "preferences_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "subjects" ADD CONSTRAINT "subjects_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

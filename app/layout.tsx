@@ -1,5 +1,6 @@
 import Providers from '@/app/providers';
 import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
+import { Footer } from '@/components/footer';
 import HeaderComponent from '@/components/header';
 import { LoadingScreen } from '@/components/loadingscreen';
 import { cn } from '@/lib/utils';
@@ -99,10 +100,13 @@ export default function RootLayout({
       <body className={cn(inter.className)}>
         <Providers>
           <HeaderComponent />
-          <main className="bg-background text-foreground h-screen flex justify-center mt-[5rem]">
-            <LoadingScreen />
-            {children}
-          </main>
+          <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
+            <main className="min-h-screen w-full flex flex-col items-center">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <LoadingScreen />
           <CorruptedDataDialog />
           <Toaster theme="light" className="dark:hidden dark:size-0" />
           <Toaster theme="dark" className="hidden dark:flex" />

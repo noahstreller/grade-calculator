@@ -7,9 +7,8 @@ import {
   importFromJSON,
   importFromText,
 } from "@/lib/storageUtils";
-import { ClearDataTranslations } from "@/lib/translationObjects";
 import { Database } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -30,7 +29,8 @@ export type ExportableType = {
 };
 
 export function ImportExportButton() {
-  return (
+  const session = useSession();
+  return session.status === "authenticated" ? (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -70,5 +70,5 @@ export function ImportExportButton() {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
+  ) : null;
 }
