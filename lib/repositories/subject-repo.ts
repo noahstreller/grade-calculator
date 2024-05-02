@@ -48,7 +48,5 @@ export async function deleteSubjectFromDb(subject: Subject, userId: string): Pro
     .where(and(eq(subjects.id, subject.id), eq(subjects.userId, userId)))
     .returning({ oldId: subjects.id, oldName: subjects.name })
     .execute();
-
-    console.log(result[0].oldName);
   return (result[0].oldName || "") satisfies string;
 }

@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -8,10 +9,10 @@ export default function LoginButton({children = "Sign in", className = ""}: {chi
   const session = useSession();
 
   return (
-    <div className="items-center justify-center flex">
+    <div className={cn("items-center justify-center flex", className)}>
       {session.status === "authenticated" ? (
         <Button onClick={() => signOut()}>
-          Sign out {session.data.user.uid}
+          Sign out
         </Button>
       ) : session.status === "loading" ? (
         <LoadingSpinner />
