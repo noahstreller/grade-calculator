@@ -8,6 +8,7 @@ import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
   Card,
@@ -94,7 +95,7 @@ function RequiredGradesBody({
       );
     };
     
-    setChunkPairs([...chunkIntoPieces(averageData)]);
+    setChunkPairs([...chunkIntoPieces(averageData, isMobile ? 1 : 2)]);
   }, [averageData, showPassing]);
 
   return (
@@ -113,15 +114,15 @@ function RequiredGradesBody({
                 <CardHeader>
                   <h2>
                     {average.subject && average.average?.passing ? (
-                      <span className="text-green-400">
+                      <b className="text-green-400 mr-2">
                         {truncateForPage(average.subject.name)}
-                      </span>
+                      </b>
                     ) : (
-                      <span className="text-red-400">
+                      <b className="text-red-400 mr-2">
                         {truncateForPage(average.subject.name)}
-                      </span>
+                      </b>
                     )}
-                    <SubjectGradeBadge average={average} className="ml-2" />
+                    <SubjectGradeBadge average={average} />
                   </h2>
                 </CardHeader>
                 <CardContent>

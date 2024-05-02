@@ -5,114 +5,163 @@ import FailingGradesCard from "@/components/cards/failingGradesCard/failingGrade
 import { GradeOverview } from "@/components/cards/grade-overview";
 import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { RequiredGrades } from "@/components/cards/required-grades";
+import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
-import Grade from "@/lib/entities/grade";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
-import Subjects from "@/lib/entities/subject";
+import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
-import { quickCreateSubject } from "@/lib/services/subject-service";
+import { getAllGradeAveragesWithSubject, getAllGradesWithSubject } from "@/lib/services/grade-service";
+import { AverageWithSubject } from "@/types/types";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const [gradeData, setGradeData] = useState<Grade[]>([]);
-  const [subjectData, setSubjectData] = useState<GradeAverage[]>([]);
-  const [failingData, setFailingData] = useState<GradeAverage[]>([]);
-  const [passingData, setPassingData] = useState<GradeAverage[]>([]);
+  const [gradeData, setGradeData] = useState<GradeWithSubject[]>([]);
+  const [averageData, setAverageData] = useState<AverageWithSubject[]>([]);
+  const [failingData, setFailingData] = useState<AverageWithSubject[]>([]);
+  const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const session = useSession();
 
-  function refreshGrades() {
-    let grades = Grade.get();
+  const refreshGrades = async () => {
+    let grades = catchProblem(await getAllGradesWithSubject());
     setGradeData([...grades]);
+    return grades;
+  };
+
+  const refreshAverages = async () => {
+    let averages = catchProblem(await getAllGradeAveragesWithSubject());
+    setAverageData([...averages]);
+    return averages;
+  };
+
+  function refreshFailing(averages: AverageWithSubject[]) {
+    let allAverages = averages;
+    let failing = allAverages.filter(
+      (average: AverageWithSubject) => average.average?.passing === false
+    );
+    setFailingData([...failing]);
+    return failing;
   }
 
-  function refreshSubjects() {
-    let averages = GradeAverage.get();
-    setSubjectData([...averages]);
-  }
-
-  function refreshFailing() {
-    let subjects = Subjects.getFailingSubjects();
-    setFailingData([...subjects]);
-  }
-
-  function refreshPassing() {
-    let subjects = Subjects.getPassingSubjects();
-    setPassingData([...subjects]);
+  function refreshPassing(averages: AverageWithSubject[]) {
+    let allAverages = averages;
+    let passing = allAverages.filter(
+      (average: AverageWithSubject) => average.average?.passing
+    );
+    setPassingData([...passing]);
+    return passing;
   }
 
   function refreshAll() {
     refreshGrades();
-    refreshSubjects();
-    refreshFailing();
-    refreshPassing();
+    refreshAverages().then((averages: AverageWithSubject[]) => {
+      refreshFailing(averages);
+      refreshPassing(averages);
+    });
   }
 
   useEffect(() => {
-    Subjects.load();
-    Grade.load();
-    refreshAll();
-    setLoaded(true);
+    const refreshGrades = async () => {
+      let grades = catchProblem(await getAllGradesWithSubject());
+      setGradeData([...grades]);
+      return grades;
+    };
 
-    const a =async () => {
-      console.log(catchProblem(await quickCreateSubject("hallo")))
+    const refreshAverages = async () => {
+      let averages = catchProblem(await getAllGradeAveragesWithSubject());
+      setAverageData([...averages]);
+      return averages;
+    };
+
+    function refreshFailing(averages: AverageWithSubject[]) {
+      let allAverages = averages;
+      let failing = allAverages.filter(
+        (average: AverageWithSubject) => average.average?.passing === false
+      );
+      setFailingData([...failing]);
+      return failing;
     }
-    a()
-  }, []);
 
-  return loaded ? (
+    function refreshPassing(averages: AverageWithSubject[]) {
+      let allAverages = averages;
+      let passing = allAverages.filter(
+        (average: AverageWithSubject) => average.average?.passing
+      );
+      setPassingData([...passing]);
+      return passing;
+    }
+
+    function refreshAll() {
+      refreshGrades();
+      refreshAverages().then((averages: AverageWithSubject[]) => {
+        refreshFailing(averages);
+        refreshPassing(averages);
+      });
+    }
+
+    if (session.status === "authenticated"){
+      try {
+        refreshAll();
+      } finally {
+        setLoaded(true);
+      }
+
+    }
+
+  }, [session]);
+
+  return session.status === "unauthenticated" ? (
+    <LandingPage />
+  ) : loaded ? (
     <>
       <CardBoard className="flex xl:hidden">
+        <RequiredGrades averageData={averageData} />
+        <AverageOverview data={gradeData} averageData={averageData} />
         <GradeOverview
           data={gradeData}
           passingData={passingData}
           failingData={failingData}
         />
-        <AverageOverview
-          data={gradeData}
-          averageData={[...passingData, ...failingData]}
-        />
-        <RequiredGrades
-          gradeData={gradeData}
-          averageData={[...passingData, ...failingData]}
-        />
-        <PassingGradesCard data={passingData} setData={setPassingData} />
-        <FailingGradesCard data={failingData} setData={setFailingData} />
+        <PassingGradesCard data={passingData} />
+        <FailingGradesCard data={failingData} />
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-        <AverageOverview
-          data={gradeData}
-          averageData={[...passingData, ...failingData]}
-        />
-        <GradeOverview
-          data={gradeData}
-          passingData={passingData}
-          failingData={failingData}
-        />
-        <RequiredGrades
-          gradeData={gradeData}
-          averageData={[...passingData, ...failingData]}
-        />
         <CardBoard>
-          <PassingGradesCard data={passingData} setData={setPassingData} />
-          <FailingGradesCard data={failingData} setData={setFailingData} />
+          <RequiredGrades averageData={averageData} />
+          <PassingGradesCard data={passingData} />
+          <FailingGradesCard data={failingData} />
+        </CardBoard>
+        <CardBoard>
+          <GradeOverview
+            data={gradeData}
+            passingData={passingData}
+            failingData={failingData}
+          />
+          <AverageOverview data={gradeData} averageData={averageData} />
         </CardBoard>
       </CardBoard>
     </>
   ) : (
     <>
       <CardBoard className="flex xl:hidden">
-        <CardSkeleton wide variant="small" />
-        <CardSkeleton wide variant="small" />
         <CardSkeleton wide variant="medium" />
         <CardSkeleton wide variant="large" />
+        <CardSkeleton wide variant="small" />
+        <CardSkeleton wide variant="small" />
       </CardBoard>
       <CardBoard row className="hidden xl:flex">
-        <CardSkeleton variant="medium" />
-        <CardSkeleton variant="large" />
-        <CardSkeleton variant="small" />
         <CardBoard>
           <CardSkeleton variant="small" />
           <CardSkeleton variant="small" />
+          <CardSkeleton variant="medium" />
+        </CardBoard>
+        <CardBoard>
+          <CardSkeleton variant="medium" />
+          <CardSkeleton variant="medium" />
+        </CardBoard>
+        <CardBoard>
+          <CardSkeleton variant="large" />
+          <CardSkeleton variant="medium" />
         </CardBoard>
       </CardBoard>
     </>
