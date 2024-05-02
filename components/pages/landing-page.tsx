@@ -8,12 +8,10 @@ import { Separator } from "@/components/ui/separator";
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
-import { isMobile } from "react-device-detect";
 
 export function LandingPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(isMobile);
   }, []);
   return (
     <div className="flex flex-col gap-10 w-4/5 self-center m-auto">
