@@ -1,1 +1,0 @@
-ALTER TABLE "subjects" ADD CONSTRAINT "subjects_name_unique" UNIQUE("name");
