@@ -41,11 +41,11 @@ export function columns(
         let subject: string = row.original.subject.name || "";
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 20 : 10
+          isMobile ? 16 : 20
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 20 : 10
+          isMobile ? 16 : 20
         ).text;
 
         if (truncated) {
@@ -103,7 +103,7 @@ export function columns(
         let average: AverageWithSubject = row.original;
 
         return (
-          <>
+          <div className="flex flex-col md:flex-row">
             <Button
               onClick={() => {
                 setOriginalSubject(average.subject);
@@ -124,7 +124,7 @@ export function columns(
             >
               <Trash className="h-4 w-4" />
             </Button>
-          </>
+          </div>
         );
       },
     },
