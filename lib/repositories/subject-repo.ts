@@ -62,3 +62,13 @@ export async function deleteSubjectFromDb(subject: Subject, userId: string): Pro
     .execute();
   return (result[0].oldName || "") satisfies string;
 }
+
+export async function updateSubjectInDb(subject: Subject, userId: string): Promise<string> {
+  const result = await db
+    .update(subjects)
+    .set(subject)
+    .where(and(eq(subjects.id, subject.id), eq(subjects.userId, userId)))
+    .returning({ oldName: subjects.name })
+    .execute();
+  return (result[0].oldName || "") satisfies string;
+}
