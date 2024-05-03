@@ -1,7 +1,10 @@
 "use client";
 import { columns } from "@/components/cards/allSubjects/columns";
+import { DataTable } from "@/components/cards/allSubjects/data-table";
+import { FailingGradesContent } from "@/components/cards/failingGradesCard/failingGradesContent";
 import { CreateSubjectForm } from "@/components/create-subject-form";
 import { EditSubjectForm } from "@/components/edit-subject-form";
+import { PassingStatus } from "@/components/passing-filter-combobox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
 import {
   Dialog,
   DialogContent,
@@ -38,16 +40,20 @@ import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { Bird } from "lucide-react";
+import { Bird, Filter } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function AllSubjects({
   data,
+  failingData,
+  passingData,
   setData,
   refresh,
 }: {
   data: AverageWithSubject[];
+  failingData: AverageWithSubject[];
+  passingData: AverageWithSubject[];
   setData: Function;
   refresh: Function;
 }) {
@@ -57,7 +63,23 @@ export function AllSubjects({
   const [editOpen, setEditOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+  const [currentData, setCurrentData] = useState<AverageWithSubject[]>(data);
   const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
+  const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
+    value: "all",
+    label: "All Subjects",
+    icon: <Filter className="size-4 mr-2" />,
+  });
+
+  useEffect(() => {
+    if (selectedStatus?.value === "all") {
+      setCurrentData(data);
+    } else if (selectedStatus?.value === "passing") {
+      setCurrentData(passingData);
+    } else if (selectedStatus?.value === "failing") {
+      setCurrentData(failingData);
+    }
+  }, [selectedStatus, data, passingData, failingData, currentData]);
 
   if (isDesktop) {
     return (
@@ -127,13 +149,28 @@ export function AllSubjects({
                       Change the details of the subject
                     </DialogDescription>
                   </DialogHeader>
-                  <EditSubjectForm originalSubject={originalSubject} refresh={refresh} setOpen={setEditOpen} />
+                  <EditSubjectForm
+                    originalSubject={originalSubject}
+                    refresh={refresh}
+                    setOpen={setEditOpen}
+                  />
                 </DialogContent>
-                <DataTable columns={columns(setSubjectToDelete, setOriginalSubject, setDeleteConfirmOpen, setEditOpen)} data={data} />
+                <DataTable
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
+                  columns={columns(
+                    setSubjectToDelete,
+                    setOriginalSubject,
+                    setDeleteConfirmOpen,
+                    setEditOpen
+                  )}
+                  data={currentData}
+                />
               </Dialog>
             )}
           </Dialog>
         </CardContent>
+        <FailingGradesContent data={failingData} />
       </Card>
     );
   }
@@ -217,18 +254,21 @@ export function AllSubjects({
                 />
               </DrawerContent>
               <DataTable
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
                 columns={columns(
                   setSubjectToDelete,
                   setOriginalSubject,
                   setDeleteConfirmOpen,
                   setEditOpen
                 )}
-                data={data}
+                data={currentData}
               />
             </Drawer>
           )}
         </Drawer>
       </CardContent>
+      <FailingGradesContent data={failingData} />
     </Card>
   );
 }
