@@ -1,25 +1,19 @@
 "use client";
+import { columns } from "@/components/cards/failingGradesCard/columns";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DataTable } from "@/components/ui/data-table";
+import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "../../ui/card";
-import { DataTable } from "../../ui/data-table";
-import { columns } from "./columns";
 
-export default function FailingGradesCard({
-  data,
-  setData,
-}: {
-  data: GradeAverage[];
-  setData: Function;
-}) {
+export default function FailingGradesCard({ data }: { data: AverageWithSubject[] }) {
   const { t } = useTranslation("common");
 
   return (

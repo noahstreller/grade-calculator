@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714637224449,
+      "tag": "0000_thankful_star_brand",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1714637233691,
+      "tag": "0001_large_plazm",
+      "breakpoints": true
+    }
+  ]
+}

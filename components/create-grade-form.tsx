@@ -4,13 +4,14 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Command,
   CommandGroup,
   CommandInput,
-  CommandItem
+  CommandItem,
 } from "@/components/ui/command";
 import {
   Form,
@@ -18,53 +19,60 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { TimePicker } from "@/components/ui/time-picker";
-import appGlobals from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
+import { NewGrade, Subject } from "@/db/schema";
+import { catchProblem } from "@/lib/problem";
+import { addGrade } from "@/lib/services/grade-service";
+import { getAllSubjects } from "@/lib/services/subject-service";
 import { addGradeToast } from "@/lib/toasts";
-import { cn, truncateText } from "@/lib/utils";
+import { cn, getDefaultPreferences, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
-import {
-  useEffect,
-  useState
-} from "react";
+import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 
 export function CreateGradeForm({
-  subjectSet,
   refresh,
-  setDrawerOpen
+  setDrawerOpen,
 }: {
-  subjectSet: Set<string>;
   refresh: Function;
   setDrawerOpen: Function;
 }) {
   const { t, lang } = useTranslation("common");
 
-  const initial: string[] = [];
-
-  const [subjects, setSubjects] = useState(initial);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
+  const [loading, setLoading] = useState(true);
+
+  const preferences = usePreferences().preferences;
+  const defaultPreferences = getDefaultPreferences();
 
   useEffect(() => {
-    subjectSet.forEach((subj) => {
-      setSubjects((subjects) => [...subjects, subj]);
-    });
-  }, [subjectSet]);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = catchProblem(await getAllSubjects());
+        setSubjects([...data]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const FormSchema = z.object({
-    subject: z.string({
+    subject: z.number({
       required_error: t("errors.required"),
     }),
     grade: z
@@ -72,8 +80,8 @@ export function CreateGradeForm({
         invalid_type_error: t("errors.invalid-type.number"),
         required_error: t("errors.required"),
       })
-      .gte(appGlobals.minimumGrade)
-      .lte(appGlobals.maximumGrade),
+      .gte(preferences?.minimumGrade ?? defaultPreferences.minimumGrade!)
+      .lte(preferences?.maximumGrade ?? defaultPreferences.maximumGrade!),
     weight: z
       .number({
         invalid_type_error: t("errors.invalid-type.number"),
@@ -87,14 +95,20 @@ export function CreateGradeForm({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    const gradeAsNumber = Number(data.grade);
-    const weightAsNumber = Number(data.weight) || 1;
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const grade: NewGrade = {
+      date: data.date,
+      weight: data.weight,
+      value: data.grade,
+      subject_fk: data.subject,
+    };
 
-    let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
+    catchProblem(await addGrade(grade));
+
+    // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
     addGradeToast(grade);
     refresh();
-    if (!appGlobals.newEntitySheetShouldStayOpen) setDrawerOpen(false);
+    if (!preferences?.newEntitySheetShouldStayOpen ?? !defaultPreferences.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
 
   return (
@@ -110,24 +124,31 @@ export function CreateGradeForm({
                 <Asterisk className="ml-1" />
               </FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger disabled asChild>
                   <FormControl>
                     <Button
                       variant="outline"
                       role="combobox"
+                      disabled={loading}
                       className={cn(
                         "w-[200px] justify-between",
                         !field.value && "text-muted-foreground"
                       )}
                     >
+                      {loading && (
+                        <div className="flex flex-row gap-2 items-center">
+                          <LoadingSpinner />
+                          Loading...
+                        </div>
+                      )}
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject === field.value
-                            ) ?? "",
+                              (subject) => subject.id === field.value
+                            )?.name ?? "",
                             20
                           ).text
-                        : "Select subject"}
+                        : loading ? null : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -144,22 +165,22 @@ export function CreateGradeForm({
                         ) : (
                           subjects.map((subject) => (
                             <CommandItem
-                              value={subject}
-                              key={subject}
+                              value={subject.name!}
+                              key={subject.id}
                               onSelect={() => {
-                                form.setValue("subject", subject);
+                                form.setValue("subject", subject.id!);
                                 setOpen(false);
                               }}
                             >
                               <Check
                                 className={cn(
                                   "mr-2 h-4 w-4",
-                                  subject === field.value
+                                  subject.id === field.value
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
                               />
-                              {subject}
+                              {truncateText(subject.name!, 20).text}
                             </CommandItem>
                           ))
                         )}

@@ -1,5 +1,7 @@
 "use client";
+import { clearUserSubjectsGrades } from "@/lib/services/user-service";
 import { ClearDataTranslations } from "@/lib/translationObjects";
+import { useSession } from "next-auth/react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,12 +22,12 @@ export function ClearDataButton({
   children: React.ReactNode;
 }) {
   function clearData() {
-    localStorage.removeItem("grades");
-    localStorage.removeItem("subjects");
+    clearUserSubjectsGrades();
     window.location.reload();
   }
+  const session = useSession();
 
-  return (
+  return session.status === "authenticated" ? (
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -47,5 +49,5 @@ export function ClearDataButton({
         </AlertDialogContent>
       </AlertDialog>
     </div>
-  );
+  ) : null;
 }

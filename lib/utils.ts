@@ -1,3 +1,4 @@
+import { NewPreferences, Preferences } from "@/db/schema"
 import { clsx, type ClassValue } from "clsx"
 import { isMobile } from "react-device-detect"
 import { twMerge } from "tailwind-merge"
@@ -12,17 +13,33 @@ export function round(value: number, precision: number) {
 }
 
 export function truncateText(text: string, maxLength: number) {
-  if (text.length > maxLength) {
-    let truncated = text.substring(0, maxLength - 3) + '...';
-    return {text: truncated, truncated: true}
-  } else {
-    return {text: text, truncated: false};
+  try {
+    if (text.length > maxLength) {
+      let truncated = text.substring(0, maxLength) + "..."
+      return { text: truncated, truncated: true }
+    } else {
+      return { text, truncated: false }
+    }
+  } catch {
+    return { text, truncated: false };
+  }
+}
+
+export function truncateEmail(email: string, maxLengthBeforeDomain: number, maxLengthAfterDomain: number = maxLengthBeforeDomain) {
+  try {
+    let [username, domain] = email.split("@");
+    let truncatedUsername = truncateText(username, maxLengthBeforeDomain);
+    let truncatedDomain = truncateText(domain, maxLengthAfterDomain);
+    return truncatedUsername.text + "@" + truncatedDomain.text;
+  }
+  catch {
+    return email;
   }
 }
 
 export function truncateTextWithoutDots(text: string, maxLength: number) {
   if (text.length > maxLength) {
-    let truncated = text.substring(0, maxLength - 3);
+    let truncated = text.substring(0, maxLength);
     return {text: truncated, truncated: true}
   } else {
     return {text: text, truncated: false};
@@ -64,4 +81,24 @@ export function getDateOrDateTime(date: Date) {
   } else {
     return date.toLocaleString();
   }
+}
+
+export function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((word) => word[0])
+    .join("");
+}
+
+export function getDefaultPreferences(): Preferences {
+  return {
+    gradeDecimals: 3,
+    newEntitySheetShouldStayOpen: false,
+    passingInverse: false,
+    passingGrade: 4,
+    minimumGrade: 1,
+    maximumGrade: 6,
+    id: 0,
+    userId: null,
+  } satisfies NewPreferences;
 }

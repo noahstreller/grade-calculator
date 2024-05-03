@@ -1,13 +1,14 @@
-import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
+import Providers from '@/app/providers';
+import { Footer } from '@/components/footer';
 import HeaderComponent from '@/components/header';
-import { ThemeProvider } from '@/components/theme-provider';
+import { LoadingScreen } from '@/components/loadingscreen';
+import { ToasterWrapper } from '@/components/toaster-wrapper';
 import { cn } from '@/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Author } from 'next/dist/lib/metadata/types/metadata-types';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -40,6 +41,8 @@ export const metadata: Metadata = {
     "grade",
     "calculator",
     "average",
+    "weighted",
+    "subject",
     "grades",
     "school",
     "student",
@@ -60,6 +63,9 @@ export const metadata: Metadata = {
     "weighted grade average",
     "weighted average calculator",
     "weighted grade average calculator",
+    "grade overview",
+    "grade calculator",
+    "grade average calculator",
   ],
   authors,
   publisher: "Noah Streller",
@@ -89,25 +95,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html>
+    <html lang="en">
       <body className={cn(inter.className)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <HeaderComponent />
-          <main className='bg-background text-foreground h-screen flex justify-center mt-[5rem]'>
-            {children}
-          </main>
-          <CorruptedDataDialog />
-          <Toaster theme='light' className='dark:hidden' />
-          <Toaster theme='dark' className='hidden dark:flex' />
-        </ThemeProvider>
+          <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
+            <main className="min-h-screen w-full flex flex-col items-center">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <LoadingScreen />
+          <ToasterWrapper />
+        </Providers>
         <SpeedInsights />
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

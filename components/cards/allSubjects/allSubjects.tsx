@@ -1,4 +1,5 @@
 "use client";
+import { columns } from "@/components/cards/allSubjects/columns";
 import { CreateSubjectForm } from "@/components/create-subject-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -29,22 +30,23 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { GradeAverage } from "@/lib/entities/gradeAverage";
-import Subjects from "@/lib/entities/subject";
+import { Subject } from "@/db/schema";
+import { catchProblem } from "@/lib/problem";
+import { deleteSubject } from "@/lib/services/subject-service";
 import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
+import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { columns } from "./columns";
 
 export function AllSubjects({
   data,
   setData,
   refresh,
 }: {
-  data: GradeAverage[];
+  data: AverageWithSubject[];
   setData: Function;
   refresh: Function;
 }) {
@@ -52,7 +54,7 @@ export function AllSubjects({
   const isDesktop = !isMobileDevice();
   const [open, setOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
-  const [subjectToDelete, setSubjectToDelete] = useState<string | null>(null);
+  const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
 
   if (isDesktop) {
     return (
@@ -88,10 +90,12 @@ export function AllSubjects({
                 </DialogClose>
                 <DialogClose asChild>
                   <Button
-                    onClick={() => {
+                    onClick={async () => {
                       if (subjectToDelete) {
-                        Subjects.remove(subjectToDelete);
-                        deleteSubjectToast(subjectToDelete);
+                        let subjectName = catchProblem(
+                          await deleteSubject(subjectToDelete)
+                        );
+                        deleteSubjectToast(subjectName);
                         setSubjectToDelete(null);
                       }
                       refresh();
@@ -155,12 +159,14 @@ export function AllSubjects({
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button
-                  onClick={() => {
-                    if (subjectToDelete) {
-                      Subjects.remove(subjectToDelete);
-                      deleteSubjectToast(subjectToDelete);
-                      setSubjectToDelete(null);
-                    }
+                  onClick={async () => {
+                      if (subjectToDelete) {
+                        let subjectName = catchProblem(
+                          await deleteSubject(subjectToDelete)
+                        );
+                        deleteSubjectToast(subjectName);
+                        setSubjectToDelete(null);
+                      }
                     refresh();
                   }}
                   variant="destructive"
