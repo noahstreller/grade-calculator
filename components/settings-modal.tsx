@@ -19,9 +19,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { NewPreferences } from "@/db/schema";
-import appGlobals, { defaultAppGlobals } from "@/lib/app.globals";
 import { savePreferences } from "@/lib/services/preferences-service";
 import { ClearDataTranslations, PreferencesTranslations } from "@/lib/translationObjects";
+import { getDefaultPreferences } from "@/lib/utils";
 import { Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
@@ -45,12 +45,12 @@ export function SettingsModalForm({
 }: {
   translations: PreferencesTranslations;
 }) {
+  const preferences = usePreferences();
   const { t } = useTranslation("common");
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
-  const [decimals, setDecimals] = useState(appGlobals.gradeDecimals);
-  const preferences = usePreferences();
+  const [decimals, setDecimals] = useState(preferences.preferences?.gradeDecimals || 3);
 
   type FormValues = NewPreferences;
   const defaultValues: DefaultValues<FormValues> = preferences.preferences as FormValues;
@@ -82,7 +82,7 @@ export function SettingsModalForm({
 
   function onReset(event: any) {
     event.preventDefault();
-    form.reset(defaultAppGlobals);
+    form.reset(getDefaultPreferences() as any);
   }
 
   useEffect(() => {

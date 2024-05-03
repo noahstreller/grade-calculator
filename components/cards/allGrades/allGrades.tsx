@@ -28,7 +28,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { GradeWithSubject } from "@/db/schema";
-import Subjects from "@/lib/entities/subject";
 import { isMobileDevice } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -67,7 +66,6 @@ export function AllGrades({
               </DialogHeader>
               <CreateGradeForm
                 refresh={refresh}
-                subjectSet={Subjects.get()}
                 setDrawerOpen={setOpen}
               />
             </DialogContent>
@@ -106,7 +104,6 @@ export function AllGrades({
             </DrawerHeader>
             <CreateGradeForm
               refresh={refresh}
-              subjectSet={Subjects.get()}
               setDrawerOpen={setOpen}
             />
             <DrawerFooter className="pt-2">

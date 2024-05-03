@@ -1,5 +1,4 @@
 import Providers from '@/app/providers';
-import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
 import { Footer } from '@/components/footer';
 import HeaderComponent from '@/components/header';
 import { LoadingScreen } from '@/components/loadingscreen';
@@ -107,7 +106,6 @@ export default function RootLayout({
             <Footer />
           </div>
           <LoadingScreen />
-          <CorruptedDataDialog />
           <ToasterWrapper />
         </Providers>
         <SpeedInsights />

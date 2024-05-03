@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 export function LoggedInAvatar({ className = "" }: { className?: string }) {
   const session = useSession();
-  return (
+  return session.status === "authenticated" ? (
     <Popover>
       <PopoverTrigger asChild>
         <Button
@@ -28,5 +28,5 @@ export function LoggedInAvatar({ className = "" }: { className?: string }) {
         <AccountSection />
       </PopoverContent>
     </Popover>
-  );
+  ) : null;
 }
