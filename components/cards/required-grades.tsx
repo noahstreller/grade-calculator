@@ -32,12 +32,12 @@ function RequiredGradesBody({
   const getRequiredGradeToPass = (
     average: AverageWithSubject
   ): { result: number; overflowCounts: number } => {
-    let sum = average.average?.gradeSum!;
-    let count = average.average?.gradeAmount! + 1;
+    let sum = average.average?.gradeWeightedSum!;
+    let count = average.average?.gradeWeightedAmount! + 1;
     let passing = preferences?.passingGrade!;
     let max = preferences?.maximumGrade!;
     let min = preferences?.minimumGrade!;
-    let result = passing * count - sum;;
+    let result = passing * count - sum;
     let overflowCounts = 0;
     while (result > max || result < min) {
       count++;

@@ -4,6 +4,7 @@ import createTranslation from 'next-translate/createTranslation';
  
 import { ColoredGrade } from "@/components/colored-grade";
 import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
@@ -13,7 +14,7 @@ import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 
-export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject[]): ColumnDef<GradeWithSubject>[] {
+export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<GradeWithSubject>[] {
   const { t, lang } = createTranslation('common');
 
   return [
@@ -118,17 +119,18 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
 
         return (
           <>
-            <Button
-              variant="ghost"
-              className="h-8 w-8 p-0"
-              // onClick={() => {
-              //   navigator.clipboard.writeText(gradeInfo);
-              //   copySuccessToast(gradeInfo);
-              // }}
-            >
-              <span className="sr-only">{t("actions.copy.prompt")}</span>
-              <Edit className="h-4 w-4" />
-            </Button>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0"
+                onClick={() => {
+                  setGradeToEdit(grade.grades);
+                }}
+              >
+                <span className="sr-only">{t("actions.copy.prompt")}</span>
+                <Edit className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
 
             <Button
               variant="ghost"
