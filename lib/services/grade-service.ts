@@ -1,7 +1,7 @@
 "use server"
 import { Grade, GradeWithSubject, NewGrade, Subject } from "@/db/schema";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
-import { addGradeToDb, deleteGradeByIdFromDb, deleteGradeFromDb, getAllGradesFromDb, getAllGradesWithSubjectFromDb, getGradesBySubjectFromDb, getGradesBySubjectWithSubjectFromDb } from "@/lib/repositories/grade-repo";
+import { addGradeToDb, deleteGradeByIdFromDb, deleteGradeFromDb, getAllGradesFromDb, getAllGradesWithSubjectFromDb, getGradesBySubjectFromDb, getGradesBySubjectWithSubjectFromDb, updateGradeInDb } from "@/lib/repositories/grade-repo";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { getPreferencesElseGetDefault } from "@/lib/services/preferences-service";
 import { getUserId, setUserId } from "@/lib/services/service-util";
@@ -57,6 +57,8 @@ export async function getGradeAverageWithSubjectBySubject(
     const grades = await getGradesBySubjectWithSubjectFromDb(subject, userId);
     const average = async (): Promise<AverageWithSubject> => {
       let sum = 0;
+      let weightedSum = 0;
+      let totalGradesWithWeight = 0;
       if (grades.length === 0) {
         return {
           subject: catchProblem(await getSubjectByIdByNameBySubject(subject))
@@ -64,15 +66,25 @@ export async function getGradeAverageWithSubjectBySubject(
       }
       grades.map((grade: GradeWithSubject) => {
         sum += grade.grades.value!;
+        weightedSum += grade.grades.value! * grade.grades.weight!;
+        totalGradesWithWeight += grade.grades.weight!;
       });
+      
+      if (totalGradesWithWeight === 0) {
+        return {
+          subject: catchProblem(await getSubjectByIdByNameBySubject(subject)),
+        };
+      }
       return {
         average: {
           subjectId: grades[0].grades.subject_fk!,
-          gradeAverage: sum / grades.length,
+          gradeAverage: weightedSum / totalGradesWithWeight,
           gradeSum: sum,
+          gradeWeightedSum: weightedSum,
+          gradeWeightedAmount: totalGradesWithWeight,
           gradeAmount: grades.length,
           passing: doesGradePass(
-            sum / grades.length,
+            weightedSum / totalGradesWithWeight,
             catchProblem(await getPreferencesElseGetDefault())
           ),
         },
@@ -97,18 +109,27 @@ export async function getGradeAverageBySubject(
     const grades = await getGradesBySubjectFromDb(subject, userId);
     const average = async(): Promise<Average> => {
       let sum = 0;
+      let weightedSum = 0;
+      let totalGradesWithWeight = 0;
       grades.map((grade: Grade) => {
         sum += grade.value!;
+        weightedSum += grade.value! * grade.weight!;
+        totalGradesWithWeight += grade.weight!;
       });
       return {
         subjectId: grades[0].subject_fk!,
-        gradeAverage: sum / grades.length,
+        gradeAverage:
+          weightedSum / totalGradesWithWeight > 0
+            ? weightedSum / totalGradesWithWeight
+            : 0,
         gradeAmount: grades.length,
+        gradeWeightedAmount: totalGradesWithWeight,
+        gradeWeightedSum: weightedSum,
         gradeSum: sum,
         passing: doesGradePass(
-          sum / grades.length,
+          weightedSum / totalGradesWithWeight,
           catchProblem(await getPreferencesElseGetDefault())
-        )
+        ),
       };
     };
     return await average();
@@ -209,6 +230,20 @@ export async function deleteGradeById(
   try {
     const userId = await getUserId();
     return catchProblem(await deleteGradeByIdFromDb(gradeId, userId));
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+      e: JSON.stringify(e),
+    }) satisfies Problem;
+  }
+}
+
+export async function updateGrade(grade: Grade): Promise<number | Problem> {
+  try {
+    const userId = await getUserId();
+    return catchProblem(await updateGradeInDb(grade, userId));
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
