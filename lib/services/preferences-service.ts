@@ -1,7 +1,8 @@
 "use server";
-import { NewPreferences, Preferences } from "@/db/schema";
+import { Grade, NewPreferences, Preferences } from "@/db/schema";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
 import { addPreferencesToDb, getPreferencesFromDb, updatePreferencesInDb } from "@/lib/repositories/preferences-repo";
+import { getAllGrades, updateGrade } from "@/lib/services/grade-service";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 import { getDefaultPreferences } from "@/lib/utils";
 
@@ -41,12 +42,43 @@ export async function savePreferences(
 ): Promise<Preferences | Problem> {
   try {
     newPreferences = await setUserId(newPreferences);
+    adjustGradesToPreferences(newPreferences as Preferences);
     let existing: Preferences[] = catchProblem(await getPreferences());
+    console.log(existing.length);
     if (existing.length > 0) {
       newPreferences.id = existing[0].id;
       return await updatePreferencesInDb(newPreferences);
     }
     return await addPreferencesToDb(newPreferences);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function adjustGradesToPreferences(
+  preferences: Preferences
+){
+  try {
+    let grades: Grade[] = catchProblem(await getAllGrades());
+    grades.map((grade) => {
+      let modifiedGrade = grade;
+      let wasModified = false;
+      if(grade.value! > preferences.maximumGrade!){
+        modifiedGrade.value = preferences.maximumGrade;
+        wasModified = true;
+      }
+      if(grade.value! < preferences.minimumGrade!){
+        modifiedGrade.value = preferences.minimumGrade;
+        wasModified = true;
+      }
+      if(wasModified){
+        updateGrade(modifiedGrade);
+      }
+    });
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
