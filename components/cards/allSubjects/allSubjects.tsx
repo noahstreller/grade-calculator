@@ -202,15 +202,30 @@ export function AllSubjects({
               </AlertDescription>
             </Alert>
           ) : (
-            <DataTable
-              columns={columns(
-                setSubjectToDelete,
-                setOriginalSubject,
-                setOpen,
-                setEditOpen
-              )}
-              data={data}
-            />
+            <Drawer open={editOpen} onOpenChange={setEditOpen}>
+              <DrawerContent className="sm:max-w-[425px]">
+                <DrawerHeader>
+                  <DrawerTitle>Edit Subject</DrawerTitle>
+                  <DrawerDescription>
+                    Change the details of the subject
+                  </DrawerDescription>
+                </DrawerHeader>
+                <EditSubjectForm
+                  originalSubject={originalSubject}
+                  refresh={refresh}
+                  setOpen={setEditOpen}
+                />
+              </DrawerContent>
+              <DataTable
+                columns={columns(
+                  setSubjectToDelete,
+                  setOriginalSubject,
+                  setDeleteConfirmOpen,
+                  setEditOpen
+                )}
+                data={data}
+              />
+            </Drawer>
           )}
         </Drawer>
       </CardContent>

@@ -32,7 +32,7 @@ import { Grade, Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { updateGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
-import { addGradeToast } from "@/lib/toasts";
+import { editGradeToast } from "@/lib/toasts";
 import { cn, getDefaultPreferences, truncateText } from "@/lib/utils";
 import { format } from "date-fns";
 import useTranslation from "next-translate/useTranslation";
@@ -120,7 +120,7 @@ export function EditGradeForm({
     let newGradeId = catchProblem(await updateGrade(grade));
     if (newGradeId) {
       setSubmitting(false);
-      addGradeToast(
+      editGradeToast(
         grade,
         subjects.find((subject) => subject.id === data.subject)?.name ?? ""
       );
