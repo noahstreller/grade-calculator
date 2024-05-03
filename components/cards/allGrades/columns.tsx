@@ -9,7 +9,7 @@ import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { getDateOrDateTime, truncateText } from "@/lib/utils";
-import { ArrowUpDown, Copy, Trash } from "lucide-react";
+import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 
@@ -115,7 +115,6 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
       id: "actions",
       cell: ({ row }) => {
         const grade = row.original;
-        // const gradeInfo = grade.getGradeInformation()
 
         return (
           <>
@@ -128,7 +127,7 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
               // }}
             >
               <span className="sr-only">{t("actions.copy.prompt")}</span>
-              <Copy className="h-4 w-4" />
+              <Edit className="h-4 w-4" />
             </Button>
 
             <Button
@@ -136,9 +135,8 @@ export function columns(refresh: Function, gradesWithSubjects?: GradeWithSubject
               className="h-8 w-8 p-0"
               onClick={() => {
                 let gradeCopy = grade.grades;
-                // grade.delete();
                 deleteGradeByGrade(grade.grades);
-                deleteGradeToast(gradeCopy, refresh);
+                deleteGradeToast(gradeCopy, grade.subjects.name ?? "", refresh);
                 refresh();
               }}
             >

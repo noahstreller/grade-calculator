@@ -54,6 +54,7 @@ export function CreateGradeForm({
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   const preferences = usePreferences().preferences;
   const defaultPreferences = getDefaultPreferences();
@@ -96,6 +97,7 @@ export function CreateGradeForm({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setSubmitting(true);
     const grade: NewGrade = {
       date: data.date,
       weight: data.weight,
@@ -103,10 +105,14 @@ export function CreateGradeForm({
       subject_fk: data.subject,
     };
 
-    catchProblem(await addGrade(grade));
-
-    // let grade = new Grade(undefined, gradeAsNumber, data.subject, weightAsNumber, data.date);
-    addGradeToast(grade);
+    let newGradeId = catchProblem(await addGrade(grade));
+    if (newGradeId) {
+      setSubmitting(false);
+      addGradeToast(
+        grade,
+        subjects.find((subject) => subject.id === data.subject)?.name ?? ""
+      );
+    }
     refresh();
     if (!preferences?.newEntitySheetShouldStayOpen ?? !defaultPreferences.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
@@ -148,7 +154,9 @@ export function CreateGradeForm({
                             )?.name ?? "",
                             20
                           ).text
-                        : loading ? null : "Select subject"}
+                        : loading
+                        ? null
+                        : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -294,8 +302,8 @@ export function CreateGradeForm({
           )}
         />
 
-        <Button className="w-full" type="submit">
-          {t("actions.submit")}
+        <Button className="w-full" type="submit" disabled={submitting}>
+          {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>
     </Form>

@@ -9,7 +9,7 @@ import {
 import { catchProblem } from "@/lib/problem";
 import { addGrade, getAllGradesWithSubject } from "@/lib/services/grade-service";
 import { getPreferences, savePreferences } from "@/lib/services/preferences-service";
-import { addSubject } from "@/lib/services/subject-service";
+import { addSubject, getSubjectIdElseAdd } from "@/lib/services/subject-service";
 
 export type ExportableData = {
   preferences: NewPreferences | undefined;
@@ -56,14 +56,20 @@ export async function prepareDataForExport(): Promise<ExportableData> {
   return exportableData;
 }
 
-export async function importData(data: ExportableData) {
+export async function importData(data: ExportableData, purge: boolean) {
   if (data.preferences) savePreferences(data.preferences);
   const nonUniqueSubjects = data.data.map((grade) => grade.subjects.name);
   const uniqueSubjects = [...new Set(nonUniqueSubjects)];
   const subjectWithIds = await Promise.all(uniqueSubjects.map(async (subjectName) => {
     const subject = { name: subjectName };
-    let result = catchProblem(await addSubject(subject));
-    return { name: subject.name, id: result };
+    if(purge) {
+      let result = catchProblem(await addSubject(subject));
+      return { name: subject.name, id: result };
+    }
+    else {
+      let result = catchProblem(await getSubjectIdElseAdd(subject));
+      return { name: subject.name, id: result };
+    }
   }));
   console.log(subjectWithIds);
 

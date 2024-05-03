@@ -15,9 +15,9 @@ function lang() {
   return lang;
 }
 
-export function addGradeToast(grade: NewGrade) {
+export function addGradeToast(grade: NewGrade, subjectName: string) {
   toast(t("grades.add-success"), {
-    description: grade.value,
+    description: `${grade.value} in ${subjectName}`,
     action: {
       label: t("actions.ok"),
       onClick: () => void 0,
@@ -45,14 +45,14 @@ export function copySuccessToast(copiedContent: string) {
   });
 }
 
-export function deleteGradeToast(grade: Grade, refresh: Function){
+export function deleteGradeToast(grade: Grade, subjectName: string, refresh: Function){
   toast(t("actions.delete.success"), {
     description: grade.value,
     action: {
       label: t("actions.undo"),
       onClick: async () => {
         await addGrade(grade);
-        addGradeToast(grade);
+        addGradeToast(grade, subjectName);
         refresh();
       },
     },

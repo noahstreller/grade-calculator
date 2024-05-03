@@ -1,11 +1,13 @@
 "use client";
 import { prepareDataForExport } from "@/lib/services/export-service";
 import { exportToClipboard, exportToJSONFile, importFromJSON, importFromText } from "@/lib/services/notAsyncLogic";
-import { Database } from "lucide-react";
+import { ClipboardCopy, ClipboardPaste, Database, FileInput, FileOutput, FolderInput, FolderOutput } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -18,6 +20,7 @@ import {
 
 export function ImportExportButton() {
   const session = useSession();
+  const [purge, setPurge] = useState(true);
 
   return session.status === "authenticated" ? (
     <div>
@@ -30,21 +33,31 @@ export function ImportExportButton() {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Manage data</DropdownMenuLabel>
+          <DropdownMenuCheckboxItem checked={purge} onCheckedChange={setPurge}>
+            Replace existing data
+          </DropdownMenuCheckboxItem>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Import data</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+              <FolderInput className="size-4 mr-2" /> Import data
+            </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={importFromText}>
+                <DropdownMenuItem onClick={() => importFromText(purge)}>
+                  <ClipboardPaste className="size-4 mr-2" />
                   Text (Clipboard)
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={importFromJSON}>
+                <DropdownMenuItem onClick={() => importFromJSON(purge)}>
+                  <FileOutput className="size-4 mr-2" />
                   JSON (File)
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Export data</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+              <FolderOutput className="size-4 mr-2" />
+              Export data
+            </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem
@@ -52,6 +65,7 @@ export function ImportExportButton() {
                     exportToClipboard(await prepareDataForExport())
                   }
                 >
+                  <ClipboardCopy className="size-4 mr-2" />
                   Text (Clipboard)
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -59,6 +73,7 @@ export function ImportExportButton() {
                     exportToJSONFile(await prepareDataForExport())
                   }
                 >
+                  <FileInput className="size-4 mr-2" />
                   JSON (File)
                 </DropdownMenuItem>
               </DropdownMenuSubContent>

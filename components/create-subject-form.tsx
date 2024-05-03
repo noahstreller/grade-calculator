@@ -13,16 +13,19 @@ import {
   FormLabel,
   FormMessage
 } from "@/components/ui/form";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
+import { useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 
 export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, setOpen: Function}) {
   const { t, lang } = useTranslation("common");
   const preferences = usePreferences().preferences!;
+  const [submitting, setSubmitting] = useState(false);
 
   type FormValues = {
     subject: string;
@@ -47,12 +50,16 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setSubmitting(true);
     const subject = data.subject
     let insertedId: number | undefined = catchProblem(await quickCreateSubject(subject));
 
     form.reset(defaultValues);
     form.setFocus("subject");
-    if (insertedId) addSubjectToast(subject);
+    if (insertedId) {
+      addSubjectToast(subject);
+      setSubmitting(false);
+    }
     refresh();
     if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
   }
@@ -77,8 +84,8 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
           )}
         />
 
-        <Button className="w-full" type="submit">
-          {t("actions.submit")}
+        <Button className="w-full" type="submit" disabled={submitting}>
+          {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>
     </Form>

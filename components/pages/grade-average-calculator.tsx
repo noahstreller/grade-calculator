@@ -112,65 +112,93 @@ export default function GradeAverageCalculator() {
 
   }, [session]);
 
-  return session.status === "unauthenticated" ? <LandingPage /> : loaded ? (
-    <>
-      <CardBoard className="flex xl:hidden">
-        <AllSubjects
-          data={averageData}
-          setData={setAverageData}
-          refresh={refreshAll}
-        />
-        <AllGrades
-          data={gradeData}
-          setData={setGradeData}
-          refresh={refreshAll}
-        />
-        <RequiredGrades averageData={averageData} />
-        <PassingGradesCard data={passingData} />
-        <FailingGradesCard data={failingData} />
-        <AverageOverview
-          data={gradeData}
-          averageData={averageData}
-        />
-        <GradeOverview
-          data={gradeData}
-          passingData={passingData}
-          failingData={failingData}
-        />
-      </CardBoard>
-      <CardBoard row className="hidden xl:flex">
-        <CardBoard>
-          <PassingGradesCard data={passingData} />
-          <FailingGradesCard data={failingData} />
-          <AverageOverview
-            data={gradeData}
-            averageData={averageData}
-          />
-        </CardBoard>
-        <CardBoard>
+  return session.status === "unauthenticated" ? (
+    <LandingPage />
+  ) : loaded ? (
+    gradeData.length > 0 ? (
+      <>
+        <CardBoard className="flex xl:hidden">
           <AllSubjects
             data={averageData}
             setData={setAverageData}
             refresh={refreshAll}
           />
-          <GradeOverview
-            data={gradeData}
-            passingData={passingData}
-            failingData={failingData}
-          />
-        </CardBoard>
-        <CardBoard>
           <AllGrades
             data={gradeData}
             setData={setGradeData}
             refresh={refreshAll}
           />
           <RequiredGrades averageData={averageData} />
+          <PassingGradesCard data={passingData} />
+          <FailingGradesCard data={failingData} />
+          <AverageOverview data={gradeData} averageData={averageData} />
+          <GradeOverview
+            data={gradeData}
+            passingData={passingData}
+            failingData={failingData}
+          />
         </CardBoard>
-      </CardBoard>
-    </>
-  )
-  : (
+        <CardBoard row className="hidden xl:flex">
+          <CardBoard>
+            <PassingGradesCard data={passingData} />
+            <FailingGradesCard data={failingData} />
+            <AverageOverview data={gradeData} averageData={averageData} />
+          </CardBoard>
+          <CardBoard>
+            <AllSubjects
+              data={averageData}
+              setData={setAverageData}
+              refresh={refreshAll}
+            />
+            <GradeOverview
+              data={gradeData}
+              passingData={passingData}
+              failingData={failingData}
+            />
+          </CardBoard>
+          <CardBoard>
+            <AllGrades
+              data={gradeData}
+              setData={setGradeData}
+              refresh={refreshAll}
+            />
+            <RequiredGrades averageData={averageData} />
+          </CardBoard>
+        </CardBoard>
+      </>
+    ) : (
+      <>
+        <CardBoard className="flex xl:hidden">
+          <AllSubjects
+            data={averageData}
+            setData={setAverageData}
+            refresh={refreshAll}
+          />
+          {averageData.length > 0 && (
+            <AllGrades
+              data={gradeData}
+              setData={setGradeData}
+              refresh={refreshAll}
+            />
+          )}
+        </CardBoard>
+        <CardBoard row className="hidden xl:flex">
+          <AllSubjects
+            data={averageData}
+            setData={setAverageData}
+            refresh={refreshAll}
+          />
+          {averageData.length > 0 && (
+            <AllGrades
+              data={gradeData}
+              setData={setGradeData}
+              refresh={refreshAll}
+            />
+          )}
+        </CardBoard>
+      </>
+    )
+  ) : (
     <>
       <CardBoard className="flex xl:hidden">
         <CardSkeleton wide variant="medium" />

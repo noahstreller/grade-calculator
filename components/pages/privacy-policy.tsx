@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
         </span>
       </h1>
       <p>
-        This privacy policy will clarify, how your data is stored, and which
+        This privacy policy will clarify how your data is stored, and which
         purpose it serves.
       </p>
       <p className="text-sm text-muted-foreground">

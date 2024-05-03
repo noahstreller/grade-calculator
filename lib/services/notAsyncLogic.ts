@@ -59,7 +59,7 @@ export function exportToClipboard(data: ExportableData) {
   navigator.clipboard.writeText(json);
 }
 
-export function importFromJSON() {
+export function importFromJSON(purge: boolean = true) {
   try {
     const input = document.createElement("input");
     input.type = "file";
@@ -70,11 +70,18 @@ export function importFromJSON() {
       reader.onload = async () => {
         const json = reader.result as string;
         const data = JSON.parse(json) as ExportableData;
-        clearUserSubjectsGrades().then(() => {
-          importData(data).then(() => {
+        if(purge) {
+          clearUserSubjectsGrades().then(() => {
+            importData(data, purge).then(() => {
+              window.location.reload();
+            });
+          });
+        }
+        else {
+          importData(data, purge).then(() => {
             window.location.reload();
           });
-        });
+        }
       };
       reader.readAsText(file);
     };
@@ -84,16 +91,26 @@ export function importFromJSON() {
   }
 }
 
-export function importFromText() {
+export function importFromText(purge: boolean = true) {
   try {
-    navigator.clipboard.readText().then((text) => {
-      clearUserSubjectsGrades().then(() =>{
+    if(purge) {
+      navigator.clipboard.readText().then((text) => {
+        clearUserSubjectsGrades().then(() => {
+          const data = JSON.parse(text) as ExportableData;
+          importData(data, purge).then(() => {
+            window.location.reload();
+          });
+        });
+      });      
+    }
+    else {
+      navigator.clipboard.readText().then((text) => {
         const data = JSON.parse(text) as ExportableData;
-        importData(data).then(() => {
+        importData(data, purge).then(() => {
           window.location.reload();
         });
       });
-    });
+    }
   }
   catch (e) {
     importFailedToast();

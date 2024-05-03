@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { NewPreferences } from "@/db/schema";
 import { savePreferences } from "@/lib/services/preferences-service";
 import { ClearDataTranslations, PreferencesTranslations } from "@/lib/translationObjects";
@@ -51,6 +52,7 @@ export function SettingsModalForm({
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
   const [decimals, setDecimals] = useState(preferences.preferences?.gradeDecimals || 3);
+  const [submitted, setSubmitted] = useState(false);
 
   type FormValues = NewPreferences;
   const defaultValues: DefaultValues<FormValues> = preferences.preferences as FormValues;
@@ -69,6 +71,7 @@ export function SettingsModalForm({
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    setSubmitted(true);
     const newPreferences = {
       gradeDecimals: data.gradeDecimals,
       newEntitySheetShouldStayOpen: data.newEntitySheetShouldStayOpen,
@@ -304,11 +307,11 @@ export function SettingsModalForm({
 
         <Separator />
         <Button
-          disabled={passGtMax || passLtMin || maxLtMin}
+          disabled={passGtMax || passLtMin || maxLtMin || submitted}
           className="w-full"
           type="submit"
         >
-          {t("actions.save")}
+          {submitted ? <LoadingSpinner /> : t("actions.save")}
         </Button>
 
         <Button className="w-full" variant="outline" onClick={onReset}>
