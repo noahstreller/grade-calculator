@@ -111,6 +111,10 @@ export type GradeWithSubject = {
   subjects: Subject;
 };
 export type NewGrade = typeof grades.$inferInsert;
+export type NewGradeWithNewSubject = {
+  grades: NewGrade;
+  subjects: NewSubject;
+};
 
 export type Subject = typeof subjects.$inferSelect;
 export type NewSubject = typeof subjects.$inferInsert;

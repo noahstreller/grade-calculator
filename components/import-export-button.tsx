@@ -1,12 +1,6 @@
 "use client";
-import { AppGlobalsType } from "@/lib/app.globals";
-import Grade from "@/lib/entities/grade";
-import {
-  exportToJSONFile,
-  exportToText,
-  importFromJSON,
-  importFromText,
-} from "@/lib/storageUtils";
+import { prepareDataForExport } from "@/lib/services/export-service";
+import { exportToClipboard, exportToJSONFile, importFromJSON, importFromText } from "@/lib/services/notAsyncLogic";
 import { Database } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Button } from "./ui/button";
@@ -22,14 +16,9 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export type ExportableType = {
-  preferences: AppGlobalsType;
-  subjects: string[];
-  grades: Grade[];
-};
-
 export function ImportExportButton() {
   const session = useSession();
+
   return session.status === "authenticated" ? (
     <div>
       <DropdownMenu>
@@ -58,10 +47,18 @@ export function ImportExportButton() {
             <DropdownMenuSubTrigger>Export data</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={exportToText}>
+                <DropdownMenuItem
+                  onClick={async () =>
+                    exportToClipboard(await prepareDataForExport())
+                  }
+                >
                   Text (Clipboard)
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={exportToJSONFile}>
+                <DropdownMenuItem
+                  onClick={async () =>
+                    exportToJSONFile(await prepareDataForExport())
+                  }
+                >
                   JSON (File)
                 </DropdownMenuItem>
               </DropdownMenuSubContent>

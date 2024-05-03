@@ -6,7 +6,7 @@ import {
   deleteSubjectFromDb,
   getAllSubjectsFromDb,
   getSubjectByIdFromDb,
-  getSubjectByNameFromDb,
+  getSubjectByNameFromDb
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
@@ -55,6 +55,23 @@ export async function getSubjectByName(
 export async function addSubject(newSubject: NewSubject): Promise<number | Problem> {
   try{
     newSubject = await setUserId(newSubject);
+    return await addSubjectToDb(newSubject);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function getSubjectIdElseAdd(newSubject: NewSubject): Promise<number | Problem> {
+  try {
+    const userId = await getUserId();
+    newSubject = await setUserId(newSubject);
+    const subject = await getSubjectByNameFromDb(newSubject.name!, userId);
+    console.log(subject);
+    if (subject) return subject.id;
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
     return getProblem({

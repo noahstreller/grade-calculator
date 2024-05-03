@@ -24,7 +24,10 @@ export async function getSubjectByIdFromDb(
   return result[0] satisfies Subject;
 }
 
-export async function getSubjectByNameFromDb(subjectName: string, userId: string) {
+export async function getSubjectByNameFromDb(
+  subjectName: string,
+  userId: string
+) {
   const result = await db
     .select()
     .from(subjects)
@@ -40,6 +43,15 @@ export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
     .returning({ newId: subjects.id })
     .execute();
   return result[0].newId satisfies number;
+}
+
+export async function addSubjectToDbReturning(newSubject: NewSubject): Promise<Subject> {
+  const result = await db
+    .insert(subjects)
+    .values(newSubject)
+    .returning()
+    .execute();
+  return result[0] satisfies Subject;
 }
 
 export async function deleteSubjectFromDb(subject: Subject, userId: string): Promise<string> {

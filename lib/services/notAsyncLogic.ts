@@ -1,4 +1,7 @@
 import { GradeWithSubject, Preferences } from "@/db/schema";
+import { ExportableData, importData } from "@/lib/services/export-service";
+import { clearUserSubjectsGrades } from "@/lib/services/user-service";
+import { importFailedToast } from "@/lib/toasts";
 import { AverageWithSubject } from "@/types/types";
 
 export function doesGradePass(
@@ -39,4 +42,60 @@ export function getTotalGradeAverages(grades: GradeWithSubject[]): number {
     }
   }
   return sum / count;
+}
+
+export function exportToJSONFile(data: ExportableData) {
+  const json = JSON.stringify(data);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "gradedata.json";
+  a.click();
+}
+
+export function exportToClipboard(data: ExportableData) {
+  const json = JSON.stringify(data);
+  navigator.clipboard.writeText(json);
+}
+
+export function importFromJSON() {
+  try {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = async () => {
+      const file = input.files![0];
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const json = reader.result as string;
+        const data = JSON.parse(json) as ExportableData;
+        clearUserSubjectsGrades().then(() => {
+          importData(data).then(() => {
+            window.location.reload();
+          });
+        });
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  } catch (e) {
+    importFailedToast();
+  }
+}
+
+export function importFromText() {
+  try {
+    navigator.clipboard.readText().then((text) => {
+      clearUserSubjectsGrades().then(() =>{
+        const data = JSON.parse(text) as ExportableData;
+        importData(data).then(() => {
+          window.location.reload();
+        });
+      });
+    });
+  }
+  catch (e) {
+    importFailedToast();
+  }
 }

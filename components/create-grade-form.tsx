@@ -42,11 +42,9 @@ import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
 
 export function CreateGradeForm({
-  subjectSet,
   refresh,
   setDrawerOpen,
 }: {
-  subjectSet: Set<string>;
   refresh: Function;
   setDrawerOpen: Function;
 }) {
@@ -59,12 +57,6 @@ export function CreateGradeForm({
 
   const preferences = usePreferences().preferences;
   const defaultPreferences = getDefaultPreferences();
-
-  // useEffect(() => {
-  //   subjectSet.forEach((subj) => {
-  //     setSubjects((subjects) => [...subjects, subj]);
-  //   });
-  // }, [subjectSet]);
 
   useEffect(() => {
     const fetchData = async () => {
