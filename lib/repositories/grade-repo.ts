@@ -124,7 +124,6 @@ export async function updateGradeInDb(
   grade: Grade,
   userId: string
 ): Promise<number> {
-  console.log(grade);
   const result = await db
     .update(grades)
     .set(grade)
