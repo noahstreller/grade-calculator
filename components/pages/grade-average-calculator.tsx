@@ -3,9 +3,7 @@ import { AllGrades } from "@/components/cards/allGrades/allGrades";
 import { AllSubjects } from "@/components/cards/allSubjects/allSubjects";
 import { AverageOverview } from "@/components/cards/average-overview";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
-import FailingGradesCard from "@/components/cards/failingGradesCard/failingGradesCard";
 import { GradeOverview } from "@/components/cards/grade-overview";
-import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { RequiredGrades } from "@/components/cards/required-grades";
 import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
@@ -120,6 +118,8 @@ export default function GradeAverageCalculator() {
         <CardBoard className="flex xl:hidden">
           <AllSubjects
             data={averageData}
+            failingData={failingData}
+            passingData={passingData}
             setData={setAverageData}
             refresh={refreshAll}
           />
@@ -129,8 +129,6 @@ export default function GradeAverageCalculator() {
             refresh={refreshAll}
           />
           <RequiredGrades averageData={averageData} />
-          <PassingGradesCard data={passingData} />
-          <FailingGradesCard data={failingData} />
           <AverageOverview data={gradeData} averageData={averageData} />
           <GradeOverview
             data={gradeData}
@@ -140,21 +138,12 @@ export default function GradeAverageCalculator() {
         </CardBoard>
         <CardBoard row className="hidden xl:flex">
           <CardBoard>
-            <PassingGradesCard data={passingData} />
-            <FailingGradesCard data={failingData} />
-            <AverageOverview data={gradeData} averageData={averageData} />
-          </CardBoard>
-          <CardBoard>
-            <AllSubjects
-              data={averageData}
-              setData={setAverageData}
-              refresh={refreshAll}
-            />
             <GradeOverview
               data={gradeData}
               passingData={passingData}
               failingData={failingData}
             />
+            <AverageOverview data={gradeData} averageData={averageData} />
           </CardBoard>
           <CardBoard>
             <AllGrades
@@ -164,6 +153,15 @@ export default function GradeAverageCalculator() {
             />
             <RequiredGrades averageData={averageData} />
           </CardBoard>
+          <CardBoard>
+            <AllSubjects
+              data={averageData}
+              failingData={failingData}
+              passingData={passingData}
+              setData={setAverageData}
+              refresh={refreshAll}
+            />
+          </CardBoard>
         </CardBoard>
       </>
     ) : (
@@ -171,6 +169,8 @@ export default function GradeAverageCalculator() {
         <CardBoard className="flex xl:hidden">
           <AllSubjects
             data={averageData}
+            failingData={failingData}
+            passingData={passingData}
             setData={setAverageData}
             refresh={refreshAll}
           />
@@ -185,6 +185,8 @@ export default function GradeAverageCalculator() {
         <CardBoard row className="hidden xl:flex">
           <AllSubjects
             data={averageData}
+            failingData={failingData}
+            passingData={passingData}
             setData={setAverageData}
             refresh={refreshAll}
           />
