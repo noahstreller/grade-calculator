@@ -25,6 +25,16 @@ export function addGradeToast(grade: NewGrade, subjectName: string) {
   });
 }
 
+export function editGradeToast(grade: NewGrade, subjectName: string) {
+  toast("The grade was updated", {
+    description: `${grade.value} in ${subjectName}`,
+    action: {
+      label: t("actions.ok"),
+      onClick: () => void 0,
+    },
+  });
+}
+
 export function addSubjectToast(subject: string) {
   toast(t("subjects.add-success"), {
     description: subject,

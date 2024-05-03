@@ -86,7 +86,7 @@ export function AllGrades({
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit Grade</DialogTitle>
-                  <DialogDescription>Edit Grade</DialogDescription>
+                  <DialogDescription>Change the grade details here</DialogDescription>
                 </DialogHeader>
                 <EditGradeForm refresh={refresh} setDrawerOpen={setEditOpen} originalGrade={originalGrade} />
               </DialogContent>
@@ -133,8 +133,10 @@ export function AllGrades({
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>{t("grades.add")}</DrawerTitle>
-                <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
+                <DrawerTitle>Edit Grade</DrawerTitle>
+                <DrawerDescription>
+                  Change the grade details here
+                </DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
                 refresh={refresh}
