@@ -6,7 +6,8 @@ import {
   deleteSubjectFromDb,
   getAllSubjectsFromDb,
   getSubjectByIdFromDb,
-  getSubjectByNameFromDb
+  getSubjectByNameFromDb,
+  updateSubjectInDb
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
@@ -70,7 +71,6 @@ export async function getSubjectIdElseAdd(newSubject: NewSubject): Promise<numbe
     const userId = await getUserId();
     newSubject = await setUserId(newSubject);
     const subject = await getSubjectByNameFromDb(newSubject.name!, userId);
-    console.log(subject);
     if (subject) return subject.id;
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
@@ -125,6 +125,19 @@ export async function deleteSubject(subject: string | number | Subject): Promise
     let resolvedSubject = catchProblem(await getSubjectByIdByNameBySubject(subject));
     const userId = await getUserId();
     return await deleteSubjectFromDb(resolvedSubject, userId)
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function updateSubject(subject: Subject): Promise<string | Problem> {
+  try {
+    const userId = await getUserId();
+    return await updateSubjectInDb(subject, userId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

@@ -126,11 +126,7 @@ export function EditGradeForm({
       );
     }
     refresh();
-    if (
-      !preferences?.newEntitySheetShouldStayOpen ??
-      !defaultPreferences.newEntitySheetShouldStayOpen
-    )
-      setDrawerOpen(false);
+    setDrawerOpen(false);
   }
 
   useEffect(() => {
