@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { Laptop, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -31,15 +30,15 @@ export function ThemeSwitcher() {
         <DropdownMenuLabel>{t("themes.title")}</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun className="h-[1rem] w-[1rem] mr-[0.5rem]" />
-          {t("themes.light")}
+          Light
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Moon className="h-[1rem] w-[1rem] mr-[0.5rem]" />
-          {t("themes.dark")}
+          Dark
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <Laptop className="h-[1rem] w-[1rem] mr-[0.5rem]" />
-          {t("themes.system")}
+          System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

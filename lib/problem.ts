@@ -19,7 +19,7 @@ enum ErrorCode {
 }
 
 const errorMessages: { [key in ErrorCode]?: string } = {
-  [ErrorCode.UniqueConstraintViolation]: "You already added this subject",
+  [ErrorCode.UniqueConstraintViolation]: "You already added this item",
   [ErrorCode.ForeignKeyConstraintViolation]: "Some related data is missing",
   [ErrorCode.UnauthorizedViolation]: "You are not logged in",
 };

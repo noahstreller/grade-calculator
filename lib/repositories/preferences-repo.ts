@@ -29,6 +29,7 @@ export async function updatePreferencesInDb(
   const result = await db
     .update(preferences)
     .set(newPreferences)
+    .where(eq(preferences.id, newPreferences.id!))
     .returning()
     .execute();
   return result[0] satisfies Preferences;
