@@ -36,11 +36,11 @@ export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<
         let subject: string = row.original.subjects.name!;
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 16 : 20
+          isMobile ? 20 : 40
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 16 : 20
+          isMobile ? 20 : 40
         ).text;
 
         if (truncated) {

@@ -155,7 +155,7 @@ export function EditGradeForm({
                       role="combobox"
                       disabled={loading}
                       className={cn(
-                        "w-[200px] justify-between",
+                        "w-full justify-between",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -170,7 +170,7 @@ export function EditGradeForm({
                             subjects.find(
                               (subject) => subject.id === field.value
                             )?.name ?? "",
-                            20
+                            35
                           ).text
                         : loading
                         ? null
@@ -179,7 +179,7 @@ export function EditGradeForm({
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-full p-0">
                   <Command>
                     <CommandInput placeholder={t("subjects.search")} />
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
@@ -206,7 +206,7 @@ export function EditGradeForm({
                                     : "opacity-0"
                                 )}
                               />
-                              {truncateText(subject.name!, 20).text}
+                              {truncateText(subject.name!, 35).text}
                             </CommandItem>
                           ))
                         )}

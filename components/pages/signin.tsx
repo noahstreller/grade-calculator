@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
+import { Globe } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -82,8 +83,11 @@ export function SignInPageComponent() {
               Check out the legacy version, if you prefer saving your data
               locally.
             </CardDescription>
-            <Button variant={"secondary"}>
-              <Link href="https://legacy.grades.nstr.dev">Legacy Version</Link>
+            <Button variant={"secondary"} asChild>
+              <Link href="https://legacy.grades.nstr.dev">
+                <Globe className="size-4 mr-2" />
+                Legacy Version
+              </Link>
             </Button>
           </CardContent>
         </Card>
