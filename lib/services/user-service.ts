@@ -1,8 +1,8 @@
 "use server"
 
-import { Subject } from "@/db/schema";
+import { Subject, User } from "@/db/schema";
 import { Problem, getProblem } from "@/lib/problem";
-import { clearUserSubjectsGradesFromDb } from "@/lib/repositories/user-repo";
+import { clearUserSubjectsGradesFromDb, deleteUserDataFromDb } from "@/lib/repositories/user-repo";
 import { getUserId } from "@/lib/services/service-util";
 
 export async function clearUserSubjectsGrades(): Promise<Subject[] | Problem> {
@@ -18,10 +18,10 @@ export async function clearUserSubjectsGrades(): Promise<Subject[] | Problem> {
   }
 }
 
-export async function clearUserData(): Promise<Subject[] | Problem> {
+export async function clearUserData(): Promise<User | Problem> {
   try {
     const userId = await getUserId();
-    return await clearUserSubjectsGradesFromDb(userId);
+    return await deleteUserDataFromDb(userId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
