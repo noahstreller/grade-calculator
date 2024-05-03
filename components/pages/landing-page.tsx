@@ -14,9 +14,6 @@ export function LandingPage() {
   }, []);
   return (
     <div className="flex flex-col gap-10 w-4/5 self-center m-auto">
-      <h1 className="relative z-10 text-3xl md:text-5xl text-foreground text-center font-sans font-bold">
-        Grade Calculator
-      </h1>
       <div className="hidden lg:flex flex-col">
         <CardBoard>
           <CardBoard row>
@@ -119,7 +116,7 @@ export function LandingPage() {
         </CardBoard>
         <div className="flex justify-start m-20"></div>
       </div>
-      <div className="flex flex-col gap-10 w-4/5 self-center m-auto">
+      <div className="flex flex-col gap-10 w-full self-center m-auto">
         <div className="flex lg:hidden flex-col">
           <CardBoard>
             <Card className="shadow-xl">

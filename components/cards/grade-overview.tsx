@@ -11,11 +11,15 @@ import {
 } from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
-import { doesGradePass, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
+import {
+  doesGradePass,
+  getTotalGradeAverages,
+} from "@/lib/services/notAsyncLogic";
 import { getDateOrTime, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
+import { isMobile } from "react-device-detect";
 import {
   Label,
   Line,
@@ -60,7 +64,10 @@ export function GradeOverview({
               <span className="text-[0.70rem] uppercase text-muted-foreground">
                 Grade
               </span>
-              <ColoredGrade grade={payload[0].value} className="text-left font-bold" />
+              <ColoredGrade
+                grade={payload[0].value}
+                className="text-left font-bold"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
@@ -121,6 +128,7 @@ export function GradeOverview({
                 dataKey={getGrade}
                 stroke="#000000"
                 className="dark:invert"
+                z={10}
               />
               <Tooltip content={<CustomTooltip />} />
               <YAxis
@@ -129,17 +137,42 @@ export function GradeOverview({
               />
               <XAxis
                 tick={false}
-                label={preferences.passingInverse ? "Lower is better" : "Higher is better"}
+                label={
+                  preferences.passingInverse
+                    ? "Lower is better"
+                    : "Higher is better"
+                }
               />
               <ReferenceLine
                 y={preferences.passingGrade!}
-                label={<Label value="Passing Grade" dx={-120} dy={-12} />}
+                label={
+                  <Label
+                    value="Passing Grade"
+                    dx={isMobile ? 60 : 120}
+                    opacity={0.8}
+                    dy={-10}
+                  />
+                }
                 strokeDasharray="3 5"
                 stroke="grey"
+                z={0}
               />
               <ReferenceLine
                 y={getTotalGradeAverages(data)}
-                label={<Label value="Your Average" dx={-120} dy={12} />}
+                label={
+                  <Label
+                    value="Your Average"
+                    opacity={0.6}
+                    dx={isMobile ? -60 : -120}
+                    z={0}
+                    dy={10}
+                    fill={
+                      doesGradePass(getTotalGradeAverages(data), preferences)
+                        ? "#4ade80"
+                        : "#f87171"
+                    }
+                  />
+                }
                 strokeDasharray="10 4"
                 stroke={
                   doesGradePass(getTotalGradeAverages(data), preferences)

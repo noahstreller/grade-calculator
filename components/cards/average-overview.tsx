@@ -1,5 +1,10 @@
 import { ColoredGrade } from "@/components/colored-grade";
 import { usePreferences } from "@/components/preferences-provider";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardBoard } from "@/components/ui/cardboard";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { GradeWithSubject } from "@/db/schema";
 import { doesGradePass, getSubjectAverages, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
@@ -15,17 +20,6 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Badge } from "../ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import { CardBoard } from "../ui/cardboard";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export function AverageOverview({
   data,

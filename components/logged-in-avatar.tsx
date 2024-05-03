@@ -14,7 +14,7 @@ export function LoggedInAvatar({ className = "" }: { className?: string }) {
         <Button
           size={"icon"}
           variant={"ghost"}
-          className="rounded-full cursor-default"
+          className="rounded-full"
         >
           <Avatar className={className}>
             <AvatarImage src={session.data?.user.image || ""} />
