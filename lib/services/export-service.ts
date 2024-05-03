@@ -71,7 +71,6 @@ export async function importData(data: ExportableData, purge: boolean) {
       return { name: subject.name, id: result };
     }
   }));
-  console.log(subjectWithIds);
 
   let results = data.data.forEach(async (grade) => {
     let resultingSubject = subjectWithIds.find((subject) => subject.name === grade.subjects.name)?.id;

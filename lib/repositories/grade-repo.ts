@@ -119,3 +119,17 @@ export async function deleteGradeByIdFromDb(
 
   return (result[0].oldGrade || 0) as number;
 }
+
+export async function updateGradeInDb(
+  grade: Grade,
+  userId: string
+): Promise<number> {
+  const result = await db
+    .update(grades)
+    .set(grade)
+    .where(and(eq(grades.id, grade.id), eq(grades.userId, userId)))
+    .returning({ value: grades.value })
+    .execute();
+
+  return (result[0].value || 0) as number;
+}

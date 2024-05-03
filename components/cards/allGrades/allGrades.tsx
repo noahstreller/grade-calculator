@@ -1,5 +1,6 @@
 "use client";
 import { CreateGradeForm } from "@/components/create-grade-form";
+import { EditGradeForm } from "@/components/edit-grade-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +28,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { GradeWithSubject } from "@/db/schema";
+import { Grade, GradeWithSubject } from "@/db/schema";
 import { isMobileDevice } from "@/lib/utils";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -47,7 +48,9 @@ export function AllGrades({
   const { t, lang } = useTranslation("common");
 
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const isDesktop = !isMobileDevice();
+  const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
 
   if (isDesktop) {
     return (
@@ -64,10 +67,7 @@ export function AllGrades({
                 <DialogTitle>{t("grades.add")}</DialogTitle>
                 <DialogDescription>{t("grades.add-desc")}</DialogDescription>
               </DialogHeader>
-              <CreateGradeForm
-                refresh={refresh}
-                setDrawerOpen={setOpen}
-              />
+              <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             </DialogContent>
           </Dialog>
         </CardHeader>
@@ -81,7 +81,16 @@ export function AllGrades({
               </AlertDescription>
             </Alert>
           ) : (
-            <DataTable columns={columns(refresh)} data={data} />
+            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+              <DataTable columns={columns(refresh, setOriginalGrade)} data={data} />
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Edit Grade</DialogTitle>
+                  <DialogDescription>Edit Grade</DialogDescription>
+                </DialogHeader>
+                <EditGradeForm refresh={refresh} setDrawerOpen={setEditOpen} originalGrade={originalGrade} />
+              </DialogContent>
+            </Dialog>
           )}
         </CardContent>
       </Card>
@@ -102,10 +111,7 @@ export function AllGrades({
               <DrawerTitle>{t("grades.add")}</DrawerTitle>
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
-            <CreateGradeForm
-              refresh={refresh}
-              setDrawerOpen={setOpen}
-            />
+            <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
@@ -115,18 +121,38 @@ export function AllGrades({
         </Drawer>
       </CardHeader>
       <CardContent>
-        {
-          data.length === 0 ? (
-            <Alert>
-              <Bird className="h-4 w-4" />
-              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
-              <AlertDescription>
-                {t("errors.not-enough-data-yet-grade", { count: 1 })}
-              </AlertDescription>
-            </Alert>
-          ) : <DataTable columns={columns(refresh)} data={data} />
-        }
-        
+        {data.length === 0 ? (
+          <Alert>
+            <Bird className="h-4 w-4" />
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertDescription>
+              {t("errors.not-enough-data-yet-grade", { count: 1 })}
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <Drawer open={editOpen} onOpenChange={setEditOpen}>
+            <DrawerContent>
+              <DrawerHeader className="text-left">
+                <DrawerTitle>{t("grades.add")}</DrawerTitle>
+                <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
+              </DrawerHeader>
+              <EditGradeForm
+                refresh={refresh}
+                setDrawerOpen={setEditOpen}
+                originalGrade={originalGrade}
+              />
+              <DrawerFooter className="pt-2">
+                <DrawerClose asChild>
+                  <Button variant="outline">Cancel</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+            <DataTable
+              columns={columns(refresh, setOriginalGrade)}
+              data={data}
+            />
+          </Drawer>
+        )}
       </CardContent>
     </Card>
   );

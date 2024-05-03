@@ -1,6 +1,7 @@
 "use client";
 import { columns } from "@/components/cards/allSubjects/columns";
 import { CreateSubjectForm } from "@/components/create-subject-form";
+import { EditSubjectForm } from "@/components/edit-subject-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,8 +54,10 @@ export function AllSubjects({
   const { t, lang } = useTranslation("common");
   const isDesktop = !isMobileDevice();
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [subjectToDelete, setSubjectToDelete] = useState<Subject | null>(null);
+  const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
 
   if (isDesktop) {
     return (
@@ -116,7 +119,18 @@ export function AllSubjects({
                 </AlertDescription>
               </Alert>
             ) : (
-              <DataTable columns={columns(setSubjectToDelete)} data={data} />
+              <Dialog open={editOpen} onOpenChange={setEditOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Edit Subject</DialogTitle>
+                    <DialogDescription>
+                      Change the details of the subject
+                    </DialogDescription>
+                  </DialogHeader>
+                  <EditSubjectForm originalSubject={originalSubject} refresh={refresh} setOpen={setEditOpen} />
+                </DialogContent>
+                <DataTable columns={columns(setSubjectToDelete, setOriginalSubject, setDeleteConfirmOpen, setEditOpen)} data={data} />
+              </Dialog>
             )}
           </Dialog>
         </CardContent>
@@ -160,13 +174,13 @@ export function AllSubjects({
               <DrawerClose asChild>
                 <Button
                   onClick={async () => {
-                      if (subjectToDelete) {
-                        let subjectName = catchProblem(
-                          await deleteSubject(subjectToDelete)
-                        );
-                        deleteSubjectToast(subjectName);
-                        setSubjectToDelete(null);
-                      }
+                    if (subjectToDelete) {
+                      let subjectName = catchProblem(
+                        await deleteSubject(subjectToDelete)
+                      );
+                      deleteSubjectToast(subjectName);
+                      setSubjectToDelete(null);
+                    }
                     refresh();
                   }}
                   variant="destructive"
@@ -188,7 +202,15 @@ export function AllSubjects({
               </AlertDescription>
             </Alert>
           ) : (
-            <DataTable columns={columns(setSubjectToDelete)} data={data} />
+            <DataTable
+              columns={columns(
+                setSubjectToDelete,
+                setOriginalSubject,
+                setOpen,
+                setEditOpen
+              )}
+              data={data}
+            />
           )}
         </Drawer>
       </CardContent>

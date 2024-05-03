@@ -32,7 +32,17 @@ export function addSubjectToast(subject: string) {
       label: "Got it",
       onClick: () => void 0,
     },
-  })
+  });
+}
+
+export function editSubjectToast(subject: string) {
+  toast("The subject was updated", {
+    description: subject,
+    action: {
+      label: "Got it",
+      onClick: () => void 0,
+    },
+  });
 }
 
 export function copySuccessToast(copiedContent: string) {
