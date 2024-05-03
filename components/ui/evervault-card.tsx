@@ -27,7 +27,6 @@ export const EvervaultCard = ({
     width?: number;
   }) => {
     const size = (height * width) / 300;
-    console.log(size);
     return size;
   };
 
@@ -42,7 +41,6 @@ export const EvervaultCard = ({
       width?: number;
     }) => {
       const size = (height * width) / 300;
-      console.log(size);
       return size;
     };
     let str = generateRandomString(
