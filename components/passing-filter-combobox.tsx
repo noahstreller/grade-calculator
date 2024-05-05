@@ -89,7 +89,6 @@ function StatusList({
 }) {
   return (
     <Command>
-      {/* <CommandInput placeholder="Filter status..." /> */}
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>

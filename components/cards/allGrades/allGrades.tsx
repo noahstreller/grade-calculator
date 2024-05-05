@@ -61,7 +61,7 @@ export function AllGrades({
     icon: <FilterX className="size-4 mr-2" />,
   });
 
-  const handleStatusChange = (status: PassingStatus | null) => {
+  const getGradesForStatus = (status: PassingStatus | null) => {
     if(status?.value === "passing") {
       return data.filter(
         (grade) => doesGradePass(grade.grades.value!, preferences)
@@ -109,7 +109,7 @@ export function AllGrades({
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
               <DataTable
                 columns={columns(refresh, setOriginalGrade)}
-                data={handleStatusChange(selectedStatus)}
+                data={getGradesForStatus(selectedStatus)}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
@@ -187,7 +187,7 @@ export function AllGrades({
             </DrawerContent>
             <DataTable
               columns={columns(refresh, setOriginalGrade)}
-              data={handleStatusChange(selectedStatus)}
+              data={getGradesForStatus(selectedStatus)}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}
             />
