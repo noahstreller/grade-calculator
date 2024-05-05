@@ -33,8 +33,7 @@ import { catchProblem } from "@/lib/problem";
 import { updateGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
 import { editGradeToast } from "@/lib/toasts";
-import { cn, getDefaultPreferences, truncateText } from "@/lib/utils";
-import { format } from "date-fns";
+import { cn, getDateOrDateTimeLong, getDefaultPreferences, truncateText } from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
@@ -291,7 +290,7 @@ export function EditGradeForm({
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
                       {date ? (
-                        format(date, "PPP HH:mm:ss")
+                        getDateOrDateTimeLong(date)
                       ) : (
                         <span>Pick a date</span>
                       )}
