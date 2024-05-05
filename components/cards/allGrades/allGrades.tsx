@@ -1,6 +1,8 @@
 "use client";
 import { CreateGradeForm } from "@/components/create-grade-form";
 import { EditGradeForm } from "@/components/edit-grade-form";
+import { PassingStatus } from "@/components/passing-filter-combobox";
+import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,8 +31,9 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Grade, GradeWithSubject } from "@/db/schema";
+import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { isMobileDevice } from "@/lib/utils";
-import { Bird } from "lucide-react";
+import { Bird, FilterX } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { columns } from "./columns";
@@ -46,11 +49,33 @@ export function AllGrades({
   refresh: Function;
 }) {
   const { t, lang } = useTranslation("common");
+  const preferences = usePreferences().preferences!;
 
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const isDesktop = !isMobileDevice();
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
+  const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
+    value: "all",
+    label: "Show all",
+    icon: <FilterX className="size-4 mr-2" />,
+  });
+
+  const getGradesForStatus = (status: PassingStatus | null) => {
+    if(status?.value === "passing") {
+      return data.filter(
+        (grade) => doesGradePass(grade.grades.value!, preferences)
+      );
+    }
+
+    if(status?.value === "failing") {
+      return data.filter(
+        (grade) => !doesGradePass(grade.grades.value!, preferences)
+      );
+    }
+    
+    return data;
+  }
 
   if (isDesktop) {
     return (
@@ -82,13 +107,24 @@ export function AllGrades({
             </Alert>
           ) : (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
-              <DataTable columns={columns(refresh, setOriginalGrade)} data={data} />
+              <DataTable
+                columns={columns(refresh, setOriginalGrade)}
+                data={getGradesForStatus(selectedStatus)}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
+              />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>Edit Grade</DialogTitle>
-                  <DialogDescription>Change the grade details here</DialogDescription>
+                  <DialogDescription>
+                    Change the grade details here
+                  </DialogDescription>
                 </DialogHeader>
-                <EditGradeForm refresh={refresh} setDrawerOpen={setEditOpen} originalGrade={originalGrade} />
+                <EditGradeForm
+                  refresh={refresh}
+                  setDrawerOpen={setEditOpen}
+                  originalGrade={originalGrade}
+                />
               </DialogContent>
             </Dialog>
           )}
@@ -151,7 +187,9 @@ export function AllGrades({
             </DrawerContent>
             <DataTable
               columns={columns(refresh, setOriginalGrade)}
-              data={data}
+              data={getGradesForStatus(selectedStatus)}
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
             />
           </Drawer>
         )}
