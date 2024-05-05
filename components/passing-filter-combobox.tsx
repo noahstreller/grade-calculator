@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, Filter, X } from "lucide-react";
+import { Check, FilterX, X } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 export type PassingStatus = {
@@ -28,8 +28,8 @@ export type PassingStatus = {
 const statuses: PassingStatus[] = [
   {
     value: "all",
-    label: "All Subjects",
-    icon: <Filter className="size-4 mr-2" />,
+    label: "Show all",
+    icon: <FilterX className="size-4 mr-2" />,
   },
   {
     value: "passing",
