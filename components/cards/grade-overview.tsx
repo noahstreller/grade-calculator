@@ -47,6 +47,11 @@ export function GradeOverview({
     return grade.grades.value;
   };
 
+  const isOverNinetyPercent = () => {
+    let result = 100 / preferences.maximumGrade! * getTotalGradeAverages(data)
+    return result > 90
+  }
+
   const CustomTooltip = ({
     active,
     payload,
@@ -150,7 +155,11 @@ export function GradeOverview({
                     value="Passing Grade"
                     dx={isMobile ? 60 : 120}
                     opacity={0.8}
-                    dy={-10}
+                    dy={
+                      doesGradePass(getTotalGradeAverages(data), preferences)
+                        ? 10
+                        : -10
+                    }
                   />
                 }
                 strokeDasharray="3 5"
@@ -165,7 +174,13 @@ export function GradeOverview({
                     opacity={0.6}
                     dx={isMobile ? -60 : -120}
                     z={0}
-                    dy={10}
+                    dy={
+                      doesGradePass(getTotalGradeAverages(data), preferences)
+                        ? isOverNinetyPercent()
+                          ? 10
+                          : -10
+                        : 10
+                    }
                     fill={
                       doesGradePass(getTotalGradeAverages(data), preferences)
                         ? "#4ade80"
