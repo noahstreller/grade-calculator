@@ -170,7 +170,7 @@ export function AllSubjects({
             )}
           </Dialog>
         </CardContent>
-        <FailingGradesContent data={failingData} />
+        {failingData.length > 0 && <FailingGradesContent data={failingData} />}
       </Card>
     );
   }
@@ -268,7 +268,7 @@ export function AllSubjects({
           )}
         </Drawer>
       </CardContent>
-      <FailingGradesContent data={failingData} />
+      {failingData.length > 0 && <FailingGradesContent data={failingData} />}
     </Card>
   );
 }

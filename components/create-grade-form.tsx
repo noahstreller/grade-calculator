@@ -33,8 +33,7 @@ import { catchProblem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
 import { addGradeToast } from "@/lib/toasts";
-import { cn, getDefaultPreferences, truncateText } from "@/lib/utils";
-import { format } from "date-fns";
+import { cn, getDateOrDateTimeLong, getDefaultPreferences, truncateText } from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
@@ -261,13 +260,13 @@ export function CreateGradeForm({
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "max-w-full justify-start text-left font-normal",
+                        "w-full justify-start text-left font-normal",
                         !date && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
                       {date ? (
-                        format(date, "PPP HH:mm:ss")
+                        getDateOrDateTimeLong(date)
                       ) : (
                         <span>Pick a date (optional)</span>
                       )}
