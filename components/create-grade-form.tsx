@@ -281,7 +281,6 @@ export function CreateGradeForm({
                         setDate(value);
                         field.onChange(value);
                       }}
-                      initialFocus
                     />
                     <div className="p-3 border-t border-border">
                       <TimePicker
