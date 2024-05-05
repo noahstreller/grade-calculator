@@ -1,7 +1,8 @@
-import { NewPreferences, Preferences } from "@/db/schema"
-import { clsx, type ClassValue } from "clsx"
-import { isMobile } from "react-device-detect"
-import { twMerge } from "tailwind-merge"
+import { NewPreferences, Preferences } from "@/db/schema";
+import { clsx, type ClassValue } from "clsx";
+import { format } from "date-fns";
+import { isMobile } from "react-device-detect";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -79,7 +80,24 @@ export function getDateOrDateTime(date: Date) {
   if (isToday(date)) {
     return date.toLocaleTimeString();
   } else {
+    if (date.getHours() === 0 && date.getMinutes() === 0) {
+      return date.toLocaleDateString();
+    }
     return date.toLocaleString();
+  }
+}
+
+export function getDateOrDateTimeLong(date: Date) {
+  if (isToday(date)) {
+    if (date.getHours() === 0 && date.getMinutes() === 0) {
+      return "Today"
+    }
+    return `Today - ${format(date, "HH:mm:ss")}`;
+  } else {
+    if (date.getHours() === 0 && date.getMinutes() === 0) {
+      return format(date, "PPP");
+    }
+    return format(date, "PPP - HH:mm:ss");
   }
 }
 

@@ -78,7 +78,9 @@ export function LandingPage() {
                   <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
                     <Button className="w-full shadow-md" asChild>
                       <Link href={"/login"}>
-                        <Sparkles className="size-4 mr-2" />Continue to the app</Link>
+                        <Sparkles className="size-4 mr-2" />
+                        Continue to the app
+                      </Link>
                     </Button>
                     <Button
                       className="w-full shadow-md"
@@ -143,7 +145,10 @@ export function LandingPage() {
                   </Highlight>
                   <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
                     <Button className="w-full shadow-md" asChild>
-                      <Link href={"/login"}>Continue to the app</Link>
+                      <Link href={"/login"}>
+                        <Sparkles className="size-4 mr-2" />
+                        Continue to the app
+                      </Link>
                     </Button>
                     <Button
                       className="w-full shadow-md"
@@ -151,6 +156,7 @@ export function LandingPage() {
                       asChild
                     >
                       <Link href={"https://legacy.grades.nstr.dev"}>
+                        <Globe className="size-4 mr-2" />
                         Use the legacy version
                       </Link>
                     </Button>

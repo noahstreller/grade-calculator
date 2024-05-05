@@ -64,14 +64,14 @@ export function DataTable<TData, TValue>({
 
   return (
   <>
-    <div className="flex items-center py-4">
+    <div className="w-full flex items-center py-4">
       <Input
         placeholder="Filter by subject"
         value={(table.getColumn("subjectName")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
           table.getColumn("subjectName")?.setFilterValue(event.target.value)
         }
-        className="max-w-sm"
+        className="w-full"
       />
     </div>
     <div className="rounded-md border">

@@ -43,8 +43,10 @@ import { Switch } from "./ui/switch";
 
 export function SettingsModalForm({
   translations,
+  setOpen,
 }: {
   translations: PreferencesTranslations;
+  setOpen: (open: boolean) => void;
 }) {
   const preferences = usePreferences();
   const { t } = useTranslation("common");
@@ -80,7 +82,13 @@ export function SettingsModalForm({
       minimumGrade: data.minimumGrade,
       maximumGrade: data.maximumGrade,
     } satisfies NewPreferences;
-    savePreferences(newPreferences).then(() => window.location.reload());
+    preferences.setPreferences(newPreferences as any);
+    savePreferences(newPreferences).then(() => {
+      setSubmitted(false);
+      if (!preferences.preferences?.newEntitySheetShouldStayOpen){
+        setOpen(false);
+      }
+    });
   }
 
   function onReset(event: any) {
@@ -335,8 +343,10 @@ export function SettingsModal({
   clearDataTranslations: ClearDataTranslations;
 }) {
   const session = useSession();
+  const [open, setOpen] = useState<boolean>(false);
+
   return session.status === "authenticated" ? (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
           <Settings className="h-[1.2rem] w-[1.2rem]" />
@@ -364,7 +374,7 @@ export function SettingsModal({
         <Separator />
         <AccountSection />
         <Separator />
-        <SettingsModalForm translations={translations} />
+        <SettingsModalForm translations={translations} setOpen={setOpen} />
       </SheetContent>
     </Sheet>
   ) : null;

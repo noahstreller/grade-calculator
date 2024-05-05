@@ -9,7 +9,7 @@ import useTranslation from "next-translate/useTranslation";
 export function FailingGradesContent({ data }: { data: AverageWithSubject[] }) {
   const { t } = useTranslation("common");
   return (
-    <CardContent>
+    <CardContent className="mt-5">
       <CardTitle>Subjects to revise</CardTitle>
       <CardDescription>{t("subjects.failing-subjects-desc")}</CardDescription>
       {data.length === 0 ? (
