@@ -167,13 +167,6 @@ export default function GradeAverageCalculator() {
     ) : (
       <>
         <CardBoard className="flex xl:hidden">
-          <AllSubjects
-            data={averageData}
-            failingData={failingData}
-            passingData={passingData}
-            setData={setAverageData}
-            refresh={refreshAll}
-          />
           {averageData.length > 0 && (
             <AllGrades
               data={gradeData}
@@ -181,15 +174,15 @@ export default function GradeAverageCalculator() {
               refresh={refreshAll}
             />
           )}
+          <AllSubjects
+            data={averageData}
+            failingData={failingData}
+            passingData={passingData}
+            setData={setAverageData}
+            refresh={refreshAll}
+          />
         </CardBoard>
         <CardBoard row className="hidden xl:flex">
-          <AllSubjects
-            data={averageData}
-            failingData={failingData}
-            passingData={passingData}
-            setData={setAverageData}
-            refresh={refreshAll}
-          />
           {averageData.length > 0 && (
             <AllGrades
               data={gradeData}
@@ -197,6 +190,13 @@ export default function GradeAverageCalculator() {
               refresh={refreshAll}
             />
           )}
+          <AllSubjects
+            data={averageData}
+            failingData={failingData}
+            passingData={passingData}
+            setData={setAverageData}
+            refresh={refreshAll}
+          />
         </CardBoard>
       </>
     )

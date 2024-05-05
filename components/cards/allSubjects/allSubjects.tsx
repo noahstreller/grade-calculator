@@ -40,7 +40,7 @@ import { deleteSubjectToast } from "@/lib/toasts";
 import { isMobileDevice } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { Bird, Filter } from "lucide-react";
+import { Bird, FilterX } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 
@@ -67,8 +67,8 @@ export function AllSubjects({
   const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "All Subjects",
-    icon: <Filter className="size-4 mr-2" />,
+    label: "Show all",
+    icon: <FilterX className="size-4 mr-2" />,
   });
 
   useEffect(() => {
