@@ -15,6 +15,20 @@
       "when": 1714637233691,
       "tag": "0001_large_plazm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1715153907818,
+      "tag": "0002_majestic_bloodaxe",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1715154829100,
+      "tag": "0003_married_kingpin",
+      "breakpoints": true
     }
   ]
 }
