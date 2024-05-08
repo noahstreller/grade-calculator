@@ -18,6 +18,7 @@ export const grades = pgTable("grades", {
   subject_fk: integer("subject_fk").references(() => subjects.id, {
     onDelete: "cascade",
   }),
+  description: varchar("description"),
   weight: doublePrecision("weight").default(1),
   date: timestamp("date", { mode: "date", withTimezone: true }).defaultNow(),
   userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
