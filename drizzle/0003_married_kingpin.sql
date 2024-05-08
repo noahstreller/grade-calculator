@@ -1,0 +1,1 @@
+ALTER TABLE "grades" RENAME COLUMN "name" TO "description";

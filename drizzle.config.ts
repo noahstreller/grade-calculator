@@ -1,5 +1,7 @@
-import "dotenv/config";
+import * as dotenv from "dotenv";
 import type { Config } from "drizzle-kit";
+
+dotenv.config({ path: ".env.development.local" });
 
 export default {
   schema: "./db/schema.ts",
@@ -10,5 +12,6 @@ export default {
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DATABASE!,
+    ssl: true,
   },
 } satisfies Config;
