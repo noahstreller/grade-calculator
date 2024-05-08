@@ -27,13 +27,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 import { TimePicker } from "@/components/ui/time-picker";
 import { Grade, Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { updateGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
 import { editGradeToast } from "@/lib/toasts";
-import { cn, getDateOrDateTimeLong, getDefaultPreferences, truncateText } from "@/lib/utils";
+import {
+  cn,
+  getDateOrDateTimeLong,
+  getDefaultPreferences,
+  truncateText,
+} from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
@@ -48,15 +54,16 @@ export function EditGradeForm({
   refresh: Function;
   setDrawerOpen: Function;
   originalGrade: Grade | undefined;
-  
 }) {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+
+  const maxLengthDescription = 255;
 
   const preferences = usePreferences().preferences;
   const defaultPreferences = getDefaultPreferences();
@@ -91,6 +98,7 @@ export function EditGradeForm({
       })
       .gte(0),
     date: z.date(),
+    description: z.string().trim().max(maxLengthDescription).optional(),
   });
 
   type FormValues = z.infer<typeof FormSchema>;
@@ -99,7 +107,8 @@ export function EditGradeForm({
     grade: originalGrade?.value ?? 0,
     weight: originalGrade?.weight ?? 1,
     date: originalGrade?.date ?? new Date(),
-  }
+    description: originalGrade?.description ?? undefined,
+  };
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -114,6 +123,7 @@ export function EditGradeForm({
       subject_fk: data.subject,
       id: originalGrade?.id!,
       userId: originalGrade?.userId!,
+      description: data.description ?? null,
     };
 
     let newGradeId = catchProblem(await updateGrade(grade));
@@ -242,6 +252,28 @@ export function EditGradeForm({
               </FormControl>
               <FormMessage />
             </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <div className="flex flex-col gap-2">
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Add a short description (optional)"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+              <span className="text-sm text-right mr-2 text-muted-foreground">
+                {field.value?.length} / {maxLengthDescription}
+              </span>
+            </div>
           )}
         />
 

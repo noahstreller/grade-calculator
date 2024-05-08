@@ -44,7 +44,6 @@ export async function savePreferences(
     newPreferences = await setUserId(newPreferences);
     adjustGradesToPreferences(newPreferences as Preferences);
     let existing: Preferences[] = catchProblem(await getPreferences());
-    console.log(existing.length);
     if (existing.length > 0) {
       newPreferences.id = existing[0].id;
       return await updatePreferencesInDb(newPreferences);
