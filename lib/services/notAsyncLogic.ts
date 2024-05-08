@@ -2,6 +2,7 @@ import { GradeWithSubject, Preferences } from "@/db/schema";
 import { ExportableData, importData } from "@/lib/services/export-service";
 import { clearUserSubjectsGrades } from "@/lib/services/user-service";
 import { importFailedToast } from "@/lib/toasts";
+import { secondsSinceMidnight } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 
 export function doesGradePass(
@@ -21,7 +22,11 @@ export function getSubjectAverages(averages: AverageWithSubject[]): number {
   let sum = 0;
   let count = 0;
   for (let average of averages) {
-    if (average.average && average.average.gradeAverage && average.average.gradeAverage !== 0) {
+    if (
+      average.average &&
+      average.average.gradeAverage &&
+      average.average.gradeAverage !== 0
+    ) {
       sum += average.average.gradeAverage;
       count++;
     }
@@ -46,11 +51,13 @@ export function getTotalGradeAverages(grades: GradeWithSubject[]): number {
 
 export function exportToJSONFile(data: ExportableData) {
   const json = JSON.stringify(data);
+  const timestamp = new Date();
+  const readableTimestamp = `${timestamp.getDate()}-${timestamp.getMonth()}-${timestamp.getFullYear()}-${secondsSinceMidnight()}`;
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "gradedata.json";
+  a.download = `grades-${readableTimestamp}.json`;
   a.click();
 }
 
@@ -70,14 +77,13 @@ export function importFromJSON(purge: boolean = true) {
       reader.onload = async () => {
         const json = reader.result as string;
         const data = JSON.parse(json) as ExportableData;
-        if(purge) {
+        if (purge) {
           clearUserSubjectsGrades().then(() => {
             importData(data, purge).then(() => {
               window.location.reload();
             });
           });
-        }
-        else {
+        } else {
           importData(data, purge).then(() => {
             window.location.reload();
           });
@@ -93,7 +99,7 @@ export function importFromJSON(purge: boolean = true) {
 
 export function importFromText(purge: boolean = true) {
   try {
-    if(purge) {
+    if (purge) {
       navigator.clipboard.readText().then((text) => {
         clearUserSubjectsGrades().then(() => {
           const data = JSON.parse(text) as ExportableData;
@@ -101,9 +107,8 @@ export function importFromText(purge: boolean = true) {
             window.location.reload();
           });
         });
-      });      
-    }
-    else {
+      });
+    } else {
       navigator.clipboard.readText().then((text) => {
         const data = JSON.parse(text) as ExportableData;
         importData(data, purge).then(() => {
@@ -111,8 +116,7 @@ export function importFromText(purge: boolean = true) {
         });
       });
     }
-  }
-  catch (e) {
+  } catch (e) {
     importFailedToast();
   }
 }
