@@ -32,7 +32,7 @@ export type ExportableData = {
 export async function prepareDataForExport(): Promise<ExportableData> {
   const preferences: Preferences = catchProblem(await getPreferences())[0];
   const grades: GradeWithSubject[] = catchProblem(
-    await getAllGradesWithSubject(),
+    await getAllGradesWithSubject()
   );
   const subjects: Subject[] = catchProblem(await getAllSubjects());
 
@@ -56,6 +56,7 @@ export async function prepareDataForExport(): Promise<ExportableData> {
         value: grade.grades.value,
         weight: grade.grades.weight,
         date: grade.grades.date,
+        description: grade.grades.description,
       },
       subjects: {
         name: grade.subjects.name,
@@ -80,10 +81,10 @@ export async function prepareDataForExport(): Promise<ExportableData> {
 export async function importData(data: ExportableData, purge: boolean) {
   if (data.preferences) savePreferences(data.preferences);
   const nonUniqueSubjectsFromGrades = data.grades.map(
-    (grade) => grade.subjects.name,
+    (grade) => grade.subjects.name
   );
   const nonUniqueSubjectsFromSubjects = data.subjects.map(
-    (subject) => subject.name,
+    (subject) => subject.name
   );
   const nonUniqueSubjects = [
     ...nonUniqueSubjectsFromGrades,
@@ -100,12 +101,12 @@ export async function importData(data: ExportableData, purge: boolean) {
         let result = catchProblem(await getSubjectIdElseAdd(subject));
         return { name: subject.name, id: result };
       }
-    }),
+    })
   );
 
   let results = data.grades.forEach(async (grade) => {
     let resultingSubject = subjectWithIds.find(
-      (subject) => subject.name === grade.subjects.name,
+      (subject) => subject.name === grade.subjects.name
     )?.id;
     grade.grades.subject_fk = resultingSubject;
     grade.grades.date = new Date(grade.grades.date || Date.now());
