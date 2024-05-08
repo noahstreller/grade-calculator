@@ -1,11 +1,17 @@
-"use client"
+"use client";
 import { ColumnDef } from "@tanstack/react-table";
-import createTranslation from 'next-translate/createTranslation';
- 
+import createTranslation from "next-translate/createTranslation";
+
 import { ColoredGrade } from "@/components/colored-grade";
+import { GradeWeightBadge } from "@/components/grade-weight-badge";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
@@ -13,9 +19,11 @@ import { getDateOrDateTime, truncateText } from "@/lib/utils";
 import { ArrowUpDown, Edit, Trash } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
-
-export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<GradeWithSubject>[] {
-  const { t, lang } = createTranslation('common');
+export function columns(
+  refresh: Function,
+  setGradeToEdit: Function
+): ColumnDef<GradeWithSubject>[] {
+  const { t, lang } = createTranslation("common");
 
   return [
     {
@@ -75,26 +83,52 @@ export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<
       },
       cell: ({ row }) => {
         let value: number = row.original.grades.value!;
-        return <ColoredGrade grade={value} />
+        let weight: number = row.original.grades.weight!;
+        return (
+          <div className="flex flex-row">
+            <ColoredGrade grade={value} className="ml-2 mr-2" />
+            <GradeWeightBadge weight={weight} />
+          </div>
+        );
       },
     },
     {
-      accessorKey: "weight",
+      accessorKey: "description",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.weight")}
+            Description
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
       cell: ({ row }) => {
-        let weight: number = row.original.grades.weight!;
+        let description: string = row.original.grades.description!;
+        let truncated = truncateText(description, 20);
 
-        return <p className="ml-4">{weight}</p>;
+        if (truncated.truncated) {
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="text-left ml-2">
+                  {truncated.text}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{description}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        }
+
+        return description ? (
+          <p className="ml-2">{description}</p>
+        ) : (
+          <p className="ml-2 text-muted-foreground">-</p>
+        );
       },
     },
     {
@@ -115,7 +149,7 @@ export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<
       cell: ({ row }) => {
         let date = getDateOrDateTime(row.original.grades.date!);
 
-        return <p className="ml-4">{date}</p>;
+        return <p className="ml-2">{date}</p>;
       },
     },
     {
@@ -156,5 +190,4 @@ export function columns(refresh: Function, setGradeToEdit: Function): ColumnDef<
       },
     },
   ];
-
 }

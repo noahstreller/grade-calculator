@@ -27,13 +27,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { Textarea } from "@/components/ui/textarea";
 import { TimePicker } from "@/components/ui/time-picker";
 import { NewGrade, Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
 import { getAllSubjects } from "@/lib/services/subject-service";
 import { addGradeToast } from "@/lib/toasts";
-import { cn, getDateOrDateTimeLong, getDefaultPreferences, truncateText } from "@/lib/utils";
+import {
+  cn,
+  getDateOrDateTimeLong,
+  getDefaultPreferences,
+  truncateText,
+} from "@/lib/utils";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
@@ -89,6 +95,7 @@ export function CreateGradeForm({
       .gte(0)
       .optional(),
     date: z.date().optional(),
+    description: z.string().trim().max(255).optional(),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -102,6 +109,7 @@ export function CreateGradeForm({
       weight: data.weight,
       value: data.grade,
       subject_fk: data.subject,
+      description: data.description,
     };
 
     let newGradeId = catchProblem(await addGrade(grade));
@@ -113,7 +121,11 @@ export function CreateGradeForm({
       );
     }
     refresh();
-    if (!preferences?.newEntitySheetShouldStayOpen ?? !defaultPreferences.newEntitySheetShouldStayOpen) setDrawerOpen(false);
+    if (
+      !preferences?.newEntitySheetShouldStayOpen ??
+      !defaultPreferences.newEntitySheetShouldStayOpen
+    )
+      setDrawerOpen(false);
   }
 
   return (
@@ -220,6 +232,23 @@ export function CreateGradeForm({
                     if (e.target.value === "") field.onChange("");
                     else field.onChange(Number(e.target.value));
                   }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Add a short description (optional)"
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
