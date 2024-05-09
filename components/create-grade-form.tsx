@@ -61,6 +61,8 @@ export function CreateGradeForm({
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
+  const maxLengthDescription = 255;
+
   const preferences = usePreferences().preferences;
   const defaultPreferences = getDefaultPreferences();
 
@@ -95,7 +97,7 @@ export function CreateGradeForm({
       .gte(0)
       .optional(),
     date: z.date().optional(),
-    description: z.string().trim().max(255).optional(),
+    description: z.string().trim().max(maxLengthDescription).optional(),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -244,14 +246,19 @@ export function CreateGradeForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Add a short description (optional)"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
+              <div className="flex flex-col gap-2">
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Add a short description (optional)"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+                <span className="text-sm text-right mr-2 text-muted-foreground">
+                  {field.value?.length ?? 0} / {maxLengthDescription}
+                </span>
+              </div>
             </FormItem>
           )}
         />

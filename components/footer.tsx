@@ -1,9 +1,9 @@
 import { FooterItem } from "@/components/footer-item";
 import { Separator } from "@/components/ui/separator";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Globe, Scale } from "lucide-react";
+import { GitBranch, Globe, Scale } from "lucide-react";
 
-export function Footer (){
+export function Footer() {
   return (
     <footer className="mt-5 bottom-0 w-11/12 p-2 flex flex-col gap-2">
       <Separator />
@@ -16,8 +16,25 @@ export function Footer (){
           <Globe className="mr-2 size-4" />
           Legacy Version
         </FooterItem>
-        <FooterItem newTab href="https://github.com/noahstreller/notenrechner-next">
+        <FooterItem
+          newTab
+          href="https://github.com/noahstreller/notenrechner-next"
+        >
           <SiGithub className="mr-2 size-4" /> Source Code
+        </FooterItem>
+        <FooterItem
+          newTab
+          href={
+            process.env.VERCEL_GIT_COMMIT_REF
+              ? "https://github.com/noahstreller/notenrechner-next/tree/" +
+                process.env.VERCEL_GIT_COMMIT_REF
+              : "https://github.com/noahstreller/notenrechner-next"
+          }
+        >
+          <GitBranch className="mr-2 size-4" />{" "}
+          {process.env.VERCEL_ENV === "production"
+            ? "Production"
+            : process.env.VERCEL_GIT_COMMIT_REF || "Development"}
         </FooterItem>
       </div>
     </footer>

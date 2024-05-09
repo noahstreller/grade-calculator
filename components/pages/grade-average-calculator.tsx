@@ -112,7 +112,9 @@ export default function GradeAverageCalculator() {
   }, [session]);
 
   return session.status === "unauthenticated" ? (
-    <LandingPage />
+    <div>
+      <LandingPage />
+    </div>
   ) : loaded ? (
     gradeData.length > 0 ? (
       <>
@@ -183,22 +185,33 @@ export default function GradeAverageCalculator() {
             refresh={refreshAll}
           />
         </CardBoard>
-        <CardBoard row className="hidden xl:flex w-1/2">
-          {averageData.length > 0 && (
+        {averageData.length > 0 ? (
+          <CardBoard row className="hidden xl:flex w-1/2">
             <AllGrades
               data={gradeData}
               setData={setGradeData}
               refresh={refreshAll}
             />
-          )}
-          <AllSubjects
-            data={averageData}
-            failingData={failingData}
-            passingData={passingData}
-            setData={setAverageData}
-            refresh={refreshAll}
-          />
-        </CardBoard>
+
+            <AllSubjects
+              data={averageData}
+              failingData={failingData}
+              passingData={passingData}
+              setData={setAverageData}
+              refresh={refreshAll}
+            />
+          </CardBoard>
+        ) : (
+          <CardBoard row className="hidden xl:flex">
+            <AllSubjects
+              data={averageData}
+              failingData={failingData}
+              passingData={passingData}
+              setData={setAverageData}
+              refresh={refreshAll}
+            />
+          </CardBoard>
+        )}
       </>
     )
   ) : (
