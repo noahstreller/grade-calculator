@@ -1,6 +1,13 @@
-"use server"
+"use server";
 import { db } from "@/db";
-import { Grade, grades, GradeWithSubject, NewGrade, Subject, subjects } from "@/db/schema";
+import {
+  Grade,
+  grades,
+  GradeWithSubject,
+  NewGrade,
+  Subject,
+  subjects,
+} from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { getSubjectByName } from "@/lib/services/subject-service";
 import { and, eq } from "drizzle-orm";
@@ -14,7 +21,9 @@ export async function getAllGradesFromDb(userId: string): Promise<Grade[]> {
   return result;
 }
 
-export async function getAllGradesWithSubjectFromDb(userId: string): Promise<GradeWithSubject[]> {
+export async function getAllGradesWithSubjectFromDb(
+  userId: string
+): Promise<GradeWithSubject[]> {
   const result = await db
     .select()
     .from(grades)
@@ -86,12 +95,8 @@ export async function getGradesBySubjectWithSubjectFromDb(
 }
 
 export async function addGradeToDb(newGrade: NewGrade): Promise<number> {
-  const result = await db
-    .insert(grades)
-    .values(newGrade)
-    .returning({ newId: grades.id })
-    .execute();
-  return result[0].newId;
+  const result = await db.insert(grades).values(newGrade).returning().execute();
+  return result[0].id;
 }
 
 export async function deleteGradeFromDb(
@@ -101,10 +106,10 @@ export async function deleteGradeFromDb(
   const result = await db
     .delete(grades)
     .where(and(eq(grades.id, grade.id), eq(grades.userId, userId)))
-    .returning({ oldId: grades.id, oldGrade: grades.value })
+    .returning()
     .execute();
 
-  return (result[0].oldGrade || 0) as number;
+  return (result[0].value || 0) as number;
 }
 
 export async function deleteGradeByIdFromDb(
@@ -114,10 +119,10 @@ export async function deleteGradeByIdFromDb(
   const result = await db
     .delete(grades)
     .where(and(eq(grades.id, gradeId), eq(grades.userId, userId)))
-    .returning({ oldId: grades.id, oldGrade: grades.value })
+    .returning()
     .execute();
 
-  return (result[0].oldGrade || 0) as number;
+  return (result[0].value || 0) as number;
 }
 
 export async function updateGradeInDb(
@@ -128,7 +133,7 @@ export async function updateGradeInDb(
     .update(grades)
     .set(grade)
     .where(and(eq(grades.id, grade.id), eq(grades.userId, userId)))
-    .returning({ value: grades.value })
+    .returning()
     .execute();
 
   return (result[0].value || 0) as number;
