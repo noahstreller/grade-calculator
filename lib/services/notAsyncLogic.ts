@@ -3,7 +3,7 @@ import { ExportableData, importData } from "@/lib/services/export-service";
 import { clearUserSubjectsGrades } from "@/lib/services/user-service";
 import { importFailedToast } from "@/lib/toasts";
 import { secondsSinceMidnight } from "@/lib/utils";
-import { AverageWithSubject } from "@/types/types";
+import { AverageWithSubject, Empty } from "@/types/types";
 
 export function doesGradePass(
   grade: number,
@@ -49,7 +49,10 @@ export function getTotalGradeAverages(grades: GradeWithSubject[]): number {
   return sum / count;
 }
 
-export function exportToJSONFile(data: ExportableData) {
+export function exportToJSONFile(
+  data: ExportableData,
+  filename?: string | Empty
+) {
   const json = JSON.stringify(data);
   const timestamp = new Date();
   const readableTimestamp = `${timestamp.getDate()}-${timestamp.getMonth()}-${timestamp.getFullYear()}-${secondsSinceMidnight()}`;
@@ -57,7 +60,9 @@ export function exportToJSONFile(data: ExportableData) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `grades-${readableTimestamp}.json`;
+  a.download = filename
+    ? `${filename}.json`
+    : `grades-${readableTimestamp}.json`;
   a.click();
 }
 
@@ -76,6 +81,7 @@ export function importFromJSON(purge: boolean = true) {
       const reader = new FileReader();
       reader.onload = async () => {
         const json = reader.result as string;
+        if (!validateJSON(json)) return importFailedToast();
         const data = JSON.parse(json) as ExportableData;
         if (purge) {
           clearUserSubjectsGrades().then(() => {
@@ -97,10 +103,26 @@ export function importFromJSON(purge: boolean = true) {
   }
 }
 
+export function validateJSON(json: string): boolean {
+  try {
+    const data = JSON.parse(json);
+
+    if (!data) return false;
+    if (typeof data !== "object") return false;
+    if (!data.subjects || !data.grades) return false;
+    if (!Array.isArray(data.subjects) || !Array.isArray(data.grades))
+      return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 export function importFromText(purge: boolean = true) {
   try {
     if (purge) {
       navigator.clipboard.readText().then((text) => {
+        if (!validateJSON(text)) return importFailedToast();
         clearUserSubjectsGrades().then(() => {
           const data = JSON.parse(text) as ExportableData;
           importData(data, purge).then(() => {
@@ -110,6 +132,7 @@ export function importFromText(purge: boolean = true) {
       });
     } else {
       navigator.clipboard.readText().then((text) => {
+        if (!validateJSON(text)) return importFailedToast();
         const data = JSON.parse(text) as ExportableData;
         importData(data, purge).then(() => {
           window.location.reload();

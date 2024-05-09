@@ -1,7 +1,17 @@
-"use server"
+"use server";
 
 import { db } from "@/db";
-import { Subject, User, subjects, users } from "@/db/schema";
+import {
+  Account,
+  Grade,
+  Subject,
+  User,
+  accounts,
+  grades,
+  subjects,
+  users,
+} from "@/db/schema";
+import { Empty } from "@/types/types";
 import { eq } from "drizzle-orm";
 
 export async function deleteUserDataFromDb(userId: string): Promise<User> {
@@ -13,11 +23,46 @@ export async function deleteUserDataFromDb(userId: string): Promise<User> {
   return result[0];
 }
 
-export async function clearUserSubjectsGradesFromDb(userId: string): Promise<Subject[]> {
+export async function clearUserSubjectsGradesFromDb(
+  userId: string
+): Promise<Subject[]> {
   const result = await db
     .delete(subjects)
     .where(eq(subjects.userId, userId))
     .returning()
     .execute();
   return result;
+}
+
+export async function clearUserGradesFromDb(userId: string): Promise<Grade[]> {
+  const result = await db
+    .delete(grades)
+    .where(eq(grades.userId, userId))
+    .returning()
+    .execute();
+  return result;
+}
+
+export async function saveRefreshTokenIntoDb(
+  userId: string,
+  refreshToken: string
+): Promise<Account> {
+  const result = await db
+    .update(accounts)
+    .set({ refresh_token: refreshToken })
+    .where(eq(accounts.userId, userId))
+    .returning()
+    .execute();
+  return result[0];
+}
+
+export async function getRefreshTokenFromDb(
+  userId: string
+): Promise<string | Empty> {
+  const result = await db
+    .select()
+    .from(accounts)
+    .where(eq(accounts.userId, userId))
+    .execute();
+  return result[0].refresh_token;
 }

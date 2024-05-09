@@ -1,7 +1,7 @@
 import { columns } from "@/components/cards/failingGradesCard/columns";
+import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";

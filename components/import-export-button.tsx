@@ -1,7 +1,20 @@
 "use client";
 import { prepareDataForExport } from "@/lib/services/export-service";
-import { exportToClipboard, exportToJSONFile, importFromJSON, importFromText } from "@/lib/services/notAsyncLogic";
-import { ClipboardCopy, ClipboardPaste, Database, FileInput, FileOutput, FolderInput, FolderOutput } from "lucide-react";
+import {
+  exportToClipboard,
+  exportToJSONFile,
+  importFromJSON,
+  importFromText,
+} from "@/lib/services/notAsyncLogic";
+import {
+  ClipboardCopy,
+  ClipboardPaste,
+  Database,
+  FileInput,
+  FileOutput,
+  FolderInput,
+  FolderOutput,
+} from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -26,7 +39,7 @@ export function ImportExportButton() {
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" className="flex-shrink-0">
             <Database className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
             <span className="sr-only">Manage data</span>
           </Button>
