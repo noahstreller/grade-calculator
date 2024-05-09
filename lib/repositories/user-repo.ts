@@ -1,7 +1,16 @@
 "use server";
 
 import { db } from "@/db";
-import { Account, Subject, User, accounts, subjects, users } from "@/db/schema";
+import {
+  Account,
+  Grade,
+  Subject,
+  User,
+  accounts,
+  grades,
+  subjects,
+  users,
+} from "@/db/schema";
 import { Empty } from "@/types/types";
 import { eq } from "drizzle-orm";
 
@@ -20,6 +29,15 @@ export async function clearUserSubjectsGradesFromDb(
   const result = await db
     .delete(subjects)
     .where(eq(subjects.userId, userId))
+    .returning()
+    .execute();
+  return result;
+}
+
+export async function clearUserGradesFromDb(userId: string): Promise<Grade[]> {
+  const result = await db
+    .delete(grades)
+    .where(eq(grades.userId, userId))
     .returning()
     .execute();
   return result;

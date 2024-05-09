@@ -1,8 +1,9 @@
 "use server";
 
-import { Account, Subject, User } from "@/db/schema";
+import { Account, Grade, Subject, User } from "@/db/schema";
 import { Problem, getProblem } from "@/lib/problem";
 import {
+  clearUserGradesFromDb,
   clearUserSubjectsGradesFromDb,
   deleteUserDataFromDb,
   getRefreshTokenFromDb,
@@ -15,6 +16,18 @@ export async function clearUserSubjectsGrades(): Promise<Subject[] | Problem> {
   try {
     const userId = await getUserId();
     return await clearUserSubjectsGradesFromDb(userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+export async function clearUserGrades(): Promise<Grade[] | Problem> {
+  try {
+    const userId = await getUserId();
+    return await clearUserGradesFromDb(userId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

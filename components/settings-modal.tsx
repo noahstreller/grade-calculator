@@ -6,6 +6,7 @@ import { z } from "zod";
 import { AccountSection } from "@/components/account-section";
 import { ClearDataButton } from "@/components/clear-data-button";
 import { ImportExportButton } from "@/components/import-export-button";
+import { NewSemesterButton } from "@/components/new-semester-button";
 import { usePreferences } from "@/components/preferences-provider";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,10 @@ import {
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { NewPreferences } from "@/db/schema";
 import { savePreferences } from "@/lib/services/preferences-service";
-import { ClearDataTranslations, PreferencesTranslations } from "@/lib/translationObjects";
+import {
+  ClearDataTranslations,
+  PreferencesTranslations,
+} from "@/lib/translationObjects";
 import { getDefaultPreferences } from "@/lib/utils";
 import { Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -53,11 +57,14 @@ export function SettingsModalForm({
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
-  const [decimals, setDecimals] = useState(preferences.preferences?.gradeDecimals || 3);
+  const [decimals, setDecimals] = useState(
+    preferences.preferences?.gradeDecimals || 3
+  );
   const [submitted, setSubmitted] = useState(false);
 
   type FormValues = NewPreferences;
-  const defaultValues: DefaultValues<FormValues> = preferences.preferences as FormValues;
+  const defaultValues: DefaultValues<FormValues> =
+    preferences.preferences as FormValues;
 
   const FormSchema = z.object({
     gradeDecimals: z.number().gte(0),
@@ -85,7 +92,7 @@ export function SettingsModalForm({
     preferences.setPreferences(newPreferences as any);
     savePreferences(newPreferences).then(() => {
       setSubmitted(false);
-      if (!preferences.preferences?.newEntitySheetShouldStayOpen){
+      if (!preferences.preferences?.newEntitySheetShouldStayOpen) {
         setOpen(false);
       }
     });
@@ -364,12 +371,13 @@ export function SettingsModal({
             <Button
               size="icon"
               variant="outline"
-              className="hover:text-red-400"
+              className="hover:text-red-400 flex-shrink-0"
             >
               <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
               <span className="sr-only">Delete all data</span>
             </Button>
           </ClearDataButton>
+          <NewSemesterButton />
         </div>
         <Separator />
         <AccountSection />

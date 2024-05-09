@@ -9,7 +9,10 @@ import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
-import { getAllGradeAveragesWithSubject, getAllGradesWithSubject } from "@/lib/services/grade-service";
+import {
+  getAllGradeAveragesWithSubject,
+  getAllGradesWithSubject,
+} from "@/lib/services/grade-service";
 import { AverageWithSubject } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -99,15 +102,13 @@ export default function GradeAverageCalculator() {
       });
     }
 
-    if (session.status === "authenticated"){
+    if (session.status === "authenticated") {
       try {
         refreshAll();
       } finally {
         setLoaded(true);
       }
-
     }
-
   }, [session]);
 
   return session.status === "unauthenticated" ? (
