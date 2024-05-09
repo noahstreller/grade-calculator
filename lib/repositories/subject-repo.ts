@@ -40,12 +40,14 @@ export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
   const result = await db
     .insert(subjects)
     .values(newSubject)
-    .returning({ newId: subjects.id })
+    .returning()
     .execute();
-  return result[0].newId satisfies number;
+  return result[0].id satisfies number;
 }
 
-export async function addSubjectToDbReturning(newSubject: NewSubject): Promise<Subject> {
+export async function addSubjectToDbReturning(
+  newSubject: NewSubject
+): Promise<Subject> {
   const result = await db
     .insert(subjects)
     .values(newSubject)
@@ -54,21 +56,27 @@ export async function addSubjectToDbReturning(newSubject: NewSubject): Promise<S
   return result[0] satisfies Subject;
 }
 
-export async function deleteSubjectFromDb(subject: Subject, userId: string): Promise<string> {
+export async function deleteSubjectFromDb(
+  subject: Subject,
+  userId: string
+): Promise<string> {
   const result = await db
     .delete(subjects)
     .where(and(eq(subjects.id, subject.id), eq(subjects.userId, userId)))
-    .returning({ oldId: subjects.id, oldName: subjects.name })
+    .returning()
     .execute();
-  return (result[0].oldName || "") satisfies string;
+  return (result[0].name || "") satisfies string;
 }
 
-export async function updateSubjectInDb(subject: Subject, userId: string): Promise<string> {
+export async function updateSubjectInDb(
+  subject: Subject,
+  userId: string
+): Promise<string> {
   const result = await db
     .update(subjects)
     .set(subject)
     .where(and(eq(subjects.id, subject.id), eq(subjects.userId, userId)))
-    .returning({ oldName: subjects.name })
+    .returning()
     .execute();
-  return (result[0].oldName || "") satisfies string;
+  return (result[0].name || "") satisfies string;
 }
