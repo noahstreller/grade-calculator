@@ -1,0 +1,21 @@
+services:
+  grades-db:
+    container_name: grades-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "verceldb"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_USER: "admin"
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: "pg_isready -U admin -d admin"
+      timeout: 2s
+    image: "postgres:12.17-alpine"
+    restart: unless-stopped
+    volumes:
+      - "grades:/var/lib/postgresql/data"
+
+volumes:
+  grades:

@@ -271,7 +271,7 @@ export function EditGradeForm({
                 <FormMessage />
               </FormItem>
               <span className="text-sm text-right mr-2 text-muted-foreground">
-                {field.value?.length} / {maxLengthDescription}
+                {field.value?.length ?? 0} / {maxLengthDescription}
               </span>
             </div>
           )}
