@@ -183,7 +183,7 @@ export default function GradeAverageCalculator() {
             refresh={refreshAll}
           />
         </CardBoard>
-        <CardBoard row className="hidden xl:flex">
+        <CardBoard row className="hidden xl:flex w-1/2">
           {averageData.length > 0 && (
             <AllGrades
               data={gradeData}

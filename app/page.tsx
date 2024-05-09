@@ -1,9 +1,5 @@
-import GradeAverageCalculator from '@/components/pages/grade-average-calculator';
+import GradeAverageCalculator from "@/components/pages/grade-average-calculator";
 
 export default function Home() {
-  return (
-    <div>
-      <GradeAverageCalculator />
-    </div>
-  );
+  return <GradeAverageCalculator />;
 }
