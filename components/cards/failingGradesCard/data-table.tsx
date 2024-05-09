@@ -12,10 +12,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import {
-  PassingFilterComboBox,
-  PassingStatus,
-} from "@/components/passing-filter-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -33,19 +29,15 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   pageSize?: number;
-  selectedStatus: PassingStatus | null;
-  setSelectedStatus: (status: PassingStatus | null) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   pageSize = 6,
-  selectedStatus,
-  setSelectedStatus,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([
-    { id: "grade", desc: true },
+    { id: "grade", desc: false },
   ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -72,7 +64,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="w-full flex flex-row justify-between py-4 gap-2">
+      <div className="w-full flex items-center py-4">
         <Input
           placeholder="Filter by subject"
           value={
@@ -82,10 +74,6 @@ export function DataTable<TData, TValue>({
             table.getColumn("subjectName")?.setFilterValue(event.target.value)
           }
           className="w-full"
-        />
-        <PassingFilterComboBox
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
         />
       </div>
       <div className="rounded-md border">

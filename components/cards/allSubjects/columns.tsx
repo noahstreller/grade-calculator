@@ -1,6 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, Trash } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Edit, Trash } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
@@ -33,7 +33,15 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {t("grades.subject")}
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {column.getIsSorted() ? (
+              column.getIsSorted() === "asc" ? (
+                <ArrowUp className="ml-2 h-4 w-4" />
+              ) : (
+                <ArrowDown className="ml-2 h-4 w-4" />
+              )
+            ) : (
+              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
+            )}
           </Button>
         );
       },
@@ -80,6 +88,7 @@ export function columns(
       },
     },
     {
+      id: "grade",
       accessorKey: "average.gradeAverage",
       header: ({ column }) => {
         return (
@@ -88,7 +97,15 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {t("grades.grade")}
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {column.getIsSorted() ? (
+              column.getIsSorted() === "asc" ? (
+                <ArrowUp className="ml-2 h-4 w-4" />
+              ) : (
+                <ArrowDown className="ml-2 h-4 w-4" />
+              )
+            ) : (
+              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
+            )}
           </Button>
         );
       },
