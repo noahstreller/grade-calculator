@@ -1,6 +1,14 @@
 import { db } from "@/db";
+import {
+  getRefreshTokenFromDb,
+  saveRefreshTokenIntoDb,
+} from "@/lib/repositories/user-repo";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
+import {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
 import { NextAuthOptions, getServerSession } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
@@ -21,6 +29,13 @@ export const config = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID || "",
       clientSecret: process.env.GOOGLE_SECRET || "",
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -31,17 +46,26 @@ export const config = {
       }
       return session;
     },
-    jwt: async ({ user, token }) => {
+    jwt: async ({ user, token, account }) => {
       if (user) {
         token.uid = user.id;
       }
+
+      if (account && user) {
+        token.refreshToken = account.refresh_token;
+        await saveRefreshTokenIntoDb(user.id, account.refresh_token as string);
+      } else {
+        token.refreshToken = await getRefreshTokenFromDb(token.sub as string);
+      }
+
       return token;
     },
   },
-  
+
   session: {
     strategy: "jwt",
     maxAge: 7 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
   },
 } satisfies NextAuthOptions;
 
