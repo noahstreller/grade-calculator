@@ -57,7 +57,7 @@ export const NewSemesterButton = () => {
       if (!keepGrades && keepSubjects) await clearUserGrades();
     } finally {
       setIsOpen(false);
-      if (!keepGrades && !keepSubjects && exportData) window.location.reload();
+      window.location.reload();
     }
   };
 
