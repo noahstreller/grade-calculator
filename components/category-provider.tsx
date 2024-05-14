@@ -1,6 +1,7 @@
 "use client";
 import { Category } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
+import { getCurrentCategoryElseInsert } from "@/lib/services/category-service";
 import { getPreferencesElseGetDefault } from "@/lib/services/preferences-service";
 import { useSession } from "next-auth/react";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -33,7 +34,7 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      getPreferencesElseGetDefault().then((result): void => {
+      getCurrentCategoryElseInsert().then((result): void => {
         setCategory(catchProblem(result));
         setLoading(false);
       });
@@ -49,4 +50,4 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const usePreferences = () => useContext(CategoryContext);
+export const useCategory = () => useContext(CategoryContext);
