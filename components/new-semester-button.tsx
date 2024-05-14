@@ -1,4 +1,5 @@
 "use client";
+import { useCategory } from "@/components/category-provider";
 import { Button } from "@/components/ui/button";
 import { Highlight } from "@/components/ui/card-stack";
 import {
@@ -38,6 +39,7 @@ export const NewSemesterButton = () => {
   const [keepSubjects, setKeepSubjectsState] = useState<boolean>(true);
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
   const [exportData, setExportData] = useState<boolean>(true);
+  const categoryState = useCategory();
 
   const setKeepSubjects = (value: boolean) => {
     if (!value) setKeepGradesState(false);
@@ -51,7 +53,10 @@ export const NewSemesterButton = () => {
 
   const handleSubmit = async () => {
     try {
-      const data = await prepareDataForExport();
+      const data = await prepareDataForExport(
+        categoryState.category?.name ?? "",
+        categoryState.category?.id,
+      );
       if (exportData) exportToJSONFile(data);
       if (!keepSubjects) await clearUserSubjectsGrades();
       if (!keepGrades && keepSubjects) await clearUserGrades();

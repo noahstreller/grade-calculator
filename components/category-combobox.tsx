@@ -19,13 +19,18 @@ import { LoadingSpinner } from "@/components/ui/spinner";
 import { Category } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
 export function CategoryComboBox() {
   const categoryState = useCategory();
   const [open, setOpen] = useState(false);
+  const session = useSession();
   const isDesktop = !isMobile;
+
+  if (session.status !== "authenticated") return null;
+
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>

@@ -5,6 +5,7 @@ import { AverageOverview } from "@/components/cards/average-overview";
 import { CardSkeleton } from "@/components/cards/card-skeleton";
 import { GradeOverview } from "@/components/cards/grade-overview";
 import { RequiredGrades } from "@/components/cards/required-grades";
+import { useCategory } from "@/components/category-provider";
 import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
@@ -18,21 +19,27 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function GradeAverageCalculator() {
+  const categoryState = useCategory();
   const [gradeData, setGradeData] = useState<GradeWithSubject[]>([]);
   const [averageData, setAverageData] = useState<AverageWithSubject[]>([]);
   const [failingData, setFailingData] = useState<AverageWithSubject[]>([]);
   const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [authLoaded, setAuthLoaded] = useState(false);
+  const [allLoaded, setAllLoaded] = useState(false);
   const session = useSession();
 
   const refreshGrades = async () => {
-    let grades = catchProblem(await getAllGradesWithSubject());
+    let grades = catchProblem(
+      await getAllGradesWithSubject(categoryState.category?.id),
+    );
     setGradeData([...grades]);
     return grades;
   };
 
   const refreshAverages = async () => {
-    let averages = catchProblem(await getAllGradeAveragesWithSubject());
+    let averages = catchProblem(
+      await getAllGradeAveragesWithSubject(categoryState.category?.id),
+    );
     setAverageData([...averages]);
     return averages;
   };
@@ -40,7 +47,7 @@ export default function GradeAverageCalculator() {
   function refreshFailing(averages: AverageWithSubject[]) {
     let allAverages = averages;
     let failing = allAverages.filter(
-      (average: AverageWithSubject) => average.average?.passing === false
+      (average: AverageWithSubject) => average.average?.passing === false,
     );
     setFailingData([...failing]);
     return failing;
@@ -49,7 +56,7 @@ export default function GradeAverageCalculator() {
   function refreshPassing(averages: AverageWithSubject[]) {
     let allAverages = averages;
     let passing = allAverages.filter(
-      (average: AverageWithSubject) => average.average?.passing
+      (average: AverageWithSubject) => average.average?.passing,
     );
     setPassingData([...passing]);
     return passing;
@@ -65,13 +72,17 @@ export default function GradeAverageCalculator() {
 
   useEffect(() => {
     const refreshGrades = async () => {
-      let grades = catchProblem(await getAllGradesWithSubject());
+      let grades = catchProblem(
+        await getAllGradesWithSubject(categoryState.category?.id),
+      );
       setGradeData([...grades]);
       return grades;
     };
 
     const refreshAverages = async () => {
-      let averages = catchProblem(await getAllGradeAveragesWithSubject());
+      let averages = catchProblem(
+        await getAllGradeAveragesWithSubject(categoryState.category?.id),
+      );
       setAverageData([...averages]);
       return averages;
     };
@@ -79,7 +90,7 @@ export default function GradeAverageCalculator() {
     function refreshFailing(averages: AverageWithSubject[]) {
       let allAverages = averages;
       let failing = allAverages.filter(
-        (average: AverageWithSubject) => average.average?.passing === false
+        (average: AverageWithSubject) => average.average?.passing === false,
       );
       setFailingData([...failing]);
       return failing;
@@ -88,7 +99,7 @@ export default function GradeAverageCalculator() {
     function refreshPassing(averages: AverageWithSubject[]) {
       let allAverages = averages;
       let passing = allAverages.filter(
-        (average: AverageWithSubject) => average.average?.passing
+        (average: AverageWithSubject) => average.average?.passing,
       );
       setPassingData([...passing]);
       return passing;
@@ -104,18 +115,24 @@ export default function GradeAverageCalculator() {
 
     if (session.status === "authenticated") {
       try {
-        refreshAll();
+        if (categoryState.category) refreshAll();
       } finally {
-        setLoaded(true);
+        if (categoryState.category) setAuthLoaded(true);
       }
     }
-  }, [session]);
+  }, [session, categoryState.category]);
+
+  useEffect(() => {
+    if (!categoryState.loading && authLoaded) {
+      setAllLoaded(true);
+    } else setAllLoaded(false);
+  }, [categoryState.loading, authLoaded]);
 
   return session.status === "unauthenticated" ? (
     <div>
       <LandingPage />
     </div>
-  ) : loaded ? (
+  ) : allLoaded ? (
     gradeData.length > 0 ? (
       <>
         <CardBoard className="flex xl:hidden">

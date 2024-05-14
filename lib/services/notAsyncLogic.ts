@@ -7,7 +7,7 @@ import { AverageWithSubject, Empty } from "@/types/types";
 
 export function doesGradePass(
   grade: number,
-  preferences: Preferences
+  preferences: Preferences,
 ): boolean {
   if (preferences.passingInverse) {
     return grade <= preferences.passingGrade!;
@@ -51,7 +51,7 @@ export function getTotalGradeAverages(grades: GradeWithSubject[]): number {
 
 export function exportToJSONFile(
   data: ExportableData,
-  filename?: string | Empty
+  filename?: string | Empty,
 ) {
   const json = JSON.stringify(data);
   const timestamp = new Date();
@@ -71,7 +71,10 @@ export function exportToClipboard(data: ExportableData) {
   navigator.clipboard.writeText(json);
 }
 
-export function importFromJSON(purge: boolean = true) {
+export function importFromJSON(
+  purge: boolean = true,
+  categoryId?: number | undefined,
+) {
   try {
     const input = document.createElement("input");
     input.type = "file";
@@ -118,14 +121,17 @@ export function validateJSON(json: string): boolean {
   }
 }
 
-export function importFromText(purge: boolean = true) {
+export function importFromText(
+  purge: boolean = true,
+  categoryId?: number | undefined,
+) {
   try {
     if (purge) {
       navigator.clipboard.readText().then((text) => {
         if (!validateJSON(text)) return importFailedToast();
         clearUserSubjectsGrades().then(() => {
           const data = JSON.parse(text) as ExportableData;
-          importData(data, purge).then(() => {
+          importData(data, purge, categoryId).then(() => {
             window.location.reload();
           });
         });
@@ -134,7 +140,7 @@ export function importFromText(purge: boolean = true) {
       navigator.clipboard.readText().then((text) => {
         if (!validateJSON(text)) return importFailedToast();
         const data = JSON.parse(text) as ExportableData;
-        importData(data, purge).then(() => {
+        importData(data, purge, categoryId).then(() => {
           window.location.reload();
         });
       });
