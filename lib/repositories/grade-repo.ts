@@ -12,33 +12,57 @@ import { catchProblem } from "@/lib/problem";
 import { getSubjectByName } from "@/lib/services/subject-service";
 import { and, eq } from "drizzle-orm";
 
-export async function getAllGradesFromDb(userId: string): Promise<Grade[]> {
-  const result = await db
-    .select()
-    .from(grades)
-    .where(eq(grades.userId, userId))
-    .execute();
-  return result;
+export async function getAllGradesFromDb(
+  userId: string,
+  categoryId?: number | undefined,
+): Promise<Grade[]> {
+  if (categoryId) {
+    const result = await db
+      .select()
+      .from(grades)
+      .where(and(eq(grades.userId, userId), eq(grades.category_fk, categoryId)))
+      .execute();
+    return result;
+  } else {
+    const result = await db
+      .select()
+      .from(grades)
+      .where(eq(grades.userId, userId))
+      .execute();
+    return result;
+  }
 }
 
 export async function getAllGradesWithSubjectFromDb(
-  userId: string
+  userId: string,
+  categoryId?: number | undefined,
 ): Promise<GradeWithSubject[]> {
-  const result = await db
-    .select()
-    .from(grades)
-    .innerJoin(subjects, eq(grades.subject_fk, subjects.id))
-    .where(eq(grades.userId, userId))
-    .execute();
-  return result;
+  if (categoryId) {
+    const result = await db
+      .select()
+      .from(grades)
+      .innerJoin(subjects, eq(grades.subject_fk, subjects.id))
+      .where(and(eq(grades.userId, userId), eq(grades.category_fk, categoryId)))
+      .execute();
+    return result;
+  } else {
+    const result = await db
+      .select()
+      .from(grades)
+      .innerJoin(subjects, eq(grades.subject_fk, subjects.id))
+      .where(eq(grades.userId, userId))
+      .execute();
+    return result;
+  }
 }
 
 export async function getGradesBySubjectFromDb(
   subject: string | number | Subject,
-  userId: string
+  userId: string,
+  categoryId?: number | undefined,
 ): Promise<Grade[]> {
   if (typeof subject === "string") {
-    const subjectId = catchProblem(await getSubjectByName(subject));
+    const subjectId = catchProblem(await getSubjectByName(subject, categoryId));
     const result = await db
       .select()
       .from(grades)
@@ -64,10 +88,11 @@ export async function getGradesBySubjectFromDb(
 
 export async function getGradesBySubjectWithSubjectFromDb(
   subject: string | number | Subject,
-  userId: string
+  userId: string,
+  categoryId?: number | undefined,
 ): Promise<GradeWithSubject[]> {
   if (typeof subject === "string") {
-    const subjectId = catchProblem(await getSubjectByName(subject));
+    const subjectId = catchProblem(await getSubjectByName(subject, categoryId));
     const result = await db
       .select()
       .from(grades)
@@ -101,7 +126,7 @@ export async function addGradeToDb(newGrade: NewGrade): Promise<number> {
 
 export async function deleteGradeFromDb(
   grade: Grade,
-  userId: string
+  userId: string,
 ): Promise<number> {
   const result = await db
     .delete(grades)
@@ -114,7 +139,7 @@ export async function deleteGradeFromDb(
 
 export async function deleteGradeByIdFromDb(
   gradeId: number,
-  userId: string
+  userId: string,
 ): Promise<number> {
   const result = await db
     .delete(grades)
@@ -127,7 +152,7 @@ export async function deleteGradeByIdFromDb(
 
 export async function updateGradeInDb(
   grade: Grade,
-  userId: string
+  userId: string,
 ): Promise<number> {
   const result = await db
     .update(grades)
