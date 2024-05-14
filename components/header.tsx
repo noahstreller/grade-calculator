@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { CategoryComboBox } from "@/components/category-combobox";
 import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +13,7 @@ import { DashboardButton } from "./dashboard-button";
 import { ImportExportButton } from "./import-export-button";
 import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
+import { CategoryGroup } from "@/components/category-group";
 
 export default function HeaderComponent() {
   const { t } = useTranslation("common");
@@ -74,7 +74,7 @@ export default function HeaderComponent() {
           Grades
         </h1>
       </Link>
-      <CategoryComboBox />
+      <CategoryGroup />
       <div className="flex gap-3">
         <DashboardButton />
         <div className="hidden md:flex gap-3">

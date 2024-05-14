@@ -93,13 +93,18 @@ function CategoryList({
   setOpen: (open: boolean) => void;
   setSelectedCategory: (category: Category) => void;
 }) {
+  const sortedCategories = () => {
+    return categories.sort((a, b) => {
+      return a.name!.localeCompare(b.name!);
+    });
+  };
   return (
     <Command>
       <CommandInput placeholder="Filter status..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
-          {categories.map((category) => (
+          {sortedCategories().map((category) => (
             <CommandItem
               key={category.name}
               value={category.name ?? ""}

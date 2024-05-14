@@ -1,0 +1,17 @@
+"use client";
+import { CategoryButton } from "@/components/category-button";
+import { CategoryComboBox } from "@/components/category-combobox";
+import { useCategory } from "@/components/category-provider";
+
+export function CategoryGroup() {
+  const categoryState = useCategory();
+  return (
+    <div className="flex flex-row gap-4">
+      <CategoryComboBox />
+      <div className="flex flex-row gap-2">
+        <CategoryButton action="create" />
+        <CategoryButton action="edit" />
+      </div>
+    </div>
+  );
+}
