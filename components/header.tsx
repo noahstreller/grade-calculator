@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { CategoryComboBox } from "@/components/category-combobox";
 import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -69,9 +70,11 @@ export default function HeaderComponent() {
           className={
             "inline-block md:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
           }
-        >Grades
+        >
+          Grades
         </h1>
       </Link>
+      <CategoryComboBox />
       <div className="flex gap-3">
         <DashboardButton />
         <div className="hidden md:flex gap-3">

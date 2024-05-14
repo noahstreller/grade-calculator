@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ChevronsUpDown } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 type Status = {
@@ -47,7 +48,7 @@ const statuses: Status[] = [
   },
 ];
 
-export function ComboBoxResponsive() {
+export function CategoryComboBox() {
   const [open, setOpen] = React.useState(false);
   const isDesktop = !isMobile;
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
@@ -58,8 +59,9 @@ export function ComboBoxResponsive() {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] justify-start">
+          <Button variant="outline" className="w-[150px] justify-between">
             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
