@@ -1,24 +1,24 @@
-import Providers from '@/app/providers';
-import { Footer } from '@/components/footer';
-import HeaderComponent from '@/components/header';
-import { LoadingScreen } from '@/components/loadingscreen';
-import { ToasterWrapper } from '@/components/toaster-wrapper';
-import { cn } from '@/lib/utils';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata, Viewport } from 'next';
-import { Author } from 'next/dist/lib/metadata/types/metadata-types';
-import { Inter } from 'next/font/google';
-import '../styles/globals.css';
+import Providers from "@/app/providers";
+import { Footer } from "@/components/footer";
+import HeaderComponent from "@/components/header";
+import { LoadingScreen } from "@/components/loadingscreen";
+import { ToasterWrapper } from "@/components/toaster-wrapper";
+import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata, Viewport } from "next";
+import { Author } from "next/dist/lib/metadata/types/metadata-types";
+import { Inter } from "next/font/google";
+import "../styles/globals.css";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 const authors: Author[] = [
   {
-    name: 'Noah Streller',
-    url: 'https://github.com/noahstreller',
-  }
-]
+    name: "Noah Streller",
+    url: "https://github.com/noahstreller",
+  },
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://grades.nstr.dev"),
@@ -36,10 +36,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   description:
-    "This grade calculator features different tools to get an overview of your grades and calculate your average grades for your subjects. It supports any numeric grading system and can calculate weighted averages. It also features a dark mode and is fully responsive. It saves data exclusively in your browser and does not require an account.",
+    "This grade calculator/dashboard features different tools to get an overview of your grades and calculate your average grades for your subjects. It supports any numeric grading system and can calculate weighted averages. It also features a dark mode and is fully responsive. Everything is synced with your favorite service. There is also a legacy version, which saves data exclusively in your browser and does not require an account.",
   keywords: [
     "grade",
     "calculator",
+    "dashboard",
+    "required grades",
+    "dash",
+    "app",
+    "web app",
+    "website",
+    "tool",
     "average",
     "weighted",
     "subject",
@@ -92,7 +99,7 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
