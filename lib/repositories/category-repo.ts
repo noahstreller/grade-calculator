@@ -49,7 +49,7 @@ export async function updateCategoryInDb(category: Category, userId: string) {
   const result = await db
     .update(categories)
     .set(category)
-    .where(eq(categories.userId, userId))
+    .where(and(eq(categories.userId, userId), eq(categories.id, category.id)))
     .returning()
     .execute();
   return result[0];

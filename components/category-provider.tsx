@@ -12,6 +12,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 type CategoryContextType = {
   category: Category | undefined;
   setCategory: (category: Category) => void;
+  setCategories: (categories: Category[]) => void;
   categories: Category[];
   loading: boolean;
 };
@@ -19,6 +20,7 @@ type CategoryContextType = {
 const defaultContextValue: CategoryContextType = {
   category: undefined,
   setCategory: () => void 0,
+  setCategories: () => void 0,
   categories: [],
   loading: true,
 };
@@ -38,7 +40,7 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
         setLoading(false);
       });
     }
-  }, [session]);
+  }, [session, categories]);
 
   useEffect(() => {
     if (session.status === "authenticated") {
@@ -57,8 +59,9 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
   return (
     <CategoryContext.Provider
       value={{
-        category: category,
-        setCategory: setCategory,
+        category,
+        setCategory,
+        setCategories,
         loading,
         categories,
       }}
