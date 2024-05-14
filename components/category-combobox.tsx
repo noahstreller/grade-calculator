@@ -1,7 +1,5 @@
 "use client";
-
-import * as React from "react";
-
+import { useCategory } from "@/components/category-provider";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -17,55 +15,37 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ChevronsUpDown } from "lucide-react";
+import { LoadingSpinner } from "@/components/ui/spinner";
+import { Category } from "@/db/schema";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
-type Status = {
-  value: string;
-  label: string;
-};
-
-const statuses: Status[] = [
-  {
-    value: "backlog",
-    label: "Backlog",
-  },
-  {
-    value: "todo",
-    label: "Todo",
-  },
-  {
-    value: "in progress",
-    label: "In Progress",
-  },
-  {
-    value: "done",
-    label: "Done",
-  },
-  {
-    value: "canceled",
-    label: "Canceled",
-  },
-];
-
 export function CategoryComboBox() {
-  const [open, setOpen] = React.useState(false);
+  const categoryState = useCategory();
+  const [open, setOpen] = useState(false);
   const isDesktop = !isMobile;
-  const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    null
-  );
-
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-between">
-            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+            {categoryState.loading ? (
+              <LoadingSpinner />
+            ) : (
+              categoryState.category?.name
+            )}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <CategoryList
+            selected={categoryState.category}
+            categories={categoryState.categories}
+            setOpen={setOpen}
+            setSelectedCategory={categoryState.setCategory}
+          />
         </PopoverContent>
       </Popover>
     );
@@ -74,25 +54,39 @@ export function CategoryComboBox() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-[150px] justify-start">
-          {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+        <Button variant="outline" className="w-[150px] justify-between">
+          {categoryState.loading ? (
+            <LoadingSpinner />
+          ) : (
+            categoryState.category?.name
+          )}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <CategoryList
+            selected={categoryState.category}
+            categories={categoryState.categories}
+            setOpen={setOpen}
+            setSelectedCategory={categoryState.setCategory}
+          />
         </div>
       </DrawerContent>
     </Drawer>
   );
 }
 
-function StatusList({
+function CategoryList({
+  categories,
+  selected,
   setOpen,
-  setSelectedStatus,
+  setSelectedCategory: setSelectedCategory,
 }: {
+  categories: Category[];
+  selected: Category | undefined;
   setOpen: (open: boolean) => void;
-  setSelectedStatus: (status: Status | null) => void;
+  setSelectedCategory: (category: Category) => void;
 }) {
   return (
     <Command>
@@ -100,18 +94,22 @@ function StatusList({
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
-          {statuses.map((status) => (
+          {categories.map((category) => (
             <CommandItem
-              key={status.value}
-              value={status.value}
-              onSelect={(value) => {
-                setSelectedStatus(
-                  statuses.find((priority) => priority.value === value) || null
-                );
+              key={category.name}
+              value={category.name ?? ""}
+              onSelect={() => {
+                setSelectedCategory(category);
                 setOpen(false);
               }}
             >
-              {status.label}
+              <Check
+                className={cn(
+                  "mr-2 h-4 w-4",
+                  category.id === selected?.id ? "opacity-100" : "opacity-0",
+                )}
+              />
+              {category.name}
             </CommandItem>
           ))}
         </CommandGroup>

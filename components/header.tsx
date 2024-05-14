@@ -16,7 +16,7 @@ import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export default function HeaderComponent() {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   const clearDataTranslations: ClearDataTranslations = {
     prompt: t("actions.clear-data.prompt"),
