@@ -68,17 +68,24 @@ export async function getGradesBySubject(
 
 export async function getGradeAverageWithSubjectBySubject(
   subject: string | number | Subject,
+  categoryId?: number | undefined,
 ): Promise<AverageWithSubject | Problem> {
   try {
     const userId = await getUserId();
-    const grades = await getGradesBySubjectWithSubjectFromDb(subject, userId);
+    const grades = await getGradesBySubjectWithSubjectFromDb(
+      subject,
+      userId,
+      categoryId,
+    );
     const average = async (): Promise<AverageWithSubject> => {
       let sum = 0;
       let weightedSum = 0;
       let totalGradesWithWeight = 0;
       if (grades.length === 0) {
         return {
-          subject: catchProblem(await getSubjectByIdByNameBySubject(subject)),
+          subject: catchProblem(
+            await getSubjectByIdByNameBySubject(subject, categoryId),
+          ),
         };
       }
       grades.map((grade: GradeWithSubject) => {
@@ -89,7 +96,9 @@ export async function getGradeAverageWithSubjectBySubject(
 
       if (totalGradesWithWeight === 0) {
         return {
-          subject: catchProblem(await getSubjectByIdByNameBySubject(subject)),
+          subject: catchProblem(
+            await getSubjectByIdByNameBySubject(subject, categoryId),
+          ),
         };
       }
       return {
@@ -120,10 +129,11 @@ export async function getGradeAverageWithSubjectBySubject(
 
 export async function getGradeAverageBySubject(
   subject: string | number | Subject,
+  categoryId?: number | undefined,
 ): Promise<Average | Problem> {
   try {
     const userId = await getUserId();
-    const grades = await getGradesBySubjectFromDb(subject, userId);
+    const grades = await getGradesBySubjectFromDb(subject, userId, categoryId);
     const average = async (): Promise<Average> => {
       let sum = 0;
       let weightedSum = 0;
@@ -159,12 +169,14 @@ export async function getGradeAverageBySubject(
   }
 }
 
-export async function getAllGradeAverages(): Promise<Average[] | Problem> {
+export async function getAllGradeAverages(
+  categoryId?: number | undefined,
+): Promise<Average[] | Problem> {
   try {
-    const subjects: Subject[] = catchProblem(await getAllSubjects());
+    const subjects: Subject[] = catchProblem(await getAllSubjects(categoryId));
     const average = async () => {
       let promises = subjects.map((subject) =>
-        getGradeAverageBySubject(subject),
+        getGradeAverageBySubject(subject, categoryId),
       );
       let resolved: (Average | Problem)[] = await Promise.all(promises);
       let averages: Average[] = resolved.map((res) => {
@@ -183,14 +195,14 @@ export async function getAllGradeAverages(): Promise<Average[] | Problem> {
   }
 }
 
-export async function getAllGradeAveragesWithSubject(): Promise<
-  AverageWithSubject[] | Problem
-> {
+export async function getAllGradeAveragesWithSubject(
+  categoryId?: number | undefined,
+): Promise<AverageWithSubject[] | Problem> {
   try {
-    const subjects: Subject[] = catchProblem(await getAllSubjects());
+    const subjects: Subject[] = catchProblem(await getAllSubjects(categoryId));
     const average = async () => {
       let promises = subjects.map((subject) =>
-        getGradeAverageWithSubjectBySubject(subject),
+        getGradeAverageWithSubjectBySubject(subject, categoryId),
       );
       let resolved: (AverageWithSubject | Problem)[] =
         await Promise.all(promises);

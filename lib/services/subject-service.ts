@@ -78,7 +78,11 @@ export async function getSubjectIdElseAdd(
   try {
     const userId = await getUserId();
     newSubject = await setUserId(newSubject);
-    const subject = await getSubjectByNameFromDb(newSubject.name!, userId);
+    const subject = await getSubjectByNameFromDb(
+      newSubject.name!,
+      userId,
+      newSubject.category_fk!,
+    );
     if (subject) return subject.id;
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
