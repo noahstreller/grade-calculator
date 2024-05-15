@@ -4,6 +4,7 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -67,19 +68,23 @@ export function EditGradeForm({
 
   const preferences = usePreferences().preferences;
   const defaultPreferences = getDefaultPreferences();
+  const categoryState = useCategory();
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!categoryState.category?.id) return;
       try {
         setLoading(true);
-        const data = catchProblem(await getAllSubjects());
+        const data = catchProblem(
+          await getAllSubjects(categoryState.category?.id)
+        );
         setSubjects([...data]);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [categoryState.category?.id]);
 
   const FormSchema = z.object({
     subject: z.number({
@@ -132,7 +137,7 @@ export function EditGradeForm({
       setSubmitting(false);
       editGradeToast(
         grade,
-        subjects.find((subject) => subject.id === data.subject)?.name ?? "",
+        subjects.find((subject) => subject.id === data.subject)?.name ?? ""
       );
     }
     refresh();
@@ -166,7 +171,7 @@ export function EditGradeForm({
                       disabled={loading}
                       className={cn(
                         "w-full justify-between",
-                        !field.value && "text-muted-foreground",
+                        !field.value && "text-muted-foreground"
                       )}
                     >
                       {loading && (
@@ -178,13 +183,13 @@ export function EditGradeForm({
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject.id === field.value,
+                              (subject) => subject.id === field.value
                             )?.name ?? "",
-                            35,
+                            35
                           ).text
                         : loading
-                          ? null
-                          : "Select subject"}
+                        ? null
+                        : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -213,7 +218,7 @@ export function EditGradeForm({
                                   "mr-2 h-4 w-4",
                                   subject.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0",
+                                    : "opacity-0"
                                 )}
                               />
                               {truncateText(subject.name!, 35).text}
@@ -318,7 +323,7 @@ export function EditGradeForm({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground",
+                        !date && "text-muted-foreground"
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
