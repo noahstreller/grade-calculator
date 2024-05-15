@@ -54,11 +54,11 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
     if (session.status === "authenticated") {
       if (category?.id) {
         selectCategory(category.id);
-        categories.forEach((c) => {
-          if (c.id === category.id) {
-            c.selected = true;
+        categories.forEach((iteratedCategory) => {
+          if (iteratedCategory.id === category.id) {
+            iteratedCategory.selected = true;
           } else {
-            c.selected = false;
+            iteratedCategory.selected = false;
           }
         });
       }

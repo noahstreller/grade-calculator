@@ -185,7 +185,9 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
     let inserted: Category = catchProblem(await updateCategory(newCategory));
     if (inserted) {
       categoryState.setCategories([
-        ...categoryState.categories.filter((c) => c.id !== selected?.id),
+        ...categoryState.categories.filter(
+          (category) => category.id !== selected?.id
+        ),
         inserted,
       ]);
       setSubmitting(false);
