@@ -7,14 +7,16 @@ import {
   getAllSubjectsFromDb,
   getSubjectByIdFromDb,
   getSubjectByNameFromDb,
-  updateSubjectInDb
+  updateSubjectInDb,
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
-export async function getAllSubjects(): Promise<Subject[] | Problem> {
+export async function getAllSubjects(
+  categoryId?: number | undefined,
+): Promise<Subject[] | Problem> {
   try {
     const userId = await getUserId();
-    return await getAllSubjectsFromDb(userId);
+    return await getAllSubjectsFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
@@ -24,7 +26,9 @@ export async function getAllSubjects(): Promise<Subject[] | Problem> {
   }
 }
 
-export async function getSubjectById(subjectId: number): Promise<Subject | Problem> {
+export async function getSubjectById(
+  subjectId: number,
+): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
     return await getSubjectByIdFromDb(subjectId, userId);
@@ -38,11 +42,12 @@ export async function getSubjectById(subjectId: number): Promise<Subject | Probl
 }
 
 export async function getSubjectByName(
-  subjectName: string
+  subjectName: string,
+  categoryId?: number | undefined,
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
-    return await getSubjectByNameFromDb(subjectName, userId);
+    return await getSubjectByNameFromDb(subjectName, userId, categoryId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
@@ -52,9 +57,10 @@ export async function getSubjectByName(
   }
 }
 
-
-export async function addSubject(newSubject: NewSubject): Promise<number | Problem> {
-  try{
+export async function addSubject(
+  newSubject: NewSubject,
+): Promise<number | Problem> {
+  try {
     newSubject = await setUserId(newSubject);
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
@@ -66,11 +72,17 @@ export async function addSubject(newSubject: NewSubject): Promise<number | Probl
   }
 }
 
-export async function getSubjectIdElseAdd(newSubject: NewSubject): Promise<number | Problem> {
+export async function getSubjectIdElseAdd(
+  newSubject: NewSubject,
+): Promise<number | Problem> {
   try {
     const userId = await getUserId();
     newSubject = await setUserId(newSubject);
-    const subject = await getSubjectByNameFromDb(newSubject.name!, userId);
+    const subject = await getSubjectByNameFromDb(
+      newSubject.name!,
+      userId,
+      newSubject.category_fk!,
+    );
     if (subject) return subject.id;
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
@@ -82,13 +94,17 @@ export async function getSubjectIdElseAdd(newSubject: NewSubject): Promise<numbe
   }
 }
 
-export async function quickCreateSubject(name: string): Promise<number | Problem> {
+export async function quickCreateSubject(
+  name: string,
+  categoryId?: number | undefined,
+): Promise<number | Problem> {
   try {
     const userId = await getUserId();
     const newSubject: NewSubject = {
       name,
       weight: 1,
       userId,
+      category_fk: categoryId,
     } satisfies NewSubject;
     return await addSubject(newSubject);
   } catch (e: any) {
@@ -102,10 +118,11 @@ export async function quickCreateSubject(name: string): Promise<number | Problem
 
 export async function getSubjectByIdByNameBySubject(
   subject: string | number | Subject,
+  categoryId?: number | undefined,
 ): Promise<Subject | Problem> {
   try {
     if (typeof subject === "string") {
-      return catchProblem(await getSubjectByName(subject));
+      return catchProblem(await getSubjectByName(subject, categoryId));
     }
     if (typeof subject === "number") {
       return catchProblem(await getSubjectById(subject));
@@ -120,11 +137,15 @@ export async function getSubjectByIdByNameBySubject(
   }
 }
 
-export async function deleteSubject(subject: string | number | Subject): Promise<string | Problem> {
+export async function deleteSubject(
+  subject: string | number | Subject,
+): Promise<string | Problem> {
   try {
-    let resolvedSubject = catchProblem(await getSubjectByIdByNameBySubject(subject));
+    let resolvedSubject = catchProblem(
+      await getSubjectByIdByNameBySubject(subject),
+    );
     const userId = await getUserId();
-    return await deleteSubjectFromDb(resolvedSubject, userId)
+    return await deleteSubjectFromDb(resolvedSubject, userId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
@@ -134,7 +155,9 @@ export async function deleteSubject(subject: string | number | Subject): Promise
   }
 }
 
-export async function updateSubject(subject: Subject): Promise<string | Problem> {
+export async function updateSubject(
+  subject: Subject,
+): Promise<string | Problem> {
   try {
     const userId = await getUserId();
     return await updateSubjectInDb(subject, userId);

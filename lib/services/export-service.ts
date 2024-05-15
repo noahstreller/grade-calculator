@@ -27,14 +27,18 @@ export type ExportableData = {
   preferences: NewPreferences | undefined;
   grades: NewGradeWithNewSubject[];
   subjects: NewSubject[];
+  category: string;
 };
 
-export async function prepareDataForExport(): Promise<ExportableData> {
+export async function prepareDataForExport(
+  categoryName: string,
+  categoryId?: number | undefined
+): Promise<ExportableData> {
   const preferences: Preferences = catchProblem(await getPreferences())[0];
   const grades: GradeWithSubject[] = catchProblem(
-    await getAllGradesWithSubject()
+    await getAllGradesWithSubject(categoryId)
   );
-  const subjects: Subject[] = catchProblem(await getAllSubjects());
+  const subjects: Subject[] = catchProblem(await getAllSubjects(categoryId));
 
   const strippedPreferences = (): NewPreferences | undefined => {
     if (preferences)
@@ -74,11 +78,16 @@ export async function prepareDataForExport(): Promise<ExportableData> {
     preferences: strippedPreferences(),
     grades: strippedGrades,
     subjects: strippedSubjects,
+    category: categoryName,
   };
   return exportableData;
 }
 
-export async function importData(data: ExportableData, purge: boolean) {
+export async function importData(
+  data: ExportableData,
+  purge: boolean,
+  categoryId?: number | undefined
+) {
   if (data.preferences) savePreferences(data.preferences);
   const nonUniqueSubjectsFromGrades = data.grades.map(
     (grade) => grade.subjects.name
@@ -93,7 +102,8 @@ export async function importData(data: ExportableData, purge: boolean) {
   const uniqueSubjects = [...new Set(nonUniqueSubjects)];
   const subjectWithIds = await Promise.all(
     uniqueSubjects.map(async (subjectName) => {
-      const subject = { name: subjectName };
+      const subject = { name: subjectName, category_fk: categoryId };
+      console.log(subject);
       if (purge) {
         let result = catchProblem(await addSubject(subject));
         return { name: subject.name, id: result };
@@ -109,7 +119,9 @@ export async function importData(data: ExportableData, purge: boolean) {
       (subject) => subject.name === grade.subjects.name
     )?.id;
     grade.grades.subject_fk = resultingSubject;
+    grade.grades.category_fk = categoryId;
     grade.grades.date = new Date(grade.grades.date || Date.now());
+    console.log(grade.grades);
     let result = catchProblem(await addGrade(grade.grades));
     return result;
   });

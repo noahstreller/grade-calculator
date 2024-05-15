@@ -124,6 +124,7 @@ export function EditGradeForm({
       id: originalGrade?.id!,
       userId: originalGrade?.userId!,
       description: data.description ?? null,
+      category_fk: originalGrade?.category_fk!,
     };
 
     let newGradeId = catchProblem(await updateGrade(grade));
@@ -131,7 +132,7 @@ export function EditGradeForm({
       setSubmitting(false);
       editGradeToast(
         grade,
-        subjects.find((subject) => subject.id === data.subject)?.name ?? ""
+        subjects.find((subject) => subject.id === data.subject)?.name ?? "",
       );
     }
     refresh();
@@ -165,7 +166,7 @@ export function EditGradeForm({
                       disabled={loading}
                       className={cn(
                         "w-full justify-between",
-                        !field.value && "text-muted-foreground"
+                        !field.value && "text-muted-foreground",
                       )}
                     >
                       {loading && (
@@ -177,13 +178,13 @@ export function EditGradeForm({
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject.id === field.value
+                              (subject) => subject.id === field.value,
                             )?.name ?? "",
-                            35
+                            35,
                           ).text
                         : loading
-                        ? null
-                        : "Select subject"}
+                          ? null
+                          : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -212,7 +213,7 @@ export function EditGradeForm({
                                   "mr-2 h-4 w-4",
                                   subject.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                               {truncateText(subject.name!, 35).text}
@@ -317,7 +318,7 @@ export function EditGradeForm({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />

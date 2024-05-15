@@ -11,7 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { catchProblem } from "@/lib/problem";
@@ -21,15 +21,23 @@ import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
+import { useCategory } from "@/components/category-provider";
 
-export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, setOpen: Function}) {
-  const { t, lang } = useTranslation("common");
+export function CreateSubjectForm({
+  refresh,
+  setOpen,
+}: {
+  refresh: Function;
+  setOpen: Function;
+}) {
+  const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
   const [submitting, setSubmitting] = useState(false);
+  const categoryState = useCategory();
 
   type FormValues = {
     subject: string;
-  }
+  };
 
   const FormSchema = z.object({
     subject: z
@@ -42,7 +50,7 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
   });
 
   const defaultValues: DefaultValues<FormValues> = {
-    subject: ""
+    subject: "",
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -51,8 +59,10 @@ export function CreateSubjectForm({ refresh, setOpen }: { refresh: Function, set
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setSubmitting(true);
-    const subject = data.subject
-    let insertedId: number | undefined = catchProblem(await quickCreateSubject(subject));
+    const subject = data.subject;
+    let insertedId: number | undefined = catchProblem(
+      await quickCreateSubject(subject, categoryState.category?.id),
+    );
 
     form.reset(defaultValues);
     form.setFocus("subject");

@@ -1,4 +1,18 @@
 "use client";
+import { useCategory } from "@/components/category-provider";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { prepareDataForExport } from "@/lib/services/export-service";
 import {
   exportToClipboard,
@@ -17,22 +31,10 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 
 export function ImportExportButton() {
   const session = useSession();
+  const categoryState = useCategory();
   const [purge, setPurge] = useState(true);
 
   return session.status === "authenticated" ? (
@@ -55,13 +57,21 @@ export function ImportExportButton() {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={() => importFromText(purge)}>
+                <DropdownMenuItem
+                  onClick={() =>
+                    importFromText(purge, categoryState.category?.id)
+                  }
+                >
                   <ClipboardPaste className="size-4 mr-2" />
-                  Text (Clipboard)
+                  Clipboard
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => importFromJSON(purge)}>
+                <DropdownMenuItem
+                  onClick={() =>
+                    importFromJSON(purge, categoryState.category?.id!)
+                  }
+                >
                   <FileOutput className="size-4 mr-2" />
-                  JSON (File)
+                  JSON-File
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -75,19 +85,29 @@ export function ImportExportButton() {
               <DropdownMenuSubContent>
                 <DropdownMenuItem
                   onClick={async () =>
-                    exportToClipboard(await prepareDataForExport())
+                    exportToClipboard(
+                      await prepareDataForExport(
+                        categoryState.category?.name ?? "",
+                        categoryState.category?.id
+                      )
+                    )
                   }
                 >
                   <ClipboardCopy className="size-4 mr-2" />
-                  Text (Clipboard)
+                  Clipboard
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={async () =>
-                    exportToJSONFile(await prepareDataForExport())
+                    exportToJSONFile(
+                      await prepareDataForExport(
+                        categoryState.category?.name ?? "",
+                        categoryState.category?.id
+                      )
+                    )
                   }
                 >
                   <FileInput className="size-4 mr-2" />
-                  JSON (File)
+                  JSON-File
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
