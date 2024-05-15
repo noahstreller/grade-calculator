@@ -52,9 +52,20 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (session.status === "authenticated") {
-      if (category?.id) selectCategory(category.id);
+      if (category?.id) {
+        selectCategory(category.id);
+        categories.forEach((c) => {
+          if (c.id === category.id) {
+            c.selected = true;
+          } else {
+            c.selected = false;
+          }
+        });
+      }
     }
-  }, [category, session]);
+    console.log("category", category);
+    console.log("categories", categories);
+  }, [category, session, categories]);
 
   return (
     <CategoryContext.Provider
