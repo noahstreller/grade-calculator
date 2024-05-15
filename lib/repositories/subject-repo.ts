@@ -3,18 +3,32 @@ import { db } from "@/db";
 import { NewSubject, Subject, subjects } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 
-export async function getAllSubjectsFromDb(userId: string): Promise<Subject[]> {
-  const result = await db
-    .select()
-    .from(subjects)
-    .where(eq(subjects.userId, userId))
-    .execute();
-  return result satisfies Subject[];
+export async function getAllSubjectsFromDb(
+  userId: string,
+  categoryId?: number | undefined,
+): Promise<Subject[]> {
+  if (categoryId) {
+    const result = await db
+      .select()
+      .from(subjects)
+      .where(
+        and(eq(subjects.userId, userId), eq(subjects.category_fk, categoryId)),
+      )
+      .execute();
+    return result satisfies Subject[];
+  } else {
+    const result = await db
+      .select()
+      .from(subjects)
+      .where(eq(subjects.userId, userId))
+      .execute();
+    return result satisfies Subject[];
+  }
 }
 
 export async function getSubjectByIdFromDb(
   subjectId: number,
-  userId: string
+  userId: string,
 ): Promise<Subject> {
   const result = await db
     .select()
@@ -26,14 +40,30 @@ export async function getSubjectByIdFromDb(
 
 export async function getSubjectByNameFromDb(
   subjectName: string,
-  userId: string
+  userId: string,
+  categoryId?: number | undefined,
 ) {
-  const result = await db
-    .select()
-    .from(subjects)
-    .where(and(eq(subjects.name, subjectName), eq(subjects.userId, userId)))
-    .execute();
-  return result[0] satisfies Subject;
+  if (categoryId) {
+    const result = await db
+      .select()
+      .from(subjects)
+      .where(
+        and(
+          eq(subjects.name, subjectName),
+          eq(subjects.userId, userId),
+          eq(subjects.category_fk, categoryId),
+        ),
+      )
+      .execute();
+    return result[0] satisfies Subject;
+  } else {
+    const result = await db
+      .select()
+      .from(subjects)
+      .where(and(eq(subjects.name, subjectName), eq(subjects.userId, userId)))
+      .execute();
+    return result[0] satisfies Subject;
+  }
 }
 
 export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
@@ -46,7 +76,7 @@ export async function addSubjectToDb(newSubject: NewSubject): Promise<number> {
 }
 
 export async function addSubjectToDbReturning(
-  newSubject: NewSubject
+  newSubject: NewSubject,
 ): Promise<Subject> {
   const result = await db
     .insert(subjects)
@@ -58,7 +88,7 @@ export async function addSubjectToDbReturning(
 
 export async function deleteSubjectFromDb(
   subject: Subject,
-  userId: string
+  userId: string,
 ): Promise<string> {
   const result = await db
     .delete(subjects)
@@ -70,7 +100,7 @@ export async function deleteSubjectFromDb(
 
 export async function updateSubjectInDb(
   subject: Subject,
-  userId: string
+  userId: string,
 ): Promise<string> {
   const result = await db
     .update(subjects)

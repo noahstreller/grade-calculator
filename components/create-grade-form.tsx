@@ -45,6 +45,7 @@ import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
+import { useCategory } from "@/components/category-provider";
 
 export function CreateGradeForm({
   refresh,
@@ -53,9 +54,10 @@ export function CreateGradeForm({
   refresh: Function;
   setDrawerOpen: Function;
 }) {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const categoryState = useCategory();
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
   const [loading, setLoading] = useState(true);
@@ -70,14 +72,16 @@ export function CreateGradeForm({
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = catchProblem(await getAllSubjects());
+        const data = catchProblem(
+          await getAllSubjects(categoryState.category?.id),
+        );
         setSubjects([...data]);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [categoryState.category]);
 
   const FormSchema = z.object({
     subject: z.number({
@@ -112,6 +116,7 @@ export function CreateGradeForm({
       value: data.grade,
       subject_fk: data.subject,
       description: data.description,
+      category_fk: categoryState.category?.id,
     };
 
     let newGradeId = catchProblem(await addGrade(grade));
@@ -119,7 +124,7 @@ export function CreateGradeForm({
       setSubmitting(false);
       addGradeToast(
         grade,
-        subjects.find((subject) => subject.id === data.subject)?.name ?? ""
+        subjects.find((subject) => subject.id === data.subject)?.name ?? "",
       );
     }
     refresh();
@@ -151,7 +156,7 @@ export function CreateGradeForm({
                       disabled={loading}
                       className={cn(
                         "w-full justify-between",
-                        !field.value && "text-muted-foreground"
+                        !field.value && "text-muted-foreground",
                       )}
                     >
                       {loading && (
@@ -163,13 +168,13 @@ export function CreateGradeForm({
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject.id === field.value
+                              (subject) => subject.id === field.value,
                             )?.name ?? "",
-                            35
+                            35,
                           ).text
                         : loading
-                        ? null
-                        : "Select subject"}
+                          ? null
+                          : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -198,7 +203,7 @@ export function CreateGradeForm({
                                   "mr-2 h-4 w-4",
                                   subject.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                               {truncateText(subject.name!, 35).text}
@@ -297,7 +302,7 @@ export function CreateGradeForm({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />

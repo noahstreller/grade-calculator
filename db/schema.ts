@@ -9,7 +9,7 @@ import {
   text,
   timestamp,
   unique,
-  varchar
+  varchar,
 } from "drizzle-orm/pg-core";
 
 export const grades = pgTable("grades", {
@@ -21,6 +21,9 @@ export const grades = pgTable("grades", {
   description: varchar("description"),
   weight: doublePrecision("weight").default(1),
   date: timestamp("date", { mode: "date", withTimezone: true }).defaultNow(),
+  category_fk: integer("category_fk").references(() => categories.id, {
+    onDelete: "cascade",
+  }),
   userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
 });
 
@@ -30,6 +33,22 @@ export const subjects = pgTable(
     id: serial("id").primaryKey(),
     name: varchar("name"),
     weight: doublePrecision("weight").default(1),
+    category_fk: integer("category_fk").references(() => categories.id, {
+      onDelete: "cascade",
+    }),
+    userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
+  },
+  (t) => ({
+    unq: unique().on(t.userId, t.name, t.category_fk),
+  })
+);
+
+export const categories = pgTable(
+  "categories",
+  {
+    id: serial("id").primaryKey(),
+    name: varchar("name"),
+    selected: boolean("selected").default(false),
     userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
   },
   (t) => ({
@@ -119,6 +138,9 @@ export type NewGradeWithNewSubject = {
 
 export type Subject = typeof subjects.$inferSelect;
 export type NewSubject = typeof subjects.$inferInsert;
+
+export type Category = typeof categories.$inferSelect;
+export type NewCategory = typeof categories.$inferInsert;
 
 export type Preferences = typeof preferences.$inferSelect;
 export type NewPreferences = typeof preferences.$inferInsert;

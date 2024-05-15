@@ -29,6 +29,20 @@
       "when": 1715154829100,
       "tag": "0003_married_kingpin",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1715773423471,
+      "tag": "0004_peaceful_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1715773837594,
+      "tag": "0005_wakeful_phalanx",
+      "breakpoints": true
     }
   ]
 }

@@ -1,4 +1,3 @@
-
 import { Grade, NewGrade } from "@/db/schema";
 import { Problem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
@@ -6,12 +5,12 @@ import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
 
 function t(key: string) {
-  const {t} = createTranslation("common");
+  const { t } = createTranslation("common");
   return t(key);
 }
 
 function lang() {
-  const {lang} = createTranslation("common");
+  const { lang } = createTranslation("common");
   return lang;
 }
 
@@ -45,6 +44,16 @@ export function addSubjectToast(subject: string) {
   });
 }
 
+export function addCategoryToast(category: string) {
+  toast("The category was added", {
+    description: category,
+    action: {
+      label: "Got it",
+      onClick: () => void 0,
+    },
+  });
+}
+
 export function editSubjectToast(subject: string) {
   toast("The subject was updated", {
     description: subject,
@@ -65,7 +74,11 @@ export function copySuccessToast(copiedContent: string) {
   });
 }
 
-export function deleteGradeToast(grade: Grade, subjectName: string, refresh: Function){
+export function deleteGradeToast(
+  grade: Grade,
+  subjectName: string,
+  refresh: Function,
+) {
   toast(t("actions.delete.success"), {
     description: grade.value,
     action: {
@@ -79,7 +92,7 @@ export function deleteGradeToast(grade: Grade, subjectName: string, refresh: Fun
   });
 }
 
-export function deleteSubjectToast(subject: string){
+export function deleteSubjectToast(subject: string) {
   toast(t("actions.delete.success"), {
     description: subject,
     action: {
@@ -89,7 +102,7 @@ export function deleteSubjectToast(subject: string){
   });
 }
 
-export function exportToast(method: "json" | "clipboard"){
+export function exportToast(method: "json" | "clipboard") {
   toast(t("actions.export.success"), {
     description: t(`actions.export.description-${method}`),
     action: {
@@ -99,7 +112,7 @@ export function exportToast(method: "json" | "clipboard"){
   });
 }
 
-export function importFailedToast(){
+export function importFailedToast() {
   toast.error(t("errors.import-failed"));
 }
 

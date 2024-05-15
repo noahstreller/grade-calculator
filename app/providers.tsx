@@ -1,4 +1,5 @@
 "use client";
+import { CategoryProvider } from "@/components/category-provider";
 import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
@@ -12,7 +13,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <SessionProvider>
-        <PreferencesProvider>{children}</PreferencesProvider>
+        <PreferencesProvider>
+          <CategoryProvider>{children}</CategoryProvider>
+        </PreferencesProvider>
       </SessionProvider>
     </ThemeProvider>
   );
