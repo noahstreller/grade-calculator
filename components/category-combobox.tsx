@@ -106,7 +106,7 @@ function CategoryList({
   };
   return (
     <Command>
-      <CommandInput placeholder="Filter status..." />
+      <CommandInput placeholder="Filter by categories" />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
