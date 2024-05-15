@@ -182,9 +182,6 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
       ...selected!,
       name: data.categoryName,
     };
-    console.log(newCategory);
-    console.log(selected);
-    console.log(categoryState.category);
     let inserted: Category = catchProblem(await updateCategory(newCategory));
     if (inserted) {
       categoryState.setCategories([

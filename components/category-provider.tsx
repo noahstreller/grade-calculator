@@ -63,8 +63,6 @@ export function CategoryProvider({ children }: { children: React.ReactNode }) {
         });
       }
     }
-    console.log("category", category);
-    console.log("categories", categories);
   }, [category, session, categories]);
 
   return (
