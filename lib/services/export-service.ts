@@ -32,11 +32,11 @@ export type ExportableData = {
 
 export async function prepareDataForExport(
   categoryName: string,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ): Promise<ExportableData> {
   const preferences: Preferences = catchProblem(await getPreferences())[0];
   const grades: GradeWithSubject[] = catchProblem(
-    await getAllGradesWithSubject(categoryId),
+    await getAllGradesWithSubject(categoryId)
   );
   const subjects: Subject[] = catchProblem(await getAllSubjects(categoryId));
 
@@ -86,14 +86,14 @@ export async function prepareDataForExport(
 export async function importData(
   data: ExportableData,
   purge: boolean,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ) {
   if (data.preferences) savePreferences(data.preferences);
   const nonUniqueSubjectsFromGrades = data.grades.map(
-    (grade) => grade.subjects.name,
+    (grade) => grade.subjects.name
   );
   const nonUniqueSubjectsFromSubjects = data.subjects.map(
-    (subject) => subject.name,
+    (subject) => subject.name
   );
   const nonUniqueSubjects = [
     ...nonUniqueSubjectsFromGrades,
@@ -103,6 +103,7 @@ export async function importData(
   const subjectWithIds = await Promise.all(
     uniqueSubjects.map(async (subjectName) => {
       const subject = { name: subjectName, category_fk: categoryId };
+      console.log(subject);
       if (purge) {
         let result = catchProblem(await addSubject(subject));
         return { name: subject.name, id: result };
@@ -110,16 +111,17 @@ export async function importData(
         let result = catchProblem(await getSubjectIdElseAdd(subject));
         return { name: subject.name, id: result };
       }
-    }),
+    })
   );
 
   let results = data.grades.forEach(async (grade) => {
     let resultingSubject = subjectWithIds.find(
-      (subject) => subject.name === grade.subjects.name,
+      (subject) => subject.name === grade.subjects.name
     )?.id;
     grade.grades.subject_fk = resultingSubject;
     grade.grades.category_fk = categoryId;
     grade.grades.date = new Date(grade.grades.date || Date.now());
+    console.log(grade.grades);
     let result = catchProblem(await addGrade(grade.grades));
     return result;
   });

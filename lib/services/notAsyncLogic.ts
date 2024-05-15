@@ -1,13 +1,16 @@
 import { GradeWithSubject, Preferences } from "@/db/schema";
 import { ExportableData, importData } from "@/lib/services/export-service";
-import { clearUserSubjectsGrades } from "@/lib/services/user-service";
+import {
+  clearUserSubjectsGrades,
+  clearUserSubjectsGradesByCategory,
+} from "@/lib/services/user-service";
 import { importFailedToast } from "@/lib/toasts";
 import { secondsSinceMidnight } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 
 export function doesGradePass(
   grade: number,
-  preferences: Preferences,
+  preferences: Preferences
 ): boolean {
   if (preferences.passingInverse) {
     return grade <= preferences.passingGrade!;
@@ -51,7 +54,7 @@ export function getTotalGradeAverages(grades: GradeWithSubject[]): number {
 
 export function exportToJSONFile(
   data: ExportableData,
-  filename?: string | Empty,
+  filename?: string | Empty
 ) {
   const json = JSON.stringify(data);
   const timestamp = new Date();
@@ -73,7 +76,7 @@ export function exportToClipboard(data: ExportableData) {
 
 export function importFromJSON(
   purge: boolean = true,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ) {
   try {
     const input = document.createElement("input");
@@ -123,13 +126,13 @@ export function validateJSON(json: string): boolean {
 
 export function importFromText(
   purge: boolean = true,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ) {
   try {
     if (purge) {
       navigator.clipboard.readText().then((text) => {
         if (!validateJSON(text)) return importFailedToast();
-        clearUserSubjectsGrades().then(() => {
+        clearUserSubjectsGradesByCategory(categoryId!).then(() => {
           const data = JSON.parse(text) as ExportableData;
           importData(data, purge, categoryId).then(() => {
             window.location.reload();
