@@ -1,4 +1,18 @@
 "use client";
+import { useCategory } from "@/components/category-provider";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { prepareDataForExport } from "@/lib/services/export-service";
 import {
   exportToClipboard,
@@ -17,20 +31,6 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useCategory } from "@/components/category-provider";
 
 export function ImportExportButton() {
   const session = useSession();
@@ -67,7 +67,7 @@ export function ImportExportButton() {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
-                    importFromJSON(purge, categoryState.category?.id)
+                    importFromJSON(purge, categoryState.category?.id!)
                   }
                 >
                   <FileOutput className="size-4 mr-2" />
@@ -88,8 +88,8 @@ export function ImportExportButton() {
                     exportToClipboard(
                       await prepareDataForExport(
                         categoryState.category?.name ?? "",
-                        categoryState.category?.id,
-                      ),
+                        categoryState.category?.id
+                      )
                     )
                   }
                 >
@@ -101,8 +101,8 @@ export function ImportExportButton() {
                     exportToJSONFile(
                       await prepareDataForExport(
                         categoryState.category?.name ?? "",
-                        categoryState.category?.id,
-                      ),
+                        categoryState.category?.id
+                      )
                     )
                   }
                 >

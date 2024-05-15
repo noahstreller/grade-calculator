@@ -1,9 +1,6 @@
 import { GradeWithSubject, Preferences } from "@/db/schema";
 import { ExportableData, importData } from "@/lib/services/export-service";
-import {
-  clearUserSubjectsGrades,
-  clearUserSubjectsGradesByCategory,
-} from "@/lib/services/user-service";
+import { clearUserSubjectsGradesByCategory } from "@/lib/services/user-service";
 import { importFailedToast } from "@/lib/toasts";
 import { secondsSinceMidnight } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
@@ -74,10 +71,7 @@ export function exportToClipboard(data: ExportableData) {
   navigator.clipboard.writeText(json);
 }
 
-export function importFromJSON(
-  purge: boolean = true,
-  categoryId?: number | undefined
-) {
+export function importFromJSON(purge: boolean = true, categoryId: number) {
   try {
     const input = document.createElement("input");
     input.type = "file";
@@ -90,13 +84,13 @@ export function importFromJSON(
         if (!validateJSON(json)) return importFailedToast();
         const data = JSON.parse(json) as ExportableData;
         if (purge) {
-          clearUserSubjectsGrades().then(() => {
-            importData(data, purge).then(() => {
+          clearUserSubjectsGradesByCategory(categoryId).then(() => {
+            importData(data, purge, categoryId).then(() => {
               window.location.reload();
             });
           });
         } else {
-          importData(data, purge).then(() => {
+          importData(data, purge, categoryId).then(() => {
             window.location.reload();
           });
         }
