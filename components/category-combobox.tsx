@@ -17,13 +17,13 @@ import {
 } from "@/components/ui/popover";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { Category } from "@/db/schema";
-import { cn } from "@/lib/utils";
+import { cn, truncateText } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
-export function CategoryComboBox() {
+export function CategoryComboBox({ className }: { className?: string }) {
   const categoryState = useCategory();
   const [open, setOpen] = useState(false);
   const session = useSession();
@@ -35,11 +35,14 @@ export function CategoryComboBox() {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] justify-between">
+          <Button
+            variant="outline"
+            className={cn("w-[150px] justify-between", className)}
+          >
             {categoryState.loading ? (
               <LoadingSpinner />
             ) : (
-              categoryState.category?.name
+              truncateText(categoryState.category?.name ?? "", 20).text
             )}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -58,12 +61,15 @@ export function CategoryComboBox() {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline" className="w-[150px] justify-between">
+      <DrawerTrigger
+        asChild
+        className={cn("w-[150px] justify-between", className)}
+      >
+        <Button variant="outline">
           {categoryState.loading ? (
             <LoadingSpinner />
           ) : (
-            categoryState.category?.name
+            truncateText(categoryState.category?.name ?? "", 15).text
           )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -116,10 +122,11 @@ function CategoryList({
               <Check
                 className={cn(
                   "mr-2 h-4 w-4",
-                  category.id === selected?.id ? "opacity-100" : "opacity-0",
+                  category.id === selected?.id ? "opacity-100" : "opacity-0"
                 )}
               />
-              {category.name}
+
+              {truncateText(category.name ?? "", 15).text}
             </CommandItem>
           ))}
         </CommandGroup>

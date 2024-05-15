@@ -127,13 +127,12 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
 
   async function handleDelete() {
     setSubmitting(true);
-    let deleted: Category = catchProblem(
-      await deleteCategory(categoryState.category!.id)
-    );
+    if (!selected) return;
+    let deleted: Category = catchProblem(await deleteCategory(selected?.id));
     if (deleted) {
       categoryState.setCategories([
         ...categoryState.categories.filter(
-          (category) => category.id !== categoryState.category?.id
+          (category) => category.id !== selected?.id
         ),
       ]);
       setSubmitting(false);
@@ -180,15 +179,16 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
     }
     setSubmitting(true);
     const newCategory: Category = {
-      ...categoryState.category!,
+      ...selected!,
       name: data.categoryName,
     };
+    console.log(newCategory);
+    console.log(selected);
+    console.log(categoryState.category);
     let inserted: Category = catchProblem(await updateCategory(newCategory));
     if (inserted) {
       categoryState.setCategories([
-        ...categoryState.categories.filter(
-          (c) => c.id !== categoryState.category?.id
-        ),
+        ...categoryState.categories.filter((c) => c.id !== selected?.id),
         inserted,
       ]);
       setSubmitting(false);
