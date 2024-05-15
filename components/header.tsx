@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { CategoryGroup } from "@/components/category-group";
 import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +9,7 @@ import {
 import { Trash2 } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
+import { isMobile } from "react-device-detect";
 import { ClearDataButton } from "./clear-data-button";
 import { DashboardButton } from "./dashboard-button";
 import { ImportExportButton } from "./import-export-button";
@@ -15,7 +17,7 @@ import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export default function HeaderComponent() {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
 
   const clearDataTranslations: ClearDataTranslations = {
     prompt: t("actions.clear-data.prompt"),
@@ -69,9 +71,15 @@ export default function HeaderComponent() {
           className={
             "inline-block md:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
           }
-        >Grades
+        >
+          Grades
         </h1>
       </Link>
+      {isMobile ? null : (
+        <div className="hidden lg:flex">
+          <CategoryGroup />
+        </div>
+      )}
       <div className="flex gap-3">
         <DashboardButton />
         <div className="hidden md:flex gap-3">

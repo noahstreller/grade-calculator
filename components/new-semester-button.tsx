@@ -1,4 +1,5 @@
 "use client";
+import { useCategory } from "@/components/category-provider";
 import { Button } from "@/components/ui/button";
 import { Highlight } from "@/components/ui/card-stack";
 import {
@@ -38,6 +39,7 @@ export const NewSemesterButton = () => {
   const [keepSubjects, setKeepSubjectsState] = useState<boolean>(true);
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
   const [exportData, setExportData] = useState<boolean>(true);
+  const categoryState = useCategory();
 
   const setKeepSubjects = (value: boolean) => {
     if (!value) setKeepGradesState(false);
@@ -51,7 +53,10 @@ export const NewSemesterButton = () => {
 
   const handleSubmit = async () => {
     try {
-      const data = await prepareDataForExport();
+      const data = await prepareDataForExport(
+        categoryState.category?.name ?? "",
+        categoryState.category?.id
+      );
       if (exportData) exportToJSONFile(data);
       if (!keepSubjects) await clearUserSubjectsGrades();
       if (!keepGrades && keepSubjects) await clearUserGrades();
@@ -76,17 +81,26 @@ export const NewSemesterButton = () => {
             decide what data you wish to keep
           </DrawerDescription>
         </DrawerHeader>
-        <div className="flex flex-col m-5 space-y-5">
-          <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
-          <Label>
-            Keep current <Highlight colorName="yellow">subjects</Highlight>
-          </Label>
-          <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
-          <Label>
-            Keep current <Highlight>grades</Highlight>
-          </Label>
-          <Switch checked={exportData} onCheckedChange={setExportData} />
-          <Label>Export your current data to a file</Label>
+        <div className="m-5 flex flex-col gap-6">
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
+            <Label>
+              Keep current <Highlight colorName="yellow">subjects</Highlight>
+            </Label>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
+            <Label>
+              Keep current <Highlight>grades</Highlight>
+            </Label>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={exportData} onCheckedChange={setExportData} />
+            <Label>
+              Export your current data to a{" "}
+              <Highlight colorName="blue">file</Highlight>
+            </Label>
+          </div>
         </div>
 
         <DrawerFooter>
@@ -123,19 +137,27 @@ export const NewSemesterButton = () => {
             decide what data you wish to keep
           </DialogDescription>
         </DialogHeader>
-        <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
-        <Label>
-          Keep current <Highlight colorName="yellow">subjects</Highlight>
-        </Label>
-        <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
-        <Label>
-          Keep current <Highlight>grades</Highlight>
-        </Label>
-        <Switch checked={exportData} onCheckedChange={setExportData} />
-        <Label>
-          Export your current data to a{" "}
-          <Highlight colorName="blue">file</Highlight>
-        </Label>
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
+            <Label>
+              Keep current <Highlight colorName="yellow">subjects</Highlight>
+            </Label>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
+            <Label>
+              Keep current <Highlight>grades</Highlight>
+            </Label>
+          </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={exportData} onCheckedChange={setExportData} />
+            <Label>
+              Export your current data to a{" "}
+              <Highlight colorName="blue">file</Highlight>
+            </Label>
+          </div>
+        </div>
         <DialogFooter>
           {!(exportData || keepGrades) && (
             <span className="text-muted-foreground self-center">

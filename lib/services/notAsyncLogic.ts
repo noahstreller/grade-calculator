@@ -1,6 +1,9 @@
 import { GradeWithSubject, Preferences } from "@/db/schema";
 import { ExportableData, importData } from "@/lib/services/export-service";
-import { clearUserSubjectsGrades } from "@/lib/services/user-service";
+import {
+  clearUserSubjectsGrades,
+  clearUserSubjectsGradesByCategory,
+} from "@/lib/services/user-service";
 import { importFailedToast } from "@/lib/toasts";
 import { secondsSinceMidnight } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
@@ -71,7 +74,10 @@ export function exportToClipboard(data: ExportableData) {
   navigator.clipboard.writeText(json);
 }
 
-export function importFromJSON(purge: boolean = true) {
+export function importFromJSON(
+  purge: boolean = true,
+  categoryId?: number | undefined
+) {
   try {
     const input = document.createElement("input");
     input.type = "file";
@@ -118,14 +124,17 @@ export function validateJSON(json: string): boolean {
   }
 }
 
-export function importFromText(purge: boolean = true) {
+export function importFromText(
+  purge: boolean = true,
+  categoryId?: number | undefined
+) {
   try {
     if (purge) {
       navigator.clipboard.readText().then((text) => {
         if (!validateJSON(text)) return importFailedToast();
-        clearUserSubjectsGrades().then(() => {
+        clearUserSubjectsGradesByCategory(categoryId!).then(() => {
           const data = JSON.parse(text) as ExportableData;
-          importData(data, purge).then(() => {
+          importData(data, purge, categoryId).then(() => {
             window.location.reload();
           });
         });
@@ -134,7 +143,7 @@ export function importFromText(purge: boolean = true) {
       navigator.clipboard.readText().then((text) => {
         if (!validateJSON(text)) return importFailedToast();
         const data = JSON.parse(text) as ExportableData;
-        importData(data, purge).then(() => {
+        importData(data, purge, categoryId).then(() => {
           window.location.reload();
         });
       });

@@ -3,7 +3,9 @@
 import { Account, Grade, Subject, User } from "@/db/schema";
 import { Problem, getProblem } from "@/lib/problem";
 import {
+  clearUserGradesByCategoryFromDb,
   clearUserGradesFromDb,
+  clearUserSubjectsGradesByCategoryFromDb,
   clearUserSubjectsGradesFromDb,
   deleteUserDataFromDb,
   getRefreshTokenFromDb,
@@ -24,10 +26,41 @@ export async function clearUserSubjectsGrades(): Promise<Subject[] | Problem> {
     }) satisfies Problem;
   }
 }
+
+export async function clearUserSubjectsGradesByCategory(
+  categoryId: number
+): Promise<Subject[] | Problem> {
+  try {
+    const userId = await getUserId();
+    return await clearUserSubjectsGradesByCategoryFromDb(userId, categoryId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
 export async function clearUserGrades(): Promise<Grade[] | Problem> {
   try {
     const userId = await getUserId();
     return await clearUserGradesFromDb(userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
+export async function clearUserGradesByCategory(
+  categoryId: number
+): Promise<Grade[] | Problem> {
+  try {
+    const userId = await getUserId();
+    return await clearUserGradesByCategoryFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,

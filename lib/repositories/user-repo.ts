@@ -12,7 +12,7 @@ import {
   users,
 } from "@/db/schema";
 import { Empty } from "@/types/types";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function deleteUserDataFromDb(userId: string): Promise<User> {
   const result = await db
@@ -34,10 +34,36 @@ export async function clearUserSubjectsGradesFromDb(
   return result;
 }
 
+export async function clearUserSubjectsGradesByCategoryFromDb(
+  userId: string,
+  categoryId: number
+): Promise<Subject[]> {
+  const result = await db
+    .delete(subjects)
+    .where(
+      and(eq(subjects.userId, userId), eq(subjects.category_fk, categoryId))
+    )
+    .returning()
+    .execute();
+  return result;
+}
+
 export async function clearUserGradesFromDb(userId: string): Promise<Grade[]> {
   const result = await db
     .delete(grades)
     .where(eq(grades.userId, userId))
+    .returning()
+    .execute();
+  return result;
+}
+
+export async function clearUserGradesByCategoryFromDb(
+  userId: string,
+  categoryId: number
+): Promise<Grade[]> {
+  const result = await db
+    .delete(grades)
+    .where(and(eq(grades.userId, userId), eq(grades.category_fk, categoryId)))
     .returning()
     .execute();
   return result;
