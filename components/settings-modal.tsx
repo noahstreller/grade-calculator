@@ -4,6 +4,7 @@ import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { AccountSection } from "@/components/account-section";
+import { CategoryGroup } from "@/components/category-group";
 import { ClearDataButton } from "@/components/clear-data-button";
 import { ImportExportButton } from "@/components/import-export-button";
 import { NewSemesterButton } from "@/components/new-semester-button";
@@ -364,6 +365,10 @@ export function SettingsModal({
           <SheetTitle>{translations.title}</SheetTitle>
           <SheetDescription>{translations.description}</SheetDescription>
         </SheetHeader>
+        <div className="my-5 flex-1">
+          <CategoryGroup />
+        </div>
+        <Separator />
         <div className="mt-4 mb-5 flex gap-2 justify-start">
           <ThemeSwitcher />
           <ImportExportButton />

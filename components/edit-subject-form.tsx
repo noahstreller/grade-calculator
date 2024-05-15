@@ -32,8 +32,7 @@ export function EditSubjectForm({
   setOpen: Function;
   originalSubject: Subject | undefined;
 }) {
-  const { t, lang } = useTranslation("common");
-  const preferences = usePreferences().preferences!;
+  const { t } = useTranslation("common");
   const [submitting, setSubmitting] = useState(false);
 
   type FormValues = {
@@ -61,9 +60,7 @@ export function EditSubjectForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setSubmitting(true);
     let newSubject = { ...originalSubject, name: data.subject } as Subject;
-    let subjectName: string = catchProblem(
-      await updateSubject(newSubject)
-    );
+    let subjectName: string = catchProblem(await updateSubject(newSubject));
 
     form.reset(defaultValues);
     form.setFocus("subject");
@@ -72,7 +69,7 @@ export function EditSubjectForm({
       setSubmitting(false);
     }
     refresh();
-    
+
     setOpen(false);
   }
 

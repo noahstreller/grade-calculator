@@ -1,8 +1,9 @@
 "use client";
+import { useCategory } from "@/components/category-provider";
 import { Button } from "@/components/ui/button";
 import {
-  clearUserGrades,
-  clearUserSubjectsGrades,
+  clearUserGradesByCategory,
+  clearUserSubjectsGradesByCategory,
 } from "@/lib/services/user-service";
 import { ClearDataTranslations } from "@/lib/translationObjects";
 import { useSession } from "next-auth/react";
@@ -25,13 +26,14 @@ export function ClearDataButton({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const categoryState = useCategory();
 
   function clearData() {
-    clearUserSubjectsGrades();
+    clearUserSubjectsGradesByCategory(categoryState.category?.id!);
     window.location.reload();
   }
   function clearGrades() {
-    clearUserGrades();
+    clearUserGradesByCategory(categoryState.category?.id!);
     window.location.reload();
   }
   const session = useSession();
