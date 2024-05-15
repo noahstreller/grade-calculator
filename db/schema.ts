@@ -66,9 +66,6 @@ export const preferences = pgTable("preferences", {
     false
   ),
   passingInverse: boolean("passingInverse").default(false),
-  category_fk: integer("category_fk").references(() => categories.id, {
-    onDelete: "cascade",
-  }),
   userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
 });
 
