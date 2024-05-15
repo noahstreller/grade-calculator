@@ -1,7 +1,6 @@
 "use server";
 
-import { db } from "@/db";
-import { Category, categories } from "@/db/schema";
+import { Category } from "@/db/schema";
 import { Problem, getProblem } from "@/lib/problem";
 import {
   changeSelectedCategoryInDb,
@@ -13,7 +12,6 @@ import {
   updateCategoryInDb,
 } from "@/lib/repositories/category-repo";
 import { getUserId } from "@/lib/services/service-util";
-import { and, eq } from "drizzle-orm";
 
 export async function getAllCategories(): Promise<Category[] | Problem> {
   try {
@@ -75,7 +73,7 @@ export async function getCurrentCategoryElseInsert(): Promise<
 
 export async function insertCategory(
   name: string,
-  selected: boolean = false,
+  selected: boolean = false
 ): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
@@ -90,7 +88,7 @@ export async function insertCategory(
 }
 
 export async function updateCategory(
-  category: Category,
+  category: Category
 ): Promise<Category | Problem> {
   try {
     const userId = await getUserId();

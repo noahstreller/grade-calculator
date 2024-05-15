@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,18 +15,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { Category } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
+import {
+  deleteCategory,
+  insertCategory,
+  updateCategory,
+} from "@/lib/services/category-service";
 import { addCategoryToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
-import { useCategory } from "@/components/category-provider";
-import {
-  insertCategory,
-  updateCategory,
-} from "@/lib/services/category-service";
-import { Category } from "@/db/schema";
 
 export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
   const { t } = useTranslation("common");
@@ -59,7 +60,7 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
     setSubmitting(true);
     const category = data.category;
     let inserted: Category = catchProblem(
-      await insertCategory(category, false),
+      await insertCategory(category, false)
     );
 
     form.reset(defaultValues);
@@ -105,12 +106,28 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
   const categoryState = useCategory();
   const [submitting, setSubmitting] = useState(false);
 
+  async function handleDelete() {
+    setSubmitting(true);
+    let deleted: Category = catchProblem(
+      await deleteCategory(categoryState.category!.id)
+    );
+    if (deleted) {
+      categoryState.setCategories([
+        ...categoryState.categories.filter(
+          (category) => category.id !== categoryState.category?.id
+        ),
+      ]);
+      setSubmitting(false);
+    }
+    setOpen(false);
+  }
+
   type FormValues = {
-    category: string;
+    categoryName: string;
   };
 
   const FormSchema = z.object({
-    category: z
+    categoryName: z
       .string({
         required_error: t("errors.required"),
       })
@@ -120,7 +137,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
   });
 
   const defaultValues: DefaultValues<FormValues> = {
-    category: categoryState.category?.name ?? "",
+    categoryName: categoryState.category?.name ?? "",
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -132,20 +149,20 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
   }, [categoryState.category]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    if (data.category === categoryState.category?.name) {
+    if (data.categoryName === categoryState.category?.name) {
       setOpen(false);
       return;
     }
     setSubmitting(true);
     const newCategory: Category = {
       ...categoryState.category!,
-      name: data.category,
+      name: data.categoryName,
     };
     let inserted: Category = catchProblem(await updateCategory(newCategory));
     if (inserted) {
       categoryState.setCategories([
         ...categoryState.categories.filter(
-          (c) => c.id !== categoryState.category?.id,
+          (c) => c.id !== categoryState.category?.id
         ),
         inserted,
       ]);
@@ -159,7 +176,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
         <FormField
           control={form.control}
-          name="category"
+          name="categoryName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -183,6 +200,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
             className="w-full"
             variant="destructive"
             disabled={submitting}
+            onClick={handleDelete}
           >
             {submitting ? <LoadingSpinner /> : "Delete Category"}
           </Button>
