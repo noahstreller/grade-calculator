@@ -88,8 +88,8 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
           <DrawerHeader className="text-left">
             <DrawerTitle>Edit category</DrawerTitle>
             <DrawerDescription>
-              Categories separate your grades. Useful if you attend multiple
-              schools.
+              Edit or delete your categories. You cannot delete the currently
+              selected category.
             </DrawerDescription>
           </DrawerHeader>
           <EditCategoryForm setOpen={setOpen} />
@@ -111,8 +111,8 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
           <DialogHeader>
             <DialogTitle>Edit category</DialogTitle>
             <DialogDescription>
-              Categories separate your grades. Useful if you attend multiple
-              schools.
+              Edit or delete your categories. You cannot delete the currently
+              selected category.
             </DialogDescription>
           </DialogHeader>
           <EditCategoryForm setOpen={setOpen} />
