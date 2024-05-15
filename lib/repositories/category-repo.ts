@@ -35,7 +35,7 @@ export async function getCurrentCategoryFromDb(userId: string) {
 export async function insertCategoryIntoDb(
   name: string,
   selected: boolean,
-  userId: string,
+  userId: string
 ) {
   const result = await db
     .insert(categories)
@@ -58,7 +58,13 @@ export async function updateCategoryInDb(category: Category, userId: string) {
 export async function deleteCategoryFromDb(id: number, userId: string) {
   const result = await db
     .delete(categories)
-    .where(and(eq(categories.userId, userId), eq(categories.id, id)))
+    .where(
+      and(
+        eq(categories.userId, userId),
+        eq(categories.id, id),
+        eq(categories.selected, false)
+      )
+    )
     .returning()
     .execute();
   return result[0];

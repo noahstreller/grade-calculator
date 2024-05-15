@@ -1,8 +1,17 @@
+"use client";
 import {
   CreateCategoryForm,
   EditCategoryForm,
 } from "@/components/category-form";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -13,20 +22,16 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { FolderPen, FolderPlus } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
 export function CategoryButton({ action }: { action: "create" | "edit" }) {
   const [open, setOpen] = useState<boolean>(false);
+  const session = useSession();
+
+  if (session.status !== "authenticated") return null;
 
   if (action === "create")
     return isMobile ? (
