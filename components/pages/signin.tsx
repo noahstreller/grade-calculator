@@ -1,5 +1,11 @@
 "use client";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
-import { Globe } from "lucide-react";
+import { Container, Globe } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -79,6 +85,17 @@ export function SignInPageComponent() {
             >
               <SiGoogle className="m-2 size-5" /> Google
             </Button>
+            {process.env.NODE_ENV === "development" && (
+              <Button
+                variant={"secondary"}
+                className="w-full"
+                onClick={() => {
+                  signIn("local");
+                }}
+              >
+                <Container className="m-2 size-5" /> Local
+              </Button>
+            )}
             <CardDescription>
               Check out the legacy version, if you prefer saving your data
               locally.

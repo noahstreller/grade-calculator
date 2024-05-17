@@ -9,6 +9,7 @@ import { useCategory } from "@/components/category-provider";
 import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
+import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { catchProblem } from "@/lib/problem";
 import {
   getAllGradeAveragesWithSubject,
@@ -27,6 +28,9 @@ export default function GradeAverageCalculator() {
   const [authLoaded, setAuthLoaded] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
   const session = useSession();
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
+  const isMobile = useMediaQuery(MediaQueries.sm) && !isTablet && !isDesktop;
 
   const refreshGrades = async () => {
     let grades = catchProblem(
@@ -128,110 +132,116 @@ export default function GradeAverageCalculator() {
     } else setAllLoaded(false);
   }, [categoryState.loading, authLoaded]);
 
-  return session.status === "unauthenticated" ? (
-    <div>
-      <LandingPage />
-    </div>
-  ) : allLoaded ? (
-    gradeData.length > 0 ? (
+  if (session.status === "unauthenticated")
+    return (
+      <div>
+        <LandingPage />
+      </div>
+    );
+
+  if (allLoaded)
+    return gradeData.length > 0 ? (
       <>
-        <CardBoard className="flex xl:hidden">
-          <AllSubjects
-            data={averageData}
-            failingData={failingData}
-            passingData={passingData}
-            setData={setAverageData}
-            refresh={refreshAll}
-          />
-          <AllGrades
-            data={gradeData}
-            setData={setGradeData}
-            refresh={refreshAll}
-          />
-          <RequiredGrades averageData={averageData} />
-          <AverageOverview data={gradeData} averageData={averageData} />
-          <GradeOverview
-            data={gradeData}
-            passingData={passingData}
-            failingData={failingData}
-          />
-        </CardBoard>
-        <CardBoard row className="hidden xl:flex">
+        {isMobile && (
           <CardBoard>
-            <GradeOverview
-              data={gradeData}
-              passingData={passingData}
+            <AllSubjects
+              data={averageData}
               failingData={failingData}
+              passingData={passingData}
+              setData={setAverageData}
+              refresh={refreshAll}
             />
-            <AverageOverview data={gradeData} averageData={averageData} />
-          </CardBoard>
-          <CardBoard>
             <AllGrades
               data={gradeData}
               setData={setGradeData}
               refresh={refreshAll}
             />
             <RequiredGrades averageData={averageData} />
-          </CardBoard>
-          <CardBoard>
-            <AllSubjects
-              data={averageData}
-              failingData={failingData}
-              passingData={passingData}
-              setData={setAverageData}
-              refresh={refreshAll}
-            />
-          </CardBoard>
-        </CardBoard>
-      </>
-    ) : (
-      <>
-        <CardBoard className="flex xl:hidden">
-          {averageData.length > 0 && (
-            <AllGrades
+            <AverageOverview data={gradeData} averageData={averageData} />
+            <GradeOverview
               data={gradeData}
-              setData={setGradeData}
-              refresh={refreshAll}
-            />
-          )}
-          <AllSubjects
-            data={averageData}
-            failingData={failingData}
-            passingData={passingData}
-            setData={setAverageData}
-            refresh={refreshAll}
-          />
-        </CardBoard>
-        {averageData.length > 0 ? (
-          <CardBoard row className="hidden xl:flex w-1/2">
-            <AllGrades
-              data={gradeData}
-              setData={setGradeData}
-              refresh={refreshAll}
-            />
-
-            <AllSubjects
-              data={averageData}
-              failingData={failingData}
               passingData={passingData}
-              setData={setAverageData}
-              refresh={refreshAll}
-            />
-          </CardBoard>
-        ) : (
-          <CardBoard row className="hidden xl:flex">
-            <AllSubjects
-              data={averageData}
               failingData={failingData}
-              passingData={passingData}
-              setData={setAverageData}
-              refresh={refreshAll}
             />
           </CardBoard>
         )}
+        {isTablet && (
+          <CardBoard row className="max-w-[95vw]">
+            <CardBoard>
+              <AllGrades
+                data={gradeData}
+                setData={setGradeData}
+                refresh={refreshAll}
+              />
+              <GradeOverview
+                data={gradeData}
+                passingData={passingData}
+                failingData={failingData}
+              />
+            </CardBoard>
+            <CardBoard>
+              <AllSubjects
+                data={averageData}
+                failingData={failingData}
+                passingData={passingData}
+                setData={setAverageData}
+                refresh={refreshAll}
+              />
+              <AverageOverview data={gradeData} averageData={averageData} />
+              <RequiredGrades averageData={averageData} />
+            </CardBoard>
+          </CardBoard>
+        )}
+        {isDesktop && (
+          <CardBoard row className="max-w-[95vw]">
+            <CardBoard>
+              <GradeOverview
+                data={gradeData}
+                passingData={passingData}
+                failingData={failingData}
+              />
+              <AverageOverview data={gradeData} averageData={averageData} />
+            </CardBoard>
+            <CardBoard>
+              <AllGrades
+                data={gradeData}
+                setData={setGradeData}
+                refresh={refreshAll}
+              />
+              <RequiredGrades averageData={averageData} />
+            </CardBoard>
+            <CardBoard>
+              <AllSubjects
+                data={averageData}
+                failingData={failingData}
+                passingData={passingData}
+                setData={setAverageData}
+                refresh={refreshAll}
+              />
+            </CardBoard>
+          </CardBoard>
+        )}
       </>
-    )
-  ) : (
+    ) : (
+      <CardBoard>
+        {averageData.length > 0 && (
+          <AllGrades
+            data={gradeData}
+            setData={setGradeData}
+            refresh={refreshAll}
+          />
+        )}
+        <AllSubjects
+          data={averageData}
+          failingData={failingData}
+          passingData={passingData}
+          setData={setAverageData}
+          refresh={refreshAll}
+        />
+      </CardBoard>
+    );
+
+  return (
     <>
       <CardBoard className="flex xl:hidden">
         <CardSkeleton wide variant="medium" />

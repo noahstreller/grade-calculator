@@ -21,7 +21,7 @@ import { isMobile } from "react-device-detect";
 
 export function columns(
   refresh: Function,
-  setGradeToEdit: Function
+  setGradeToEdit: Function,
 ): ColumnDef<GradeWithSubject>[] {
   const { t } = createTranslation("common");
 
@@ -52,18 +52,18 @@ export function columns(
         let subject: string = row.original.subjects.name!;
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).text;
 
         if (truncated) {
           return (
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="text-left ml-2">
+                <TooltipTrigger className="text-left ml-2 text-wrap break-words max-w-40">
                   {truncatedSubject}
                 </TooltipTrigger>
                 <TooltipContent>
