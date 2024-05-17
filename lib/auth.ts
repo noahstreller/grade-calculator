@@ -37,6 +37,23 @@ export const config = {
         },
       },
     }),
+    {
+      id: "local",
+      name: "Local",
+      type: "oauth",
+      wellKnown:
+        "http://localhost:8080/default/.well-known/openid-configuration",
+      clientId: "mock",
+      clientSecret: "mock",
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.sub,
+          email: `${profile.sub}@nstr.dev`,
+          image: undefined,
+        };
+      },
+    },
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {

@@ -19,7 +19,7 @@ export function columns(
   setSubjectToDelete: Function,
   setOriginalSubject: Function,
   setOpenDelete: Function,
-  setOpenEdit: Function
+  setOpenEdit: Function,
 ): ColumnDef<AverageWithSubject>[] {
   const { t, lang } = createTranslation("common");
 
@@ -49,11 +49,11 @@ export function columns(
         let subject: string = row.original.subject.name || "";
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).text;
 
         if (truncated) {
@@ -65,7 +65,7 @@ export function columns(
                 hideText
               />
               <Tooltip>
-                <TooltipTrigger className="text-left">
+                <TooltipTrigger className="text-left text-wrap break-words">
                   {truncatedSubject}
                 </TooltipTrigger>
                 <TooltipContent>
