@@ -16,11 +16,12 @@ import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import { isMobile } from "react-device-detect";
 export function columns(): ColumnDef<AverageWithSubject>[] {
-  const { t, lang } = createTranslation("common");
+  const { t } = createTranslation("common");
 
   return [
     {
       id: "subjectName",
+      accessorKey: "subject.name",
       header: ({ column }) => {
         return (
           <Button
@@ -44,11 +45,11 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
         let subject: string = row.original.subject.name || "";
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 20 : 40
+          isMobile ? 16 : 20,
         ).text;
 
         if (truncated) {
