@@ -9,11 +9,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
-import { DataTable } from "../../ui/data-table";
-import { columns } from "./columns";
+} from "@/components/ui/card";
+import { DataTable } from "@/components/cards/passingGradesCard/data-table";
+import { columns } from "@/components/cards/passingGradesCard/columns";
 
-export default function PassingGradesCard({ data }: { data: AverageWithSubject[] }) {
+export default function PassingGradesCard({
+  data,
+}: {
+  data: AverageWithSubject[];
+}) {
   const { t } = useTranslation("common");
 
   return (
