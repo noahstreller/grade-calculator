@@ -30,11 +30,11 @@ export default function GradeAverageCalculator() {
   const session = useSession();
   const isDesktop = useMediaQuery(MediaQueries.xxl);
   const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
-  const isMobile = useMediaQuery(MediaQueries.sm) && !isTablet && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
 
   const refreshGrades = async () => {
     let grades = catchProblem(
-      await getAllGradesWithSubject(categoryState.category?.id),
+      await getAllGradesWithSubject(categoryState.category?.id)
     );
     setGradeData([...grades]);
     return grades;
@@ -42,7 +42,7 @@ export default function GradeAverageCalculator() {
 
   const refreshAverages = async () => {
     let averages = catchProblem(
-      await getAllGradeAveragesWithSubject(categoryState.category?.id),
+      await getAllGradeAveragesWithSubject(categoryState.category?.id)
     );
     setAverageData([...averages]);
     return averages;
@@ -51,7 +51,7 @@ export default function GradeAverageCalculator() {
   function refreshFailing(averages: AverageWithSubject[]) {
     let allAverages = averages;
     let failing = allAverages.filter(
-      (average: AverageWithSubject) => average.average?.passing === false,
+      (average: AverageWithSubject) => average.average?.passing === false
     );
     setFailingData([...failing]);
     return failing;
@@ -60,7 +60,7 @@ export default function GradeAverageCalculator() {
   function refreshPassing(averages: AverageWithSubject[]) {
     let allAverages = averages;
     let passing = allAverages.filter(
-      (average: AverageWithSubject) => average.average?.passing,
+      (average: AverageWithSubject) => average.average?.passing
     );
     setPassingData([...passing]);
     return passing;
@@ -77,7 +77,7 @@ export default function GradeAverageCalculator() {
   useEffect(() => {
     const refreshGrades = async () => {
       let grades = catchProblem(
-        await getAllGradesWithSubject(categoryState.category?.id),
+        await getAllGradesWithSubject(categoryState.category?.id)
       );
       setGradeData([...grades]);
       return grades;
@@ -85,7 +85,7 @@ export default function GradeAverageCalculator() {
 
     const refreshAverages = async () => {
       let averages = catchProblem(
-        await getAllGradeAveragesWithSubject(categoryState.category?.id),
+        await getAllGradeAveragesWithSubject(categoryState.category?.id)
       );
       setAverageData([...averages]);
       return averages;
@@ -94,7 +94,7 @@ export default function GradeAverageCalculator() {
     function refreshFailing(averages: AverageWithSubject[]) {
       let allAverages = averages;
       let failing = allAverages.filter(
-        (average: AverageWithSubject) => average.average?.passing === false,
+        (average: AverageWithSubject) => average.average?.passing === false
       );
       setFailingData([...failing]);
       return failing;
@@ -103,7 +103,7 @@ export default function GradeAverageCalculator() {
     function refreshPassing(averages: AverageWithSubject[]) {
       let allAverages = averages;
       let passing = allAverages.filter(
-        (average: AverageWithSubject) => average.average?.passing,
+        (average: AverageWithSubject) => average.average?.passing
       );
       setPassingData([...passing]);
       return passing;
