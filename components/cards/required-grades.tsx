@@ -1,9 +1,13 @@
 "use client";
 import { usePreferences } from "@/components/preferences-provider";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
+import { Button } from "@/components/ui/button";
+import { Highlight } from "@/components/ui/card-stack";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
@@ -22,9 +26,11 @@ import { CardBoard } from "../ui/cardboard";
 function RequiredGradesBody({
   averageData,
   showPassing,
+  simulatedWeight,
 }: {
   averageData: AverageWithSubject[];
   showPassing: boolean;
+  simulatedWeight: number;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences;
@@ -37,11 +43,12 @@ function RequiredGradesBody({
     average: AverageWithSubject
   ): { result: number; overflowCounts: number } => {
     let sum = average.average?.gradeWeightedSum!;
-    let count = average.average?.gradeWeightedAmount! + 1;
+    let weight = simulatedWeight;
+    let count = average.average?.gradeWeightedAmount! + weight;
     let passing = preferences?.passingGrade!;
     let max = preferences?.maximumGrade!;
     let min = preferences?.minimumGrade!;
-    let result = passing * count - sum;
+    let result = (passing * count - sum) / weight;
     let overflowCounts = 0;
     while (result > max || result < min) {
       count++;
@@ -52,7 +59,7 @@ function RequiredGradesBody({
         sum += min;
         overflowCounts--;
       }
-      result = passing * count - sum;
+      result = (passing * count - sum) / weight;
     }
     return { result, overflowCounts };
   };
@@ -95,15 +102,23 @@ function RequiredGradesBody({
 
     const shouldBeShown = (average: AverageWithSubject) => {
       return (
-        (average.average?.passing === false || showPassing) && average.average
+        (doesGradePass(average.average?.gradeAverage!, preferences!) ===
+          false ||
+          showPassing) &&
+        average.average
       );
     };
 
     setChunkPairs([...chunkIntoPieces(averageData, isMobile ? 1 : 2)]);
-  }, [averageData, showPassing]);
+  }, [averageData, isMobile, showPassing, preferences]);
 
   return (
     <CardBoard>
+      <h2>
+        If your next exam is weighted{" "}
+        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
+        need:
+      </h2>
       {chunkPairs.length === 0 ? (
         <Alert>
           <Bird className="h-4 w-4" />
@@ -123,7 +138,11 @@ function RequiredGradesBody({
               <Card key={index}>
                 <CardHeader>
                   <h2>
-                    {average.subject && average.average?.passing ? (
+                    {average.subject &&
+                    doesGradePass(
+                      average.average?.gradeAverage!,
+                      preferences!
+                    ) ? (
                       <b className="text-green-400 mr-2">
                         {truncateForPage(average.subject.name)}
                       </b>
@@ -149,7 +168,7 @@ function RequiredGradesBody({
                         )
                       : null}
                     <br />
-                    {average.average?.passing
+                    {doesGradePass(average.average?.gradeAverage!, preferences!)
                       ? t("required-grades.passed")
                       : t("required-grades.required")}
                   </h1>
@@ -170,6 +189,13 @@ export function RequiredGrades({
 }) {
   const { t } = useTranslation("common");
   const [showPassing, setShowPassing] = useState<boolean>(false);
+  const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
+
+  const getSimulatedWeight = () => {
+    if (!simulatedWeight || simulatedWeight <= 0)
+      return { simulatedWeight: 1, valid: false };
+    return { simulatedWeight, valid: true };
+  };
 
   return (
     <Card>
@@ -185,11 +211,41 @@ export function RequiredGrades({
           </Label>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-3">
         <RequiredGradesBody
           averageData={averageData}
           showPassing={showPassing}
+          simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
+        <CardDescription className="mt-4 mx-1">
+          If you know the weight of the next exam, you can apply that weight to
+          the required grades.
+        </CardDescription>
+        <div className="flex flex-row gap-3">
+          <Input
+            value={simulatedWeight || ""}
+            type="number"
+            onChange={(e) => {
+              console.log("changed");
+              setSimulatedWeight(e.target.valueAsNumber);
+            }}
+            placeholder="Simulated weight"
+            className="w-[250px]"
+          />
+          <Button
+            variant="outline"
+            onClick={() => {
+              setSimulatedWeight(undefined);
+            }}
+          >
+            Clear
+          </Button>
+        </div>
+        {!getSimulatedWeight().valid && (
+          <span className="text-red-400 text-xs">
+            Weight must be a positive number
+          </span>
+        )}
       </CardContent>
     </Card>
   );
