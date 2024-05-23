@@ -69,7 +69,7 @@ export function EmailLoginForm() {
               <LoadingSpinner />
             ) : (
               <>
-                <Mail className="m-2 size-5" /> Email
+                <Mail className="m-2 size-5" /> Request Link
               </>
             )}
           </Button>

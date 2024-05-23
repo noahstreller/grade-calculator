@@ -41,7 +41,7 @@ export function SignInPageComponent() {
   }, [session, router]);
 
   return (
-    <div className="flex flex-col gap-5 h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 ">
+    <div className="flex flex-col gap-5 h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4">
       <Breadcrumb className="pl-2">
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -106,6 +106,7 @@ export function SignInPageComponent() {
               </Button>
               <Separator />
               <EmailLoginForm />
+              <Separator />
               <CardDescription>
                 Check out the legacy version, if you prefer saving your data
                 locally.
@@ -138,7 +139,7 @@ export function SignInPageComponent() {
 
 export function SentEmailComponent() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4">
       <Breadcrumb className="pl-2">
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -169,11 +170,14 @@ export function SentEmailComponent() {
         </CardHeader>
         <CardContent className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-row items-center gap-2">
-            <MailCheck className="size-5" /> Your{" "}
-            <Highlight>magic link</Highlight> is on the way! Check your Inbox.
+            <MailCheck className="size-5 flex-shrink-0" />
+            <p>
+              Your <Highlight>magic link</Highlight> is on the way! Check your
+              Inbox.
+            </p>
           </div>
           <p className="text-muted-foreground flex flex-row gap-2 items-center">
-            <Clock className="size-5" />
+            <Clock className="size-5 flex-shrink-0" />
             It may take a moment to arrive.
           </p>
         </CardContent>
