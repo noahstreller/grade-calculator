@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { CardDescription } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -45,6 +46,9 @@ export function EmailLoginForm() {
 
   return (
     <>
+      <CardDescription>
+        You can also request a magic link to sign in with your email address.
+      </CardDescription>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
