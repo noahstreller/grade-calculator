@@ -12,11 +12,18 @@ import {
 import { NextAuthOptions, getServerSession } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
+import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
 export const config = {
   adapter: DrizzleAdapter(db) as Adapter,
+  pages: {
+    signIn: "/login",
+    signOut: "/",
+    error: "/login",
+    verifyRequest: "/login/sent",
+  },
   providers: [
     DiscordProvider({
       clientId: process.env.DISCORD_ID || "",
@@ -25,6 +32,10 @@ export const config = {
     GithubProvider({
       clientId: process.env.GITHUB_ID || "",
       clientSecret: process.env.GITHUB_SECRET || "",
+    }),
+    EmailProvider({
+      server: process.env.SMTP_SERVER || "",
+      from: process.env.SMTP_FROM || "",
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID || "",
@@ -69,10 +80,16 @@ export const config = {
       }
 
       if (account && user) {
-        token.refreshToken = account.refresh_token;
-        await saveRefreshTokenIntoDb(user.id, account.refresh_token as string);
+        if (account.refresh_token) {
+          token.refreshToken = account.refresh_token;
+          await saveRefreshTokenIntoDb(
+            user.id,
+            account.refresh_token as string
+          );
+        }
       } else {
-        token.refreshToken = await getRefreshTokenFromDb(token.sub as string);
+        const refreshToken = await getRefreshTokenFromDb(token.sub as string);
+        if (refreshToken) token.refreshToken = refreshToken;
       }
 
       return token;

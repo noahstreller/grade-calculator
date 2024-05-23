@@ -1,4 +1,5 @@
 "use client";
+import { EmailLoginForm } from "@/components/email-login-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,16 +15,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Highlight } from "@/components/ui/card-stack";
+import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
-import { Container, Globe } from "lucide-react";
+import { Clock, Container, Globe, MailCheck } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export function SignInPageComponent() {
   const session = useSession();
+  const sent = useSearchParams().get("sent");
   const router = useRouter();
 
   useEffect(() => {
@@ -51,6 +55,7 @@ export function SignInPageComponent() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+      {}
 
       {session.status === "unauthenticated" ? (
         <Card className="transition-all">
@@ -61,6 +66,17 @@ export function SignInPageComponent() {
             </CardDescription>
           </CardHeader>
           <CardContent className="gap-4 flex flex-col">
+            {process.env.NODE_ENV === "development" && (
+              <Button
+                variant={"secondary"}
+                className="w-full"
+                onClick={() => {
+                  signIn("local");
+                }}
+              >
+                <Container className="m-2 size-5" /> Local
+              </Button>
+            )}
             <Button
               className="w-full"
               onClick={() => {
@@ -85,17 +101,8 @@ export function SignInPageComponent() {
             >
               <SiGoogle className="m-2 size-5" /> Google
             </Button>
-            {process.env.NODE_ENV === "development" && (
-              <Button
-                variant={"secondary"}
-                className="w-full"
-                onClick={() => {
-                  signIn("local");
-                }}
-              >
-                <Container className="m-2 size-5" /> Local
-              </Button>
-            )}
+            <Separator />
+            <EmailLoginForm />
             <CardDescription>
               Check out the legacy version, if you prefer saving your data
               locally.
@@ -122,5 +129,28 @@ export function SignInPageComponent() {
         </Card>
       )}
     </div>
+  );
+}
+
+export function SentEmailComponent() {
+  return (
+    <Card className="transition-all">
+      <CardHeader>
+        <CardTitle>E-Mail sign-in</CardTitle>
+        <CardDescription>
+          Make sure to check your spam folder, if you did not receive it.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col justify-center items-center gap-4">
+        <div className="flex flex-row items-center gap-2">
+          <MailCheck className="size-5" /> Your{" "}
+          <Highlight>magic link</Highlight> is on the way! Check your Inbox.
+        </div>
+        <p className="text-muted-foreground flex flex-row gap-2 items-center">
+          <Clock className="size-5" />
+          It may take a moment to arrive.
+        </p>
+      </CardContent>
+    </Card>
   );
 }

@@ -130,6 +130,10 @@ export function getInitials(name: string) {
     .join("");
 }
 
+export function getInitialsFromEmail(email: string) {
+  return email.split("@")[0][0];
+}
+
 export function getDefaultPreferences(): Preferences {
   return {
     gradeDecimals: 3,
