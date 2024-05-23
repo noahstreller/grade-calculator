@@ -34,10 +34,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Subject } from "@/db/schema";
+import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { catchProblem } from "@/lib/problem";
 import { deleteSubject } from "@/lib/services/subject-service";
 import { deleteSubjectToast } from "@/lib/toasts";
-import { isMobileDevice } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird, FilterX } from "lucide-react";
@@ -58,7 +58,11 @@ export function AllSubjects({
   refresh: Function;
 }) {
   const { t, lang } = useTranslation("common");
-  const isDesktop = !isMobileDevice();
+
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
+
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
