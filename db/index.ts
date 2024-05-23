@@ -4,11 +4,11 @@ import { drizzle } from "drizzle-orm/vercel-postgres";
 import postgres from "postgres";
 
 type PostgresDB = ReturnType<typeof postgres> | undefined;
-let postgresDb: PostgresDB = undefined;
 
-if (!postgresDb && process.env.VERCEL_ENV === "development") {
-  postgresDb = postgres(process.env.POSTGRES_URL ?? "");
-}
+export const postgresDb: PostgresDB =
+  process.env.VERCEL_ENV === "development"
+    ? postgres(process.env.POSTGRES_URL ?? "")
+    : undefined;
 
 export const db =
   process.env.VERCEL_ENV === "development"

@@ -45,11 +45,11 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
         let subject: string = row.original.subject.name || "";
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).text;
 
         if (truncated) {

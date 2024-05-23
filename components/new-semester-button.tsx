@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { prepareDataForExport } from "@/lib/services/export-service";
 import { exportToJSONFile } from "@/lib/services/notAsyncLogic";
 import {
@@ -32,7 +33,6 @@ import {
 } from "@/lib/services/user-service";
 import { CalendarPlus } from "lucide-react";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 
 export const NewSemesterButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -40,6 +40,10 @@ export const NewSemesterButton = () => {
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
   const [exportData, setExportData] = useState<boolean>(true);
   const categoryState = useCategory();
+
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
 
   const setKeepSubjects = (value: boolean) => {
     if (!value) setKeepGradesState(false);

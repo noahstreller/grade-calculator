@@ -3,12 +3,12 @@ import { usePreferences } from "@/components/preferences-provider";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
   Card,
@@ -21,13 +21,17 @@ import { CardBoard } from "../ui/cardboard";
 
 function RequiredGradesBody({
   averageData,
-  showPassing
+  showPassing,
 }: {
   averageData: AverageWithSubject[];
   showPassing: boolean;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences;
+
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
 
   const getRequiredGradeToPass = (
     average: AverageWithSubject
@@ -41,11 +45,10 @@ function RequiredGradesBody({
     let overflowCounts = 0;
     while (result > max || result < min) {
       count++;
-      if (result > max){
+      if (result > max) {
         sum += max;
         overflowCounts++;
-      }
-      else {
+      } else {
         sum += min;
         overflowCounts--;
       }
@@ -54,32 +57,33 @@ function RequiredGradesBody({
     return { result, overflowCounts };
   };
 
-  const getGradeOverflowString = (overflowCounts: number ) => {
+  const getGradeOverflowString = (overflowCounts: number) => {
     let result = "";
-    if(overflowCounts < 0){
-      if(overflowCounts < -10) return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
+    if (overflowCounts < 0) {
+      if (overflowCounts < -10)
+        return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
       for (let i = 0; i > overflowCounts; i--) {
         result += ` + ${preferences?.minimumGrade}`;
       }
       return result;
     }
 
-    if(overflowCounts > 10) return ` + ${overflowCounts} × ${preferences?.maximumGrade}`;
+    if (overflowCounts > 10)
+      return ` + ${overflowCounts} × ${preferences?.maximumGrade}`;
     for (let i = 0; i < overflowCounts; i++) {
       result += ` + ${preferences?.maximumGrade}`;
     }
     return result;
   };
 
-  const truncateForPage = (subject:string | null ): string => {
-    if(subject === null) return "";
+  const truncateForPage = (subject: string | null): string => {
+    if (subject === null) return "";
     return truncateText(subject, 20).text;
-  }
+  };
 
   const [chunkPairs, setChunkPairs] = useState<Array<any>>([]);
 
   useEffect(() => {
-
     const chunkIntoPieces = (data: Array<any>, amount: number = 2) => {
       let filteredData = data.filter((average) => shouldBeShown(average));
       let result = [];
@@ -94,7 +98,7 @@ function RequiredGradesBody({
         (average.average?.passing === false || showPassing) && average.average
       );
     };
-    
+
     setChunkPairs([...chunkIntoPieces(averageData, isMobile ? 1 : 2)]);
   }, [averageData, showPassing]);
 
