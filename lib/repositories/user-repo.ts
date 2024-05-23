@@ -86,9 +86,11 @@ export async function getRefreshTokenFromDb(
   userId: string
 ): Promise<string | Empty> {
   const result = await db
-    .select()
+    .select({ token: accounts.refresh_token })
     .from(accounts)
     .where(eq(accounts.userId, userId))
     .execute();
-  return result[0].refresh_token;
+
+  if (result.length === 0) return null;
+  return result[0].token;
 }
