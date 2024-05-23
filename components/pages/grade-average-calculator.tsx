@@ -127,10 +127,14 @@ export default function GradeAverageCalculator() {
   }, [session, categoryState.category]);
 
   useEffect(() => {
-    if (!categoryState.loading && authLoaded) {
+    if (
+      !categoryState.loading &&
+      authLoaded &&
+      categoryState.categories.length > 0
+    ) {
       setAllLoaded(true);
     } else setAllLoaded(false);
-  }, [categoryState.loading, authLoaded]);
+  }, [categoryState, authLoaded]);
 
   if (session.status === "unauthenticated")
     return (
