@@ -31,8 +31,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Grade, GradeWithSubject } from "@/db/schema";
+import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
-import { isMobileDevice } from "@/lib/utils";
 import { Bird, FilterX } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
@@ -53,7 +53,11 @@ export function AllGrades({
 
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const isDesktop = !isMobileDevice();
+
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
+
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
@@ -62,20 +66,20 @@ export function AllGrades({
   });
 
   const getGradesForStatus = (status: PassingStatus | null) => {
-    if(status?.value === "passing") {
-      return data.filter(
-        (grade) => doesGradePass(grade.grades.value!, preferences)
+    if (status?.value === "passing") {
+      return data.filter((grade) =>
+        doesGradePass(grade.grades.value!, preferences)
       );
     }
 
-    if(status?.value === "failing") {
+    if (status?.value === "failing") {
       return data.filter(
         (grade) => !doesGradePass(grade.grades.value!, preferences)
       );
     }
-    
+
     return data;
-  }
+  };
 
   if (isDesktop) {
     return (

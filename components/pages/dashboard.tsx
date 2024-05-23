@@ -5,11 +5,22 @@ import FailingGradesCard from "@/components/cards/failingGradesCard/failingGrade
 import { GradeOverview } from "@/components/cards/grade-overview";
 import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { RequiredGrades } from "@/components/cards/required-grades";
+import { useCategory } from "@/components/category-provider";
 import { LandingPage } from "@/components/pages/landing-page";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
-import { getAllGradeAveragesWithSubject, getAllGradesWithSubject } from "@/lib/services/grade-service";
+import {
+  getAllGradeAveragesWithSubject,
+  getAllGradesWithSubject,
+} from "@/lib/services/grade-service";
 import { AverageWithSubject } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -21,6 +32,7 @@ export default function Dashboard() {
   const [passingData, setPassingData] = useState<AverageWithSubject[]>([]);
   const [loaded, setLoaded] = useState(false);
   const session = useSession();
+  const categoryState = useCategory();
 
   const refreshGrades = async () => {
     let grades = catchProblem(await getAllGradesWithSubject());
@@ -99,22 +111,24 @@ export default function Dashboard() {
       });
     }
 
-    if (session.status === "authenticated"){
-      try {
-        refreshAll();
-      } finally {
-        setLoaded(true);
-      }
-
-    }
-
+    if (session.status === "authenticated") refreshAll();
   }, [session]);
+
+  useEffect(() => {
+    if (
+      session.status === "authenticated" &&
+      categoryState.categories.length > 0
+    ) {
+      setLoaded(true);
+    }
+  }, [session, categoryState.categories]);
 
   return session.status === "unauthenticated" ? (
     <LandingPage />
   ) : loaded ? (
     <>
       <CardBoard className="flex xl:hidden">
+        <DashboardHeaderCard />
         <RequiredGrades averageData={averageData} />
         <AverageOverview data={gradeData} averageData={averageData} />
         <GradeOverview
@@ -132,6 +146,7 @@ export default function Dashboard() {
           <FailingGradesCard data={failingData} />
         </CardBoard>
         <CardBoard>
+          <DashboardHeaderCard />
           <GradeOverview
             data={gradeData}
             passingData={passingData}
@@ -165,5 +180,51 @@ export default function Dashboard() {
         </CardBoard>
       </CardBoard>
     </>
+  );
+}
+
+function DashboardHeaderCard() {
+  const categoryState = useCategory();
+  const categoryCount = categoryState.categories.length;
+  const categories = categoryState.categories;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Dashboard</CardTitle>
+        <CardDescription>
+          The dashboard helps you get an overview of your averages from all your
+          categories.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {categoryCount < 10 ? (
+          <>
+            Showing <b>{categoryCount}</b> categories
+            <ul className="list-disc">
+              {categories
+                .sort((a, b) => a.name!.localeCompare(b.name!))
+                .map((category) => (
+                  <li className="list-inside" key={category.id}>
+                    {category.name}
+                  </li>
+                ))}
+            </ul>
+            {categoryCount >= 5 ? (
+              <p className="text-sm text-gray-500 mt-1">
+                Data storage does not grow on trees.
+              </p>
+            ) : null}
+          </>
+        ) : (
+          <>
+            You currently have <b>{categoryCount}</b> categories.
+            <p className="text-sm text-gray-500 mt-1">
+              Data storage does not grow on trees.
+            </p>
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 }
