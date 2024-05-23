@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +13,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { clearUserData } from "@/lib/services/user-service";
-import { getInitials, truncateEmail, truncateText } from "@/lib/utils";
+import {
+  getInitials,
+  getInitialsFromEmail,
+  truncateEmail,
+  truncateText,
+} from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -26,7 +31,7 @@ export function AccountSection() {
   const clearData = () => {
     clearUserData();
     signOut();
-  }
+  };
 
   useEffect(() => {
     setDisabled(true);
@@ -35,17 +40,21 @@ export function AccountSection() {
 
   return (
     <div className="py-5 flex flex-col gap-3">
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 items-center">
         <Avatar>
           <AvatarImage src={session.data?.user.image || ""} />
           <AvatarFallback>
-            {getInitials(session.data?.user.name || "User")}
+            {session.data?.user.name
+              ? getInitials(session.data?.user.name)
+              : getInitialsFromEmail(session.data?.user.email || "")}
           </AvatarFallback>
         </Avatar>
         <div>
-          <h2 className="text-lg font-semibold">
-            {truncateText(session.data?.user.name || "User", 30).text}
-          </h2>
+          {session.data?.user.name && (
+            <h2 className="text-lg font-semibold">
+              {truncateText(session.data?.user.name, 30).text}
+            </h2>
+          )}
           <p className="text-gray-500">
             {truncateEmail(session.data?.user.email || "", 15)}
           </p>
