@@ -192,8 +192,8 @@ export function RequiredGrades({
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
   const getSimulatedWeight = () => {
-    if (!simulatedWeight || simulatedWeight <= 0)
-      return { simulatedWeight: 1, valid: false };
+    if (!simulatedWeight) return { simulatedWeight: 1, valid: true };
+    if (simulatedWeight < 0) return { simulatedWeight: 1, valid: false };
     return { simulatedWeight, valid: true };
   };
 
@@ -226,8 +226,7 @@ export function RequiredGrades({
             value={simulatedWeight || ""}
             type="number"
             onChange={(e) => {
-              console.log("changed");
-              setSimulatedWeight(e.target.valueAsNumber);
+              setSimulatedWeight(Number(e.target.value));
             }}
             placeholder="Simulated weight"
             className="w-[250px]"
