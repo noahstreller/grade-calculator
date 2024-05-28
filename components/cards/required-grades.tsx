@@ -221,7 +221,7 @@ export function RequiredGrades({
           If you know the weight of the next exam, you can apply that weight to
           the required grades.
         </CardDescription>
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-3 max-w-full">
           <Input
             value={simulatedWeight || ""}
             type="number"
@@ -229,15 +229,16 @@ export function RequiredGrades({
               setSimulatedWeight(Number(e.target.value));
             }}
             placeholder="Simulated weight"
-            className="w-[250px]"
+            className=" flex-shrink-1"
           />
           <Button
             variant="outline"
+            className="flex-shrink-0"
             onClick={() => {
               setSimulatedWeight(undefined);
             }}
           >
-            Clear
+            Reset
           </Button>
         </div>
         {!getSimulatedWeight().valid && (
