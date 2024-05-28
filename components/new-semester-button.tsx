@@ -61,7 +61,7 @@ export const NewSemesterButton = () => {
         categoryState.category?.name ?? "",
         categoryState.category?.id
       );
-      if (exportData) exportToJSONFile(data);
+      if (exportData) exportToJSONFile(data, categoryState.category?.name);
       if (!keepSubjects) await clearUserSubjectsGrades();
       if (!keepGrades && keepSubjects) await clearUserGrades();
     } finally {

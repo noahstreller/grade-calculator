@@ -69,7 +69,7 @@ export default function HeaderComponent() {
         </h1>
         <h1
           className={
-            "inline-block sm:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
+            "hidden xs:inline-block  sm:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
           }
         >
           Grades

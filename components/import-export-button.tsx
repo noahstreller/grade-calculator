@@ -102,7 +102,8 @@ export function ImportExportButton() {
                       await prepareDataForExport(
                         categoryState.category?.name ?? "",
                         categoryState.category?.id
-                      )
+                      ),
+                      categoryState.category?.name
                     )
                   }
                 >

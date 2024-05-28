@@ -55,14 +55,15 @@ export function exportToJSONFile(
 ) {
   const json = JSON.stringify(data);
   const timestamp = new Date();
-  const readableTimestamp = `${timestamp.getDate()}-${timestamp.getMonth()}-${timestamp.getFullYear()}-${secondsSinceMidnight()}`;
+  const readableTimestamp = `${timestamp.getDate()}-${timestamp.getMonth()}-${timestamp.getFullYear()}_${secondsSinceMidnight()}`;
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename
-    ? `${filename}.json`
-    : `grades-${readableTimestamp}.json`;
+  a.download =
+    filename && filename !== "Default"
+      ? `${filename}_${readableTimestamp}.json`
+      : `grades_${readableTimestamp}.json`;
   a.click();
 }
 
