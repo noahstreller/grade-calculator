@@ -2,11 +2,25 @@ import { ColoredGrade } from "@/components/colored-grade";
 import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { GradeWithSubject } from "@/db/schema";
-import { doesGradePass, getSubjectAverages, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
+import {
+  doesGradePass,
+  getSubjectAverages,
+  getTotalGradeAverages,
+} from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
@@ -24,9 +38,11 @@ import {
 export function AverageOverview({
   data,
   averageData,
+  className,
 }: {
   data: GradeWithSubject[];
   averageData: AverageWithSubject[];
+  className?: string;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -38,6 +54,9 @@ export function AverageOverview({
   let averageSubject = (gradeAverage: AverageWithSubject) => {
     return gradeAverage.subject.name!;
   };
+
+  console.log("averageData", averageData);
+  console.log("data", data);
 
   const subjectAverages = getSubjectAverages(averageData);
   const gradeAverages = getTotalGradeAverages(data);
@@ -89,7 +108,7 @@ export function AverageOverview({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{t("subject-overview.title")}</CardTitle>
         <CardDescription>{t("subject-overview.description")}</CardDescription>

@@ -49,10 +49,12 @@ export function GradeOverview({
   data,
   passingData,
   failingData,
+  className,
 }: {
   data: GradeWithSubject[];
   passingData: AverageWithSubject[];
   failingData: AverageWithSubject[];
+  className?: string;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -178,7 +180,7 @@ export function GradeOverview({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{t("overview.title")}</CardTitle>
         <CardDescription>{t("overview.description")}</CardDescription>
@@ -233,7 +235,7 @@ export function GradeOverview({
                     dy={
                       doesGradePass(
                         getTotalGradeAverages(getGraphData()),
-                        preferences,
+                        preferences
                       )
                         ? 10
                         : -10
@@ -255,7 +257,7 @@ export function GradeOverview({
                     dy={
                       doesGradePass(
                         getTotalGradeAverages(getGraphData()),
-                        preferences,
+                        preferences
                       )
                         ? isOverNinetyPercent()
                           ? 10
@@ -288,7 +290,7 @@ export function GradeOverview({
               role="combobox"
               className={cn(
                 "w-full justify-between",
-                !subject && "text-muted-foreground",
+                !subject && "text-muted-foreground"
               )}
             >
               {subject ? (
@@ -315,7 +317,7 @@ export function GradeOverview({
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        null === subject ? "opacity-100" : "opacity-0",
+                        null === subject ? "opacity-100" : "opacity-0"
                       )}
                     />
                     All Subjects
@@ -335,7 +337,7 @@ export function GradeOverview({
                           "mr-2 h-4 w-4",
                           mappedSubject === subject
                             ? "opacity-100"
-                            : "opacity-0",
+                            : "opacity-0"
                         )}
                       />
                       {truncateText(mappedSubject, 35).text}
@@ -354,12 +356,12 @@ export function GradeOverview({
               <CardHeader>{t("subjects.passing-subjects")}</CardHeader>
               <CardContent>
                 {passingData.filter(
-                  (gradeAverage) => gradeAverage.average?.passing,
+                  (gradeAverage) => gradeAverage.average?.passing
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {
                       passingData.filter(
-                        (gradeAverage) => gradeAverage.average?.passing,
+                        (gradeAverage) => gradeAverage.average?.passing
                       ).length
                     }
                   </b>
@@ -374,12 +376,12 @@ export function GradeOverview({
               <CardHeader>{t("subjects.failing-subjects")}</CardHeader>
               <CardContent>
                 {failingData.filter(
-                  (gradeAverage) => !gradeAverage.average?.passing,
+                  (gradeAverage) => !gradeAverage.average?.passing
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
                     {
                       failingData.filter(
-                        (gradeAverage) => !gradeAverage.average?.passing,
+                        (gradeAverage) => !gradeAverage.average?.passing
                       ).length
                     }
                   </b>
@@ -396,12 +398,12 @@ export function GradeOverview({
               <CardHeader>{t("grades.passing-grades")}</CardHeader>
               <CardContent>
                 {data.filter((grade) =>
-                  doesGradePass(grade.grades.value!, preferences),
+                  doesGradePass(grade.grades.value!, preferences)
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {
                       data.filter((grade) =>
-                        doesGradePass(grade.grades.value!, preferences),
+                        doesGradePass(grade.grades.value!, preferences)
                       ).length
                     }
                   </b>
@@ -416,13 +418,13 @@ export function GradeOverview({
               <CardHeader>{t("grades.failing-grades")}</CardHeader>
               <CardContent>
                 {data.filter(
-                  (grade) => !doesGradePass(grade.grades.value!, preferences),
+                  (grade) => !doesGradePass(grade.grades.value!, preferences)
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
                     {
                       data.filter(
                         (grade) =>
-                          !doesGradePass(grade.grades.value!, preferences),
+                          !doesGradePass(grade.grades.value!, preferences)
                       ).length
                     }
                   </b>

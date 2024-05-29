@@ -11,13 +11,22 @@ type Card = {
 
 export const Highlight = ({
   colorName = "emerald",
-  children
+  children,
 }: {
-  colorName?: "emerald" | "red" | "green" | "blue" | "yellow" | "purple" | "pink" | "orange" | "brown";
+  colorName?:
+    | "emerald"
+    | "red"
+    | "green"
+    | "blue"
+    | "yellow"
+    | "purple"
+    | "pink"
+    | "orange"
+    | "brown";
   children: React.ReactNode;
 }) => {
-  // safelist: 
-  // emerald: bg-emerald-100 text-emerald-700 dark:bg-emerald-700/[0.2] dark:text-emerald-500 
+  // safelist:
+  // emerald: bg-emerald-100 text-emerald-700 dark:bg-emerald-700/[0.2] dark:text-emerald-500
   // basic colors
   // red: bg-red-100 text-red-700 dark:bg-red-700/[0.2] dark:text-red-500
   // green: bg-green-100 text-green-700 dark:bg-green-700/[0.2] dark:text-green-500
@@ -29,13 +38,7 @@ export const Highlight = ({
   // brown: bg-brown-100 text-brown-700 dark:bg-brown-700/[0.2] dark:text-brown-500
 
   const className = `font-bold bg-${colorName}-100 text-${colorName}-700 dark:bg-${colorName}-700/[0.2] dark:text-${colorName}-500 px-1 py-0.5`;
-  return (
-    <span
-      className={className}
-    >
-      {children}
-    </span>
-  );
+  return <span className={className}>{children}</span>;
 };
 
 export const CardStack = ({
@@ -52,6 +55,7 @@ export const CardStack = ({
   const [cards, setCards] = useState<Card[]>(items);
   const interval = useRef<any>();
   const [isFlipping, setIsFlipping] = useState(true);
+  const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
     return () => clearInterval(interval.current);
@@ -74,7 +78,7 @@ export const CardStack = ({
       newArray.unshift(newArray.pop()!); // move the last element to the front
       return newArray;
     });
-  }
+  };
 
   const skip = () => {
     flip();
@@ -82,7 +86,12 @@ export const CardStack = ({
   };
 
   return (
-    <div className="relative h-80 w-full 2xl:h-60 md:w-full select-none" onClick={skip}>
+    <div
+      className="relative h-80 w-full 2xl:h-60 md:w-full select-none"
+      onClick={skip}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
       {cards.map((card, index) => {
         return (
           <motion.div
@@ -92,7 +101,7 @@ export const CardStack = ({
               transformOrigin: "top center",
             }}
             animate={{
-              top: index * -CARD_OFFSET,
+              top: hovering ? index * -CARD_OFFSET : 0,
               scale: 1 - index * SCALE_FACTOR, // decrease scale for cards that are behind
               zIndex: cards.length - index, //  decrease z-index for the cards that are behind
             }}
