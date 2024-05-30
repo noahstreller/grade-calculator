@@ -39,10 +39,12 @@ export function AverageOverview({
   data,
   averageData,
   className,
+  animate = true,
 }: {
   data: GradeWithSubject[];
   averageData: AverageWithSubject[];
   className?: string;
+  animate?: boolean;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -139,6 +141,7 @@ export function AverageOverview({
                 dataKey={subjectAverage}
                 className="fill-foreground stroke-foreground stroke-2"
                 fillOpacity={0.6}
+                isAnimationActive={animate}
               />
               <Tooltip content={<CustomTooltip />} />
             </RadarChart>

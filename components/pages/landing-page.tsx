@@ -1,6 +1,4 @@
 "use client";
-import { AverageOverview } from "@/components/cards/average-overview";
-import { GradeOverview } from "@/components/cards/grade-overview";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,7 +14,6 @@ import { Tabs } from "@/components/ui/tabs";
 import { GradeWithSubject } from "@/db/schema";
 import { AverageWithSubject } from "@/types/types";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { motion } from "framer-motion";
 import { Globe, Info, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -25,8 +22,6 @@ export function LandingPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const [hovering, setHovering] = useState(false);
 
   const TABS = [
     {
@@ -37,46 +32,7 @@ export function LandingPage() {
         </div>
       ),
       value: "start",
-      content: (
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Grade Calculator</CardTitle>
-            <CardDescription>
-              Some boring additional information about this project.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CardBoard row>
-              <AverageOverview
-                data={MOCKDATA.data}
-                averageData={MOCKDATA.averageData}
-              />
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get started now</CardTitle>
-                </CardHeader>
-              </Card>
-              <motion.div
-                style={{
-                  opacity: hovering ? 1 : 0.1,
-                }}
-                onMouseEnter={() => {
-                  setHovering(true);
-                }}
-                onMouseLeave={() => {
-                  setHovering(false);
-                }}
-              >
-                <GradeOverview
-                  data={MOCKDATA.data}
-                  failingData={MOCKDATA.failingData(MOCKDATA.averageData)}
-                  passingData={MOCKDATA.passingData(MOCKDATA.averageData)}
-                />
-              </motion.div>
-            </CardBoard>
-          </CardContent>
-        </Card>
-      ),
+      content: <GettingStartedTab />,
     },
     {
       title: (
@@ -640,3 +596,47 @@ const MOCKDATA: {
   passingData: (data: AverageWithSubject[]) =>
     data.filter((average: AverageWithSubject) => average.average?.passing),
 };
+
+function GettingStartedTab() {
+  const [hovering, setHovering] = useState<string | null>(null);
+  return (
+    <Card className="w-full h-full">
+      <CardHeader>
+        <CardTitle>Grade Calculator</CardTitle>
+        <CardDescription>
+          Some boring additional information about this project.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <CardBoard row>
+          <Card>
+            <CardHeader>
+              <CardTitle>Get started now</CardTitle>
+            </CardHeader>
+          </Card>
+        </CardBoard>
+      </CardContent>
+    </Card>
+  );
+}
+
+{
+  /* <RequiredGrades
+  className="touch-none"
+  averageData={MOCKDATA.averageData}
+  showPassingGrades
+/>;
+<GradeOverview
+  className="touch-none"
+  data={MOCKDATA.data}
+  failingData={MOCKDATA.failingData(MOCKDATA.averageData)}
+  passingData={MOCKDATA.passingData(MOCKDATA.averageData)}
+  animate={false}
+/>;
+<AverageOverview
+  className="touch-none"
+  data={MOCKDATA.data}
+  averageData={MOCKDATA.averageData}
+  animate={false}
+/>; */
+}

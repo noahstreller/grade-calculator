@@ -184,11 +184,15 @@ function RequiredGradesBody({
 
 export function RequiredGrades({
   averageData,
+  className = "",
+  showPassingGrades = false,
 }: {
   averageData: AverageWithSubject[];
+  className?: string;
+  showPassingGrades?: boolean;
 }) {
   const { t } = useTranslation("common");
-  const [showPassing, setShowPassing] = useState<boolean>(false);
+  const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
   const getSimulatedWeight = () => {
@@ -198,7 +202,7 @@ export function RequiredGrades({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
           <CardTitle>{t("required-grades.title")}</CardTitle>

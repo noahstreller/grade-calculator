@@ -50,11 +50,13 @@ export function GradeOverview({
   passingData,
   failingData,
   className,
+  animate = true,
 }: {
   data: GradeWithSubject[];
   passingData: AverageWithSubject[];
   failingData: AverageWithSubject[];
   className?: string;
+  animate?: boolean;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -210,6 +212,7 @@ export function GradeOverview({
                 dataKey={getGrade}
                 stroke="#000000"
                 className="dark:invert"
+                isAnimationActive={animate}
                 z={10}
               />
               <Tooltip content={<CustomTooltip />} />
