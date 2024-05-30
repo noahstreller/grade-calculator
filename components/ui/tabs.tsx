@@ -37,7 +37,7 @@ export const Tabs = ({
   const [hovering, setHovering] = useState(false);
 
   return (
-    <>
+    <div className="h-fit">
       <div className="flex flex-row items-center justify-center [perspective:1000px]">
         <div
           className={cn(
@@ -53,7 +53,7 @@ export const Tabs = ({
               }}
               onMouseEnter={() => setHovering(true)}
               onMouseLeave={() => setHovering(false)}
-              className={cn("relative px-4 py-1.5 rounded-full", tabClassName)}
+              className={cn("px-4 py-1.5 rounded-full", tabClassName)}
               style={{
                 transformStyle: "preserve-3d",
               }}
@@ -81,9 +81,9 @@ export const Tabs = ({
         active={active}
         key={active.value}
         hovering={hovering}
-        className={cn("mt-12", contentClassName)}
+        className={cn("mt-12", contentClassName, "h-fit")}
       />
-    </>
+    </div>
   );
 };
 
@@ -98,25 +98,23 @@ export const FadeInDiv = ({
   active: Tab;
   hovering?: boolean;
 }) => {
-  const isActive = (tab: Tab) => {
+  const isActive = (tab: Tab): boolean => {
     return tab.value === tabs[0].value;
   };
   return (
-    <div className="relative w-full h-full">
+    <div className="w-full h-fit mt-4">
       {tabs.map((tab, idx) => (
         <motion.div
           key={tab.value}
           layoutId={tab.value}
           style={{
-            scale: idx ? 0.97 : 1,
-            top: hovering ? idx * -25 : 0,
             zIndex: -idx,
-            opacity: idx ? 0.5 : 1,
           }}
           animate={{
-            y: isActive(tab) ? [0, 0, 0] : 0,
+            opacity: isActive(tab) ? 1 : 0,
+            maxHeight: isActive(tab) ? "100%" : 0,
           }}
-          className={cn("w-full h-full absolute top-0 left-0", className)}
+          className={cn("w-full h-full", className)}
         >
           {tab.content}
         </motion.div>

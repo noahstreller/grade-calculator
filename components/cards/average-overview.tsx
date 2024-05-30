@@ -57,9 +57,6 @@ export function AverageOverview({
     return gradeAverage.subject.name!;
   };
 
-  console.log("averageData", averageData);
-  console.log("data", data);
-
   const subjectAverages = getSubjectAverages(averageData);
   const gradeAverages = getTotalGradeAverages(data);
 

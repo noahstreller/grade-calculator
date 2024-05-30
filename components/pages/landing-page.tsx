@@ -1,4 +1,7 @@
 "use client";
+import { AverageOverview } from "@/components/cards/average-overview";
+import { GradeOverview } from "@/components/cards/grade-overview";
+import { RequiredGrades } from "@/components/cards/required-grades";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +17,7 @@ import { Tabs } from "@/components/ui/tabs";
 import { GradeWithSubject } from "@/db/schema";
 import { AverageWithSubject } from "@/types/types";
 import { SiGithub } from "@icons-pack/react-simple-icons";
+import { motion } from "framer-motion";
 import { Globe, Info, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -290,7 +294,7 @@ export function LandingPage() {
     },
   ];
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-fit">
       <div className="[perspective:1000px] h-full relative b flex flex-col mx-auto w-11/12">
         <Tabs tabs={TABS} />
       </div>
@@ -598,9 +602,8 @@ const MOCKDATA: {
 };
 
 function GettingStartedTab() {
-  const [hovering, setHovering] = useState<string | null>(null);
   return (
-    <Card className="w-full h-full">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Grade Calculator</CardTitle>
         <CardDescription>
@@ -609,6 +612,7 @@ function GettingStartedTab() {
       </CardHeader>
       <CardContent>
         <CardBoard row>
+          <Demos />
           <Card>
             <CardHeader>
               <CardTitle>Get started now</CardTitle>
@@ -620,23 +624,88 @@ function GettingStartedTab() {
   );
 }
 
-{
-  /* <RequiredGrades
-  className="touch-none"
-  averageData={MOCKDATA.averageData}
-  showPassingGrades
-/>;
-<GradeOverview
-  className="touch-none"
-  data={MOCKDATA.data}
-  failingData={MOCKDATA.failingData(MOCKDATA.averageData)}
-  passingData={MOCKDATA.passingData(MOCKDATA.averageData)}
-  animate={false}
-/>;
-<AverageOverview
-  className="touch-none"
-  data={MOCKDATA.data}
-  averageData={MOCKDATA.averageData}
-  animate={false}
-/>; */
-}
+type DemoType = {
+  title: string;
+  value: string;
+};
+
+const Demos = () => {
+  const demos: DemoType[] = [
+    {
+      title: "Grade Overview",
+      value: "grade-overview",
+    },
+    {
+      title: "Average Overview",
+      value: "average-overview",
+    },
+    {
+      title: "Required Grades",
+      value: "required-grades",
+    },
+  ];
+
+  const [selected, setSelected] = useState<string>("grade-overview");
+
+  return (
+    <motion.div layout>
+      <Card>
+        <CardHeader>
+          <CardTitle>Grade Calculator Demos</CardTitle>
+          <CardDescription>
+            Some boring additional information about this project.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <DemoSwitcher demos={demos} setSelected={setSelected} />
+          {selected === "required-grades" && (
+            <RequiredGrades
+              className="touch-none"
+              averageData={MOCKDATA.averageData}
+              showPassingGrades
+            />
+          )}
+          {selected === "grade-overview" && (
+            <GradeOverview
+              className="touch-none"
+              data={MOCKDATA.data}
+              failingData={MOCKDATA.failingData(MOCKDATA.averageData)}
+              passingData={MOCKDATA.passingData(MOCKDATA.averageData)}
+              animate={false}
+            />
+          )}
+          {selected === "average-overview" && (
+            <AverageOverview
+              className="touch-none"
+              data={MOCKDATA.data}
+              averageData={MOCKDATA.averageData}
+              animate={false}
+            />
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+};
+
+const DemoSwitcher = ({
+  demos,
+  setSelected,
+}: {
+  demos: DemoType[];
+  setSelected: Function;
+}) => {
+  return (
+    <div className="flex flex-row gap-2 justify-center">
+      {demos.map((demo) => (
+        <Button
+          key={demo.value}
+          className="shadow-md"
+          onClick={() => setSelected(demo.value)}
+        >
+          {demo.title}
+        </Button>
+      ))}
+    </div>
+  );
+};
