@@ -2,6 +2,7 @@ import Providers from "@/app/providers";
 import { Footer } from "@/components/footer";
 import HeaderComponent from "@/components/header";
 import { LoadingScreen } from "@/components/loadingscreen";
+import { Maintenance, MaintenanceType } from "@/components/pages/maintenance";
 import { ToasterWrapper } from "@/components/toaster-wrapper";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
@@ -96,6 +97,10 @@ export const viewport: Viewport = {
   themeColor: "#030712",
 };
 
+const maintenance: MaintenanceType = {
+  maintenance: false,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -104,17 +109,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className)}>
-        <Providers>
-          <HeaderComponent />
-          <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
-            <main className="min-h-screen w-full flex flex-col items-center">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <LoadingScreen />
-          <ToasterWrapper />
-        </Providers>
+        {maintenance.maintenance ? (
+          <Maintenance maintenance={maintenance} />
+        ) : (
+          <Providers>
+            <HeaderComponent />
+            <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
+              <main className="min-h-screen w-full flex flex-col items-center">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <LoadingScreen />
+            <ToasterWrapper />
+          </Providers>
+        )}
         <SpeedInsights />
         <Analytics />
       </body>
