@@ -103,7 +103,6 @@ export async function importData(
   const subjectWithIds = await Promise.all(
     uniqueSubjects.map(async (subjectName) => {
       const subject = { name: subjectName, category_fk: categoryId };
-      console.log(subject);
       if (purge) {
         let result = catchProblem(await addSubject(subject));
         return { name: subject.name, id: result };
@@ -121,7 +120,6 @@ export async function importData(
     grade.grades.subject_fk = resultingSubject;
     grade.grades.category_fk = categoryId;
     grade.grades.date = new Date(grade.grades.date || Date.now());
-    console.log(grade.grades);
     let result = catchProblem(await addGrade(grade.grades));
     return result;
   });

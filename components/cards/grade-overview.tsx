@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { GradeWithSubject } from "@/db/schema";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import {
   doesGradePass,
   getTotalGradeAverages,
@@ -33,7 +34,6 @@ import { AverageWithSubject } from "@/types/types";
 import { Bird, Check, ChevronsUpDown, FilterX } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 import {
   Label,
   Line,
@@ -49,10 +49,14 @@ export function GradeOverview({
   data,
   passingData,
   failingData,
+  className,
+  animate = true,
 }: {
   data: GradeWithSubject[];
   passingData: AverageWithSubject[];
   failingData: AverageWithSubject[];
+  className?: string;
+  animate?: boolean;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -81,6 +85,8 @@ export function GradeOverview({
       (100 / preferences.maximumGrade!) * getTotalGradeAverages(data);
     return result > 90;
   };
+
+  const { isMobile } = useDevice();
 
   const CustomTooltip = ({
     active,
@@ -178,7 +184,7 @@ export function GradeOverview({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{t("overview.title")}</CardTitle>
         <CardDescription>{t("overview.description")}</CardDescription>
@@ -208,6 +214,7 @@ export function GradeOverview({
                 dataKey={getGrade}
                 stroke="#000000"
                 className="dark:invert"
+                isAnimationActive={animate}
                 z={10}
               />
               <Tooltip content={<CustomTooltip />} />
@@ -227,13 +234,13 @@ export function GradeOverview({
                 y={preferences.passingGrade!}
                 label={
                   <Label
-                    value="Passing Grade"
+                    value={isMobile ? "Pass" : "Passing Grade"}
                     dx={isMobile ? 50 : 100}
                     opacity={0.8}
                     dy={
                       doesGradePass(
                         getTotalGradeAverages(getGraphData()),
-                        preferences,
+                        preferences
                       )
                         ? 10
                         : -10
@@ -248,14 +255,14 @@ export function GradeOverview({
                 y={getTotalGradeAverages(getGraphData())}
                 label={
                   <Label
-                    value="Your Average"
+                    value={isMobile ? "You" : "Your Average"}
                     opacity={0.6}
                     dx={isMobile ? -50 : -100}
                     z={0}
                     dy={
                       doesGradePass(
                         getTotalGradeAverages(getGraphData()),
-                        preferences,
+                        preferences
                       )
                         ? isOverNinetyPercent()
                           ? 10
@@ -288,7 +295,7 @@ export function GradeOverview({
               role="combobox"
               className={cn(
                 "w-full justify-between",
-                !subject && "text-muted-foreground",
+                !subject && "text-muted-foreground"
               )}
             >
               {subject ? (
@@ -315,7 +322,7 @@ export function GradeOverview({
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        null === subject ? "opacity-100" : "opacity-0",
+                        null === subject ? "opacity-100" : "opacity-0"
                       )}
                     />
                     All Subjects
@@ -335,7 +342,7 @@ export function GradeOverview({
                           "mr-2 h-4 w-4",
                           mappedSubject === subject
                             ? "opacity-100"
-                            : "opacity-0",
+                            : "opacity-0"
                         )}
                       />
                       {truncateText(mappedSubject, 35).text}
@@ -354,12 +361,12 @@ export function GradeOverview({
               <CardHeader>{t("subjects.passing-subjects")}</CardHeader>
               <CardContent>
                 {passingData.filter(
-                  (gradeAverage) => gradeAverage.average?.passing,
+                  (gradeAverage) => gradeAverage.average?.passing
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {
                       passingData.filter(
-                        (gradeAverage) => gradeAverage.average?.passing,
+                        (gradeAverage) => gradeAverage.average?.passing
                       ).length
                     }
                   </b>
@@ -374,12 +381,12 @@ export function GradeOverview({
               <CardHeader>{t("subjects.failing-subjects")}</CardHeader>
               <CardContent>
                 {failingData.filter(
-                  (gradeAverage) => !gradeAverage.average?.passing,
+                  (gradeAverage) => !gradeAverage.average?.passing
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
                     {
                       failingData.filter(
-                        (gradeAverage) => !gradeAverage.average?.passing,
+                        (gradeAverage) => !gradeAverage.average?.passing
                       ).length
                     }
                   </b>
@@ -396,12 +403,12 @@ export function GradeOverview({
               <CardHeader>{t("grades.passing-grades")}</CardHeader>
               <CardContent>
                 {data.filter((grade) =>
-                  doesGradePass(grade.grades.value!, preferences),
+                  doesGradePass(grade.grades.value!, preferences)
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-green-400">
                     {
                       data.filter((grade) =>
-                        doesGradePass(grade.grades.value!, preferences),
+                        doesGradePass(grade.grades.value!, preferences)
                       ).length
                     }
                   </b>
@@ -416,13 +423,13 @@ export function GradeOverview({
               <CardHeader>{t("grades.failing-grades")}</CardHeader>
               <CardContent>
                 {data.filter(
-                  (grade) => !doesGradePass(grade.grades.value!, preferences),
+                  (grade) => !doesGradePass(grade.grades.value!, preferences)
                 ).length > 0 ? (
                   <b className="block text-5xl text-center items-center self-center text-red-400">
                     {
                       data.filter(
                         (grade) =>
-                          !doesGradePass(grade.grades.value!, preferences),
+                          !doesGradePass(grade.grades.value!, preferences)
                       ).length
                     }
                   </b>
