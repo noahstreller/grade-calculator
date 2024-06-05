@@ -499,15 +499,15 @@ type DemoType = {
 const Demos = () => {
   const demos: DemoType[] = [
     {
-      title: "Grade Overview",
+      title: "Grades",
       value: "grade-overview",
     },
     {
-      title: "Average Overview",
+      title: "Averages",
       value: "average-overview",
     },
     {
-      title: "Required Grades",
+      title: "Calculator",
       value: "required-grades",
     },
   ];
