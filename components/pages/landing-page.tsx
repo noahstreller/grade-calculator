@@ -529,14 +529,14 @@ const Demos = () => {
         <motion.div layout>
           {selected === "required-grades" && (
             <RequiredGrades
-              className="touch-none"
+              className="select-none"
               averageData={MOCKDATA.averageData}
               showPassingGrades
             />
           )}
           {selected === "grade-overview" && (
             <GradeOverview
-              className="touch-none"
+              className="select-none"
               data={MOCKDATA.data}
               failingData={MOCKDATA.failingData(MOCKDATA.averageData)}
               passingData={MOCKDATA.passingData(MOCKDATA.averageData)}
@@ -545,7 +545,7 @@ const Demos = () => {
           )}
           {selected === "average-overview" && (
             <AverageOverview
-              className="touch-none"
+              className="select-none"
               data={MOCKDATA.data}
               averageData={MOCKDATA.averageData}
               animate={false}
