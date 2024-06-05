@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { GradeWithSubject } from "@/db/schema";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import {
   doesGradePass,
   getTotalGradeAverages,
@@ -33,7 +34,6 @@ import { AverageWithSubject } from "@/types/types";
 import { Bird, Check, ChevronsUpDown, FilterX } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 import {
   Label,
   Line,
@@ -85,6 +85,8 @@ export function GradeOverview({
       (100 / preferences.maximumGrade!) * getTotalGradeAverages(data);
     return result > 90;
   };
+
+  const { isMobile } = useDevice();
 
   const CustomTooltip = ({
     active,
@@ -232,7 +234,7 @@ export function GradeOverview({
                 y={preferences.passingGrade!}
                 label={
                   <Label
-                    value="Passing Grade"
+                    value={isMobile ? "Pass" : "Passing Grade"}
                     dx={isMobile ? 50 : 100}
                     opacity={0.8}
                     dy={
@@ -253,7 +255,7 @@ export function GradeOverview({
                 y={getTotalGradeAverages(getGraphData())}
                 label={
                   <Label
-                    value="Your Average"
+                    value={isMobile ? "You" : "Your Average"}
                     opacity={0.6}
                     dx={isMobile ? -50 : -100}
                     z={0}

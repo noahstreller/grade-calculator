@@ -108,11 +108,13 @@ export const FadeInDiv = ({
           key={tab.value}
           layoutId={tab.value}
           style={{
+            overflow: isActive(tab) ? "visible" : "auto",
             zIndex: -idx,
           }}
           animate={{
             opacity: isActive(tab) ? 1 : 0,
             maxHeight: isActive(tab) ? "100%" : 0,
+            height: isActive(tab) ? "100%" : 0,
           }}
           className={cn("w-full h-full", className)}
         >

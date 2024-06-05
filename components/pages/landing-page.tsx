@@ -2,7 +2,7 @@
 import { AverageOverview } from "@/components/cards/average-overview";
 import { GradeOverview } from "@/components/cards/grade-overview";
 import { RequiredGrades } from "@/components/cards/required-grades";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -14,12 +14,16 @@ import { CardStack, Highlight } from "@/components/ui/card-stack";
 import { CardBoard } from "@/components/ui/cardboard";
 import { Separator } from "@/components/ui/separator";
 import { Tabs } from "@/components/ui/tabs";
-import { GradeWithSubject } from "@/db/schema";
-import { AverageWithSubject } from "@/types/types";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
+import { cn } from "@/lib/utils";
+import { MOCKDATA } from "@/mockdata-export";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
-import { Globe, Info, Sparkles } from "lucide-react";
+import { ExternalLinkIcon, Globe, Info, Sparkles } from "lucide-react";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function LandingPage() {
@@ -377,250 +381,113 @@ const CARDS = [
   },
 ];
 
-const MOCKDATA: {
-  data: GradeWithSubject[];
-  averageData: AverageWithSubject[];
-  failingData: (data: AverageWithSubject[]) => AverageWithSubject[];
-  passingData: (data: AverageWithSubject[]) => AverageWithSubject[];
-} = {
-  data: [
-    {
-      grades: {
-        id: 91,
-        value: 4.7,
-        subject_fk: 63,
-        description: "Example economy grade",
-        weight: 1,
-        date: new Date("2024-05-15T14:23:21.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 63,
-        name: "Economy - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 92,
-        value: 3.6,
-        subject_fk: 61,
-        description: "Example maths grade",
-        weight: 2,
-        date: new Date("2024-05-21T13:21:00.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 61,
-        name: "Maths - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 93,
-        value: 5.4,
-        subject_fk: 62,
-        description: "Example physics grade",
-        weight: 1,
-        date: new Date("2024-05-24T22:00:00.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 62,
-        name: "Physics - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 94,
-        value: 4.1,
-        subject_fk: 63,
-        description: "Another example economy grade",
-        weight: 1,
-        date: new Date("2024-05-25T22:00:00.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 63,
-        name: "Economy - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 95,
-        value: 3.3,
-        subject_fk: 61,
-        description: "Another example maths grade",
-        weight: 0.5,
-        date: new Date("2024-05-27T10:00:00.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 61,
-        name: "Maths - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 96,
-        value: 6,
-        subject_fk: 62,
-        description: "Another example physics grade",
-        weight: 1,
-        date: new Date("2024-05-28T10:12:12.000Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 62,
-        name: "Physics - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 97,
-        value: 5.5,
-        subject_fk: 63,
-        description: null,
-        weight: 1,
-        date: new Date("2024-05-28T14:18:54.623Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 63,
-        name: "Economy - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      grades: {
-        id: 98,
-        value: 5.6,
-        subject_fk: 61,
-        description: null,
-        weight: 1,
-        date: new Date("2024-05-28T14:19:25.259Z"),
-        category_fk: null,
-        userId: null,
-      },
-      subjects: {
-        id: 61,
-        name: "Maths - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-  ],
-  averageData: [
-    {
-      average: {
-        subjectId: 63,
-        gradeAverage: 4.766666666666667,
-        gradeSum: 14.3,
-        gradeWeightedSum: 14.3,
-        gradeWeightedAmount: 3,
-        gradeAmount: 3,
-        passing: true,
-      },
-      subject: {
-        id: 63,
-        name: "Economy - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      average: {
-        subjectId: 61,
-        gradeAverage: 4.128571428571428,
-        gradeSum: 12.5,
-        gradeWeightedSum: 14.45,
-        gradeWeightedAmount: 3.5,
-        gradeAmount: 3,
-        passing: true,
-      },
-      subject: {
-        id: 61,
-        name: "Maths - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-    {
-      average: {
-        subjectId: 62,
-        gradeAverage: 5.7,
-        gradeSum: 11.4,
-        gradeWeightedSum: 11.4,
-        gradeWeightedAmount: 2,
-        gradeAmount: 2,
-        passing: true,
-      },
-      subject: {
-        id: 62,
-        name: "Physics - Demo",
-        weight: 1,
-        category_fk: null,
-        userId: null,
-      },
-    },
-  ],
-  failingData: (data: AverageWithSubject[]) =>
-    data.filter(
-      (average: AverageWithSubject) => average.average?.passing === false
-    ),
-  passingData: (data: AverageWithSubject[]) =>
-    data.filter((average: AverageWithSubject) => average.average?.passing),
-};
-
 function GettingStartedTab() {
+  const { isMobile } = useDevice();
+  const theme = useTheme();
+  const router = useRouter();
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Grade Calculator</CardTitle>
-        <CardDescription>
-          Some boring additional information about this project.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <CardBoard row>
-          <Demos />
-          <Card>
-            <CardHeader>
-              <CardTitle>Get started now</CardTitle>
-            </CardHeader>
-          </Card>
-        </CardBoard>
-      </CardContent>
-    </Card>
+    <CardBoard row={!isMobile}>
+      <CardBoard>
+        <Card>
+          <CardHeader>
+            <CardTitle>Get started now</CardTitle>
+            <CardDescription>
+              You can start using the grade calculator right away.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="flex flex-col gap-5">
+            <p>
+              This grade calculator features a{" "}
+              <Highlight colorName="yellow">cloud synced</Highlight>, and a{" "}
+              <Highlight colorName="yellow">legacy</Highlight> version, which
+              stores all data locally in your browser. The legacy version is
+              unmaintained and will not receive any updates.
+            </p>
+            <p>
+              To use the cloud synced version, you need to authenticate first.
+              To access the legacy version,{" "}
+              <Highlight colorName="blue">
+                <a target="_blank" href="https://legacy.grades.nstr.dev">
+                  click here
+                </a>
+              </Highlight>
+              <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
+                <Button className="w-full shadow-md" asChild>
+                  <Link href={"/login"}>
+                    <Sparkles className="size-4 mr-2" />
+                    Continue to the app
+                  </Link>
+                </Button>
+                <Button
+                  className="w-full shadow-md"
+                  variant={"secondary"}
+                  asChild
+                >
+                  <Link href={"https://legacy.grades.nstr.dev"}>
+                    <Globe className="size-4 mr-2" />
+                    Use the legacy version
+                  </Link>
+                </Button>
+              </div>
+            </p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Screenshot</CardTitle>
+            <CardDescription>
+              This is what the grade calculator looks like.
+            </CardDescription>
+            <CardContent className="flex flex-col gap-4 p-3">
+              {theme.resolvedTheme === "dark" ? (
+                <>
+                  <Image
+                    src={"/screenshot-dark.png"}
+                    alt={"Screenshot Dark Mode"}
+                    className="w-full border-2 border-muted rounded-md"
+                    width="2213"
+                    height="1941"
+                  />
+                  <Link
+                    href={"/screenshot-dark.png"}
+                    target="_blank"
+                    className={cn(
+                      buttonVariants({ variant: "link" }),
+                      "flex flex-row gap-2 w-fit justify-center"
+                    )}
+                  >
+                    Open image <ExternalLinkIcon className="size-4" />
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Image
+                    src={"/screenshot-light.png"}
+                    alt={"Screenshot Light Mode"}
+                    className="w-full border-2 border-muted rounded-md"
+                    width="2213"
+                    height="1941"
+                  />
+                  <Link
+                    href={"/screenshot-light.png"}
+                    target="_blank"
+                    className={cn(
+                      buttonVariants({ variant: "link" }),
+                      "flex flex-row gap-2 w-fit justify-center"
+                    )}
+                  >
+                    Open image <ExternalLinkIcon className="size-4" />
+                  </Link>
+                </>
+              )}
+            </CardContent>
+          </CardHeader>
+        </Card>
+      </CardBoard>
+
+      <Demos />
+    </CardBoard>
   );
 }
 
@@ -648,16 +515,18 @@ const Demos = () => {
   const [selected, setSelected] = useState<string>("grade-overview");
 
   return (
-    <motion.div layout>
-      <Card>
-        <CardHeader>
-          <CardTitle>Grade Calculator Demos</CardTitle>
-          <CardDescription>
-            Some boring additional information about this project.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <DemoSwitcher demos={demos} setSelected={setSelected} />
+    <Card>
+      <CardHeader>
+        <CardTitle>Demo</CardTitle>
+        <CardDescription>You can try out different demos here.</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <DemoSwitcher
+          demos={demos}
+          selected={selected}
+          setSelected={setSelected}
+        />
+        <motion.div layout>
           {selected === "required-grades" && (
             <RequiredGrades
               className="touch-none"
@@ -682,30 +551,47 @@ const Demos = () => {
               animate={false}
             />
           )}
-        </CardContent>
-      </Card>
-    </motion.div>
+        </motion.div>
+      </CardContent>
+    </Card>
   );
 };
 
 const DemoSwitcher = ({
   demos,
+  selected,
   setSelected,
 }: {
   demos: DemoType[];
+  selected: string;
   setSelected: Function;
 }) => {
   return (
-    <div className="flex flex-row gap-2 justify-center">
-      {demos.map((demo) => (
-        <Button
-          key={demo.value}
-          className="shadow-md"
-          onClick={() => setSelected(demo.value)}
-        >
-          {demo.title}
-        </Button>
-      ))}
+    <div className="flex flex-row items-center justify-center [perspective:1000px]">
+      <div className="flex flex-row gap-2 justify-center relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-fit border-muted border-2 rounded-full p-1.5 shadow-md">
+        {demos.map((demo) => (
+          <button
+            key={demo.value}
+            onClick={() => {
+              setSelected(demo.value);
+            }}
+            className={"px-4 py-1.5 rounded-full"}
+            style={{
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {selected === demo.value && (
+              <motion.div
+                layoutId="clickedbutton-demos"
+                transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                className={"absolute inset-0 bg-muted shadow-lg rounded-full "}
+              />
+            )}
+
+            <span className="relative block text-foreground">{demo.title}</span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

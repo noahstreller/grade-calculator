@@ -157,7 +157,7 @@ export function AverageOverview({
       )}
       <CardContent>
         <CardBoard>
-          <CardBoard column={false} className="flex-col sm:flex-row ">
+          <CardBoard className="flex-col sm:flex-row ">
             <Card>
               <CardHeader className="flex-row gap-3">
                 {t("subject-overview.subject-average")}
