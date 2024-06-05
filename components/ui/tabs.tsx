@@ -1,5 +1,6 @@
 "use client";
 
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -35,6 +36,62 @@ export const Tabs = ({
   };
 
   const [hovering, setHovering] = useState(false);
+
+  const { isMobile } = useDevice();
+
+  if (isMobile)
+    return (
+      <div className="h-fit">
+        <div className="flex flex-row items-center justify-center [perspective:1000px]">
+          <div
+            className={cn(
+              "relative overflow-hidden no-visible-scrollbar max-w-full w-fit",
+              containerClassName
+            )}
+          >
+            {propTabs.map((tab, idx) => (
+              <button
+                key={tab.value}
+                onClick={() => {
+                  moveSelectedTabToTop(idx);
+                }}
+                onMouseEnter={() => setHovering(true)}
+                onMouseLeave={() => setHovering(false)}
+                className={cn(
+                  "mx-1 my-1 px-4 py-1.5 rounded-full bg-muted/[0.2]",
+                  tabClassName
+                )}
+                style={{
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {active.value === tab.value && (
+                  <motion.div
+                    layoutId="clickedbutton"
+                    transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                    className={cn(
+                      "absolute inset-0 bg-muted rounded-full ",
+                      activeTabClassName
+                    )}
+                  />
+                )}
+
+                <span className="relative block text-foreground">
+                  {tab.title}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+        <FadeInDiv
+          tabs={tabs}
+          active={active}
+          key={active.value}
+          hovering={hovering}
+          className={cn("mt-12", contentClassName, "h-fit")}
+        />
+      </div>
+    );
 
   return (
     <div className="h-fit">

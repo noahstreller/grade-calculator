@@ -19,19 +19,29 @@ import { cn } from "@/lib/utils";
 import { MOCKDATA } from "@/mockdata-export";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
-import { ExternalLinkIcon, Globe, Info, Sparkles } from "lucide-react";
+import {
+  CalculatorIcon,
+  ExternalLinkIcon,
+  Globe,
+  GroupIcon,
+  Info,
+  LineChartIcon,
+  Sparkles,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 export function LandingPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const TABS = [
+  const { isMobile } = useDevice();
+
+  const PAGE_TABS = [
     {
       title: (
         <div className="flex flex-row items-center gap-2">
@@ -126,11 +136,13 @@ export function LandingPage() {
                               click here
                             </a>
                           </Highlight>
-                          <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
+                          <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                             <Button className="w-full shadow-md" asChild>
                               <Link href={"/login"}>
-                                <Sparkles className="size-4 mr-2" />
-                                Continue to the app
+                                <Sparkles className="size-4 mr-2 flex-shrink-0" />
+                                {isMobile
+                                  ? "To the app"
+                                  : "Continue to the app"}
                               </Link>
                             </Button>
                             <Button
@@ -139,8 +151,8 @@ export function LandingPage() {
                               asChild
                             >
                               <Link href={"https://legacy.grades.nstr.dev"}>
-                                <Globe className="size-4 mr-2" />
-                                Use the legacy version
+                                <Globe className="size-4 mr-2 flex-shrink-0" />
+                                {isMobile ? "Legacy" : "Use the legacy version"}
                               </Link>
                             </Button>
                           </div>
@@ -149,7 +161,7 @@ export function LandingPage() {
                     </Card>
                   </CardBoard>
                   <CardBoard>
-                    <CardStack items={CARDS} offset={7} />
+                    <CardStack items={REVIEW_CARDS} offset={7} />
                     <Card className="shadow-md">
                       <CardHeader>
                         <CardTitle>Source Code</CardTitle>
@@ -204,11 +216,11 @@ export function LandingPage() {
                             click here
                           </a>
                         </Highlight>
-                        <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
+                        <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                           <Button className="w-full shadow-md" asChild>
                             <Link href={"/login"}>
-                              <Sparkles className="size-4 mr-2" />
-                              Continue to the app
+                              <Sparkles className="size-4 mr-2 flex-shrink-0" />
+                              {isMobile ? "To the app" : "Continue to the app"}
                             </Link>
                           </Button>
                           <Button
@@ -217,8 +229,8 @@ export function LandingPage() {
                             asChild
                           >
                             <Link href={"https://legacy.grades.nstr.dev"}>
-                              <Globe className="size-4 mr-2" />
-                              Use the legacy version
+                              <Globe className="size-4 mr-2 flex-shrink-0" />
+                              {isMobile ? "Legacy" : "Use the legacy version"}
                             </Link>
                           </Button>
                         </div>
@@ -288,7 +300,7 @@ export function LandingPage() {
                       </Button>
                     </CardContent>
                   </Card>
-                  <CardStack items={CARDS} offset={7} />
+                  <CardStack items={REVIEW_CARDS} offset={7} />
                 </CardBoard>
               </div>
             </div>
@@ -300,13 +312,13 @@ export function LandingPage() {
   return (
     <div className="w-screen h-fit">
       <div className="[perspective:1000px] h-full relative b flex flex-col mx-auto w-11/12">
-        <Tabs tabs={TABS} />
+        <Tabs tabs={PAGE_TABS} />
       </div>
     </div>
   );
 }
 
-const CARDS = [
+const REVIEW_CARDS = [
   {
     id: 0,
     name: "Noah",
@@ -412,11 +424,11 @@ function GettingStartedTab() {
                   click here
                 </a>
               </Highlight>
-              <div className="flex justify-center gap-5 m-5 xl:flex-row flex-col">
+              <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                 <Button className="w-full shadow-md" asChild>
                   <Link href={"/login"}>
-                    <Sparkles className="size-4 mr-2" />
-                    Continue to the app
+                    <Sparkles className="size-4 mr-2 flex-shrink-0" />
+                    {isMobile ? "To the app" : "Continue to the app"}
                   </Link>
                 </Button>
                 <Button
@@ -425,8 +437,8 @@ function GettingStartedTab() {
                   asChild
                 >
                   <Link href={"https://legacy.grades.nstr.dev"}>
-                    <Globe className="size-4 mr-2" />
-                    Use the legacy version
+                    <Globe className="size-4 mr-2 flex-shrink-0" />
+                    {isMobile ? "Legacy" : "Use the legacy version"}
                   </Link>
                 </Button>
               </div>
@@ -485,29 +497,43 @@ function GettingStartedTab() {
           </CardHeader>
         </Card>
       </CardBoard>
-
       <Demos />
     </CardBoard>
   );
 }
 
 type DemoType = {
-  title: string;
+  title: ReactNode;
   value: string;
 };
 
 const Demos = () => {
   const demos: DemoType[] = [
     {
-      title: "Grades",
+      title: (
+        <span className="flex flex-row gap-2 justify-center items-center">
+          <LineChartIcon className="size-4 text-muted-foreground" />
+          Grades
+        </span>
+      ),
       value: "grade-overview",
     },
     {
-      title: "Averages",
+      title: (
+        <span className="flex flex-row gap-2 justify-center items-center">
+          <GroupIcon className="size-4 text-muted-foreground" />
+          Averages
+        </span>
+      ),
       value: "average-overview",
     },
     {
-      title: "Calculator",
+      title: (
+        <span className="flex flex-row gap-2 justify-center items-center">
+          <CalculatorIcon className="size-4 text-muted-foreground" />
+          Calculator
+        </span>
+      ),
       value: "required-grades",
     },
   ];
@@ -566,9 +592,43 @@ const DemoSwitcher = ({
   selected: string;
   setSelected: Function;
 }) => {
+  const { isMobile } = useDevice();
+
+  if (isMobile)
+    return (
+      <div className="flex flex-row items-center justify-center [perspective:1000px]">
+        <div className="relative overflow-hidden no-visible-scrollbar max-w-full w-fit bg-transparent">
+          {demos.map((demo) => (
+            <button
+              key={demo.value}
+              onClick={() => {
+                setSelected(demo.value);
+              }}
+              className={"mx-1 my-1 px-4 py-1.5 rounded-full bg-muted/[0.3]"}
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {selected === demo.value && (
+                <motion.div
+                  layoutId="clickedbutton-demos"
+                  transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                  className={"absolute inset-0 bg-muted rounded-full "}
+                />
+              )}
+
+              <span className="relative block text-foreground">
+                {demo.title}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+
   return (
     <div className="flex flex-row items-center justify-center [perspective:1000px]">
-      <div className="flex flex-row gap-2 justify-center relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-fit border-muted border-2 rounded-full p-1.5 shadow-md">
+      <div className="relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-fit border-muted border-2 rounded-full p-1.5 shadow-md">
         {demos.map((demo) => (
           <button
             key={demo.value}
