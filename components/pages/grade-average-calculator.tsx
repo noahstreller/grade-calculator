@@ -9,7 +9,7 @@ import { useCategory } from "@/components/category-provider";
 import { LandingPage } from "@/components/pages/landing-page";
 import { CardBoard } from "@/components/ui/cardboard";
 import { GradeWithSubject } from "@/db/schema";
-import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { catchProblem } from "@/lib/problem";
 import {
   getAllGradeAveragesWithSubject,
@@ -28,9 +28,7 @@ export default function GradeAverageCalculator() {
   const [authLoaded, setAuthLoaded] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
   const session = useSession();
-  const isDesktop = useMediaQuery(MediaQueries.xxl);
-  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
-  const isMobile = !isTablet && !isDesktop;
+  const { isMobile, isTablet, isDesktop } = useDevice();
 
   const refreshGrades = async () => {
     let grades = catchProblem(
@@ -73,6 +71,9 @@ export default function GradeAverageCalculator() {
       refreshPassing(averages);
     });
   }
+
+  console.log("grades", gradeData);
+  console.log("averages", averageData);
 
   useEffect(() => {
     const refreshGrades = async () => {

@@ -18,6 +18,14 @@ export function useMediaQuery(query: string) {
   return value;
 }
 
+export function useDevice() {
+  const isDesktop = useMediaQuery(MediaQueries.xxl);
+  const isTablet = useMediaQuery(MediaQueries.lg) && !isDesktop;
+  const isMobile = !isTablet && !isDesktop;
+
+  return { isDesktop, isTablet, isMobile };
+}
+
 export const MediaQueries = {
   sm: "(min-width: 640px)",
   md: "(min-width: 768px)",
