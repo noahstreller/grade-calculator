@@ -59,7 +59,7 @@ export function SettingsModalForm({
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
   const [decimals, setDecimals] = useState(
-    preferences.preferences?.gradeDecimals || 3
+    preferences.preferences?.gradeDecimals ?? 3
   );
   const [submitted, setSubmitted] = useState(false);
 

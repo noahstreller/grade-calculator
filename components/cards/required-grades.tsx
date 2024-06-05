@@ -6,7 +6,7 @@ import { Highlight } from "@/components/ui/card-stack";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
@@ -35,9 +35,7 @@ function RequiredGradesBody({
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences;
 
-  const isDesktop = useMediaQuery(MediaQueries.xxl);
-  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
-  const isMobile = !isTablet && !isDesktop;
+  const { isMobile } = useDevice();
 
   const getRequiredGradeToPass = (
     average: AverageWithSubject
@@ -184,11 +182,15 @@ function RequiredGradesBody({
 
 export function RequiredGrades({
   averageData,
+  className = "",
+  showPassingGrades = false,
 }: {
   averageData: AverageWithSubject[];
+  className?: string;
+  showPassingGrades?: boolean;
 }) {
   const { t } = useTranslation("common");
-  const [showPassing, setShowPassing] = useState<boolean>(false);
+  const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
   const getSimulatedWeight = () => {
@@ -198,7 +200,7 @@ export function RequiredGrades({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
           <CardTitle>{t("required-grades.title")}</CardTitle>

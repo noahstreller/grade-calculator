@@ -2,11 +2,25 @@ import { ColoredGrade } from "@/components/colored-grade";
 import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { GradeWithSubject } from "@/db/schema";
-import { doesGradePass, getSubjectAverages, getTotalGradeAverages } from "@/lib/services/notAsyncLogic";
+import {
+  doesGradePass,
+  getSubjectAverages,
+  getTotalGradeAverages,
+} from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
@@ -24,9 +38,13 @@ import {
 export function AverageOverview({
   data,
   averageData,
+  className,
+  animate = true,
 }: {
   data: GradeWithSubject[];
   averageData: AverageWithSubject[];
+  className?: string;
+  animate?: boolean;
 }) {
   const { t } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -89,7 +107,7 @@ export function AverageOverview({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{t("subject-overview.title")}</CardTitle>
         <CardDescription>{t("subject-overview.description")}</CardDescription>
@@ -120,6 +138,7 @@ export function AverageOverview({
                 dataKey={subjectAverage}
                 className="fill-foreground stroke-foreground stroke-2"
                 fillOpacity={0.6}
+                isAnimationActive={animate}
               />
               <Tooltip content={<CustomTooltip />} />
             </RadarChart>
@@ -138,7 +157,7 @@ export function AverageOverview({
       )}
       <CardContent>
         <CardBoard>
-          <CardBoard column={false} className="flex-col sm:flex-row ">
+          <CardBoard className="flex-col sm:flex-row ">
             <Card>
               <CardHeader className="flex-row gap-3">
                 {t("subject-overview.subject-average")}
