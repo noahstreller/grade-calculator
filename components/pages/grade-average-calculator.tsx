@@ -72,9 +72,6 @@ export default function GradeAverageCalculator() {
     });
   }
 
-  console.log("grades", gradeData);
-  console.log("averages", averageData);
-
   useEffect(() => {
     const refreshGrades = async () => {
       let grades = catchProblem(
