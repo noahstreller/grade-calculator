@@ -32,7 +32,7 @@ export function getProblem(problem: Problem): Problem {
   return problem;
 }
 
-export function catchProblem(thingInQuestion: any) {
+export function catchProblem(thingInQuestion: any, shouldThrow = false): any {
   if (
     thingInQuestion.errorMessage ||
     thingInQuestion.statusCode ||
@@ -45,9 +45,10 @@ export function catchProblem(thingInQuestion: any) {
     if (
       thingInQuestion.errorCode === ErrorCode.ForeignKeyConstraintViolation &&
       thingInQuestion.detail?.includes('is not present in table "user".')
-    ) signOut();
+    )
+      signOut();
 
     if (thingInQuestion.finalMessage) toastProblem(thingInQuestion);
-    
+    if (shouldThrow) throw new Error(thingInQuestion.finalMessage);
   } else return thingInQuestion;
 }
