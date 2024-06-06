@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DefaultValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +22,6 @@ import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
-import { useCategory } from "@/components/category-provider";
 
 export function CreateSubjectForm({
   refresh,
@@ -60,18 +60,24 @@ export function CreateSubjectForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setSubmitting(true);
     const subject = data.subject;
-    let insertedId: number | undefined = catchProblem(
-      await quickCreateSubject(subject, categoryState.category?.id),
-    );
+    try {
+      let insertedId: number | undefined = catchProblem(
+        await quickCreateSubject(subject, categoryState.category?.id),
+        true
+      );
 
-    form.reset(defaultValues);
-    form.setFocus("subject");
-    if (insertedId) {
-      addSubjectToast(subject);
+      form.reset(defaultValues);
+      form.setFocus("subject");
+
+      if (insertedId) {
+        addSubjectToast(subject);
+        setSubmitting(false);
+      }
+      refresh();
+      if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
+    } catch (e) {
       setSubmitting(false);
     }
-    refresh();
-    if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
   }
 
   return (
