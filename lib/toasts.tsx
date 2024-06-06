@@ -1,6 +1,7 @@
 import { Grade, NewGrade } from "@/db/schema";
 import { Problem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
+import { AlertTriangle } from "lucide-react";
 import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
 
@@ -77,7 +78,7 @@ export function copySuccessToast(copiedContent: string) {
 export function deleteGradeToast(
   grade: Grade,
   subjectName: string,
-  refresh: Function,
+  refresh: Function
 ) {
   toast(t("actions.delete.success"), {
     description: grade.value,
@@ -117,7 +118,13 @@ export function importFailedToast() {
 }
 
 export function toastProblem(problem: Problem) {
-  toast(problem.finalMessage, {
+  let errorMessage = (
+    <>
+      <AlertTriangle className="size-4 mr-2 text-red-400" />
+      {problem.finalMessage}
+    </>
+  );
+  toast(errorMessage, {
     description: problem.solution,
     action: {
       label: t("actions.ok"),

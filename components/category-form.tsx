@@ -73,18 +73,23 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setSubmitting(true);
     const category = data.category;
-    let inserted: Category = catchProblem(
-      await insertCategory(category, false)
-    );
+    try {
+      let inserted: Category = catchProblem(
+        await insertCategory(category, false),
+        true
+      );
 
-    form.reset(defaultValues);
-    form.setFocus("category");
-    if (inserted) {
-      categoryState.setCategories([...categoryState.categories, inserted]);
-      addCategoryToast(category);
+      form.reset(defaultValues);
+      form.setFocus("category");
+      if (inserted) {
+        categoryState.setCategories([...categoryState.categories, inserted]);
+        addCategoryToast(category);
+        setSubmitting(false);
+      }
+      if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
+    } catch (e) {
       setSubmitting(false);
     }
-    if (!preferences.newEntitySheetShouldStayOpen) setOpen(false);
   }
 
   return (
