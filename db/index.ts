@@ -1,16 +1,28 @@
-import { sql } from "@vercel/postgres";
-import { drizzle as drizzlepg } from "drizzle-orm/postgres-js";
-import { drizzle } from "drizzle-orm/vercel-postgres";
+import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
+import { drizzle } from "drizzle-orm/postgres-js";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
-type PostgresDB = ReturnType<typeof postgres> | undefined;
+// Fix for "sorry, too many clients already"
+declare global {
+  // eslint-disable-next-line no-var -- only var works here
+  var db: PostgresJsDatabase | undefined;
+}
 
-export const postgresDb: PostgresDB =
-  process.env.VERCEL_ENV === "development"
-    ? postgres(process.env.POSTGRES_URL ?? "")
-    : undefined;
+let db: PostgresJsDatabase;
 
-export const db =
-  process.env.VERCEL_ENV === "development"
-    ? drizzlepg(postgresDb!)
-    : drizzle(sql);
+if (process.env.NODE_ENV === "production") {
+  db = drizzle(postgres(process.env.POSTGRES_URL ?? "", { max: 1 }));
+} else {
+  if (!global.db) global.db = drizzle(postgres(process.env.POSTGRES_URL ?? ""));
+
+  db = global.db;
+}
+
+async function after() {
+  await migrate(db, { migrationsFolder: "drizzle" });
+}
+
+after();
+
+export { db };
