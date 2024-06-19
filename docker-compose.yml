@@ -1,8 +1,4 @@
 services:
-  grades:
-    build: .
-    ports:
-      - "3000:3000"
   grades-db:
     container_name: grades-db
     ports:
