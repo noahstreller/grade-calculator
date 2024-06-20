@@ -1,23 +1,23 @@
-import { CorruptedDataDialog } from '@/components/corrupted-data-dialog';
-import HeaderComponent from '@/components/header';
-import { ThemeProvider } from '@/components/theme-provider';
-import { cn } from '@/lib/utils';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata, Viewport } from 'next';
-import { Author } from 'next/dist/lib/metadata/types/metadata-types';
-import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
-import '../styles/globals.css';
-
-const inter = Inter({ subsets: ['latin'] })
+import { CorruptedDataDialog } from "@/components/corrupted-data-dialog";
+import HeaderComponent from "@/components/header";
+import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata, Viewport } from "next";
+import { Author } from "next/dist/lib/metadata/types/metadata-types";
+import { Inter } from "next/font/google";
+import Script from "next/script";
+import { Toaster } from "sonner";
+import "../styles/globals.css";
+const inter = Inter({ subsets: ["latin"] });
 
 const authors: Author[] = [
   {
-    name: 'Noah Streller',
-    url: 'https://github.com/noahstreller',
-  }
-]
+    name: "Noah Streller",
+    url: "https://github.com/noahstreller",
+  },
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://legacy.grades.nstr.dev"),
@@ -86,10 +86,17 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang="en">
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="3f2cf0c8-48d4-42da-b230-96f70475a4d6"
+        />
+      )}
       <body className={cn(inter.className)}>
         <ThemeProvider
           attribute="class"
@@ -98,16 +105,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <HeaderComponent />
-          <main className='bg-background text-foreground h-screen flex justify-center mt-[5rem]'>
+          <main className="bg-background text-foreground h-screen flex justify-center mt-[5rem]">
             {children}
           </main>
           <CorruptedDataDialog />
-          <Toaster theme='light' className='dark:hidden' />
-          <Toaster theme='dark' className='hidden dark:flex' />
+          <Toaster theme="light" className="dark:hidden" />
+          <Toaster theme="dark" className="hidden dark:flex" />
         </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
