@@ -10,8 +10,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import { Author } from "next/dist/lib/metadata/types/metadata-types";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "../styles/globals.css";
-
 const inter = Inter({ subsets: ["latin"] });
 
 const authors: Author[] = [
@@ -108,6 +108,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="4b26ca3b-c866-41d4-8691-919b5562601a"
+        />
+      )}
       <body className={cn(inter.className)}>
         {maintenance.maintenance ? (
           <Maintenance maintenance={maintenance} />

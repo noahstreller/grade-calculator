@@ -1,10 +1,7 @@
 {
-  "javascript.preferences.autoImportFileExcludePatterns": [
-    "@radix-ui"
-  ],
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "@radix-ui"
-  ],
+  "javascript.preferences.autoImportFileExcludePatterns": ["@radix-ui"],
+  "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui"],
   "IDX.aI.enableInlineCompletion": true,
-  "IDX.aI.enableCodebaseIndexing": true
+  "IDX.aI.enableCodebaseIndexing": true,
+  "i18n-ally.localesPaths": ["locales"]
 }
