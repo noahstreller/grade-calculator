@@ -7,6 +7,14 @@ import { GradeWeightBadge } from "@/components/grade-weight-badge";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -16,12 +24,19 @@ import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { getDateOrDateTime, truncateText } from "@/lib/utils";
-import { ArrowDown, ArrowUp, ArrowUpDown, Edit, Trash } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  Edit,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 export function columns(
   refresh: Function,
-  setGradeToEdit: Function,
+  setGradeToEdit: Function
 ): ColumnDef<GradeWithSubject>[] {
   const { t } = createTranslation("common");
 
@@ -52,11 +67,11 @@ export function columns(
         let subject: string = row.original.subjects.name!;
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).text;
 
         if (truncated) {
@@ -190,34 +205,47 @@ export function columns(
         const grade = row.original;
 
         return (
-          <>
-            <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-8 w-8 p-0"
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
                 onClick={() => {
                   setGradeToEdit(grade.grades);
                 }}
               >
-                <span className="sr-only">{t("actions.copy.prompt")}</span>
-                <Edit className="h-4 w-4" />
-              </Button>
-            </DialogTrigger>
-
-            <Button
-              variant="ghost"
-              className="h-8 w-8 p-0"
-              onClick={() => {
-                let gradeCopy = grade.grades;
-                deleteGradeByGrade(grade.grades);
-                deleteGradeToast(gradeCopy, grade.subjects.name ?? "", refresh);
-                refresh();
-              }}
-            >
-              <span className="sr-only">{t("actions.delete.prompt")}</span>
-              <Trash className="h-4 w-4" />
-            </Button>
-          </>
+                <DialogTrigger asChild>
+                  <div className="flex flex-row items-center justify-center gap-3">
+                    <Edit className="size-4 text-muted-foreground" />
+                    <span>Edit grade</span>
+                  </div>
+                </DialogTrigger>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  let gradeCopy = grade.grades;
+                  deleteGradeByGrade(grade.grades);
+                  deleteGradeToast(
+                    gradeCopy,
+                    grade.subjects.name ?? "",
+                    refresh
+                  );
+                  refresh();
+                }}
+              >
+                <div className="flex flex-row items-center justify-center gap-3">
+                  <Trash className="size-4 text-muted-foreground" />
+                  <span>Delete grade</span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },
