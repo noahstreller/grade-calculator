@@ -17,7 +17,7 @@ export const GradeWeightBadge = ({
   className?: string;
   hideOne?: boolean;
 }) => {
-  const truncatedWeight = truncateText(weight.toString(), 3);
+  const truncatedWeight = truncateText(weight.toString(), 5);
   return (
     !hideOne ||
     (weight != 1 && (
