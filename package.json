@@ -31,7 +31,6 @@
     "@serwist/sw": "^8.4.4",
     "@tanstack/react-table": "^8.11.7",
     "@vercel/analytics": "^1.1.3",
-    "@vercel/postgres": "^0.7.2",
     "@vercel/speed-insights": "^1.0.9",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
