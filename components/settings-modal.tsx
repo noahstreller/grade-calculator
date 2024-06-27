@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { NewPreferences } from "@/db/schema";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { savePreferences } from "@/lib/services/preferences-service";
 import {
   ClearDataTranslations,
@@ -170,7 +171,6 @@ export function SettingsModalForm({
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
           name="minimumGrade"
@@ -352,6 +352,7 @@ export function SettingsModal({
 }) {
   const session = useSession();
   const [open, setOpen] = useState<boolean>(false);
+  const { isMobile } = useDevice();
 
   return session.status === "authenticated" ? (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -361,29 +362,45 @@ export function SettingsModal({
         </Button>
       </SheetTrigger>
       <SheetContent className="overflow-y-auto">
-        <SheetHeader>
+        <SheetHeader className="mb-5">
           <SheetTitle>{translations.title}</SheetTitle>
           <SheetDescription>{translations.description}</SheetDescription>
         </SheetHeader>
-        <div className="my-5 flex-1">
-          <CategoryGroup />
-        </div>
-        <Separator />
-        <div className="mt-4 mb-5 flex gap-2 justify-start">
-          <ThemeSwitcher />
-          <ImportExportButton />
-          <ClearDataButton translations={clearDataTranslations}>
-            <Button
-              size="icon"
-              variant="outline"
-              className="hover:text-red-400 flex-shrink-0"
-            >
-              <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
-              <span className="sr-only">Delete all data</span>
-            </Button>
-          </ClearDataButton>
-          <NewSemesterButton />
-        </div>
+        {isMobile ? (
+          <>
+            <Separator />
+            <div className="my-5 flex flex-col gap-2">
+              <SheetDescription>
+                You can manage your categories in this section.
+              </SheetDescription>
+              <CategoryGroup />
+            </div>
+            <Separator />
+
+            <div className="my-5 flex flex-col gap-2">
+              <SheetDescription>Quick settings</SheetDescription>
+              <div className="flex flex-col gap-2 justify-start">
+                <ThemeSwitcher expanded />
+                <ImportExportButton expanded />
+                <ClearDataButton translations={clearDataTranslations}>
+                  <Button
+                    variant="outline"
+                    className="hover:text-red-400 flex-shrink-0 flex flex-row gap-2 w-full"
+                  >
+                    <Trash2 className="size-4 text-inherit" />
+                    Delete category data
+                  </Button>
+                </ClearDataButton>
+                <NewSemesterButton expanded />
+              </div>
+            </div>
+            <Separator />
+          </>
+        ) : (
+          <div className="my-5 flex-1">
+            <NewSemesterButton />
+          </div>
+        )}
         <Separator />
         <AccountSection />
         <Separator />
