@@ -1,4 +1,10 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Highlight } from "@/components/ui/card-stack";
 import Link from "next/link";
@@ -67,8 +73,8 @@ export default function PrivacyPolicy() {
 
       <h2 className="text-2xl font-bold">How is your data stored?</h2>
       <p>
-        Your data is stored in a database, hosted and secured by Vercel. It is
-        located in Germany.
+        Your data is stored in a database, hosted on a server located in
+        Austria.
       </p>
 
       <h2 className="text-2xl font-bold">
