@@ -34,7 +34,11 @@ import {
 import { CalendarPlus } from "lucide-react";
 import { useState } from "react";
 
-export const NewSemesterButton = () => {
+export const NewSemesterButton = ({
+  expanded = false,
+}: {
+  expanded?: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [keepSubjects, setKeepSubjectsState] = useState<boolean>(true);
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
@@ -73,8 +77,12 @@ export const NewSemesterButton = () => {
   return isMobile ? (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
-        <Button className="w-full" variant={"secondary"}>
-          <CalendarPlus className="size-5 " />
+        <Button
+          className="w-full flex-1 flex-shrink-0 gap-2"
+          variant={"secondary"}
+        >
+          <CalendarPlus className="size-4" />
+          {expanded && <span>New Term</span>}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
