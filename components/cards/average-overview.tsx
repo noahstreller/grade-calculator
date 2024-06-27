@@ -156,66 +156,97 @@ export function AverageOverview({
         </CardContent>
       )}
       <CardContent>
-        <CardBoard>
-          <CardBoard className="flex-col sm:flex-row ">
-            <Card>
-              <CardHeader className="flex-row gap-3">
-                {t("subject-overview.subject-average")}
-                <Popover>
-                  <PopoverTrigger>
-                    <Badge variant="outline">?</Badge>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    {t("subject-overview.subject-average-desc")}
-                  </PopoverContent>
-                </Popover>
-              </CardHeader>
-              <CardContent>
-                {subjectAverages === 0 || !subjectAverages ? (
-                  <b className="block text-5xl text-center items-center self-center text-gray-400">
-                    -
-                  </b>
-                ) : doesGradePass(subjectAverages, preferences) ? (
-                  <b className="block text-5xl text-center items-center self-center text-green-400">
-                    {round(subjectAverages, 2)}
-                  </b>
-                ) : (
-                  <b className="block text-5xl text-center items-center self-center text-red-400">
-                    {round(subjectAverages, 2)}
-                  </b>
-                )}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex-row gap-3">
-                {t("subject-overview.grade-average")}
-                <Popover>
-                  <PopoverTrigger>
-                    <Badge variant="outline">?</Badge>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    {t("subject-overview.grade-average-desc")}
-                  </PopoverContent>
-                </Popover>
-              </CardHeader>
-              <CardContent>
-                {gradeAverages === 0 ? (
-                  <b className="block text-5xl text-center items-center self-center text-gray-400">
-                    -
-                  </b>
-                ) : doesGradePass(gradeAverages, preferences) ? (
-                  <b className="block text-5xl text-center items-center self-center text-green-400">
-                    {round(gradeAverages, 2)}
-                  </b>
-                ) : (
-                  <b className="block text-5xl text-center items-center self-center text-red-400">
-                    {round(gradeAverages, 2)}
-                  </b>
-                )}
-              </CardContent>
-            </Card>
+        {subjectAverages === gradeAverages ? (
+          <Card>
+            <CardHeader className="flex-row gap-3">
+              Your Average
+              <Popover>
+                <PopoverTrigger>
+                  <Badge variant="outline">?</Badge>
+                </PopoverTrigger>
+                <PopoverContent>
+                  This reflects your average grade in all subjects.
+                </PopoverContent>
+              </Popover>
+            </CardHeader>
+            <CardContent>
+              {subjectAverages === 0 || !subjectAverages ? (
+                <b className="block text-5xl text-center items-center self-center text-gray-400">
+                  -
+                </b>
+              ) : doesGradePass(subjectAverages, preferences) ? (
+                <b className="block text-5xl text-center items-center self-center text-green-400">
+                  {round(subjectAverages, 2)}
+                </b>
+              ) : (
+                <b className="block text-5xl text-center items-center self-center text-red-400">
+                  {round(subjectAverages, 2)}
+                </b>
+              )}
+            </CardContent>
+          </Card>
+        ) : (
+          <CardBoard>
+            <CardBoard className="flex-col sm:flex-row ">
+              <Card>
+                <CardHeader className="flex-row gap-3">
+                  {t("subject-overview.subject-average")}
+                  <Popover>
+                    <PopoverTrigger>
+                      <Badge variant="outline">?</Badge>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      {t("subject-overview.subject-average-desc")}
+                    </PopoverContent>
+                  </Popover>
+                </CardHeader>
+                <CardContent>
+                  {subjectAverages === 0 || !subjectAverages ? (
+                    <b className="block text-5xl text-center items-center self-center text-gray-400">
+                      -
+                    </b>
+                  ) : doesGradePass(subjectAverages, preferences) ? (
+                    <b className="block text-5xl text-center items-center self-center text-green-400">
+                      {round(subjectAverages, 2)}
+                    </b>
+                  ) : (
+                    <b className="block text-5xl text-center items-center self-center text-red-400">
+                      {round(subjectAverages, 2)}
+                    </b>
+                  )}
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex-row gap-3">
+                  {t("subject-overview.grade-average")}
+                  <Popover>
+                    <PopoverTrigger>
+                      <Badge variant="outline">?</Badge>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      {t("subject-overview.grade-average-desc")}
+                    </PopoverContent>
+                  </Popover>
+                </CardHeader>
+                <CardContent>
+                  {gradeAverages === 0 ? (
+                    <b className="block text-5xl text-center items-center self-center text-gray-400">
+                      -
+                    </b>
+                  ) : doesGradePass(gradeAverages, preferences) ? (
+                    <b className="block text-5xl text-center items-center self-center text-green-400">
+                      {round(gradeAverages, 2)}
+                    </b>
+                  ) : (
+                    <b className="block text-5xl text-center items-center self-center text-red-400">
+                      {round(gradeAverages, 2)}
+                    </b>
+                  )}
+                </CardContent>
+              </Card>
+            </CardBoard>
           </CardBoard>
-        </CardBoard>
+        )}
       </CardContent>
     </Card>
   );
