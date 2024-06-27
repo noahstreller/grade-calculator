@@ -131,8 +131,8 @@
     "description": "Here you can see an overview of your subjects",
     "subject-average": "Subject Average",
     "grade-average": "Grade Average",
-    "grade-average-desc": "The grade average is the average of all your grades.",
-    "subject-average-desc": "The subject average is the average of all your subjects (not all your grades)."
+    "grade-average-desc": "This is calculated from all your grades, not considering weights",
+    "subject-average-desc": "This is calculated from your subject grade averages."
   },
   "required-grades": {
     "title": "Required Grades",
