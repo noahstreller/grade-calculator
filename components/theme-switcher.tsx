@@ -11,11 +11,40 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useTranslation from "next-translate/useTranslation";
 
-export function ThemeSwitcher() {
+export function ThemeSwitcher({ expanded = false }: { expanded?: boolean }) {
   const { setTheme } = useTheme();
-  const { t, lang } = useTranslation("common");
+
+  if (expanded)
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className="flex-shrink-0 flex flex-row gap-2 "
+          >
+            <Sun className="size-4 block dark:hidden" />
+            <Moon className="size-4 hidden dark:block" />
+            Toggle theme
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Theme</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => setTheme("light")}>
+            <Sun className="h-[1rem] w-[1rem] mr-[0.5rem]" />
+            Light
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <Moon className="h-[1rem] w-[1rem] mr-[0.5rem]" />
+            Dark
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("system")}>
+            <Laptop className="h-[1rem] w-[1rem] mr-[0.5rem]" />
+            System
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
 
   return (
     <DropdownMenu>
