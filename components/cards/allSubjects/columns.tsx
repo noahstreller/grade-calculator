@@ -79,7 +79,6 @@ export function columns(
                 className="mr-1"
                 hideText
               />
-
               <Popover>
                 <PopoverTrigger className="text-left text-wrap break-words max-w-40">
                   {truncatedSubject}
