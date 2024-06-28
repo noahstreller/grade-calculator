@@ -69,18 +69,18 @@ export function SignInPageComponent() {
               </CardDescription>
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
-              {process.env.NODE_ENV === "development" ||
-                (process.env.MOCK_OAUTH_WELLKNOWN_URL && (
-                  <Button
-                    variant={"secondary"}
-                    className="w-full"
-                    onClick={() => {
-                      signIn("local");
-                    }}
-                  >
-                    <Container className="m-2 size-5" /> Local
-                  </Button>
-                ))}
+              {(process.env.NODE_ENV === "development" ||
+                process.env.MOCK_OAUTH_WELLKNOWN_URL) && (
+                <Button
+                  variant={"secondary"}
+                  className="w-full"
+                  onClick={() => {
+                    signIn("local");
+                  }}
+                >
+                  <Container className="m-2 size-5" /> Local
+                </Button>
+              )}
               <Button
                 className="w-full"
                 onClick={() => {
