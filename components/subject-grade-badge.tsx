@@ -1,12 +1,11 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { truncateText } from "@/lib/utils";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { getStringForAmount, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import useTranslation from "next-translate/useTranslation";
 
@@ -21,21 +20,42 @@ export const SubjectGradeBadge = ({
 }) => {
   const { t } = useTranslation("common");
   const averageGrade = average.average?.gradeAmount ?? 0;
+  const gradeSum = average.average?.gradeWeightedSum ?? 0;
+  const weightedAmount = average.average?.gradeWeightedAmount ?? 0;
   const truncatedGrade = truncateText(averageGrade.toString(), 3).text;
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger className={className}>
-          <Badge variant="secondary" className={className}>
-            {`${truncatedGrade} ${
-              hideText
-                ? ""
-                : t("grades.grades", { count: average.average?.gradeAmount })
-            }`}
-          </Badge>
-        </TooltipTrigger>
-        <TooltipContent>Grade Count</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Popover>
+      <PopoverTrigger className={className}>
+        <Badge variant="secondary" className={className}>
+          {`${truncatedGrade} ${
+            hideText
+              ? ""
+              : t("grades.grades", { count: average.average?.gradeAmount })
+          }`}
+        </Badge>
+      </PopoverTrigger>
+      <PopoverContent className="w-fit max-w-96 text-wrap">
+        {averageGrade === weightedAmount ? (
+          averageGrade === 0 ? (
+            <>
+              This subject contains <b>{weightedAmount}</b> grades
+            </>
+          ) : (
+            <>
+              This subject contains <b>{weightedAmount}</b>{" "}
+              {getStringForAmount(averageGrade, "grade", "grades")} with a grade
+              sum of <b>{gradeSum}</b>
+            </>
+          )
+        ) : (
+          <>
+            This subject contains <b>{averageGrade}</b>{" "}
+            {getStringForAmount(averageGrade, "grade", "grades")} with a total
+            weight of <b>{weightedAmount}</b> and a grade sum of{" "}
+            <b>{gradeSum}</b>
+          </>
+        )}
+      </PopoverContent>
+    </Popover>
   );
 };
