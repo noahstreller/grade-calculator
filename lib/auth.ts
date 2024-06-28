@@ -53,7 +53,7 @@ export const config = {
       name: "Local",
       type: "oauth",
       wellKnown:
-        process.env.MOCK_OAUTH_WELLKNOWN_URL ||
+        process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL ||
         "http://localhost:8080/default/.well-known/openid-configuration",
       clientId: "mock",
       clientSecret: "mock",
