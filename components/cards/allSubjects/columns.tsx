@@ -5,6 +5,7 @@ import {
   ArrowUp,
   ArrowUpDown,
   Edit,
+  Eye,
   MoreHorizontal,
   Trash,
 } from "lucide-react";
@@ -29,6 +30,7 @@ import {
 } from "@/components/ui/popover";
 import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
+import Link from "next/link";
 import { isMobile } from "react-device-detect";
 export function columns(
   setSubjectToDelete: Function,
@@ -145,6 +147,15 @@ export function columns(
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link
+                  className="flex flex-row items-center justify-center gap-3"
+                  href={`/subject/${average.subject.id}`}
+                >
+                  <Eye className="size-4 text-muted-foreground" />
+                  View item
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   setOriginalSubject(average.subject);

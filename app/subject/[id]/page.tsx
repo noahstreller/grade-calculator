@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import {
@@ -7,6 +15,7 @@ import {
   getGradesBySubject,
 } from "@/lib/services/grade-service";
 import { getSubjectById } from "@/lib/services/subject-service";
+import { truncateText } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -45,22 +54,29 @@ export default function SubjectPage({ params }: { params: { id: string } }) {
 
   if (session.status === "unauthenticated") return <>Log in first lil bro</>;
   if (session.status === "loading" || dataState === "loading")
-    return <div>Loading</div>;
+    return <LoadingSpinner />;
   if (session.status === "authenticated")
     return dataState === "loaded" ? (
-      <div>
-        <h1>Subject Page - {params.id}</h1>
+      <>
         {subject ? (
-          <div>
-            <h2>{subject.name}</h2>
-            <p>{subject.id}</p>
-            <p>{subject.weight}</p>
-            <p>{subject.category_fk}</p>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>{truncateText(subject.name!, 40).text}</CardTitle>
+              <CardDescription>Subject details</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <b>Details</b>
+              <p>ID: {subject.id}</p>
+              <p>Name: {subject.name}</p>
+              <p>Weight: {subject.weight}</p>
+              <p>Category: {subject.category_fk}</p>
+              <p>User: {subject.userId}</p>
+            </CardContent>
+          </Card>
         ) : (
           <div>Subject not found</div>
         )}
-      </div>
+      </>
     ) : (
       dataState === "notfound" && <div>Subject not found lil bro</div>
     );
