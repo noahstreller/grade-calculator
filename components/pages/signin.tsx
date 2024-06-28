@@ -70,7 +70,7 @@ export function SignInPageComponent() {
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
               {(process.env.NODE_ENV === "development" ||
-                process.env.MOCK_OAUTH_WELLKNOWN_URL) && (
+                process.env.NEXT_PUBLIC_MOCK_OAUTH_WELLKNOWN_URL) && (
                 <Button
                   variant={"secondary"}
                   className="w-full"
