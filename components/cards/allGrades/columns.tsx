@@ -15,11 +15,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
@@ -76,16 +75,14 @@ export function columns(
 
         if (truncated) {
           return (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger className="text-left ml-2 text-wrap break-words max-w-40">
-                  {truncatedSubject}
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{subject}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Popover>
+              <PopoverTrigger className="text-left ml-2 text-wrap break-words max-w-40">
+                {truncatedSubject}
+              </PopoverTrigger>
+              <PopoverContent className="w-fit max-w-80 text-wrap break-words">
+                <p>{subject}</p>
+              </PopoverContent>
+            </Popover>
           );
         }
         return <p className="ml-2">{subject}</p>;
@@ -150,16 +147,14 @@ export function columns(
 
         if (truncated.truncated) {
           return (
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger className="text-left ml-2">
-                  {truncated.text}
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{description}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Popover>
+              <PopoverTrigger className="text-left ml-2">
+                {truncated.text}
+              </PopoverTrigger>
+              <PopoverContent className="w-fit max-w-80 text-wrap break-words">
+                <p>{description}</p>
+              </PopoverContent>
+            </Popover>
           );
         }
 

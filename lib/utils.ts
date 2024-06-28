@@ -146,3 +146,11 @@ export function getDefaultPreferences(): Preferences {
     userId: null,
   } satisfies NewPreferences;
 }
+
+export function getStringForAmount(
+  amount: number,
+  singular: string,
+  plural: string
+) {
+  return amount === 1 ? singular : plural;
+}

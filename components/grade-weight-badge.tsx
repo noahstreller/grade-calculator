@@ -1,11 +1,10 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { truncateText } from "@/lib/utils";
 
 export const GradeWeightBadge = ({
@@ -21,16 +20,16 @@ export const GradeWeightBadge = ({
   return (
     !hideOne ||
     (weight != 1 && (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger className={className}>
-            <Badge variant="secondary" className={className}>
-              {truncatedWeight.truncated ? null : "×"} {truncatedWeight.text}
-            </Badge>
-          </TooltipTrigger>
-          <TooltipContent>Weight</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <Popover>
+        <PopoverTrigger className={className}>
+          <Badge variant="secondary" className={className}>
+            {truncatedWeight.truncated ? null : "×"} {truncatedWeight.text}
+          </Badge>
+        </PopoverTrigger>
+        <PopoverContent className="w-fit">
+          This grade is weighted <b>{weight}</b>
+        </PopoverContent>
+      </Popover>
     ))
   );
 };

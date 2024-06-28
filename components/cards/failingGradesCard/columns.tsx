@@ -7,11 +7,10 @@ import { ColoredGrade } from "@/components/colored-grade";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
 import { Button } from "@/components/ui/button";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import { isMobile } from "react-device-detect";
@@ -45,37 +44,37 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
         let subject: string = row.original.subject.name || "";
         let truncated: boolean = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).truncated;
         let truncatedSubject: string = truncateText(
           subject,
-          isMobile ? 16 : 20,
+          isMobile ? 16 : 20
         ).text;
 
         if (truncated) {
           return (
-            <TooltipProvider>
+            <>
               <SubjectGradeBadge
                 average={row.original}
-                className="mr-2"
+                className="mr-1"
                 hideText
               />
-              <Tooltip>
-                <TooltipTrigger className="text-left">
+              <Popover>
+                <PopoverTrigger className="text-left text-wrap break-words max-w-40">
                   {truncatedSubject}
-                </TooltipTrigger>
-                <TooltipContent>
+                </PopoverTrigger>
+                <PopoverContent className="w-fit max-w-80 text-wrap break-words">
                   <p>{subject}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                </PopoverContent>
+              </Popover>
+            </>
           );
         }
         return (
           <>
             <SubjectGradeBadge
               average={row.original}
-              className="mr-2"
+              className="mr-1"
               hideText
             />
             {subject}
