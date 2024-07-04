@@ -32,25 +32,24 @@ import {
   MoreHorizontal,
   Trash,
 } from "lucide-react";
-import { isMobile } from "react-device-detect";
 
 export function columns(
   refresh: Function,
-  setGradeToEdit: Function
+  setGradeToEdit: Function,
+  isMobile: boolean
 ): ColumnDef<GradeWithSubject>[] {
   const { t } = createTranslation("common");
 
   return [
     {
-      id: "subjectName",
-      accessorKey: "subjects.name",
+      accessorKey: "grades.description",
       header: ({ column }) => {
         return (
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.subject")}
+            Description
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -64,29 +63,27 @@ export function columns(
         );
       },
       cell: ({ row }) => {
-        let subject: string = row.original.subjects.name!;
-        let truncated: boolean = truncateText(
-          subject,
-          isMobile ? 16 : 20
-        ).truncated;
-        let truncatedSubject: string = truncateText(
-          subject,
-          isMobile ? 16 : 20
-        ).text;
+        let description: string = row.original.grades.description!;
+        let truncated = truncateText(description, isMobile ? 25 : 40);
 
-        if (truncated) {
+        if (truncated.truncated) {
           return (
             <Popover>
-              <PopoverTrigger className="text-left ml-2 text-wrap break-words max-w-40">
-                {truncatedSubject}
+              <PopoverTrigger className="text-left ml-2">
+                {truncated.text}
               </PopoverTrigger>
               <PopoverContent className="w-fit max-w-80 text-wrap break-words">
-                <p>{subject}</p>
+                <p>{description}</p>
               </PopoverContent>
             </Popover>
           );
         }
-        return <p className="ml-2">{subject}</p>;
+
+        return description ? (
+          <p className="ml-2">{description}</p>
+        ) : (
+          <p className="ml-2 text-muted-foreground">-</p>
+        );
       },
     },
     {
@@ -118,51 +115,6 @@ export function columns(
             <ColoredGrade grade={value} className="ml-2 mr-2" />
             <GradeWeightBadge weight={weight} />
           </div>
-        );
-      },
-    },
-    {
-      accessorKey: "grades.description",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Description
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
-          </Button>
-        );
-      },
-      cell: ({ row }) => {
-        let description: string = row.original.grades.description!;
-        let truncated = truncateText(description, 20);
-
-        if (truncated.truncated) {
-          return (
-            <Popover>
-              <PopoverTrigger className="text-left ml-2">
-                {truncated.text}
-              </PopoverTrigger>
-              <PopoverContent className="w-fit max-w-80 text-wrap break-words">
-                <p>{description}</p>
-              </PopoverContent>
-            </Popover>
-          );
-        }
-
-        return description ? (
-          <p className="ml-2">{description}</p>
-        ) : (
-          <p className="ml-2 text-muted-foreground">-</p>
         );
       },
     },
