@@ -22,6 +22,7 @@ import { getSubjectById } from "@/lib/services/subject-service";
 import { truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -126,6 +127,12 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
         )}
       </CardBoard>
     ) : (
-      dataState === "notfound" && <div>Subject not found lil bro</div>
+      dataState === "notfound" && (
+        <div>
+          Subject not found lil bro
+          <br />
+          <Link href={"/"}>Go home</Link>
+        </div>
+      )
     );
 }
