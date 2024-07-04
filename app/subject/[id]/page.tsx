@@ -1,5 +1,6 @@
 "use client";
 
+import { GradeOverviewForSubject } from "@/components/cards/grade-overview";
 import { GradesForSubject } from "@/components/cards/gradesForSubject/gradesForSubject";
 import {
   Card,
@@ -19,7 +20,7 @@ import {
 } from "@/lib/services/grade-service";
 import { getSubjectById } from "@/lib/services/subject-service";
 import { truncateText } from "@/lib/utils";
-import { AverageWithSubject } from "@/types/types";
+import { Average } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,10 +35,31 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
   const { isMobile, isTablet, isDesktop } = useDevice();
   const [subject, setSubject] = useState<Subject | null>(null);
   const [grades, setGrades] = useState<GradeWithSubject[]>([]);
-  const [average, setAverage] = useState<AverageWithSubject>();
+  const [average, setAverage] = useState<Average | null>(null);
   const [dataState, setDataState] = useState<"loading" | "loaded" | "notfound">(
     "loading"
   );
+
+  const fetchData = async () => {
+    try {
+      const id = Number(subjectId);
+      const subject = catchProblem(await getSubjectById(id));
+      const newGrades = catchProblem(
+        await getGradesBySubjectWithSubject(subject)
+      );
+      const newAverage = catchProblem(await getGradeAverageBySubject(subject));
+      if (subject) {
+        setSubject(subject);
+        setGrades([...newGrades]);
+        setAverage(newAverage);
+        setDataState("loaded");
+      } else {
+        setDataState("notfound");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     setDataState("loading");
@@ -51,9 +73,7 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
         const newAverage = catchProblem(
           await getGradeAverageBySubject(subject)
         );
-        console.log("subject", subject);
-        console.log("grades", newGrades);
-        console.log("average", newAverage);
+        console.log("newAverage", newAverage);
         if (subject) {
           setSubject(subject);
           setGrades([...newGrades]);
@@ -77,15 +97,18 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
       <CardBoard row={isDesktop}>
         {subject ? (
           <>
+            {average && (
+              <GradeOverviewForSubject data={grades} averageData={average} />
+            )}
             <Card>
               <CardHeader>
-                <CardTitle>{truncateText(subject.name!, 40).text}</CardTitle>
+                <CardTitle>{truncateText(subject.name!, 20).text}</CardTitle>
                 <CardDescription>Subject details</CardDescription>
               </CardHeader>
               <CardContent>
                 <b>Details</b>
                 <p>ID: {subject.id}</p>
-                <p>Name: {subject.name}</p>
+                <p>Name: {truncateText(subject.name!, 40).text}</p>
                 <p>Weight: {subject.weight}</p>
                 <p>Category: {subject.category_fk}</p>
                 <p>User: {subject.userId}</p>
@@ -94,7 +117,8 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
             <GradesForSubject
               data={grades}
               setData={setGrades}
-              refresh={console.log}
+              refresh={fetchData}
+              subject={subject}
             />
           </>
         ) : (

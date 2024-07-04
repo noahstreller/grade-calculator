@@ -1,6 +1,6 @@
 "use client";
-import { CreateGradeForm } from "@/components/create-grade-form";
 import { EditGradeForm } from "@/components/edit-grade-form";
+import { CreateGradeFormForSubject } from "@/components/grade-for-subject-form";
 import { PassingStatus } from "@/components/passing-filter-combobox";
 import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -30,7 +30,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Grade, GradeWithSubject } from "@/db/schema";
+import { Grade, GradeWithSubject, Subject } from "@/db/schema";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { Bird, FilterX } from "lucide-react";
@@ -43,10 +43,12 @@ export function GradesForSubject({
   data,
   setData,
   refresh,
+  subject,
 }: {
   data: GradeWithSubject[];
   setData: Function;
   refresh: Function;
+  subject: Subject;
 }) {
   const { t, lang } = useTranslation("common");
   const preferences = usePreferences().preferences!;
@@ -89,14 +91,18 @@ export function GradesForSubject({
           <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button>{t("grades.add")}</Button>
+              <Button variant={"outline"}>{t("grades.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
                 <DialogTitle>{t("grades.add")}</DialogTitle>
                 <DialogDescription>{t("grades.add-desc")}</DialogDescription>
               </DialogHeader>
-              <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
+              <CreateGradeFormForSubject
+                refresh={refresh}
+                setDrawerOpen={setOpen}
+                subject={subject}
+              />
             </DialogContent>
           </Dialog>
         </CardHeader>
@@ -151,7 +157,11 @@ export function GradesForSubject({
               <DrawerTitle>{t("grades.add")}</DrawerTitle>
               <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
-            <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
+            <CreateGradeFormForSubject
+              refresh={refresh}
+              setDrawerOpen={setOpen}
+              subject={subject}
+            />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>

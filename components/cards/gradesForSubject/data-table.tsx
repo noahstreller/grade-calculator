@@ -12,9 +12,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { PassingFilterComboBox, PassingStatus } from "@/components/passing-filter-combobox";
+import { PassingStatus } from "@/components/passing-filter-combobox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import {
   Table,
@@ -42,15 +41,14 @@ export function DataTable<TData, TValue>({
   pageSize = 6,
   loading = false,
   selectedStatus,
-  setSelectedStatus
+  setSelectedStatus,
 }: DataTableProps<TData, TValue>) {
-  
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: "date", desc: true },
-  ])
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
   const table = useReactTable({
     data,
     columns,
@@ -69,21 +67,10 @@ export function DataTable<TData, TValue>({
         pageSize: pageSize,
       },
     },
-  })
+  });
 
   return (
     <>
-      <div className="w-full flex flex-row justify-between py-4 gap-2">    
-        <Input
-          placeholder="Filter by subject"
-          value={(table.getColumn("subjectName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("subjectName")?.setFilterValue(event.target.value)
-          }
-          className="w-full"
-        />
-        <PassingFilterComboBox selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
-      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
