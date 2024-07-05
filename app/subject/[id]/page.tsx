@@ -1,7 +1,10 @@
 "use client";
 
+import { CardSkeleton } from "@/components/cards/card-skeleton";
 import { GradeOverviewForSubject } from "@/components/cards/grade-overview";
 import { GradesForSubject } from "@/components/cards/gradesForSubject/gradesForSubject";
+import { RequiredGradesForSubject } from "@/components/cards/required-grades";
+import { usePreferences } from "@/components/preferences-provider";
 import {
   Card,
   CardContent,
@@ -10,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
-import { LoadingSpinner } from "@/components/ui/spinner";
+import { DetailRow, DetailRowBoolean } from "@/components/ui/detail-row";
 import { GradeWithSubject, Subject } from "@/db/schema";
 import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { catchProblem } from "@/lib/problem";
@@ -18,6 +21,7 @@ import {
   getGradeAverageBySubject,
   getGradesBySubjectWithSubject,
 } from "@/lib/services/grade-service";
+import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { getSubjectById } from "@/lib/services/subject-service";
 import { truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
@@ -40,6 +44,7 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
   const [dataState, setDataState] = useState<"loading" | "loaded" | "notfound">(
     "loading"
   );
+  const userPreferences = usePreferences();
 
   const fetchData = async () => {
     try {
@@ -91,36 +96,92 @@ export function SubjectDetails({ subjectId }: { subjectId: string }) {
   }, [subjectId, router, session]);
 
   if (session.status === "unauthenticated") return <>Log in first lil bro</>;
-  if (session.status === "loading" || dataState === "loading")
-    return <LoadingSpinner />;
+  if (
+    session.status === "loading" ||
+    dataState === "loading" ||
+    !subject ||
+    !grades ||
+    !average ||
+    (!isMobile && !isTablet && !isDesktop)
+  )
+    return (
+      <>
+        <CardBoard className="flex xl:hidden">
+          <CardSkeleton wide variant="medium" />
+          <CardSkeleton wide variant="large" />
+          <CardSkeleton wide variant="small" />
+          <CardSkeleton wide variant="small" />
+        </CardBoard>
+        <CardBoard row className="hidden xl:flex">
+          <CardBoard>
+            <CardSkeleton variant="small" />
+            <CardSkeleton variant="small" />
+            <CardSkeleton variant="medium" />
+          </CardBoard>
+          <CardBoard>
+            <CardSkeleton variant="medium" />
+            <CardSkeleton variant="medium" />
+          </CardBoard>
+          <CardBoard>
+            <CardSkeleton variant="large" />
+            <CardSkeleton variant="medium" />
+          </CardBoard>
+        </CardBoard>
+      </>
+    );
   if (session.status === "authenticated")
     return dataState === "loaded" ? (
       <CardBoard row={isDesktop}>
         {subject ? (
           <>
+            <CardBoard>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{truncateText(subject.name!, 20).text}</CardTitle>
+                  <CardDescription>Subject details</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <DetailRow title="ID" value={subject.id} />
+                  <DetailRow
+                    title="Name"
+                    value={truncateText(subject.name!, 40).text}
+                  />
+                  <DetailRowBoolean
+                    variant="yes-no"
+                    title="Passing"
+                    value={doesGradePass(
+                      average.gradeAverage!,
+                      userPreferences.preferences!
+                    )}
+                  />
+                  <DetailRow title="Grade count" value={average.gradeAmount} />
+                  <DetailRow
+                    title="Grade count (weights considered)"
+                    value={average.gradeWeightedAmount}
+                  />
+                  <DetailRow title="Grade sum" value={average.gradeSum} />
+                  <DetailRow
+                    title="Grade sum (weights considered)"
+                    value={average.gradeWeightedSum}
+                  />
+                </CardContent>
+              </Card>
+              <GradesForSubject
+                data={grades}
+                setData={setGrades}
+                refresh={fetchData}
+                subject={subject}
+              />
+            </CardBoard>
             {average && (
-              <GradeOverviewForSubject data={grades} averageData={average} />
+              <>
+                <GradeOverviewForSubject data={grades} averageData={average} />
+                <RequiredGradesForSubject
+                  subject={subject}
+                  averageData={average}
+                />
+              </>
             )}
-            <Card>
-              <CardHeader>
-                <CardTitle>{truncateText(subject.name!, 20).text}</CardTitle>
-                <CardDescription>Subject details</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <b>Details</b>
-                <p>ID: {subject.id}</p>
-                <p>Name: {truncateText(subject.name!, 40).text}</p>
-                <p>Weight: {subject.weight}</p>
-                <p>Category: {subject.category_fk}</p>
-                <p>User: {subject.userId}</p>
-              </CardContent>
-            </Card>
-            <GradesForSubject
-              data={grades}
-              setData={setGrades}
-              refresh={fetchData}
-              subject={subject}
-            />
           </>
         ) : (
           <div>Subject not found</div>
