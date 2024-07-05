@@ -37,7 +37,7 @@ export default function SubjectPage({ params }: { params: { id: string } }) {
   return <SubjectDetails subjectId={params.id} />;
 }
 
-export function SubjectDetails({ subjectId }: { subjectId: string }) {
+function SubjectDetails({ subjectId }: { subjectId: string }) {
   const session = useSession();
   const router = useRouter();
   const { isMobile, isTablet, isDesktop } = useDevice();
