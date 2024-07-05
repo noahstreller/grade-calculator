@@ -91,7 +91,7 @@ export function GradesForSubject({
           <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button variant={"outline"}>{t("grades.add")}</Button>
+              <Button variant={"secondary"}>{t("grades.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
