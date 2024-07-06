@@ -34,13 +34,14 @@ export function getProblem(problem: Problem): Problem {
 
 export function catchProblem(thingInQuestion: any, shouldThrow = false): any {
   if (
-    thingInQuestion.errorMessage ||
-    thingInQuestion.statusCode ||
-    thingInQuestion.errorCode ||
-    thingInQuestion.solution ||
-    thingInQuestion.detail ||
-    thingInQuestion.finalMessage ||
-    thingInQuestion.e
+    thingInQuestion &&
+    (thingInQuestion.errorMessage ||
+      thingInQuestion.statusCode ||
+      thingInQuestion.errorCode ||
+      thingInQuestion.solution ||
+      thingInQuestion.detail ||
+      thingInQuestion.finalMessage ||
+      thingInQuestion.e)
   ) {
     if (
       thingInQuestion.errorCode === ErrorCode.ForeignKeyConstraintViolation &&
