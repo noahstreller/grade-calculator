@@ -6,6 +6,13 @@ import { GradesForSubject } from "@/components/cards/gradesForSubject/gradesForS
 import { RequiredGradesForSubject } from "@/components/cards/required-grades";
 import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,7 +34,7 @@ import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { getSubjectById } from "@/lib/services/subject-service";
 import { truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
-import { Bird, HomeIcon } from "lucide-react";
+import { Bird, HomeIcon, LogInIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -44,9 +51,9 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
   const [subject, setSubject] = useState<Subject | null>(null);
   const [grades, setGrades] = useState<GradeWithSubject[]>([]);
   const [average, setAverage] = useState<Average | null>(null);
-  const [dataState, setDataState] = useState<"loading" | "loaded" | "notfound">(
-    "loading"
-  );
+  const [dataState, setDataState] = useState<
+    "loading" | "loaded" | "notfound" | "empty"
+  >("loading");
   const userPreferences = usePreferences();
 
   const fetchData = async () => {
@@ -82,14 +89,15 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
         const newAverage = catchProblem(
           await getGradeAverageBySubject(subject)
         );
-        console.log("newAverage", newAverage);
-        if (subject) {
+        if (subject && newGrades && newAverage) {
           setSubject(subject);
           setGrades([...newGrades]);
           setAverage(newAverage);
           setDataState("loaded");
         } else {
-          setDataState("notfound");
+          subject && newGrades.length === 0
+            ? setDataState("empty")
+            : setDataState("notfound");
         }
       } catch (error) {
         console.error(error);
@@ -98,10 +106,105 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
     fetchData();
   }, [subjectId, router, session]);
 
-  if (session.status === "unauthenticated") return <>Log in first lil bro</>;
+  if (session.status === "unauthenticated")
+    return (
+      <div>
+        <Breadcrumb className="pl-2 pb-3">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              {subject ? truncateText(subject.name!, 20).text : subjectId}
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Alert>
+          <Bird className="h-4 w-4" />
+          <AlertTitle className="font-bold">Woops.</AlertTitle>
+          <AlertDescription className="flex flex-col gap-4">
+            <>You must be logged in to view subject details.</>
+            <Button asChild>
+              <Link
+                href={"/login"}
+                className="flex flex-row gap-2 justify-center items-center"
+              >
+                <LogInIcon className="size-4 text-muted-foreground" />
+                Log in now
+              </Link>
+            </Button>
+            <Button variant={"outline"} asChild>
+              <Link
+                href={"/"}
+                className="flex flex-row gap-2 justify-center items-center"
+              >
+                <HomeIcon className="size-4 text-muted-foreground" />
+                Go home
+              </Link>
+            </Button>
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
+  if (dataState === "empty")
+    return (
+      <div>
+        <Breadcrumb className="pl-2 pb-3">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              {subject ? truncateText(subject.name!, 20).text : subjectId}
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <Alert>
+          <Bird className="h-4 w-4" />
+          <AlertTitle className="font-bold">Woops.</AlertTitle>
+          <AlertDescription className="flex flex-col gap-4">
+            <>This subject contains no data yet.</>
+            <Button variant={"outline"} asChild>
+              <Link
+                href={"/"}
+                className="flex flex-row gap-2 justify-center items-center"
+              >
+                <HomeIcon className="size-4 text-muted-foreground" />
+                Return home
+              </Link>
+            </Button>
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
   if (dataState === "notfound")
     return (
       <div>
+        <Breadcrumb className="pl-2 pb-3">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              {subject ? truncateText(subject.name!, 20).text : subjectId}
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <Alert>
           <Bird className="h-4 w-4" />
           <AlertTitle className="font-bold">Woops.</AlertTitle>
@@ -123,9 +226,12 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
   if (
     session.status === "loading" ||
     dataState === "loading" ||
-    !subject ||
-    !grades ||
-    !average ||
+    subject === null ||
+    subject === undefined ||
+    grades === null ||
+    grades === undefined ||
+    average === null ||
+    average === undefined ||
     (!isMobile && !isTablet && !isDesktop)
   )
     return (
@@ -156,70 +262,87 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
   if (session.status === "authenticated")
     return (
       dataState === "loaded" && (
-        <CardBoard row={isDesktop}>
-          {subject ? (
-            <>
-              <CardBoard>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>
-                      {truncateText(subject.name!, 20).text}
-                    </CardTitle>
-                    <CardDescription>Subject details</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <DetailRow title="ID" value={subject.id} />
-                    <DetailRow
-                      title="Name"
-                      value={truncateText(subject.name!, 40).text}
-                    />
-                    <DetailRowBoolean
-                      variant="yes-no"
-                      title="Passing"
-                      value={doesGradePass(
-                        average.gradeAverage!,
-                        userPreferences.preferences!
-                      )}
-                    />
-                    <DetailRow
-                      title="Grade count"
-                      value={average.gradeAmount}
-                    />
-                    <DetailRow
-                      title="Grade count (weights considered)"
-                      value={average.gradeWeightedAmount}
-                    />
-                    <DetailRow title="Grade sum" value={average.gradeSum} />
-                    <DetailRow
-                      title="Grade sum (weights considered)"
-                      value={average.gradeWeightedSum}
-                    />
-                  </CardContent>
-                </Card>
-                <GradesForSubject
-                  data={grades}
-                  setData={setGrades}
-                  refresh={fetchData}
-                  subject={subject}
-                />
-              </CardBoard>
-              {average && (
-                <>
-                  <GradeOverviewForSubject
+        <>
+          <Breadcrumb className="pl-2 pb-3">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>Subjects</BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                {subject ? truncateText(subject.name!, 20).text : subjectId}
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <CardBoard row={isDesktop}>
+            {subject ? (
+              <>
+                <CardBoard>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>
+                        {truncateText(subject.name!, 20).text}
+                      </CardTitle>
+                      <CardDescription>Subject details</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <DetailRow title="ID" value={subject.id} />
+                      <DetailRow
+                        title="Name"
+                        value={truncateText(subject.name!, 40).text}
+                      />
+                      <DetailRowBoolean
+                        variant="yes-no"
+                        title="Passing"
+                        value={doesGradePass(
+                          average.gradeAverage!,
+                          userPreferences.preferences!
+                        )}
+                      />
+                      <DetailRow
+                        title="Grade count"
+                        value={average.gradeAmount}
+                      />
+                      <DetailRow
+                        title="Grade count (weights considered)"
+                        value={average.gradeWeightedAmount}
+                      />
+                      <DetailRow title="Grade sum" value={average.gradeSum} />
+                      <DetailRow
+                        title="Grade sum (weights considered)"
+                        value={average.gradeWeightedSum}
+                      />
+                    </CardContent>
+                  </Card>
+                  <GradesForSubject
                     data={grades}
-                    averageData={average}
-                  />
-                  <RequiredGradesForSubject
+                    setData={setGrades}
+                    refresh={fetchData}
                     subject={subject}
-                    averageData={average}
                   />
-                </>
-              )}
-            </>
-          ) : (
-            <div>Subject not found</div>
-          )}
-        </CardBoard>
+                </CardBoard>
+                {average && (
+                  <>
+                    <GradeOverviewForSubject
+                      data={grades}
+                      averageData={average}
+                    />
+                    <RequiredGradesForSubject
+                      subject={subject}
+                      averageData={average}
+                    />
+                  </>
+                )}
+              </>
+            ) : (
+              <div>Subject not found</div>
+            )}
+          </CardBoard>
+        </>
       )
     );
 }
