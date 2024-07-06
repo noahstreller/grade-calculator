@@ -6,10 +6,11 @@ import { Highlight } from "@/components/ui/card-stack";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Subject } from "@/db/schema";
 import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
-import { AverageWithSubject } from "@/types/types";
+import { Average, AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -40,6 +41,12 @@ function RequiredGradesBody({
   const getRequiredGradeToPass = (
     average: AverageWithSubject
   ): { result: number; overflowCounts: number } => {
+    if (
+      preferences?.maximumGrade === preferences?.passingGrade ||
+      (preferences?.minimumGrade === preferences?.passingGrade &&
+        preferences?.passingInverse)
+    )
+      return { result: Infinity, overflowCounts: Infinity };
     let sum = average.average?.gradeWeightedSum!;
     let weight = simulatedWeight;
     let count = average.average?.gradeWeightedAmount! + weight;
@@ -217,6 +224,190 @@ export function RequiredGrades({
         <RequiredGradesBody
           averageData={averageData}
           showPassing={showPassing}
+          simulatedWeight={getSimulatedWeight().simulatedWeight}
+        />
+        <CardDescription className="mt-4 mx-1">
+          If you know the weight of the next exam, you can apply that weight to
+          the required grades.
+        </CardDescription>
+        <div className="flex flex-row gap-3 max-w-full">
+          <Input
+            value={simulatedWeight || ""}
+            type="number"
+            onChange={(e) => {
+              setSimulatedWeight(Number(e.target.value));
+            }}
+            placeholder="Simulated weight"
+            className=" flex-shrink-1"
+          />
+          <Button
+            variant="outline"
+            className="flex-shrink-0"
+            onClick={() => {
+              setSimulatedWeight(undefined);
+            }}
+          >
+            Reset
+          </Button>
+        </div>
+        {!getSimulatedWeight().valid && (
+          <span className="text-red-400 text-xs">
+            Weight must be a positive number
+          </span>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function RequiredGradesBodyForSubject({
+  averageData,
+  simulatedWeight,
+  subject,
+}: {
+  averageData: Average;
+  simulatedWeight: number;
+  subject: Subject;
+}) {
+  const { t } = useTranslation("common");
+  const preferences = usePreferences().preferences;
+
+  const { isMobile } = useDevice();
+
+  const getRequiredGradeToPass = (
+    average: Average
+  ): { result: number; overflowCounts: number } => {
+    if (
+      preferences?.maximumGrade === preferences?.passingGrade ||
+      (preferences?.minimumGrade === preferences?.passingGrade &&
+        preferences?.passingInverse)
+    )
+      return { result: Infinity, overflowCounts: Infinity };
+    let sum = average.gradeWeightedSum!;
+    let weight = simulatedWeight;
+    let count = average.gradeWeightedAmount! + weight;
+    let passing = preferences?.passingGrade!;
+    let max = preferences?.maximumGrade!;
+    let min = preferences?.minimumGrade!;
+    let result = (passing * count - sum) / weight;
+    let overflowCounts = 0;
+    while (result > max || result < min) {
+      count++;
+      if (result > max) {
+        sum += max;
+        overflowCounts++;
+      } else {
+        sum += min;
+        overflowCounts--;
+      }
+      result = (passing * count - sum) / weight;
+    }
+    return { result, overflowCounts };
+  };
+
+  const getGradeOverflowString = (overflowCounts: number) => {
+    let result = "";
+    if (overflowCounts < 0) {
+      if (overflowCounts < -10)
+        return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
+      for (let i = 0; i > overflowCounts; i--) {
+        result += ` + ${preferences?.minimumGrade}`;
+      }
+      return result;
+    }
+
+    if (overflowCounts > 10)
+      return ` + ${overflowCounts} × ${preferences?.maximumGrade}`;
+    for (let i = 0; i < overflowCounts; i++) {
+      result += ` + ${preferences?.maximumGrade}`;
+    }
+    return result;
+  };
+
+  const truncateForPage = (subject: string | null): string => {
+    if (subject === null) return "";
+    return truncateText(subject, 20).text;
+  };
+  return (
+    <CardBoard>
+      <h2>
+        If your next exam is weighted{" "}
+        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
+        need:
+      </h2>
+      <Card>
+        <CardHeader>
+          <h2>
+            {subject &&
+            doesGradePass(averageData?.gradeAverage!, preferences!) ? (
+              <b className="text-green-400 mr-2">
+                {truncateForPage(subject.name)}
+              </b>
+            ) : (
+              <b className="text-red-400 mr-2">
+                {truncateForPage(subject.name)}
+              </b>
+            )}
+            <SubjectGradeBadge average={{ average: averageData, subject }} />
+          </h2>
+        </CardHeader>
+        <CardContent>
+          <h1 className="text-2xl text-gray-400">
+            <span className="text-muted-foreground text-4xl">
+              {preferences?.passingInverse ? "<" : ">"}
+            </span>
+            <b className="text-5xl text-foreground">
+              {round(getRequiredGradeToPass(averageData).result, 2)}
+            </b>
+            {getRequiredGradeToPass(averageData).overflowCounts != 0
+              ? getGradeOverflowString(
+                  getRequiredGradeToPass(averageData).overflowCounts
+                )
+              : null}
+            <br />
+            {doesGradePass(averageData.gradeAverage!, preferences!)
+              ? t("required-grades.passed")
+              : t("required-grades.required")}
+          </h1>
+        </CardContent>
+      </Card>
+    </CardBoard>
+  );
+}
+
+export function RequiredGradesForSubject({
+  averageData,
+  subject,
+  className = "",
+  showPassingGrades = false,
+}: {
+  averageData: Average;
+  subject: Subject;
+  className?: string;
+  showPassingGrades?: boolean;
+}) {
+  const { t } = useTranslation("common");
+  const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
+  const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
+
+  const getSimulatedWeight = () => {
+    if (!simulatedWeight) return { simulatedWeight: 1, valid: true };
+    if (simulatedWeight < 0) return { simulatedWeight: 1, valid: false };
+    return { simulatedWeight, valid: true };
+  };
+
+  return (
+    <Card className={className}>
+      <CardHeader className="flex-row justify-between">
+        <div>
+          <CardTitle>{t("required-grades.title")}</CardTitle>
+          <CardDescription>{t("required-grades.description")}</CardDescription>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <RequiredGradesBodyForSubject
+          averageData={averageData}
+          subject={subject}
           simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
         <CardDescription className="mt-4 mx-1">
