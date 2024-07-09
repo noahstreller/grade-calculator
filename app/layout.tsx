@@ -3,6 +3,7 @@ import { Footer } from "@/components/footer";
 import HeaderComponent from "@/components/header";
 import { LoadingScreen } from "@/components/loadingscreen";
 import { Maintenance, MaintenanceType } from "@/components/pages/maintenance";
+import { Onboarding } from "@/components/pages/onboarding";
 import { ToasterWrapper } from "@/components/toaster-wrapper";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
@@ -128,6 +129,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <LoadingScreen />
+            <Onboarding />
             <ToasterWrapper />
           </Providers>
         )}
