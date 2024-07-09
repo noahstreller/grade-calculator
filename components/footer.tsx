@@ -33,8 +33,8 @@ export function Footer() {
         >
           <GitBranch className="mr-2 size-4" />{" "}
           {process.env.VERCEL_ENV === "production"
-            ? "Production"
-            : process.env.VERCEL_GIT_COMMIT_REF || "Development"}
+            ? process.env.npm_package_version || "Production"
+            : process.env.npm_package_version || "Development"}
         </FooterItem>
       </div>
     </footer>
