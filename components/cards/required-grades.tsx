@@ -400,8 +400,10 @@ export function RequiredGradesForSubject({
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
-          <CardTitle>{t("required-grades.title")}</CardTitle>
-          <CardDescription>{t("required-grades.description")}</CardDescription>
+          <CardTitle>Required Grade</CardTitle>
+          <CardDescription>
+            The grade you need to pass this subject
+          </CardDescription>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
@@ -412,7 +414,7 @@ export function RequiredGradesForSubject({
         />
         <CardDescription className="mt-4 mx-1">
           If you know the weight of the next exam, you can apply that weight to
-          the required grades.
+          the required grade.
         </CardDescription>
         <div className="flex flex-row gap-3 max-w-full">
           <Input

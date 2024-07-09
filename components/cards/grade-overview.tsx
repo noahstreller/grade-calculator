@@ -567,7 +567,9 @@ export function GradeOverviewForSubject({
     <Card className={className}>
       <CardHeader>
         <CardTitle>{t("overview.title")}</CardTitle>
-        <CardDescription>{t("overview.description")}</CardDescription>
+        <CardDescription>
+          This is an overview of your grades in this subject
+        </CardDescription>
       </CardHeader>
       {data.length === 0 ? (
         <CardContent>
