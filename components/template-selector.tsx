@@ -52,7 +52,6 @@ export function TemplateSelector({
   const [open, setOpen] = useState(false);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     setSelectedTemplate(data.preferenceTemplate);
   }
 
