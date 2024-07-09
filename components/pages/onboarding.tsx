@@ -60,7 +60,7 @@ export function Onboarding() {
         <div
           className={cn(
             "pt-12 flex items-start",
-            selectedTemplate && "gap-x-32 gap-y-12",
+            selectedTemplate && "gap-x-20 gap-y-12",
             isMobile ? "flex-col" : "flex-row"
           )}
         >
