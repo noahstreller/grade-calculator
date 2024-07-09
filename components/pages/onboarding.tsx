@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Highlight } from "@/components/ui/card-stack";
+import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { PreferencesTranslations } from "@/lib/translationObjects";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -18,6 +20,7 @@ import { useState } from "react";
 export function Onboarding() {
   const { t } = useTranslation("common");
   const preferences = usePreferences();
+  const { isMobile, isTablet, isDesktop } = useDevice();
 
   const preferencesTranslations: PreferencesTranslations = {
     title: t("preferences.title"),
@@ -46,28 +49,38 @@ export function Onboarding() {
 
   if (preferences.isDefault)
     return (
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-background z-50 pt-5 overflow-scroll">
+      <div className="fixed inset-0 flex flex-col items-center justify-start bg-background z-50 pt-5 overflow-scroll">
         <div className="items-center gap-8 flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight text-white-900 sm:text-6xl">
-            Grades
+            <span className="text-muted-foreground">Grades</span>
             <br />
             Onboarding
           </h1>
         </div>
         <div
           className={cn(
-            "pt-5 flex flex-row items-center",
-            selectedTemplate && "gap-32"
+            "pt-12 flex items-start",
+            selectedTemplate && "gap-x-32 gap-y-12",
+            isMobile ? "flex-col" : "flex-row"
           )}
         >
           <TemplateSelector setSelectedTemplate={setSelectedTemplate} />
-          <motion.div layout>
+          <motion.div
+            layout
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+            }}
+          >
             {selectedTemplate && (
-              <Card>
+              <Card className={cn(isMobile ? "max-w-80" : "max-w-md")}>
                 <CardHeader>
                   <CardTitle>Advanced Settings</CardTitle>
                   <CardDescription>
-                    You can manually change the settings here.
+                    Hit <Highlight>Save</Highlight> to apply your changes and
+                    complete the onboarding.
+                    <br /> You can change this in the settings at any time.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

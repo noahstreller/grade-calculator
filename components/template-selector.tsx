@@ -27,8 +27,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { PreferenceTemplate, templates } from "@/templates";
+import { useState } from "react";
 
 const preferenceTemplates: PreferenceTemplate[] = templates;
 
@@ -47,6 +49,8 @@ export function TemplateSelector({
     resolver: zodResolver(FormSchema),
   });
 
+  const [open, setOpen] = useState(false);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
     setSelectedTemplate(data.preferenceTemplate);
@@ -64,7 +68,7 @@ export function TemplateSelector({
               <FormDescription>
                 Select a template or use the advanced settings.
               </FormDescription>
-              <Popover>
+              <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -84,31 +88,34 @@ export function TemplateSelector({
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-full p-0">
                   <Command>
                     <CommandInput placeholder="Search template..." />
                     <CommandEmpty>No template found.</CommandEmpty>
-                    <CommandGroup>
-                      {preferenceTemplates.map((template) => (
-                        <CommandItem
-                          value={template.title}
-                          key={template.id}
-                          onSelect={() => {
-                            form.setValue("preferenceTemplate", template.id);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              template.id === field.value
-                                ? "opacity-100"
-                                : "opacity-0"
-                            )}
-                          />
-                          {template.title}
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
+                    <ScrollArea className="h-fit max-h-[30vh] overflow-auto">
+                      <CommandGroup>
+                        {preferenceTemplates.map((template) => (
+                          <CommandItem
+                            value={template.title}
+                            key={template.id}
+                            onSelect={() => {
+                              form.setValue("preferenceTemplate", template.id);
+                              setOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                template.id === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {template.title}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </ScrollArea>
                   </Command>
                 </PopoverContent>
               </Popover>

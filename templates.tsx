@@ -9,19 +9,19 @@ export type PreferenceTemplate = {
 
 export const templates: PreferenceTemplate[] = [
   {
-    id: "percentage",
-    title: "🌍 Percentage",
-    passingGrade: 50,
-    minimumGrade: 0,
-    maximumGrade: 100,
-    passingInverse: false,
-  },
-  {
     id: "custom",
     title: "✒️ Custom",
     passingGrade: 5,
     minimumGrade: 1,
     maximumGrade: 10,
+    passingInverse: false,
+  },
+  {
+    id: "percentage",
+    title: "🌍 Percentage",
+    passingGrade: 50,
+    minimumGrade: 0,
+    maximumGrade: 100,
     passingInverse: false,
   },
   {
@@ -50,10 +50,34 @@ export const templates: PreferenceTemplate[] = [
   },
   {
     id: "poland_he",
-    title: "🇵🇱 Poland (Higher Education)",
+    title: "🇵🇱 Poland (Higher Ed.)",
     passingGrade: 3,
     minimumGrade: 2,
     maximumGrade: 5.5,
+    passingInverse: false,
+  },
+  {
+    id: "france",
+    title: "🇫🇷 France",
+    passingGrade: 10,
+    minimumGrade: 0,
+    maximumGrade: 20,
+    passingInverse: false,
+  },
+  {
+    id: "italy_hs",
+    title: "🇮🇹 Italy",
+    passingGrade: 6,
+    minimumGrade: 0,
+    maximumGrade: 10,
+    passingInverse: false,
+  },
+  {
+    id: "italy_he",
+    title: "🇮🇹 Italy (Higher Ed.)",
+    passingGrade: 18,
+    minimumGrade: 0,
+    maximumGrade: 10,
     passingInverse: false,
   },
 ];

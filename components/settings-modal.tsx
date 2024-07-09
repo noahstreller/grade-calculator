@@ -30,7 +30,7 @@ import {
 } from "@/lib/translationObjects";
 import { getDefaultPreferences } from "@/lib/utils";
 import { templates } from "@/templates";
-import { Settings, Trash2 } from "lucide-react";
+import { RotateCcwIcon, SaveIcon, Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
@@ -452,27 +452,6 @@ export function SettingsFormForOnboarding({
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="newEntitySheetShouldStayOpen"
-          render={({ field }) => (
-            <FormItem>
-              <div className="space-y-0.5">
-                <FormLabel>{translations.keepModalsOpen}</FormLabel>
-                <FormDescription>
-                  {translations.keepModalsOpenDescription}
-                </FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <FormField
           control={form.control}
           name="minimumGrade"
@@ -629,11 +608,19 @@ export function SettingsFormForOnboarding({
           className="w-full"
           type="submit"
         >
-          {submitted ? <LoadingSpinner /> : t("actions.save")}
+          {submitted ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <SaveIcon className="size-4 mr-2" />
+              Save
+            </>
+          )}
         </Button>
 
         <Button className="w-full" variant="outline" onClick={onReset}>
-          {t("actions.reset")}
+          <RotateCcwIcon className="size-4 mr-2 text-muted-foreground" />
+          Reset
         </Button>
       </form>
     </Form>
