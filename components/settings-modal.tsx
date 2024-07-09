@@ -29,6 +29,7 @@ import {
   PreferencesTranslations,
 } from "@/lib/translationObjects";
 import { getDefaultPreferences } from "@/lib/utils";
+import { templates } from "@/templates";
 import { Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
@@ -345,22 +346,31 @@ export function SettingsModalForm({
 
 export function SettingsFormForOnboarding({
   translations,
+  selectedTemplate,
 }: {
   translations: PreferencesTranslations;
+  selectedTemplate: string;
 }) {
   const preferences = usePreferences();
+  const preferencesFromTemplate = templates.find(
+    (t) => t.id === selectedTemplate
+  );
   const { t } = useTranslation("common");
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
-  const [decimals, setDecimals] = useState(
-    preferences.preferences?.gradeDecimals ?? 3
-  );
+  const [decimals, setDecimals] = useState(3);
   const [submitted, setSubmitted] = useState(false);
 
   type FormValues = NewPreferences;
-  const defaultValues: DefaultValues<FormValues> =
-    preferences.preferences as FormValues;
+  const defaultValues: DefaultValues<FormValues> = {
+    gradeDecimals: 3,
+    newEntitySheetShouldStayOpen: false,
+    passingInverse: preferencesFromTemplate?.passingInverse ?? false,
+    passingGrade: preferencesFromTemplate?.passingGrade ?? 50,
+    minimumGrade: preferencesFromTemplate?.minimumGrade ?? 0,
+    maximumGrade: preferencesFromTemplate?.maximumGrade ?? 100,
+  } satisfies FormValues;
 
   const FormSchema = z.object({
     gradeDecimals: z.number().gte(0),
@@ -400,7 +410,7 @@ export function SettingsFormForOnboarding({
   useEffect(() => {
     form.reset(defaultValues as any);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedTemplate]);
 
   return (
     <Form {...form}>
@@ -442,7 +452,7 @@ export function SettingsFormForOnboarding({
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name="newEntitySheetShouldStayOpen"
           render={({ field }) => (
@@ -462,7 +472,7 @@ export function SettingsFormForOnboarding({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
           name="minimumGrade"
