@@ -1,7 +1,11 @@
 "use server";
 import { Grade, NewPreferences, Preferences } from "@/db/schema";
 import { Problem, catchProblem, getProblem } from "@/lib/problem";
-import { addPreferencesToDb, getPreferencesFromDb, updatePreferencesInDb } from "@/lib/repositories/preferences-repo";
+import {
+  addPreferencesToDb,
+  getPreferencesFromDb,
+  updatePreferencesInDb,
+} from "@/lib/repositories/preferences-repo";
 import { getAllGrades, updateGrade } from "@/lib/services/grade-service";
 import { getUserId, setUserId } from "@/lib/services/service-util";
 import { getDefaultPreferences } from "@/lib/utils";
@@ -19,15 +23,16 @@ export async function getPreferences(): Promise<Preferences[] | Problem> {
   }
 }
 
-export async function getPreferencesElseGetDefault(): Promise<Preferences | Problem> {
+export async function getPreferencesElseGetDefault(): Promise<
+  { preferences: Preferences; isDefault: boolean } | Problem
+> {
   try {
     const userId = await getUserId();
     let result = await getPreferencesFromDb(userId);
     if (result.length === 1) {
-      return result[0];
+      return { preferences: result[0], isDefault: false };
     }
-    return getDefaultPreferences();
-
+    return { preferences: getDefaultPreferences(), isDefault: true };
   } catch (e: any) {
     return getProblem({
       errorMessage: e.message,
@@ -58,23 +63,21 @@ export async function savePreferences(
   }
 }
 
-export async function adjustGradesToPreferences(
-  preferences: Preferences
-){
+export async function adjustGradesToPreferences(preferences: Preferences) {
   try {
     let grades: Grade[] = catchProblem(await getAllGrades());
     grades.map((grade) => {
       let modifiedGrade = grade;
       let wasModified = false;
-      if(grade.value! > preferences.maximumGrade!){
+      if (grade.value! > preferences.maximumGrade!) {
         modifiedGrade.value = preferences.maximumGrade;
         wasModified = true;
       }
-      if(grade.value! < preferences.minimumGrade!){
+      if (grade.value! < preferences.minimumGrade!) {
         modifiedGrade.value = preferences.minimumGrade;
         wasModified = true;
       }
-      if(wasModified){
+      if (wasModified) {
         updateGrade(modifiedGrade);
       }
     });

@@ -131,7 +131,7 @@ export async function getGradeAverageWithSubjectBySubject(
           gradeAmount: grades.length,
           passing: doesGradePass(
             weightedSum / totalGradesWithWeight,
-            catchProblem(await getPreferencesElseGetDefault())
+            catchProblem(await getPreferencesElseGetDefault()).preferences
           ),
         },
         subject: grades[0].subjects,
@@ -175,7 +175,7 @@ export async function getGradeAverageBySubject(
         gradeSum: sum,
         passing: doesGradePass(
           weightedSum / totalGradesWithWeight,
-          catchProblem(await getPreferencesElseGetDefault())
+          catchProblem(await getPreferencesElseGetDefault()).preferences
         ),
       };
     };
