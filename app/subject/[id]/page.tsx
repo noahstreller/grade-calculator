@@ -303,19 +303,38 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                           userPreferences.preferences!
                         )}
                       />
-                      <DetailRow
-                        title="Grade count"
-                        value={average.gradeAmount}
-                      />
-                      <DetailRow
-                        title="Grade count (weights considered)"
-                        value={average.gradeWeightedAmount}
-                      />
-                      <DetailRow title="Grade sum" value={average.gradeSum} />
-                      <DetailRow
-                        title="Grade sum (weights considered)"
-                        value={average.gradeWeightedSum}
-                      />
+                      {average.gradeAmount === average.gradeWeightedAmount ? (
+                        <DetailRow
+                          title="Grade count"
+                          value={average.gradeAmount}
+                        />
+                      ) : (
+                        <>
+                          <DetailRow
+                            title="Grade count"
+                            value={average.gradeAmount}
+                          />
+                          <DetailRow
+                            title="Grade count (weights considered)"
+                            value={average.gradeWeightedAmount}
+                          />
+                        </>
+                      )}
+
+                      {average.gradeSum === average.gradeWeightedSum ? (
+                        <DetailRow title="Grade sum" value={average.gradeSum} />
+                      ) : (
+                        <>
+                          <DetailRow
+                            title="Grade sum"
+                            value={average.gradeSum}
+                          />
+                          <DetailRow
+                            title="Grade sum (weights considered)"
+                            value={average.gradeWeightedSum}
+                          />
+                        </>
+                      )}
                     </CardContent>
                   </Card>
                   <GradesForSubject
