@@ -1,4 +1,5 @@
 import Providers from "@/app/providers";
+import CookieConsent from "@/components/cookie-consent";
 import { Footer } from "@/components/footer";
 import HeaderComponent from "@/components/header";
 import { LoadingScreen } from "@/components/loadingscreen";
@@ -130,6 +131,7 @@ export default function RootLayout({
             </div>
             <LoadingScreen />
             <Onboarding />
+            <CookieConsent />
             <ToasterWrapper />
           </Providers>
         )}
