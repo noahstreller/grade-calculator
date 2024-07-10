@@ -79,13 +79,15 @@ export const config = {
             wellKnown: process.env.CUSTOM_OAUTH_WELLKNOWN_URL,
             clientId: process.env.CUSTOM_OAUTH_CLIENT_ID,
             clientSecret: process.env.CUSTOM_OAUTH_SECRET,
+            authorization: { params: { scope: "openid email profile" } },
+            checks: ["pkce", "state"],
             profile(profile) {
               console.log(profile);
               return {
                 id: profile.sub,
-                name: profile.name ?? profile.sub,
-                email: profile.email ?? `${profile.sub}@nstr.local`,
-                image: undefined,
+                name: profile.name ?? profile.preferred_username,
+                email: profile.email,
+                image: profile.picture,
               };
             },
           } as Provider,
