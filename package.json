@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "upgrade": "npm i next@latest react@latest react-dom@latest eslint-config-next@latest @types/react @types/react-dom"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.8.2",
