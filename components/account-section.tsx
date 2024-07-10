@@ -52,7 +52,7 @@ export function AccountSection() {
         <div>
           {session.data?.user.name && (
             <h2 className="text-lg font-semibold">
-              {truncateText(session.data?.user.name, 30).text}
+              {truncateText(session.data?.user.name, 20).text}
             </h2>
           )}
           <p className="text-gray-500">
