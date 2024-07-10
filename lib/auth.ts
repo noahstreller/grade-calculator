@@ -82,7 +82,6 @@ export const config = {
             authorization: { params: { scope: "openid email profile" } },
             checks: ["pkce", "state"],
             profile(profile) {
-              console.log(profile);
               return {
                 id: profile.sub,
                 name: profile.name ?? profile.preferred_username,
