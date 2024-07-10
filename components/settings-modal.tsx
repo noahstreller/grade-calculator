@@ -404,7 +404,7 @@ export function SettingsFormForOnboarding({
 
   function onReset(event: any) {
     event.preventDefault();
-    form.reset(getDefaultPreferences() as any);
+    form.reset(defaultValues as any);
   }
 
   useEffect(() => {

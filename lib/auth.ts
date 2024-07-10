@@ -9,12 +9,13 @@ import {
   NextApiRequest,
   NextApiResponse,
 } from "next";
-import { NextAuthOptions, getServerSession } from "next-auth";
+import { getServerSession, NextAuthOptions } from "next-auth";
 import type { Adapter } from "next-auth/adapters";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { Provider } from "next-auth/providers/index";
 
 export const config = {
   adapter: DrizzleAdapter(db) as Adapter,
@@ -66,6 +67,32 @@ export const config = {
         };
       },
     },
+    ...(process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME &&
+    process.env.CUSTOM_OAUTH_SECRET &&
+    process.env.CUSTOM_OAUTH_CLIENT_ID &&
+    process.env.CUSTOM_OAUTH_WELLKNOWN_URL
+      ? [
+          {
+            id: "custom",
+            name: process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME,
+            type: "oauth",
+            wellKnown: process.env.CUSTOM_OAUTH_WELLKNOWN_URL,
+            clientId: process.env.CUSTOM_OAUTH_CLIENT_ID,
+            clientSecret: process.env.CUSTOM_OAUTH_SECRET,
+            authorization: { params: { scope: "openid email profile" } },
+            checks: ["pkce", "state"],
+            profile(profile) {
+              console.log(profile);
+              return {
+                id: profile.sub,
+                name: profile.name ?? profile.preferred_username,
+                email: profile.email,
+                image: profile.picture,
+              };
+            },
+          } as Provider,
+        ]
+      : []),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
