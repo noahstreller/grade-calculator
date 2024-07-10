@@ -20,7 +20,14 @@ import { Highlight } from "@/components/ui/card-stack";
 import { Separator } from "@/components/ui/separator";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { SiDiscord, SiGithub, SiGoogle } from "@icons-pack/react-simple-icons";
-import { Bird, Clock, Container, Globe, MailCheck } from "lucide-react";
+import {
+  Bird,
+  Clock,
+  Container,
+  Globe,
+  MailCheck,
+  ShieldEllipsis,
+} from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -79,6 +86,18 @@ export function SignInPageComponent() {
                   }}
                 >
                   <Container className="m-2 size-5" /> Local
+                </Button>
+              )}
+              {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
+                <Button
+                  variant={"secondary"}
+                  className="w-full"
+                  onClick={() => {
+                    signIn("custom");
+                  }}
+                >
+                  <ShieldEllipsis className="m-2 size-5" />
+                  {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}
                 </Button>
               )}
               <Button
