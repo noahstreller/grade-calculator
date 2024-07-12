@@ -22,7 +22,7 @@ import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 
@@ -51,7 +51,7 @@ export function CreateSubjectForm({
       .trim()
       .min(1, { message: t("errors.required") })
       .max(255),
-    showInOverview: z.boolean(),
+    showInOverview: z.boolean().default(true),
   });
 
   const defaultValues: DefaultValues<FormValues> = {
@@ -86,6 +86,11 @@ export function CreateSubjectForm({
       setSubmitting(false);
     }
   }
+
+  useEffect(() => {
+    form.reset(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Form {...form}>
