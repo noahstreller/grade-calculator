@@ -18,7 +18,6 @@ This is a grade calculator / dashboard that I built to have a better overview of
 - [Legacy version](https://legacy.grades.nstr.dev/) available for usage without account and cloud (unmaintained)
 - Exporting and importing your grades made easy
 - Categories to organize your subjects (useful if you attend multiple schools or want to separate your subjects)
-- Ability to remove all your data directly from the app
 - Self-hosting will be possible in the future
 
 ## Screenshots
