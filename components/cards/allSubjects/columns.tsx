@@ -156,9 +156,9 @@ export function columns(
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link
-                  className="flex flex-row items-center justify-center gap-3"
+                  className="flex flex-row items-center gap-3"
                   href={`/subject/${average.subject.id}`}
                 >
                   <Eye className="size-4 text-muted-foreground" />
