@@ -28,7 +28,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { truncateText } from "@/lib/utils";
+import { cn, truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import Link from "next/link";
 import { isMobile } from "react-device-detect";
@@ -43,6 +43,7 @@ export function columns(
   return [
     {
       id: "subjectName",
+      accessorKey: "subject.name",
       header: ({ column }) => {
         return (
           <Button
@@ -64,6 +65,7 @@ export function columns(
       },
       cell: ({ row }) => {
         let subject: string = row.original.subject.name || "";
+        let isIrrelevant: boolean = row.original.subject.weight === 0;
         let truncated: boolean = truncateText(
           subject,
           isMobile ? 16 : 20
@@ -82,7 +84,12 @@ export function columns(
                 hideText
               />
               <Popover>
-                <PopoverTrigger className="text-left text-wrap break-words max-w-40">
+                <PopoverTrigger
+                  className={cn(
+                    "text-left text-wrap break-words max-w-40",
+                    isIrrelevant && "text-muted-foreground"
+                  )}
+                >
                   {truncatedSubject}
                 </PopoverTrigger>
                 <PopoverContent className="w-fit max-w-80 text-wrap break-words">
@@ -99,7 +106,9 @@ export function columns(
               className="mr-1"
               hideText
             />
-            {subject}
+            <span className={isIrrelevant ? "text-muted-foreground" : ""}>
+              {subject}
+            </span>
           </>
         );
       },
