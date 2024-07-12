@@ -25,9 +25,10 @@ export function getSubjectAverages(averages: AverageWithSubject[]): number {
     if (
       average.average &&
       average.average.gradeAverage &&
-      average.average.gradeAverage !== 0
+      average.average.gradeAverage !== 0 &&
+      average.subject.weight !== 0
     ) {
-      sum += average.average.gradeAverage;
+      sum += (average.subject.weight || 1) * average.average.gradeAverage;
       count++;
     }
   }
