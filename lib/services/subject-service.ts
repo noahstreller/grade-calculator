@@ -12,7 +12,7 @@ import {
 import { getUserId, setUserId } from "@/lib/services/service-util";
 
 export async function getAllSubjects(
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ): Promise<Subject[] | Problem> {
   try {
     const userId = await getUserId();
@@ -27,7 +27,7 @@ export async function getAllSubjects(
 }
 
 export async function getSubjectById(
-  subjectId: number,
+  subjectId: number
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
@@ -43,7 +43,7 @@ export async function getSubjectById(
 
 export async function getSubjectByName(
   subjectName: string,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
@@ -58,7 +58,7 @@ export async function getSubjectByName(
 }
 
 export async function addSubject(
-  newSubject: NewSubject,
+  newSubject: NewSubject
 ): Promise<number | Problem> {
   try {
     newSubject = await setUserId(newSubject);
@@ -73,7 +73,7 @@ export async function addSubject(
 }
 
 export async function getSubjectIdElseAdd(
-  newSubject: NewSubject,
+  newSubject: NewSubject
 ): Promise<number | Problem> {
   try {
     const userId = await getUserId();
@@ -81,7 +81,7 @@ export async function getSubjectIdElseAdd(
     const subject = await getSubjectByNameFromDb(
       newSubject.name!,
       userId,
-      newSubject.category_fk!,
+      newSubject.category_fk!
     );
     if (subject) return subject.id;
     return await addSubjectToDb(newSubject);
@@ -96,13 +96,14 @@ export async function getSubjectIdElseAdd(
 
 export async function quickCreateSubject(
   name: string,
-  categoryId?: number | undefined,
+  weight: number,
+  categoryId?: number | undefined
 ): Promise<number | Problem> {
   try {
     const userId = await getUserId();
     const newSubject: NewSubject = {
       name,
-      weight: 1,
+      weight: weight,
       userId,
       category_fk: categoryId,
     } satisfies NewSubject;
@@ -118,7 +119,7 @@ export async function quickCreateSubject(
 
 export async function getSubjectByIdByNameBySubject(
   subject: string | number | Subject,
-  categoryId?: number | undefined,
+  categoryId?: number | undefined
 ): Promise<Subject | Problem> {
   try {
     if (typeof subject === "string") {
@@ -138,11 +139,11 @@ export async function getSubjectByIdByNameBySubject(
 }
 
 export async function deleteSubject(
-  subject: string | number | Subject,
+  subject: string | number | Subject
 ): Promise<string | Problem> {
   try {
     let resolvedSubject = catchProblem(
-      await getSubjectByIdByNameBySubject(subject),
+      await getSubjectByIdByNameBySubject(subject)
     );
     const userId = await getUserId();
     return await deleteSubjectFromDb(resolvedSubject, userId);
@@ -156,7 +157,7 @@ export async function deleteSubject(
 }
 
 export async function updateSubject(
-  subject: Subject,
+  subject: Subject
 ): Promise<string | Problem> {
   try {
     const userId = await getUserId();

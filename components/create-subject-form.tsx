@@ -6,20 +6,23 @@ import { z } from "zod";
 import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
+import { Highlight } from "@/components/ui/card-stack";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { Switch } from "@/components/ui/switch";
 import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 
@@ -37,6 +40,7 @@ export function CreateSubjectForm({
 
   type FormValues = {
     subject: string;
+    showInOverview: boolean;
   };
 
   const FormSchema = z.object({
@@ -47,10 +51,12 @@ export function CreateSubjectForm({
       .trim()
       .min(1, { message: t("errors.required") })
       .max(255),
+    showInOverview: z.boolean().default(true),
   });
 
   const defaultValues: DefaultValues<FormValues> = {
     subject: "",
+    showInOverview: true,
   };
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -60,9 +66,10 @@ export function CreateSubjectForm({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setSubmitting(true);
     const subject = data.subject;
+    const weight = data.showInOverview ? 1 : 0;
     try {
       let insertedId: number | undefined = catchProblem(
-        await quickCreateSubject(subject, categoryState.category?.id),
+        await quickCreateSubject(subject, weight, categoryState.category?.id),
         true
       );
 
@@ -80,6 +87,11 @@ export function CreateSubjectForm({
     }
   }
 
+  useEffect(() => {
+    form.reset(defaultValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
@@ -96,6 +108,40 @@ export function CreateSubjectForm({
                 <Input placeholder={t("subjects.add-placeholder")} {...field} />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="showInOverview"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center gap-1 justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">
+                  Relevant for academic promotion
+                </FormLabel>
+                <FormDescription>
+                  {field.value ? (
+                    <>
+                      This subject will be{" "}
+                      <Highlight colorName="green">included</Highlight> while
+                      calculating the total average
+                    </>
+                  ) : (
+                    <>
+                      This subject will be{" "}
+                      <Highlight colorName="red">ignored</Highlight> while
+                      calculating the total average
+                    </>
+                  )}
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
             </FormItem>
           )}
         />
