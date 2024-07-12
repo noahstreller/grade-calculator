@@ -303,6 +303,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                           userPreferences.preferences!
                         )}
                       />
+                      <DetailRowBoolean
+                        variant="yes-no"
+                        title="Relevant for academic promotion"
+                        value={subject.weight === 1}
+                      />
                       {average.gradeAmount === average.gradeWeightedAmount ? (
                         <DetailRow
                           title="Grade count"

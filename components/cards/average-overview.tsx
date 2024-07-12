@@ -157,8 +157,8 @@ export function AverageOverview({
       )}
       <CardContent>
         {subjectAverages === gradeAverages ? (
-          <Card>
-            <CardHeader className="flex-row gap-3">
+          <Card className="outline outline-border outline-4">
+            <CardHeader className="flex-row gap-3 font-bold">
               Your Average
               <Popover>
                 <PopoverTrigger>
@@ -175,11 +175,11 @@ export function AverageOverview({
                   -
                 </b>
               ) : doesGradePass(subjectAverages, preferences) ? (
-                <b className="block text-5xl text-center items-center self-center text-green-400">
+                <b className="underline decoration-double block text-5xl text-center items-center self-center text-green-400">
                   {round(subjectAverages, 2)}
                 </b>
               ) : (
-                <b className="block text-5xl text-center items-center self-center text-red-400">
+                <b className="underline decoration-double block text-5xl text-center items-center self-center text-red-400">
                   {round(subjectAverages, 2)}
                 </b>
               )}
@@ -188,7 +188,7 @@ export function AverageOverview({
         ) : (
           <CardBoard>
             <CardBoard className="flex-col sm:flex-row ">
-              <Card>
+              <Card className="outline outline-border outline-4">
                 <CardHeader className="flex-row gap-3">
                   {t("subject-overview.subject-average")}
                   <Popover>
@@ -206,11 +206,11 @@ export function AverageOverview({
                       -
                     </b>
                   ) : doesGradePass(subjectAverages, preferences) ? (
-                    <b className="block text-5xl text-center items-center self-center text-green-400">
+                    <b className="underline decoration-double block text-5xl text-center items-center self-center text-green-400">
                       {round(subjectAverages, 2)}
                     </b>
                   ) : (
-                    <b className="block text-5xl text-center items-center self-center text-red-400">
+                    <b className="underline decoration-double block text-5xl text-center items-center self-center text-red-400">
                       {round(subjectAverages, 2)}
                     </b>
                   )}

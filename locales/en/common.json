@@ -129,10 +129,10 @@
   "subject-overview": {
     "title": "Subject Overview",
     "description": "Here you can see an overview of your subjects",
-    "subject-average": "Subject Average",
+    "subject-average": "Total Average",
     "grade-average": "Grade Average",
     "grade-average-desc": "This is calculated from all your grades, not considering weights",
-    "subject-average-desc": "This is calculated from your subject grade averages."
+    "subject-average-desc": "This is calculated from your subject grade averages, considering all weights"
   },
   "required-grades": {
     "title": "Required Grades",
