@@ -38,6 +38,6 @@ _Note: only numeric grading scales are supported at the moment. You can use perc
 
 ---
 
-![Dark Screenshot](https://github.com/noahstreller/notenrechner-next/blob/main/public/screenshot-dark.png?raw=true)
+![Dark Screenshot](https://github.com/noahstreller/grade-calculator/blob/main/public/screenshot-dark.png?raw=true)
 
-![Light Screenshot](https://github.com/noahstreller/notenrechner-next/blob/main/public/screenshot-light.png?raw=true)
+![Light Screenshot](https://github.com/noahstreller/grade-calculator/blob/main/public/screenshot-light.png?raw=true)
