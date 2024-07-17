@@ -69,6 +69,22 @@ export const preferences = pgTable("preferences", {
   userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
 });
 
+export const archivedata = pgTable(
+  "archivedata",
+  {
+    id: serial("id").primaryKey(),
+    data: text("data").notNull(),
+    category: text("category").notNull(),
+    date: timestamp("date", { mode: "date", withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    userId: text("userId").references(() => users.id, { onDelete: "cascade" }),
+  },
+  (t) => ({
+    unq: unique().on(t.userId, t.data),
+  })
+);
+
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
@@ -144,6 +160,9 @@ export type NewCategory = typeof categories.$inferInsert;
 
 export type Preferences = typeof preferences.$inferSelect;
 export type NewPreferences = typeof preferences.$inferInsert;
+
+export type ArchiveData = typeof archivedata.$inferSelect;
+export type NewArchiveData = typeof archivedata.$inferInsert;
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;

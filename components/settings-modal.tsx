@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LoadingSpinner } from "@/components/ui/spinner";
+import { ViewArchiveButton } from "@/components/view-archive-button";
 import { NewPreferences } from "@/db/schema";
 import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { savePreferences } from "@/lib/services/preferences-service";
@@ -676,13 +677,15 @@ export function SettingsModal({
                   </Button>
                 </ClearDataButton>
                 <NewSemesterButton expanded />
+                <ViewArchiveButton />
               </div>
             </div>
             <Separator />
           </>
         ) : (
-          <div className="my-5 flex-1">
+          <div className="my-5 flex-1 space-y-3">
             <NewSemesterButton />
+            <ViewArchiveButton />
           </div>
         )}
         <Separator />

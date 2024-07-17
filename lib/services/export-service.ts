@@ -9,6 +9,7 @@ import {
   Subject,
 } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
+import { insertArchivedata } from "@/lib/services/archive-service";
 import {
   addGrade,
   getAllGradesWithSubject,
@@ -22,6 +23,8 @@ import {
   getAllSubjects,
   getSubjectIdElseAdd,
 } from "@/lib/services/subject-service";
+
+import zlib from "zlib";
 
 export type ExportableData = {
   preferences: NewPreferences | undefined;
@@ -81,6 +84,24 @@ export async function prepareDataForExport(
     category: categoryName,
   };
   return exportableData;
+}
+
+export async function archiveCategory(data: ExportableData): Promise<string> {
+  zlib.gzip(JSON.stringify(data), async (err, buffer) => {
+    if (!err) {
+      let result = buffer.toString("base64");
+      await insertArchivedata(result, data.category);
+    } else {
+      console.error(err);
+    }
+  });
+  return "Category archived";
+}
+
+export async function unarchiveCategory(data: string): Promise<ExportableData> {
+  let decodedData = Buffer.from(data, "base64");
+  let result = zlib.gunzipSync(decodedData);
+  return JSON.parse(result.toString());
 }
 
 export async function importData(
