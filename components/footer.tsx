@@ -22,7 +22,7 @@ export function Footer() {
         </FooterItem>
         <FooterItem
           newTab
-          href="https://github.com/noahstreller/notenrechner-next"
+          href="https://github.com/noahstreller/grade-calculator"
         >
           <SiGithub className="mr-2 size-4" /> Source Code
         </FooterItem>
@@ -30,9 +30,9 @@ export function Footer() {
           newTab
           href={
             process.env.npm_package_version
-              ? "https://github.com/noahstreller/notenrechner-next/tree/v" +
+              ? "https://github.com/noahstreller/grade-calculator/tree/v" +
                 process.env.npm_package_version
-              : "https://github.com/noahstreller/notenrechner-next"
+              : "https://github.com/noahstreller/grade-calculator"
           }
         >
           <GitBranch className="mr-2 size-4" />{" "}

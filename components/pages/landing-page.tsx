@@ -178,7 +178,7 @@ export function LandingPage() {
                         >
                           <Link
                             href={
-                              "https://github.com/noahstreller/notenrechner-next"
+                              "https://github.com/noahstreller/grade-calculator"
                             }
                           >
                             <SiGithub className="size-4 m-2" />
@@ -291,7 +291,7 @@ export function LandingPage() {
                       >
                         <Link
                           href={
-                            "https://github.com/noahstreller/notenrechner-next"
+                            "https://github.com/noahstreller/grade-calculator"
                           }
                         >
                           <SiGithub className="size-4 m-2" />
@@ -466,7 +466,7 @@ function GettingStartedTab() {
                     target="_blank"
                     className={cn(
                       buttonVariants({ variant: "link" }),
-                      "flex flex-row gap-2 w-fit justify-center"
+                      "flex flex-row gap-2 w-fit justify-center",
                     )}
                   >
                     Open image <ExternalLinkIcon className="size-4" />
@@ -486,7 +486,7 @@ function GettingStartedTab() {
                     target="_blank"
                     className={cn(
                       buttonVariants({ variant: "link" }),
-                      "flex flex-row gap-2 w-fit justify-center"
+                      "flex flex-row gap-2 w-fit justify-center",
                     )}
                   >
                     Open image <ExternalLinkIcon className="size-4" />
