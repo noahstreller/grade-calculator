@@ -25,7 +25,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import { prepareDataForExport } from "@/lib/services/export-service";
+import {
+  archiveCategory,
+  prepareDataForExport,
+} from "@/lib/services/export-service";
 import { exportToJSONFile } from "@/lib/services/notAsyncLogic";
 import {
   clearUserGrades,
@@ -35,7 +38,7 @@ import { CalendarPlus } from "lucide-react";
 import { useState } from "react";
 
 export const NewSemesterButton = ({
-  expanded = false,
+  expanded = true,
 }: {
   expanded?: boolean;
 }) => {
@@ -43,6 +46,7 @@ export const NewSemesterButton = ({
   const [keepSubjects, setKeepSubjectsState] = useState<boolean>(true);
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
   const [exportData, setExportData] = useState<boolean>(true);
+  const [archiveData, setArchiveData] = useState<boolean>(true);
   const categoryState = useCategory();
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
@@ -66,6 +70,9 @@ export const NewSemesterButton = ({
         categoryState.category?.id
       );
       if (exportData) exportToJSONFile(data, categoryState.category?.name);
+      if (archiveData) {
+        await archiveCategory(data);
+      }
       if (!keepSubjects) await clearUserSubjectsGrades();
       if (!keepGrades && keepSubjects) await clearUserGrades();
     } finally {
@@ -82,7 +89,7 @@ export const NewSemesterButton = ({
           variant={"secondary"}
         >
           <CalendarPlus className="size-4" />
-          {expanded && <span>New Term</span>}
+          <span>New Term</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -113,16 +120,26 @@ export const NewSemesterButton = ({
               <Highlight colorName="blue">file</Highlight>
             </Label>
           </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={archiveData} onCheckedChange={setArchiveData} />
+            <Label>
+              <Highlight colorName="blue">Archive</Highlight> your current data
+            </Label>
+          </div>
         </div>
 
         <DrawerFooter>
-          {!(exportData || keepGrades) && (
+          {!(exportData || archiveData || keepGrades) && (
             <span className="text-muted-foreground self-center">
               This action is irreversible
             </span>
           )}
           <Button
-            variant={exportData || keepGrades ? "default" : "destructive"}
+            variant={
+              exportData || archiveData || keepGrades
+                ? "default"
+                : "destructive"
+            }
             onClick={handleSubmit}
           >
             Do it!
@@ -137,7 +154,7 @@ export const NewSemesterButton = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button className="w-full" variant={"secondary"}>
-          <CalendarPlus className="size-5 mr-2" />
+          <CalendarPlus className="size-4 mr-2" />
           New Term
         </Button>
       </DialogTrigger>
@@ -169,9 +186,15 @@ export const NewSemesterButton = ({
               <Highlight colorName="blue">file</Highlight>
             </Label>
           </div>
+          <div className="flex flex-row items-center gap-4">
+            <Switch checked={archiveData} onCheckedChange={setArchiveData} />
+            <Label>
+              <Highlight colorName="blue">Archive</Highlight> your current data
+            </Label>
+          </div>
         </div>
         <DialogFooter>
-          {!(exportData || keepGrades) && (
+          {!(exportData || archiveData || keepGrades) && (
             <span className="text-muted-foreground self-center">
               This action is irreversible
             </span>
@@ -180,7 +203,11 @@ export const NewSemesterButton = ({
             <Button variant="secondary">Cancel</Button>
           </DialogClose>
           <Button
-            variant={exportData || keepGrades ? "default" : "destructive"}
+            variant={
+              exportData || archiveData || keepGrades
+                ? "default"
+                : "destructive"
+            }
             onClick={handleSubmit}
           >
             Do it!
