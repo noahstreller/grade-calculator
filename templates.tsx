@@ -53,7 +53,7 @@ export const templates: PreferenceTemplate[] = [
     title: "🇵🇱 Poland (Higher Ed.)",
     passingGrade: 3,
     minimumGrade: 2,
-    maximumGrade: 5.5,
+    maximumGrade: 5,
     passingInverse: false,
   },
   {
