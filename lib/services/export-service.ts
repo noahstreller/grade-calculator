@@ -74,6 +74,7 @@ export async function prepareDataForExport(
   const strippedSubjects: NewSubject[] = subjects.map((subject) => {
     return {
       name: subject.name,
+      weight: subject.weight,
     };
   });
 
@@ -110,20 +111,24 @@ export async function importData(
   categoryId?: number | undefined
 ) {
   if (data.preferences) savePreferences(data.preferences);
-  const nonUniqueSubjectsFromGrades = data.grades.map(
-    (grade) => grade.subjects.name
-  );
-  const nonUniqueSubjectsFromSubjects = data.subjects.map(
-    (subject) => subject.name
-  );
+  // const nonUniqueSubjectsFromGrades = data.grades.map((grade) => {
+  //   return { name: grade.subjects.name, weight: 1 };
+  // });
+  const nonUniqueSubjectsFromSubjects = data.subjects.map((subject) => {
+    return { name: subject.name, weight: subject.weight };
+  });
   const nonUniqueSubjects = [
-    ...nonUniqueSubjectsFromGrades,
+    // ...nonUniqueSubjectsFromGrades,
     ...nonUniqueSubjectsFromSubjects,
   ];
   const uniqueSubjects = [...new Set(nonUniqueSubjects)];
   const subjectWithIds = await Promise.all(
-    uniqueSubjects.map(async (subjectName) => {
-      const subject = { name: subjectName, category_fk: categoryId };
+    uniqueSubjects.map(async (iteratingSubject) => {
+      const subject = {
+        name: iteratingSubject.name,
+        weight: iteratingSubject.weight,
+        category_fk: categoryId,
+      };
       if (purge) {
         let result = catchProblem(await addSubject(subject));
         return { name: subject.name, id: result };
