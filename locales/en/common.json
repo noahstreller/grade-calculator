@@ -197,11 +197,13 @@
       "demo-averages": "Averages",
       "demo-calculator": "Calculator"
     },
-
     "open-image": "Open image",
     "screenshot-title": "Screenshot",
     "screenshot-light-mode": "Screenshot Light Mode",
     "screenshot-dark-mode": "Screenshot Dark Mode",
     "screenshot-desc": "This is what the grade calculator looks like."
+  },
+  "filters": {
+    "filter-by-subject": "Filter by subject"
   }
 }
