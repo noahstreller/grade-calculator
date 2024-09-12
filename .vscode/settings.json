@@ -3,5 +3,12 @@
   "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui"],
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
-  "i18n-ally.localesPaths": ["locales"]
+  "i18n-ally.localesPaths": ["locales"],
+  "i18n-ally.defaultNamespace": "common",
+  "i18n-ally.dirStructure": "auto",
+  "i18n-ally.enabledFrameworks": ["next-translate"],
+  "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.extract.keygenStyle": "snake_case",
+  "i18n-ally.fullReloadOnChanged": true,
+  "i18n-ally.keystyle": "nested"
 }

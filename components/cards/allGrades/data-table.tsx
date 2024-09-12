@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const table = useReactTable({
     data,
     columns,
@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({
     <>
       <div className="w-full flex flex-row justify-between py-4 gap-2">
         <Input
-          placeholder={t("common.filter-by-subject")}
+          placeholder={t("filter-by-subject")}
           value={
             (table.getColumn("subjectName")?.getFilterValue() as string) ?? ""
           }
@@ -145,7 +145,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {t("common.no-results")}{" "}
+                  {t("no-results")}{" "}
                 </TableCell>
               </TableRow>
             )}
@@ -163,7 +163,7 @@ export function DataTable<TData, TValue>({
             <ArrowLeft size={16} />
           </Button>
           <span>
-            {t("common.page")} {table.getState().pagination.pageIndex + 1} of{" "}
+            {t("page")} {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </span>
           <Button
