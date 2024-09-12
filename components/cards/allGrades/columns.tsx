@@ -50,7 +50,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.subject")}
+            {t("common.grades.subject")}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -97,7 +97,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.grade")}
+            {t("common.grades.grade")}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -129,7 +129,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Description
+            {t("common.description")}{" "}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -176,7 +176,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.date")}
+            {t("common.grades.date")}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -206,12 +206,14 @@ export function columns(
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t("common.open-menu")}</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {t("common.grades.actions")}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
@@ -221,7 +223,7 @@ export function columns(
                 <DialogTrigger asChild>
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Edit className="size-4 text-muted-foreground" />
-                    <span>Edit grade</span>
+                    <span>{t("common.edit-grade")}</span>
                   </div>
                 </DialogTrigger>
               </DropdownMenuItem>
@@ -239,7 +241,7 @@ export function columns(
               >
                 <div className="flex flex-row items-center justify-center gap-3">
                   <Trash className="size-4 text-muted-foreground" />
-                  <span>Delete grade</span>
+                  <span>{t("common.delete-grade")}</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -20,33 +20,41 @@ export default function HeaderComponent() {
   const { t } = useTranslation("common");
 
   const clearDataTranslations: ClearDataTranslations = {
-    prompt: t("actions.clear-data.prompt"),
-    message: t("actions.clear-data.message"),
-    cancel: t("actions.cancel"),
-    dangerContinue: t("actions.danger-continue"),
+    prompt: t("common.actions.clear-data.prompt"),
+    message: t("common.actions.clear-data.message"),
+    cancel: t("common.actions.cancel"),
+    dangerContinue: t("common.actions.danger-continue"),
   };
 
   const preferencesTranslations: PreferencesTranslations = {
-    title: t("preferences.title"),
-    description: t("preferences.description"),
-    gradeDecimals: t("preferences.grade-decimals"),
-    gradeDecimalsDescription: t("preferences.grade-decimals-description"),
-    gradeDecimalsPlaceholder: t("preferences.grade-decimals-placeholder"),
-    keepModalsOpen: t("preferences.keep-modals-open"),
-    keepModalsOpenDescription: t("preferences.keep-modals-open-description"),
-    passingGrade: t("preferences.passing-grade"),
-    passingGradeDescription: t("preferences.passing-grade-description"),
-    passingGradePlaceholder: t("preferences.passing-grade-placeholder"),
-    minimumGrade: t("preferences.minimum-grade"),
-    minimumGradeDescription: t("preferences.minimum-grade-description"),
-    minimumGradePlaceholder: t("preferences.minimum-grade-placeholder"),
-    maximumGrade: t("preferences.maximum-grade"),
-    maximumGradeDescription: t("preferences.maximum-grade-description"),
-    maximumGradePlaceholder: t("preferences.maximum-grade-placeholder"),
-    passingInverse: t("preferences.passing-inverse"),
-    passingInverseDescription: t("preferences.passing-inverse-description"),
-    alertTitle: t("preferences.alert-title"),
-    alertDescription: t("preferences.alert-description"),
+    title: t("common.preferences.title"),
+    description: t("common.preferences.description"),
+    gradeDecimals: t("common.preferences.grade-decimals"),
+    gradeDecimalsDescription: t(
+      "common.preferences.grade-decimals-description"
+    ),
+    gradeDecimalsPlaceholder: t(
+      "common.preferences.grade-decimals-placeholder"
+    ),
+    keepModalsOpen: t("common.preferences.keep-modals-open"),
+    keepModalsOpenDescription: t(
+      "common.preferences.keep-modals-open-description"
+    ),
+    passingGrade: t("common.preferences.passing-grade"),
+    passingGradeDescription: t("common.preferences.passing-grade-description"),
+    passingGradePlaceholder: t("common.preferences.passing-grade-placeholder"),
+    minimumGrade: t("common.preferences.minimum-grade"),
+    minimumGradeDescription: t("common.preferences.minimum-grade-description"),
+    minimumGradePlaceholder: t("common.preferences.minimum-grade-placeholder"),
+    maximumGrade: t("common.preferences.maximum-grade"),
+    maximumGradeDescription: t("common.preferences.maximum-grade-description"),
+    maximumGradePlaceholder: t("common.preferences.maximum-grade-placeholder"),
+    passingInverse: t("common.preferences.passing-inverse"),
+    passingInverseDescription: t(
+      "common.preferences.passing-inverse-description"
+    ),
+    alertTitle: t("common.preferences.alert-title"),
+    alertDescription: t("common.preferences.alert-description"),
   };
 
   return (
@@ -65,7 +73,7 @@ export default function HeaderComponent() {
             "hidden md:inline-block xl:inline-block lg:inline-block sm:inline-block text-3xl font-bold text-foreground whitespace-nowrap select-none"
           }
         >
-          {t("app.title")}
+          {t("common.app.title")}
         </h1>
         <h1
           className={

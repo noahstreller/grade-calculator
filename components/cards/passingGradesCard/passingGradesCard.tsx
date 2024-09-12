@@ -1,8 +1,7 @@
 "use client";
+import { columns } from "@/components/cards/passingGradesCard/columns";
+import { DataTable } from "@/components/cards/passingGradesCard/data-table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AverageWithSubject } from "@/types/types";
-import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
 import {
   Card,
   CardContent,
@@ -10,8 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DataTable } from "@/components/cards/passingGradesCard/data-table";
-import { columns } from "@/components/cards/passingGradesCard/columns";
+import { AverageWithSubject } from "@/types/types";
+import { Bird } from "lucide-react";
+import useTranslation from "next-translate/useTranslation";
 
 export default function PassingGradesCard({
   data,
@@ -23,16 +23,18 @@ export default function PassingGradesCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("subjects.passing-subjects")}</CardTitle>
-        <CardDescription>{t("subjects.passing-subjects-desc")}</CardDescription>
+        <CardTitle>{t("common.subjects.passing-subjects")}</CardTitle>
+        <CardDescription>
+          {t("common.subjects.passing-subjects-desc")}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {data.length === 0 ? (
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-passing", { count: 0 })}
+              {t("common.errors.not-enough-data-yet-passing", { count: 0 })}
             </AlertDescription>
           </Alert>
         ) : (

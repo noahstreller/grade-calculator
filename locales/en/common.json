@@ -112,6 +112,7 @@
     "not-enough-data-yet": "Not enough data yet",
     "not-enough-data-yet-desc_1": "Add at least one grade to view this graph",
     "not-enough-data-yet-desc_3": "Add at least one grade from 3 different subjects to view this graph",
+    "not-enough-data-yet-grade": "Not enough grades yet",
     "not-enough-data-yet-grade_1": "Add at least one grade to view this table",
     "not-enough-data-yet-failing_0": "No failing grades so far :)",
     "not-enough-subjects-yet-failing_0": "No failing subjects so far :)",
@@ -140,5 +141,13 @@
     "required": "to pass",
     "passed": "to keep passing",
     "required-to-pass": "You need at least"
-  }
+  },
+  "change-the-grade-details-here-0": "Change the grade details here",
+  "edit-grade-0": "Edit Grade",
+  "change-the-grade-details-here": "Change the grade details here",
+  "edit-grade": "Edit grade",
+  "show-all": "Show all",
+  "delete-grade": "Delete grade",
+  "open-menu": "Open menu",
+  "description": "Description"
 }

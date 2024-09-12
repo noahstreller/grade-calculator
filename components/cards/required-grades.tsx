@@ -127,12 +127,14 @@ function RequiredGradesBody({
       {chunkPairs.length === 0 ? (
         <Alert>
           <Bird className="h-4 w-4" />
-          <AlertTitle>{t("errors.no-data-yet")}</AlertTitle>
+          <AlertTitle>{t("common.errors.no-data-yet")}</AlertTitle>
           {showPassing ? (
-            <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
+            <AlertDescription>
+              {t("common.errors.no-data-yet-desc")}
+            </AlertDescription>
           ) : (
             <AlertDescription>
-              {t("errors.not-enough-subjects-yet-failing_0")}
+              {t("common.errors.not-enough-subjects-yet-failing_0")}
             </AlertDescription>
           )}
         </Alert>
@@ -174,8 +176,8 @@ function RequiredGradesBody({
                       : null}
                     <br />
                     {doesGradePass(average.average?.gradeAverage!, preferences!)
-                      ? t("required-grades.passed")
-                      : t("required-grades.required")}
+                      ? t("common.required-grades.passed")
+                      : t("common.required-grades.required")}
                   </h1>
                 </CardContent>
               </Card>
@@ -210,8 +212,10 @@ export function RequiredGrades({
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
-          <CardTitle>{t("required-grades.title")}</CardTitle>
-          <CardDescription>{t("required-grades.description")}</CardDescription>
+          <CardTitle>{t("common.required-grades.title")}</CardTitle>
+          <CardDescription>
+            {t("common.required-grades.description")}
+          </CardDescription>
         </div>
         <div className="flex items-center space-x-2">
           <Switch checked={showPassing} onCheckedChange={setShowPassing} />
@@ -366,8 +370,8 @@ function RequiredGradesBodyForSubject({
               : null}
             <br />
             {doesGradePass(averageData.gradeAverage!, preferences!)
-              ? t("required-grades.passed")
-              : t("required-grades.required")}
+              ? t("common.required-grades.passed")
+              : t("common.required-grades.required")}
           </h1>
         </CardContent>
       </Card>

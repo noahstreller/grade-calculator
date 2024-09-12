@@ -253,7 +253,9 @@ export function SettingsModalForm({
             </FormItem>
           )}
         />
-        {maxLtMin ? <FormMessage>{t("errors.max-lt-min")}</FormMessage> : null}
+        {maxLtMin ? (
+          <FormMessage>{t("common.errors.max-lt-min")}</FormMessage>
+        ) : null}
         <FormField
           control={form.control}
           name="passingGrade"
@@ -295,10 +297,10 @@ export function SettingsModalForm({
           )}
         />
         {passLtMin ? (
-          <FormMessage>{t("errors.pass-lt-min")}</FormMessage>
+          <FormMessage>{t("common.errors.pass-lt-min")}</FormMessage>
         ) : null}
         {passGtMax ? (
-          <FormMessage>{t("errors.pass-gt-max")}</FormMessage>
+          <FormMessage>{t("common.errors.pass-gt-max")}</FormMessage>
         ) : null}
 
         <FormField
@@ -329,15 +331,15 @@ export function SettingsModalForm({
           className="w-full"
           type="submit"
         >
-          {submitted ? <LoadingSpinner /> : t("actions.save")}
+          {submitted ? <LoadingSpinner /> : t("common.actions.save")}
         </Button>
 
         <Button className="w-full" variant="outline" onClick={onReset}>
-          {t("actions.reset")}
+          {t("common.actions.reset")}
         </Button>
         <SheetClose asChild>
           <Button variant="outline" className="w-full">
-            {t("actions.cancel")}
+            {t("common.actions.cancel")}
           </Button>
         </SheetClose>
       </form>
@@ -533,7 +535,9 @@ export function SettingsFormForOnboarding({
             </FormItem>
           )}
         />
-        {maxLtMin ? <FormMessage>{t("errors.max-lt-min")}</FormMessage> : null}
+        {maxLtMin ? (
+          <FormMessage>{t("common.errors.max-lt-min")}</FormMessage>
+        ) : null}
         <FormField
           control={form.control}
           name="passingGrade"
@@ -575,10 +579,10 @@ export function SettingsFormForOnboarding({
           )}
         />
         {passLtMin ? (
-          <FormMessage>{t("errors.pass-lt-min")}</FormMessage>
+          <FormMessage>{t("common.errors.pass-lt-min")}</FormMessage>
         ) : null}
         {passGtMax ? (
-          <FormMessage>{t("errors.pass-gt-max")}</FormMessage>
+          <FormMessage>{t("common.errors.pass-gt-max")}</FormMessage>
         ) : null}
 
         <FormField
