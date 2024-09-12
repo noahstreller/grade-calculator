@@ -187,16 +187,16 @@ export function GradeOverview({
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>{t("overview.title")}</CardTitle>
-        <CardDescription>{t("overview.description")}</CardDescription>
+        <CardTitle>{t("common.overview.title")}</CardTitle>
+        <CardDescription>{t("common.overview.description")}</CardDescription>
       </CardHeader>
       {data.length === 0 ? (
         <CardContent>
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-desc", { count: 1 })}
+              {t("common.errors.not-enough-data-yet-desc", { count: 1 })}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -305,7 +305,7 @@ export function GradeOverview({
           </PopoverTrigger>
           <PopoverContent className="w-full p-0 flex flex-row">
             <Command>
-              <CommandInput placeholder={t("subjects.search")} />
+              <CommandInput placeholder={t("common.subjects.search")} />
               <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                 <CommandGroup>
                   <CommandItem
@@ -353,7 +353,7 @@ export function GradeOverview({
         <CardBoard>
           <CardBoard row>
             <Card>
-              <CardHeader>{t("subjects.passing-subjects")}</CardHeader>
+              <CardHeader>{t("common.subjects.passing-subjects")}</CardHeader>
               <CardContent>
                 {passingData.filter(
                   (gradeAverage) => gradeAverage.average?.passing
@@ -373,7 +373,7 @@ export function GradeOverview({
               </CardContent>
             </Card>
             <Card>
-              <CardHeader>{t("subjects.failing-subjects")}</CardHeader>
+              <CardHeader>{t("common.subjects.failing-subjects")}</CardHeader>
               <CardContent>
                 {failingData.filter(
                   (gradeAverage) => !gradeAverage.average?.passing
@@ -395,7 +395,7 @@ export function GradeOverview({
           </CardBoard>
           <CardBoard row>
             <Card>
-              <CardHeader>{t("grades.passing-grades")}</CardHeader>
+              <CardHeader>{t("common.grades.passing-grades")}</CardHeader>
               <CardContent>
                 {data.filter((grade) =>
                   doesGradePass(grade.grades.value!, preferences)
@@ -415,7 +415,7 @@ export function GradeOverview({
               </CardContent>
             </Card>
             <Card>
-              <CardHeader>{t("grades.failing-grades")}</CardHeader>
+              <CardHeader>{t("common.grades.failing-grades")}</CardHeader>
               <CardContent>
                 {data.filter(
                   (grade) => !doesGradePass(grade.grades.value!, preferences)
@@ -566,7 +566,7 @@ export function GradeOverviewForSubject({
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>{t("overview.title")}</CardTitle>
+        <CardTitle>{t("common.overview.title")}</CardTitle>
         <CardDescription>
           This is an overview of your grades in this subject
         </CardDescription>
@@ -575,9 +575,9 @@ export function GradeOverviewForSubject({
         <CardContent>
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-desc", { count: 1 })}
+              {t("common.errors.not-enough-data-yet-desc", { count: 1 })}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -667,7 +667,7 @@ export function GradeOverviewForSubject({
         <CardBoard>
           <CardBoard row>
             <Card>
-              <CardHeader>{t("grades.passing-grades")}</CardHeader>
+              <CardHeader>{t("common.grades.passing-grades")}</CardHeader>
               <CardContent>
                 {data.filter((grade) =>
                   doesGradePass(grade.grades.value!, preferences)
@@ -687,7 +687,7 @@ export function GradeOverviewForSubject({
               </CardContent>
             </Card>
             <Card>
-              <CardHeader>{t("grades.failing-grades")}</CardHeader>
+              <CardHeader>{t("common.grades.failing-grades")}</CardHeader>
               <CardContent>
                 {data.filter(
                   (grade) => !doesGradePass(grade.grades.value!, preferences)

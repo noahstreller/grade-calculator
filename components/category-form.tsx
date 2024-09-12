@@ -55,10 +55,10 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
   const FormSchema = z.object({
     category: z
       .string({
-        required_error: t("errors.required"),
+        required_error: t("common.errors.required"),
       })
       .trim()
-      .min(1, { message: t("errors.required") })
+      .min(1, { message: t("common.errors.required") })
       .max(255),
   });
 
@@ -113,7 +113,7 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
         />
 
         <Button className="w-full" type="submit" disabled={submitting}>
-          {submitting ? <LoadingSpinner /> : t("actions.submit")}
+          {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
         </Button>
       </form>
     </Form>
@@ -152,14 +152,14 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
 
   const FormSchema = z.object({
     category: z.number({
-      required_error: t("errors.required"),
+      required_error: t("common.errors.required"),
     }),
     categoryName: z
       .string({
-        required_error: t("errors.required"),
+        required_error: t("common.errors.required"),
       })
       .trim()
-      .min(1, { message: t("errors.required") })
+      .min(1, { message: t("common.errors.required") })
       .max(255),
   });
 
@@ -245,7 +245,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
                   <Command>
-                    <CommandInput placeholder={t("subjects.search")} />
+                    <CommandInput placeholder={t("common.subjects.search")} />
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {categoryState.categories.length === 0 ? (
@@ -301,7 +301,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
 
         <div className="space-y-3">
           <Button className="w-full" type="submit" disabled={submitting}>
-            {submitting ? <LoadingSpinner /> : t("actions.submit")}
+            {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
           </Button>
 
           <Button

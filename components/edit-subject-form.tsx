@@ -45,10 +45,10 @@ export function EditSubjectForm({
   const FormSchema = z.object({
     subject: z
       .string({
-        required_error: t("errors.required"),
+        required_error: t("common.errors.required"),
       })
       .trim()
-      .min(1, { message: t("errors.required") })
+      .min(1, { message: t("common.errors.required") })
       .max(255),
     showInOverview: z.boolean(),
   });
@@ -97,11 +97,14 @@ export function EditSubjectForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("subjects.subject")}
+                {t("common.subjects.subject")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
-                <Input placeholder={t("subjects.add-placeholder")} {...field} />
+                <Input
+                  placeholder={t("common.subjects.add-placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -143,7 +146,7 @@ export function EditSubjectForm({
         />
 
         <Button className="w-full" type="submit" disabled={submitting}>
-          {submitting ? <LoadingSpinner /> : t("actions.submit")}
+          {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
         </Button>
       </form>
     </Form>

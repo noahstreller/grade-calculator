@@ -88,18 +88,18 @@ export function EditGradeForm({
 
   const FormSchema = z.object({
     subject: z.number({
-      required_error: t("errors.required"),
+      required_error: t("common.errors.required"),
     }),
     grade: z
       .number({
-        invalid_type_error: t("errors.invalid-type.number"),
-        required_error: t("errors.required"),
+        invalid_type_error: t("common.errors.invalid-type.number"),
+        required_error: t("common.errors.required"),
       })
       .gte(preferences?.minimumGrade ?? defaultPreferences.minimumGrade!)
       .lte(preferences?.maximumGrade ?? defaultPreferences.maximumGrade!),
     weight: z
       .number({
-        invalid_type_error: t("errors.invalid-type.number"),
+        invalid_type_error: t("common.errors.invalid-type.number"),
       })
       .gte(0),
     date: z.date(),
@@ -159,7 +159,7 @@ export function EditGradeForm({
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>
-                {t("subjects.subject")}
+                {t("common.subjects.subject")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
@@ -196,12 +196,12 @@ export function EditGradeForm({
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
                   <Command>
-                    <CommandInput placeholder={t("subjects.search")} />
+                    <CommandInput placeholder={t("common.subjects.search")} />
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {subjects.length === 0 ? (
                           <CommandItem disabled>
-                            {t("subjects.notfound")}
+                            {t("common.subjects.notfound")}
                           </CommandItem>
                         ) : (
                           subjects.map((subject) => (
@@ -241,14 +241,14 @@ export function EditGradeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("grades.grade")}
+                {t("common.grades.grade")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="any"
-                  placeholder={t("grades.add-placeholder")}
+                  placeholder={t("common.grades.add-placeholder")}
                   {...field}
                   onChange={(e) => {
                     if (e.target.value === "") field.onChange("");
@@ -289,7 +289,7 @@ export function EditGradeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("grades.weight")}
+                {t("common.grades.weight")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
@@ -312,7 +312,7 @@ export function EditGradeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("grades.date")}
+                {t("common.grades.date")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <br />
@@ -363,7 +363,7 @@ export function EditGradeForm({
         />
 
         <Button className="w-full" type="submit" disabled={submitting}>
-          {submitting ? <LoadingSpinner /> : t("actions.submit")}
+          {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
         </Button>
       </form>
     </Form>

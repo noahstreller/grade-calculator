@@ -11,13 +11,15 @@ export function FailingGradesContent({ data }: { data: AverageWithSubject[] }) {
   return (
     <CardContent className="mt-5">
       <CardTitle>Subjects to revise</CardTitle>
-      <CardDescription>{t("subjects.failing-subjects-desc")}</CardDescription>
+      <CardDescription>
+        {t("common.subjects.failing-subjects-desc")}
+      </CardDescription>
       {data.length === 0 ? (
         <Alert>
           <Bird className="h-4 w-4" />
-          <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+          <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
           <AlertDescription>
-            {t("errors.not-enough-data-yet-failing", { count: 0 })}
+            {t("common.errors.not-enough-data-yet-failing", { count: 0 })}
           </AlertDescription>
         </Alert>
       ) : (

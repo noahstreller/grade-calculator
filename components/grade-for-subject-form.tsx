@@ -62,14 +62,14 @@ export function CreateGradeFormForSubject({
   const FormSchema = z.object({
     grade: z
       .number({
-        invalid_type_error: t("errors.invalid-type.number"),
-        required_error: t("errors.required"),
+        invalid_type_error: t("common.errors.invalid-type.number"),
+        required_error: t("common.errors.required"),
       })
       .gte(preferences?.minimumGrade ?? defaultPreferences.minimumGrade!)
       .lte(preferences?.maximumGrade ?? defaultPreferences.maximumGrade!),
     weight: z
       .number({
-        invalid_type_error: t("errors.invalid-type.number"),
+        invalid_type_error: t("common.errors.invalid-type.number"),
       })
       .gte(0)
       .optional(),
@@ -110,7 +110,7 @@ export function CreateGradeFormForSubject({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 m-5">
         <FormItem className="flex flex-col">
           <FormLabel>
-            {t("subjects.subject")}
+            {t("common.subjects.subject")}
             <Asterisk className="ml-1" />
           </FormLabel>
           <Button
@@ -131,14 +131,14 @@ export function CreateGradeFormForSubject({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("grades.grade")}
+                {t("common.grades.grade")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="any"
-                  placeholder={t("grades.add-placeholder")}
+                  placeholder={t("common.grades.add-placeholder")}
                   {...field}
                   onChange={(e) => {
                     if (e.target.value === "") field.onChange("");
@@ -178,12 +178,12 @@ export function CreateGradeFormForSubject({
           name="weight"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("grades.weight")}</FormLabel>
+              <FormLabel>{t("common.grades.weight")}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="any"
-                  placeholder={t("grades.weight-placeholder")}
+                  placeholder={t("common.grades.weight-placeholder")}
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
@@ -198,7 +198,7 @@ export function CreateGradeFormForSubject({
           name="date"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("grades.date")}</FormLabel>
+              <FormLabel>{t("common.grades.date")}</FormLabel>
               <br />
               <FormControl>
                 <Popover>
@@ -247,7 +247,7 @@ export function CreateGradeFormForSubject({
         />
 
         <Button className="w-full" type="submit" disabled={submitting}>
-          {submitting ? <LoadingSpinner /> : t("actions.submit")}
+          {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
         </Button>
       </form>
     </Form>

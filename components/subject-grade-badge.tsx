@@ -30,7 +30,9 @@ export const SubjectGradeBadge = ({
           {`${truncatedGrade} ${
             hideText
               ? ""
-              : t("grades.grades", { count: average.average?.gradeAmount })
+              : t("common.grades.grades", {
+                  count: average.average?.gradeAmount,
+                })
           }`}
         </Badge>
       </PopoverTrigger>

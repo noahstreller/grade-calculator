@@ -88,15 +88,19 @@ export function GradesForSubject({
       <Card>
         <CardHeader>
           <CardTitle>Subject Grades</CardTitle>
-          <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
+          <CardDescription>
+            {t("common.grades.all-grades-desc")}
+          </CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button variant={"secondary"}>{t("grades.add")}</Button>
+              <Button variant={"secondary"}>{t("common.grades.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>{t("grades.add")}</DialogTitle>
-                <DialogDescription>{t("grades.add-desc")}</DialogDescription>
+                <DialogTitle>{t("common.grades.add")}</DialogTitle>
+                <DialogDescription>
+                  {t("common.grades.add-desc")}
+                </DialogDescription>
               </DialogHeader>
               <CreateGradeFormForSubject
                 refresh={refresh}
@@ -110,9 +114,9 @@ export function GradesForSubject({
           {data.length === 0 ? (
             <Alert>
               <Bird className="h-4 w-4" />
-              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+              <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
               <AlertDescription>
-                {t("errors.not-enough-data-yet-grade", { count: 1 })}
+                {t("common.errors.not-enough-data-yet-grade", { count: 1 })}
               </AlertDescription>
             </Alert>
           ) : (
@@ -146,16 +150,18 @@ export function GradesForSubject({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("grades.all-grades")}</CardTitle>
-        <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
+        <CardTitle>{t("common.grades.all-grades")}</CardTitle>
+        <CardDescription>{t("common.grades.all-grades-desc")}</CardDescription>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <Button>{t("grades.add")}</Button>
+            <Button>{t("common.grades.add")}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>{t("grades.add")}</DrawerTitle>
-              <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
+              <DrawerTitle>{t("common.grades.add")}</DrawerTitle>
+              <DrawerDescription>
+                {t("common.grades.add-desc")}
+              </DrawerDescription>
             </DrawerHeader>
             <CreateGradeFormForSubject
               refresh={refresh}
@@ -174,9 +180,9 @@ export function GradesForSubject({
         {data.length === 0 ? (
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("errors.not-enough-data-yet-grade", { count: 1 })}
+              {t("common.errors.not-enough-data-yet-grade", { count: 1 })}
             </AlertDescription>
           </Alert>
         ) : (
