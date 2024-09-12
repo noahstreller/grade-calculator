@@ -4,7 +4,6 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -46,6 +45,7 @@ import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
+import { useCategory } from "@/components/category-provider";
 
 export function CreateGradeForm({
   refresh,
@@ -73,7 +73,7 @@ export function CreateGradeForm({
       try {
         setLoading(true);
         const data = catchProblem(
-          await getAllSubjects(categoryState.category?.id)
+          await getAllSubjects(categoryState.category?.id),
         );
         setSubjects([...data]);
       } finally {
@@ -85,18 +85,18 @@ export function CreateGradeForm({
 
   const FormSchema = z.object({
     subject: z.number({
-      required_error: t("common.errors.required"),
+      required_error: t("errors.required"),
     }),
     grade: z
       .number({
-        invalid_type_error: t("common.errors.invalid-type.number"),
-        required_error: t("common.errors.required"),
+        invalid_type_error: t("errors.invalid-type.number"),
+        required_error: t("errors.required"),
       })
       .gte(preferences?.minimumGrade ?? defaultPreferences.minimumGrade!)
       .lte(preferences?.maximumGrade ?? defaultPreferences.maximumGrade!),
     weight: z
       .number({
-        invalid_type_error: t("common.errors.invalid-type.number"),
+        invalid_type_error: t("errors.invalid-type.number"),
       })
       .gte(0)
       .optional(),
@@ -124,7 +124,7 @@ export function CreateGradeForm({
       setSubmitting(false);
       addGradeToast(
         grade,
-        subjects.find((subject) => subject.id === data.subject)?.name ?? ""
+        subjects.find((subject) => subject.id === data.subject)?.name ?? "",
       );
     }
     refresh();
@@ -144,7 +144,7 @@ export function CreateGradeForm({
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>
-                {t("common.subjects.subject")}
+                {t("subjects.subject")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <Popover open={open} onOpenChange={setOpen}>
@@ -156,7 +156,7 @@ export function CreateGradeForm({
                       disabled={loading}
                       className={cn(
                         "w-full justify-between",
-                        !field.value && "text-muted-foreground"
+                        !field.value && "text-muted-foreground",
                       )}
                     >
                       {loading && (
@@ -168,25 +168,25 @@ export function CreateGradeForm({
                       {field.value
                         ? truncateText(
                             subjects.find(
-                              (subject) => subject.id === field.value
+                              (subject) => subject.id === field.value,
                             )?.name ?? "",
-                            35
+                            35,
                           ).text
                         : loading
-                        ? null
-                        : "Select subject"}
+                          ? null
+                          : "Select subject"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
                   <Command>
-                    <CommandInput placeholder={t("common.subjects.search")} />
+                    <CommandInput placeholder={t("subjects.search")} />
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {subjects.length === 0 ? (
                           <CommandItem disabled>
-                            {t("common.subjects.notfound")}
+                            {t("subjects.notfound")}
                           </CommandItem>
                         ) : (
                           subjects.map((subject) => (
@@ -203,7 +203,7 @@ export function CreateGradeForm({
                                   "mr-2 h-4 w-4",
                                   subject.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                               {truncateText(subject.name!, 35).text}
@@ -226,14 +226,14 @@ export function CreateGradeForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                {t("common.grades.grade")}
+                {t("grades.grade")}
                 <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="any"
-                  placeholder={t("common.grades.add-placeholder")}
+                  placeholder={t("grades.add-placeholder")}
                   {...field}
                   onChange={(e) => {
                     if (e.target.value === "") field.onChange("");
@@ -273,12 +273,12 @@ export function CreateGradeForm({
           name="weight"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("common.grades.weight")}</FormLabel>
+              <FormLabel>{t("grades.weight")}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="any"
-                  placeholder={t("common.grades.weight-placeholder")}
+                  placeholder={t("grades.weight-placeholder")}
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
@@ -293,7 +293,7 @@ export function CreateGradeForm({
           name="date"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("common.grades.date")}</FormLabel>
+              <FormLabel>{t("grades.date")}</FormLabel>
               <br />
               <FormControl>
                 <Popover>
@@ -302,7 +302,7 @@ export function CreateGradeForm({
                       variant={"outline"}
                       className={cn(
                         "w-full justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        !date && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
@@ -342,7 +342,7 @@ export function CreateGradeForm({
         />
 
         <Button className="w-full" type="submit" disabled={submitting}>
-          {submitting ? <LoadingSpinner /> : t("common.actions.submit")}
+          {submitting ? <LoadingSpinner /> : t("actions.submit")}
         </Button>
       </form>
     </Form>

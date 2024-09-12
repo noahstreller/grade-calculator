@@ -37,7 +37,7 @@ export function SignInPageComponent() {
   const session = useSession();
   const router = useRouter();
   const params = useSearchParams();
-  const [error, setError] = useState<string | null>(params.get("common.error"));
+  const [error, setError] = useState<string | null>(params.get("error"));
 
   useEffect(() => {
     window.scrollTo(0, 0);
