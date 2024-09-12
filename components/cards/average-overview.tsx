@@ -109,10 +109,8 @@ export function AverageOverview({
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>{t("common.subject-overview.title")}</CardTitle>
-        <CardDescription>
-          {t("common.subject-overview.description")}
-        </CardDescription>
+        <CardTitle>{t("subject-overview.title")}</CardTitle>
+        <CardDescription>{t("subject-overview.description")}</CardDescription>
       </CardHeader>
       {averageData.filter(
         (average) =>
@@ -150,9 +148,9 @@ export function AverageOverview({
         <CardContent>
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("common.errors.not-enough-data-yet-desc", { count: 3 })}
+              {t("errors.not-enough-data-yet-desc", { count: 3 })}
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -192,13 +190,13 @@ export function AverageOverview({
             <CardBoard className="flex-col sm:flex-row ">
               <Card className="outline outline-border outline-4">
                 <CardHeader className="flex-row gap-3">
-                  {t("common.subject-overview.subject-average")}
+                  {t("subject-overview.subject-average")}
                   <Popover>
                     <PopoverTrigger>
                       <Badge variant="outline">?</Badge>
                     </PopoverTrigger>
                     <PopoverContent>
-                      {t("common.subject-overview.subject-average-desc")}
+                      {t("subject-overview.subject-average-desc")}
                     </PopoverContent>
                   </Popover>
                 </CardHeader>
@@ -220,13 +218,13 @@ export function AverageOverview({
               </Card>
               <Card>
                 <CardHeader className="flex-row gap-3">
-                  {t("common.subject-overview.grade-average")}
+                  {t("subject-overview.grade-average")}
                   <Popover>
                     <PopoverTrigger>
                       <Badge variant="outline">?</Badge>
                     </PopoverTrigger>
                     <PopoverContent>
-                      {t("common.subject-overview.grade-average-desc")}
+                      {t("subject-overview.grade-average-desc")}
                     </PopoverContent>
                   </Popover>
                 </CardHeader>

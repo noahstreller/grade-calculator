@@ -1,6 +1,5 @@
 "use client";
 import { columns } from "@/components/cards/failingGradesCard/columns";
-import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -9,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import useTranslation from "next-translate/useTranslation";
@@ -23,18 +23,16 @@ export default function FailingGradesCard({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("common.subjects.failing-subjects")}</CardTitle>
-        <CardDescription>
-          {t("common.subjects.failing-subjects-desc")}
-        </CardDescription>
+        <CardTitle>{t("subjects.failing-subjects")}</CardTitle>
+        <CardDescription>{t("subjects.failing-subjects-desc")}</CardDescription>
       </CardHeader>
       <CardContent>
         {data.length === 0 ? (
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("common.errors.not-enough-data-yet-failing", { count: 0 })}
+              {t("errors.not-enough-data-yet-failing", { count: 0 })}
             </AlertDescription>
           </Alert>
         ) : (

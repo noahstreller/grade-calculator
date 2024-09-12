@@ -89,20 +89,16 @@ export function AllSubjects({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>{t("common.subjects.all-subjects")}</CardTitle>
-          <CardDescription>
-            {t("common.subjects.all-subjects-desc")}
-          </CardDescription>
+          <CardTitle>{t("subjects.all-subjects")}</CardTitle>
+          <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button variant="secondary">{t("common.subjects.add")}</Button>
+              <Button variant="secondary">{t("subjects.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>{t("common.subjects.add")}</DialogTitle>
-                <DialogDescription>
-                  {t("common.subjects.add-desc")}
-                </DialogDescription>
+                <DialogTitle>{t("subjects.add")}</DialogTitle>
+                <DialogDescription>{t("subjects.add-desc")}</DialogDescription>
               </DialogHeader>
               <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
             </DialogContent>
@@ -112,16 +108,14 @@ export function AllSubjects({
           <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>{t("common.subjects.delete.prompt")}</DialogTitle>
+                <DialogTitle>{t("subjects.delete.prompt")}</DialogTitle>
                 <DialogDescription>
-                  {t("common.subjects.delete.message")}
+                  {t("subjects.delete.message")}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
                 <DialogClose asChild>
-                  <Button variant="outline">
-                    {t("common.actions.cancel")}
-                  </Button>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
                 </DialogClose>
                 <DialogClose asChild>
                   <Button
@@ -137,7 +131,7 @@ export function AllSubjects({
                     }}
                     variant="destructive"
                   >
-                    {t("common.actions.danger-continue")}
+                    {t("actions.danger-continue")}
                   </Button>
                 </DialogClose>
               </DialogFooter>
@@ -145,11 +139,9 @@ export function AllSubjects({
             {data.length === 0 ? (
               <Alert>
                 <Bird className="h-4 w-4" />
-                <AlertTitle>
-                  {t("common.errors.not-enough-data-yet")}
-                </AlertTitle>
+                <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
                 <AlertDescription>
-                  {t("common.errors.not-enough-data-yet-subject", { count: 1 })}
+                  {t("errors.not-enough-data-yet-subject", { count: 1 })}
                 </AlertDescription>
               </Alert>
             ) : (
@@ -190,25 +182,21 @@ export function AllSubjects({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("common.subjects.all-subjects")}</CardTitle>
-        <CardDescription>
-          {t("common.subjects.all-subjects-desc")}
-        </CardDescription>
+        <CardTitle>{t("subjects.all-subjects")}</CardTitle>
+        <CardDescription>{t("subjects.all-subjects-desc")}</CardDescription>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <Button variant="secondary">{t("common.subjects.add")}</Button>
+            <Button variant="secondary">{t("subjects.add")}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>{t("common.grades.add")}</DrawerTitle>
-              <DrawerDescription>
-                {t("common.grades.add-desc")}
-              </DrawerDescription>
+              <DrawerTitle>{t("grades.add")}</DrawerTitle>
+              <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
             <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">{t("common.actions.cancel")}</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -218,9 +206,9 @@ export function AllSubjects({
         <Drawer open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>{t("common.subjects.delete.prompt")}</DrawerTitle>
+              <DrawerTitle>{t("subjects.delete.prompt")}</DrawerTitle>
               <DrawerDescription>
-                {t("common.subjects.delete.message")}
+                {t("subjects.delete.message")}
               </DrawerDescription>
             </DrawerHeader>
             <DrawerFooter className="pt-2">
@@ -238,20 +226,20 @@ export function AllSubjects({
                   }}
                   variant="destructive"
                 >
-                  {t("common.actions.danger-continue")}
+                  {t("actions.danger-continue")}
                 </Button>
               </DrawerClose>
               <DrawerClose asChild>
-                <Button variant="outline">{t("common.actions.cancel")}</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
           {data.length === 0 ? (
             <Alert>
               <Bird className="h-4 w-4" />
-              <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
+              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
               <AlertDescription>
-                {t("common.errors.not-enough-data-yet-subject", { count: 1 })}
+                {t("errors.not-enough-data-yet-subject", { count: 1 })}
               </AlertDescription>
             </Alert>
           ) : (

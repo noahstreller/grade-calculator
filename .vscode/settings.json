@@ -3,7 +3,5 @@
   "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui"],
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
-  "i18n-ally.localesPaths": ["locales"],
-  "i18n-ally.namespace": true,
-  "i18n-ally.pathMatcher": "{locale}/{namespace}.json"
+  "i18n-ally.localesPaths": ["locales"]
 }

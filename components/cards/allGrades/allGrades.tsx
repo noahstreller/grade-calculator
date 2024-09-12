@@ -61,7 +61,7 @@ export function AllGrades({
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: t("common.show-all"),
+    label: "Show all",
     icon: <FilterX className="size-4 mr-2" />,
   });
 
@@ -85,20 +85,16 @@ export function AllGrades({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>{t("common.grades.all-grades")}</CardTitle>
-          <CardDescription>
-            {t("common.grades.all-grades-desc")}
-          </CardDescription>
+          <CardTitle>{t("grades.all-grades")}</CardTitle>
+          <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button>{t("common.grades.add")}</Button>
+              <Button>{t("grades.add")}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>{t("common.grades.add")}</DialogTitle>
-                <DialogDescription>
-                  {t("common.grades.add-desc")}
-                </DialogDescription>
+                <DialogTitle>{t("grades.add")}</DialogTitle>
+                <DialogDescription>{t("grades.add-desc")}</DialogDescription>
               </DialogHeader>
               <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             </DialogContent>
@@ -108,9 +104,9 @@ export function AllGrades({
           {data.length === 0 ? (
             <Alert>
               <Bird className="h-4 w-4" />
-              <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
+              <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
               <AlertDescription>
-                {t("common.errors.not-enough-data-yet-grade", { count: 1 })}
+                {t("errors.not-enough-data-yet-grade", { count: 1 })}
               </AlertDescription>
             </Alert>
           ) : (
@@ -123,9 +119,9 @@ export function AllGrades({
               />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>{t("common.edit-grade")}</DialogTitle>
+                  <DialogTitle>Edit Grade</DialogTitle>
                   <DialogDescription>
-                    {t("common.change-the-grade-details-here")}{" "}
+                    Change the grade details here
                   </DialogDescription>
                 </DialogHeader>
                 <EditGradeForm
@@ -144,23 +140,21 @@ export function AllGrades({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("common.grades.all-grades")}</CardTitle>
-        <CardDescription>{t("common.grades.all-grades-desc")}</CardDescription>
+        <CardTitle>{t("grades.all-grades")}</CardTitle>
+        <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <Button>{t("common.grades.add")}</Button>
+            <Button>{t("grades.add")}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>{t("common.grades.add")}</DrawerTitle>
-              <DrawerDescription>
-                {t("common.grades.add-desc")}
-              </DrawerDescription>
+              <DrawerTitle>{t("grades.add")}</DrawerTitle>
+              <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
             </DrawerHeader>
             <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">{t("common.actions.cancel")}</Button>
+                <Button variant="outline">Cancel</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -170,18 +164,18 @@ export function AllGrades({
         {data.length === 0 ? (
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>{t("common.errors.not-enough-data-yet")}</AlertTitle>
+            <AlertTitle>{t("errors.not-enough-data-yet")}</AlertTitle>
             <AlertDescription>
-              {t("common.errors.not-enough-data-yet-grade", { count: 1 })}
+              {t("errors.not-enough-data-yet-grade", { count: 1 })}
             </AlertDescription>
           </Alert>
         ) : (
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>{t("common.edit-grade-0")}</DrawerTitle>
+                <DrawerTitle>Edit Grade</DrawerTitle>
                 <DrawerDescription>
-                  {t("common.change-the-grade-details-here-0")}{" "}
+                  Change the grade details here
                 </DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
@@ -191,9 +185,7 @@ export function AllGrades({
               />
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
-                  <Button variant="outline">
-                    {t("common.actions.cancel")}
-                  </Button>
+                  <Button variant="outline">Cancel</Button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>
