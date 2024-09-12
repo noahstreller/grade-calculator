@@ -12,7 +12,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { PassingFilterComboBox, PassingStatus } from "@/components/passing-filter-combobox";
+import {
+  PassingFilterComboBox,
+  PassingStatus,
+} from "@/components/passing-filter-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/spinner";
@@ -25,6 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import useTranslation from "next-translate/useTranslation";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -42,15 +46,15 @@ export function DataTable<TData, TValue>({
   pageSize = 6,
   loading = false,
   selectedStatus,
-  setSelectedStatus
+  setSelectedStatus,
 }: DataTableProps<TData, TValue>) {
-  
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: "date", desc: true },
-  ])
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
+  const { t } = useTranslation();
   const table = useReactTable({
     data,
     columns,
@@ -69,20 +73,25 @@ export function DataTable<TData, TValue>({
         pageSize: pageSize,
       },
     },
-  })
+  });
 
   return (
     <>
-      <div className="w-full flex flex-row justify-between py-4 gap-2">    
+      <div className="w-full flex flex-row justify-between py-4 gap-2">
         <Input
-          placeholder="Filter by subject"
-          value={(table.getColumn("subjectName")?.getFilterValue() as string) ?? ""}
+          placeholder={t("common.filter-by-subject")}
+          value={
+            (table.getColumn("subjectName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("subjectName")?.setFilterValue(event.target.value)
           }
           className="w-full"
         />
-        <PassingFilterComboBox selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
+        <PassingFilterComboBox
+          selectedStatus={selectedStatus}
+          setSelectedStatus={setSelectedStatus}
+        />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -136,7 +145,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("common.no-results")}{" "}
                 </TableCell>
               </TableRow>
             )}
@@ -154,7 +163,7 @@ export function DataTable<TData, TValue>({
             <ArrowLeft size={16} />
           </Button>
           <span>
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {t("common.page")} {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </span>
           <Button
