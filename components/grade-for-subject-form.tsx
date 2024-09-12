@@ -34,7 +34,7 @@ import {
   getDefaultPreferences,
   truncateText,
 } from "@/lib/utils";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
@@ -48,7 +48,7 @@ export function CreateGradeFormForSubject({
   setDrawerOpen: Function;
   subject: Subject;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const categoryState = useCategory();
   const [date, setDate] = useState<Date | undefined>();

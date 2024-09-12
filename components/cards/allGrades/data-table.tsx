@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const table = useReactTable({
     data,
     columns,

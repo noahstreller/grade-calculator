@@ -41,7 +41,7 @@ import {
   getDefaultPreferences,
   truncateText,
 } from "@/lib/utils";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
@@ -56,7 +56,7 @@ export function EditGradeForm({
   setDrawerOpen: Function;
   originalGrade: Grade | undefined;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [open, setOpen] = useState(false);

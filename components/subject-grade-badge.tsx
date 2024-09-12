@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { getStringForAmount, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 
 export const SubjectGradeBadge = ({
   average,
@@ -18,7 +18,7 @@ export const SubjectGradeBadge = ({
   className?: string;
   hideText?: boolean;
 }) => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const averageGrade = average.average?.gradeAmount ?? 0;
   const gradeSum = average.average?.gradeWeightedSum ?? 0;
   const weightedAmount = average.average?.gradeWeightedAmount ?? 0;

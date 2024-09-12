@@ -14,11 +14,11 @@ import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { PreferencesTranslations } from "@/lib/translationObjects";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function Onboarding() {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences();
   const { isMobile, isTablet, isDesktop } = useDevice();
 

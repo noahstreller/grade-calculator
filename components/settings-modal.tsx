@@ -33,7 +33,7 @@ import { getDefaultPreferences } from "@/lib/utils";
 import { templates } from "@/templates";
 import { RotateCcwIcon, SaveIcon, Settings, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Separator } from "./ui/separator";
@@ -57,7 +57,7 @@ export function SettingsModalForm({
   setOpen: (open: boolean) => void;
 }) {
   const preferences = usePreferences();
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);
@@ -356,7 +356,7 @@ export function SettingsFormForOnboarding({
   const preferencesFromTemplate = templates.find(
     (t) => t.id === selectedTemplate
   );
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [maxLtMin, setMaxLtMin] = useState(false);
   const [passLtMin, setPassLtMin] = useState(false);
   const [passGtMax, setPassGtMax] = useState(false);

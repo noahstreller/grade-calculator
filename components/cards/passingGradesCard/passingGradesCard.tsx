@@ -2,7 +2,7 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ export default function PassingGradesCard({
 }: {
   data: AverageWithSubject[];
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   return (
     <Card>

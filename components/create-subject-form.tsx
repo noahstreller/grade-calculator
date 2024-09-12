@@ -21,7 +21,7 @@ import { Switch } from "@/components/ui/switch";
 import { catchProblem } from "@/lib/problem";
 import { quickCreateSubject } from "@/lib/services/subject-service";
 import { addSubjectToast } from "@/lib/toasts";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
@@ -33,7 +33,7 @@ export function CreateSubjectForm({
   refresh: Function;
   setOpen: Function;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
   const [submitting, setSubmitting] = useState(false);
   const categoryState = useCategory();

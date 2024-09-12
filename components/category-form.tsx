@@ -37,13 +37,13 @@ import {
 import { addCategoryToast } from "@/lib/toasts";
 import { cn, truncateText } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 
 export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const categoryState = useCategory();
   const preferences = usePreferences().preferences!;
   const [submitting, setSubmitting] = useState(false);
@@ -121,7 +121,7 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
 }
 
 export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const categoryState = useCategory();
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);

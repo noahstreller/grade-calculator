@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextTranslate = require('next-translate-plugin')
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 const withSerwist = require("@serwist/next").default({
   swSrc: "app/sw.ts",
   swDest: "public/sw.js",
@@ -7,7 +8,7 @@ const withSerwist = require("@serwist/next").default({
 });
 
 module.exports = withSerwist(
-    nextTranslate({
-        reactStrictMode: false,
-    })
+  withNextIntl({
+    reactStrictMode: false,
+  })
 );

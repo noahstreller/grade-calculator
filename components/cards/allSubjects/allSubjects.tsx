@@ -41,7 +41,7 @@ import { deleteSubjectToast } from "@/lib/toasts";
 import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export function AllSubjects({
@@ -57,7 +57,7 @@ export function AllSubjects({
   setData: Function;
   refresh: Function;
 }) {
-  const { t, lang } = useTranslation("common");
+  const t = useTranslations();
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
   const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
