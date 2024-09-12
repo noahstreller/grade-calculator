@@ -57,7 +57,7 @@ export function AllSubjects({
   setData: Function;
   refresh: Function;
 }) {
-  const { t, lang } = useTranslation("common");
+  const { t, lang } = useTranslation();
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
   const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
@@ -71,7 +71,7 @@ export function AllSubjects({
   const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("common.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
 
@@ -156,9 +156,9 @@ export function AllSubjects({
               <Dialog open={editOpen} onOpenChange={setEditOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Edit Subject</DialogTitle>
+                    <DialogTitle>{t("common.edit-subject-0")}</DialogTitle>
                     <DialogDescription>
-                      Change the details of the subject
+                      {t("common.change-the-details-of-the-subject-0")}{" "}
                     </DialogDescription>
                   </DialogHeader>
                   <EditSubjectForm
@@ -258,9 +258,9 @@ export function AllSubjects({
             <Drawer open={editOpen} onOpenChange={setEditOpen}>
               <DrawerContent className="sm:max-w-[425px]">
                 <DrawerHeader>
-                  <DrawerTitle>Edit Subject</DrawerTitle>
+                  <DrawerTitle>{t("common.edit-subject-0")}</DrawerTitle>
                   <DrawerDescription>
-                    Change the details of the subject
+                    {t("common.change-the-details-of-the-subject-0")}{" "}
                   </DrawerDescription>
                 </DrawerHeader>
                 <EditSubjectForm
