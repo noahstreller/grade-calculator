@@ -5,6 +5,7 @@
   },
   "grades": {
     "grade": "Grade",
+    "grades": "Grades",
     "grades_one": "Grade",
     "grades_other": "Grades",
     "weight": "Weight",
