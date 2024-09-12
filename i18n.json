@@ -1,7 +1,8 @@
 {
-  "locales": ["en", "de"],
-  "defaultLocale": "de",
+  "locales": ["en", "de", "dummy"],
+  "defaultLocale": "dummy",
   "pages": {
     "*": ["common"]
-  }
+  },
+  "localeDetection": false
 }
