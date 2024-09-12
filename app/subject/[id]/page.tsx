@@ -36,7 +36,7 @@ import { truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
 import { Bird, HomeIcon, LogInIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -56,7 +56,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
     "loading" | "loaded" | "notfound" | "empty"
   >("loading");
   const userPreferences = usePreferences();
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const fetchData = async () => {
     try {

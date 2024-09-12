@@ -24,7 +24,7 @@ import {
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -46,7 +46,7 @@ export function AverageOverview({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
 
   let subjectAverage = (gradeAverage: AverageWithSubject) => {

@@ -11,14 +11,14 @@ import {
 import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 
 export default function FailingGradesCard({
   data,
 }: {
   data: AverageWithSubject[];
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   return (
     <Card>

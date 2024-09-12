@@ -12,7 +12,7 @@ import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { Average, AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
@@ -33,7 +33,7 @@ function RequiredGradesBody({
   showPassing: boolean;
   simulatedWeight: number;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences;
 
   const { isMobile } = useDevice();
@@ -196,7 +196,7 @@ export function RequiredGrades({
   className?: string;
   showPassingGrades?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
@@ -269,7 +269,7 @@ function RequiredGradesBodyForSubject({
   simulatedWeight: number;
   subject: Subject;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences;
 
   const { isMobile } = useDevice();
@@ -386,7 +386,7 @@ export function RequiredGradesForSubject({
   className?: string;
   showPassingGrades?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 

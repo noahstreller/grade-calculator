@@ -29,7 +29,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,7 +41,7 @@ export function LandingPage() {
   }, []);
 
   const { isMobile } = useDevice();
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const PAGE_TABS = [
     {
@@ -406,7 +406,7 @@ function GettingStartedTab() {
   const { isMobile } = useDevice();
   const theme = useTheme();
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   return (
     <CardBoard row={!isMobile}>
       <CardBoard>
@@ -521,7 +521,7 @@ type DemoType = {
 };
 
 const Demos = () => {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const demos: DemoType[] = [
     {
       title: (

@@ -4,10 +4,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 
 export function FailingGradesContent({ data }: { data: AverageWithSubject[] }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   return (
     <CardContent className="mt-5">
       <CardTitle>Subjects to revise</CardTitle>

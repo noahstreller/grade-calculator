@@ -33,7 +33,7 @@ import {
 import { cn, getDateOrTime, round, truncateText } from "@/lib/utils";
 import { Average, AverageWithSubject } from "@/types/types";
 import { Bird, Check, ChevronsUpDown, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   Label,
@@ -59,7 +59,7 @@ export function GradeOverview({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
   const [subject, setSubject] = useState<string | null>(null);
   const [subjectsOpen, setSubjectsOpen] = useState(false);
@@ -453,7 +453,7 @@ export function GradeOverviewForSubject({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
 
   let getGrade = (grade: GradeWithSubject) => {

@@ -7,7 +7,7 @@ import {
   PreferencesTranslations,
 } from "@/lib/translationObjects";
 import { Trash2 } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { isMobile } from "react-device-detect";
 import { ClearDataButton } from "./clear-data-button";
@@ -17,7 +17,7 @@ import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export default function HeaderComponent() {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const clearDataTranslations: ClearDataTranslations = {
     prompt: t("actions.clear-data.prompt"),
