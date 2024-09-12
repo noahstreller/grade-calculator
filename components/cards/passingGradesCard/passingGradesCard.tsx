@@ -1,8 +1,7 @@
 "use client";
+import { columns } from "@/components/cards/passingGradesCard/columns";
+import { DataTable } from "@/components/cards/passingGradesCard/data-table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AverageWithSubject } from "@/types/types";
-import { Bird } from "lucide-react";
-import { useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
@@ -10,8 +9,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DataTable } from "@/components/cards/passingGradesCard/data-table";
-import { columns } from "@/components/cards/passingGradesCard/columns";
+import { AverageWithSubject } from "@/types/types";
+import { Bird } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function PassingGradesCard({
   data,
@@ -19,6 +19,12 @@ export default function PassingGradesCard({
   data: AverageWithSubject[];
 }) {
   const t = useTranslations();
+  const colTranslations = {
+    grades: {
+      subject: t("grades.subject"),
+      grade: t("grades.grade"),
+    },
+  };
 
   return (
     <Card>
@@ -36,7 +42,7 @@ export default function PassingGradesCard({
             </AlertDescription>
           </Alert>
         ) : (
-          <DataTable columns={columns()} data={data} />
+          <DataTable columns={columns(colTranslations)} data={data} />
         )}
       </CardContent>
     </Card>

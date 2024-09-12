@@ -9,5 +9,7 @@
   "i18n-ally.fullReloadOnChanged": true,
   "i18n-ally.keystyle": "nested",
   "i18n-ally.localesPaths": ["i18n", "messages"],
-  "i18n-ally.enabledFrameworks": ["next-intl"]
+  "i18n-ally.enabledFrameworks": ["next-intl"],
+
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }

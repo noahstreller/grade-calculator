@@ -50,6 +50,19 @@ export function AllGrades({
 }) {
   const t = useTranslations();
   const preferences = usePreferences().preferences!;
+  const colTranslations = {
+    grades: {
+      date: t("grades.date"),
+      grade: t("grades.grade"),
+      subject: t("grades.subject"),
+      description: t("grades.description"),
+      actions: {
+        title: t("grades.actions.title"),
+        edit: t("grades.actions.edit"),
+        delete: t("grades.actions.delete"),
+      },
+    },
+  };
 
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -61,7 +74,7 @@ export function AllGrades({
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
 
@@ -112,7 +125,7 @@ export function AllGrades({
           ) : (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
               <DataTable
-                columns={columns(refresh, setOriginalGrade)}
+                columns={columns(refresh, setOriginalGrade, colTranslations)}
                 data={getGradesForStatus(selectedStatus)}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
@@ -190,7 +203,7 @@ export function AllGrades({
               </DrawerFooter>
             </DrawerContent>
             <DataTable
-              columns={columns(refresh, setOriginalGrade)}
+              columns={columns(refresh, setOriginalGrade, colTranslations)}
               data={getGradesForStatus(selectedStatus)}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}

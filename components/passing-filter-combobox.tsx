@@ -8,7 +8,7 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandItem,
-  CommandList
+  CommandList,
 } from "@/components/ui/command";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
@@ -17,6 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Check, FilterX, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { isMobile } from "react-device-detect";
 
 export type PassingStatus = {
@@ -25,25 +26,13 @@ export type PassingStatus = {
   icon?: React.ReactElement;
 };
 
-const statuses: PassingStatus[] = [
-  {
-    value: "all",
-    label: "Show all",
-    icon: <FilterX className="size-4 mr-2" />,
-  },
-  {
-    value: "passing",
-    label: "Passing",
-    icon: <Check className="size-4 mr-2" />,
-  },
-  {
-    value: "failing",
-    label: "Failing",
-    icon: <X className="size-4 mr-2" />,
-  },
-];
-
-export function PassingFilterComboBox({selectedStatus, setSelectedStatus}: {selectedStatus: PassingStatus | null, setSelectedStatus: (status: PassingStatus | null) => void}) {
+export function PassingFilterComboBox({
+  selectedStatus,
+  setSelectedStatus,
+}: {
+  selectedStatus: PassingStatus | null;
+  setSelectedStatus: (status: PassingStatus | null) => void;
+}) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = !isMobile;
 
@@ -52,7 +41,7 @@ export function PassingFilterComboBox({selectedStatus, setSelectedStatus}: {sele
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-fit">
-            {selectedStatus?.icon && (selectedStatus.icon)}
+            {selectedStatus?.icon && selectedStatus.icon}
             {selectedStatus!.label}
           </Button>
         </PopoverTrigger>
@@ -87,6 +76,24 @@ function StatusList({
   setOpen: (open: boolean) => void;
   setSelectedStatus: (status: PassingStatus | null) => void;
 }) {
+  const t = useTranslations();
+  const statuses: PassingStatus[] = [
+    {
+      value: "all",
+      label: t("filters.show-all"),
+      icon: <FilterX className="size-4 mr-2" />,
+    },
+    {
+      value: "passing",
+      label: t("filters.passing"),
+      icon: <Check className="size-4 mr-2" />,
+    },
+    {
+      value: "failing",
+      label: t("filters.failing"),
+      icon: <X className="size-4 mr-2" />,
+    },
+  ];
   return (
     <Command>
       <CommandList>

@@ -27,6 +27,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -50,6 +51,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  const t = useTranslations();
   const table = useReactTable({
     initialState: {
       pagination: {
@@ -74,7 +76,7 @@ export function DataTable<TData, TValue>({
     <>
       <div className="w-full flex flex-row justify-between py-4 gap-2">
         <Input
-          placeholder="Filter by subject"
+          placeholder={t("filters.filter-by-subject")}
           value={
             (table.getColumn("subjectName")?.getFilterValue() as string) ?? ""
           }
