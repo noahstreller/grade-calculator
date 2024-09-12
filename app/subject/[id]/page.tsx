@@ -36,6 +36,7 @@ import { truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
 import { Bird, HomeIcon, LogInIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
+import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -55,6 +56,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
     "loading" | "loaded" | "notfound" | "empty"
   >("loading");
   const userPreferences = usePreferences();
+  const { t } = useTranslation("common");
 
   const fetchData = async () => {
     try {
@@ -113,11 +115,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
+                <Link href="/">{t("home")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -128,14 +130,14 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <Bird className="h-4 w-4" />
           <AlertTitle className="font-bold">Woops.</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>You must be logged in to view subject details.</>
+            <>{t("you_must_be_logged_in_to_view_subject_details")}</>
             <Button asChild>
               <Link
                 href={"/login"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <LogInIcon className="size-4 text-muted-foreground" />
-                Log in now
+                {t("log_in_now")}{" "}
               </Link>
             </Button>
             <Button variant={"outline"} asChild>
@@ -144,7 +146,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                Go home
+                {t("go_home")}{" "}
               </Link>
             </Button>
           </AlertDescription>
@@ -158,11 +160,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
+                <Link href="/">{t("home-0")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects-0")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -173,14 +175,14 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <Bird className="h-4 w-4" />
           <AlertTitle className="font-bold">Woops.</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>This subject contains no data yet.</>
+            <>{t("this_subject_contains_no_data_yet")}</>
             <Button variant={"outline"} asChild>
               <Link
                 href={"/"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                Return home
+                {t("return_home")}{" "}
               </Link>
             </Button>
           </AlertDescription>
@@ -194,11 +196,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
+                <Link href="/">{t("home-1")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>Subjects</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects-1")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -209,14 +211,14 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <Bird className="h-4 w-4" />
           <AlertTitle className="font-bold">Woops.</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>We cannot find the subject you are looking for.</>
+            <>{t("we_cannot_find_the_subject_you_are_looking_for")}</>
             <Button variant={"outline"} asChild>
               <Link
                 href={"/"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                Return home
+                {t("return_home-0")}{" "}
               </Link>
             </Button>
           </AlertDescription>
@@ -267,11 +269,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="/">Home</Link>
+                  <Link href="/">{t("home-2")}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
-              <BreadcrumbItem>Subjects</BreadcrumbItem>
+              <BreadcrumbItem>{t("subjects-2")}</BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -287,17 +289,17 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                       <CardTitle>
                         {truncateText(subject.name!, 20).text}
                       </CardTitle>
-                      <CardDescription>Subject details</CardDescription>
+                      <CardDescription>{t("subject_details")}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <DetailRow title="ID" value={subject.id} />
                       <DetailRow
-                        title="Name"
+                        title={t("name")}
                         value={truncateText(subject.name!, 40).text}
                       />
                       <DetailRowBoolean
                         variant="yes-no"
-                        title="Passing"
+                        title={t("passing")}
                         value={doesGradePass(
                           average.gradeAverage!,
                           userPreferences.preferences!
@@ -305,37 +307,40 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                       />
                       <DetailRowBoolean
                         variant="yes-no"
-                        title="Relevant for academic promotion"
+                        title={t("relevant_for_academic_promotion")}
                         value={subject.weight === 1}
                       />
                       {average.gradeAmount === average.gradeWeightedAmount ? (
                         <DetailRow
-                          title="Grade count"
+                          title={t("grade_count")}
                           value={average.gradeAmount}
                         />
                       ) : (
                         <>
                           <DetailRow
-                            title="Grade count"
+                            title={t("grade_count-0")}
                             value={average.gradeAmount}
                           />
                           <DetailRow
-                            title="Grade count (weights considered)"
+                            title={t("grade_count_weights_considered")}
                             value={average.gradeWeightedAmount}
                           />
                         </>
                       )}
 
                       {average.gradeSum === average.gradeWeightedSum ? (
-                        <DetailRow title="Grade sum" value={average.gradeSum} />
+                        <DetailRow
+                          title={t("grade_sum")}
+                          value={average.gradeSum}
+                        />
                       ) : (
                         <>
                           <DetailRow
-                            title="Grade sum"
+                            title={t("grade_sum-0")}
                             value={average.gradeSum}
                           />
                           <DetailRow
-                            title="Grade sum (weights considered)"
+                            title={t("grade_sum_weights_considered")}
                             value={average.gradeWeightedSum}
                           />
                         </>
@@ -363,7 +368,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                 )}
               </>
             ) : (
-              <div>Subject not found</div>
+              <div>{t("subject_not_found")}</div>
             )}
           </CardBoard>
         </>
