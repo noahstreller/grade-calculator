@@ -1,0 +1,206 @@
+{
+  "app": {
+    "title": "Notenrechner",
+    "description": "Ein einfacher Notenrechner für Studenten."
+  },
+  "grades": {
+    "grade": "Grad",
+    "grades": "Noten",
+    "grades_one": "Grad",
+    "grades_other": "Noten",
+    "weight": "Gewicht",
+    "weight-placeholder": "Gewicht eingeben (optional)",
+    "date": "Datum",
+    "subject": "Thema",
+    "actions": "Aktionen",
+    "copy": "Kopie",
+    "notfound": "Keine Noten gefunden",
+    "add": "Note hinzufügen",
+    "add-desc": "Fügen Sie der Liste eine neue Note hinzu",
+    "add-success": "Die Note wurde hinzugefügt",
+    "add-placeholder": "Geben Sie die Note ein",
+    "all-grades": "Alle Klassen",
+    "all-grades-desc": "Alle aktuellen Noten sind hier aufgelistet",
+    "passing-grades": "Bestehen von Noten",
+    "failing-grades": "Nicht bestandene Noten",
+    "change-details": "Ändern Sie hier die Notendetails"
+  },
+  "subjects": {
+    "subject": "Thema",
+    "add": "Betreff hinzufügen",
+    "add-desc": "Fügen Sie der Liste ein neues Thema hinzu",
+    "add-success": "Das Thema wurde hinzugefügt",
+    "add-placeholder": "Betreff eingeben",
+    "notfound": "Keine Themen gefunden, bitte fügen Sie zuerst ein Thema hinzu",
+    "search": "Suchthemen",
+    "all-subjects": "Alle Themen",
+    "all-subjects-desc": "Alle Themen sind hier aufgelistet",
+    "passing-subjects": "Bestehen von Fächern",
+    "passing-subjects-desc": "Dies sind die Themen, die Sie durchlaufen. ",
+    "failing-subjects": "Durchgefallene Themen",
+    "failing-subjects-desc": "Dies sind die Fächer, in denen Sie versagen. ",
+    "delete": {
+      "prompt": "Löschen",
+      "message": "Möchten Sie diesen Betreff wirklich löschen? "
+    }
+  },
+  "preferences": {
+    "title": "Präferenzen",
+    "description": "Sollten die Noten Ihren neuen Präferenzen widersprechen, werden sie entsprechend angepasst.",
+    "grade-decimals": "Dezimalzahlen bewerten",
+    "grade-decimals-description": "Wie viele Dezimalstellen Sie in Ihren Noten sehen möchten",
+    "grade-decimals-placeholder": "Geben Sie die Anzahl der Dezimalstellen ein",
+    "keep-modals-open": "Halten Sie die Modalitäten offen",
+    "keep-modals-open-description": "Wenn diese Option aktiviert ist, bleiben die Modalitäten nach dem Absenden eines Formulars geöffnet",
+    "minimum-grade": "Mindestnote",
+    "minimum-grade-description": "Die niedrigste Note, die Sie bekommen können",
+    "minimum-grade-placeholder": "Geben Sie die Mindestnote ein",
+    "maximum-grade": "Höchstnote",
+    "maximum-grade-description": "Die höchste Note, die Sie bekommen können",
+    "maximum-grade-placeholder": "Geben Sie die Höchstnote ein",
+    "passing-grade": "Bestehen der Note",
+    "passing-grade-description": "Die Note, die Sie bestehen müssen",
+    "passing-grade-placeholder": "Geben Sie die bestandene Note ein",
+    "passing-inverse": "Inverses Notensystem",
+    "passing-inverse-description": "Wenn diese Option aktiviert ist, gelten die niedrigeren Noten als besser",
+    "alert-title": "Wichtig!",
+    "alert-description": "Nicht gespeicherte Änderungen werden verworfen, wenn Sie dieses Blatt schließen. Bitte speichern Sie sie unten."
+  },
+  "actions": {
+    "copy": {
+      "prompt": "In die Zwischenablage kopieren",
+      "success": "In die Zwischenablage kopiert"
+    },
+    "delete": {
+      "prompt": "Löschen",
+      "success": "Der Artikel wurde gelöscht"
+    },
+    "edit": {
+      "prompt": "Bearbeiten",
+      "success": "Der Artikel wurde bearbeitet"
+    },
+    "danger-continue": "Ich verstehe, fahren Sie fort",
+    "cancel": "Stornieren",
+    "ok": "Habe es",
+    "submit": "Einreichen",
+    "undo": "Rückgängig machen",
+    "reset": "Zurücksetzen",
+    "save": "Speichern",
+    "clear-data": {
+      "prompt": "Alle Daten löschen",
+      "message": "Sind Sie sicher, dass Sie alle Fächer und Noten in dieser Kategorie löschen möchten? "
+    },
+    "export": {
+      "success": "Daten erfolgreich exportiert",
+      "description-clipboard": "JSON wurde in die Zwischenablage kopiert",
+      "description-json": "JSON als Datei exportiert"
+    }
+  },
+  "themes": {
+    "toggle": "Thema ändern",
+    "title": "Thema",
+    "light": "Licht",
+    "dark": "Dunkel",
+    "system": "System"
+  },
+  "errors": {
+    "required": "Dieses Feld ist erforderlich",
+    "message": "Es ist ein Fehler aufgetreten",
+    "invalid-type": {
+      "number": "Dieses Feld muss eine Zahl sein"
+    },
+    "no-data-yet": "Noch keine Daten",
+    "no-data-yet-desc": "Fügen Sie zuerst einige Fächer und Noten hinzu :>",
+    "not-enough-data-yet": "Noch nicht genügend Daten",
+    "not-enough-data-yet-desc": "Nicht genügend Noten, um dieses Diagramm anzuzeigen",
+    "not-enough-data-yet-desc_1": "Fügen Sie mindestens eine Note hinzu, um dieses Diagramm anzuzeigen",
+    "not-enough-data-yet-desc_3": "Fügen Sie mindestens eine Note aus drei verschiedenen Fächern hinzu, um diese Grafik anzuzeigen",
+    "not-enough-data-yet-grade": "Noch nicht genügend Noten",
+    "not-enough-data-yet-grade_1": "Fügen Sie mindestens eine Note hinzu, um diese Tabelle anzuzeigen",
+    "not-enough-data-yet-failing": "Bisher keine nicht bestandenen Noten :)",
+    "not-enough-data-yet-failing_0": "Bisher keine nicht bestandenen Noten :)",
+    "not-enough-subjects-yet-failing": "Bisher keine nicht bestandenen Fächer :)",
+    "not-enough-subjects-yet-failing_0": "Bisher keine nicht bestandenen Fächer :)",
+    "not-enough-data-yet-passing": "Bisher keine bestandenen Noten :(",
+    "not-enough-data-yet-passing_0": "Bisher keine bestandenen Noten :(",
+    "not-enough-data-yet-subject": "Fügen Sie mindestens ein Thema hinzu, um diese Tabelle anzuzeigen",
+    "not-enough-data-yet-subject_1": "Fügen Sie mindestens ein Thema hinzu, um diese Tabelle anzuzeigen",
+    "max-lt-min": "Der Maximalwert muss größer als der Minimalwert sein",
+    "pass-gt-max": "Die bestandene Note muss unter der Höchstnote liegen",
+    "pass-lt-min": "Die bestandene Note muss höher sein als die Mindestnote",
+    "import-failed": "Der Import ist fehlgeschlagen. Möglicherweise sind die Daten ungültig"
+  },
+  "overview": {
+    "title": "Überblick",
+    "description": "Hier sehen Sie eine Übersicht über Ihre Noten und Fächer"
+  },
+  "subject-overview": {
+    "title": "Themenübersicht",
+    "description": "Hier sehen Sie eine Übersicht Ihrer Fächer",
+    "subject-average": "Gesamtdurchschnitt",
+    "grade-average": "Notendurchschnitt",
+    "grade-average-desc": "Dies wird aus allen Ihren Noten berechnet, ohne Berücksichtigung der Gewichte",
+    "subject-average-desc": "Diese errechnet sich aus den Notendurchschnitten Ihrer Fächer unter Berücksichtigung aller Gewichtungen"
+  },
+  "required-grades": {
+    "title": "Erforderliche Noten",
+    "description": "Die Noten, die Sie benötigen, um Ihre Fächer zu bestehen",
+    "required": "passieren",
+    "passed": "weiter vorbeigehen",
+    "required-to-pass": "Du brauchst mindestens"
+  },
+  "landing-page": {
+    "getting-started-about": {
+      "title": "Erste Schritte",
+      "to-the-app-short": "Zur App",
+      "to-the-app-long": "Weiter zur App",
+      "to-legacy-short": "Vermächtnis",
+      "to-legacy-long": "Verwenden Sie die Legacy-Version",
+      "cloud-desc-part1": "Dieser Notenrechner verfügt über a ",
+      "cloud-desc-part2": "Cloud synchronisiert",
+      "cloud-desc-part3": " und a ",
+      "cloud-desc-part4": "Vermächtnis",
+      "cloud-desc-part5": " Version, die alle Daten lokal in Ihrem Browser speichert.",
+      "cloud-desc-part6": "Um die Cloud-Version nutzen zu können, müssen Sie sich zunächst anmelden.  ",
+      "cloud-desc-part7": "klicken Sie hier."
+    },
+    "tabs": {
+      "getting-started": "Erste Schritte",
+      "learn-more": "Erfahren Sie mehr"
+    },
+    "getting-started-tab": {
+      "title": "Erste Schritte",
+      "description": "Sie können sofort mit der Nutzung des Notenrechners beginnen"
+    },
+    "about": {
+      "title": "Über dieses Projekt",
+      "description": "Einige langweilige Zusatzinformationen zu diesem Projekt.",
+      "description-label": "Beschreibung",
+      "short-description-part1": "Bei diesem Projekt handelt es sich um einen Notenrechner/ein Dashboard.  ",
+      "short-description-part2": "unterstützt nur numerische Skalen",
+      "short-description-part3": " Und ",
+      "short-description-part4": "unterstützt keine Buchstabennoten",
+      "short-description-part5": ".",
+      "credit-description-part1": "Dieses Projekt verwendet einige Komponenten von ",
+      "credit-description-part2": "shadcn/ui",
+      "credit-description-part3": " Und ",
+      "credit-description-part4": "Aceternity-Benutzeroberfläche",
+      "credit-description-part5": ".",
+      "source-code-label": "Quellcode",
+      "source-code-description": "Den Quellcode für dieses Projekt finden Sie auf GitHub.",
+      "source-code-link": "Auf GitHub ansehen"
+    },
+    "demo-card": {
+      "title": "Demo",
+      "description": "Hier können Sie verschiedene Demos ausprobieren.",
+      "demo-grades": "Noten",
+      "demo-averages": "Durchschnittswerte",
+      "demo-calculator": "Kalkulator"
+    },
+    "open-image": "Bild öffnen",
+    "screenshot-title": "Screenshot",
+    "screenshot-light-mode": "Screenshot-Lichtmodus",
+    "screenshot-dark-mode": "Screenshot Dunkelmodus",
+    "screenshot-desc": "So sieht der Notenrechner aus."
+  }
+}
