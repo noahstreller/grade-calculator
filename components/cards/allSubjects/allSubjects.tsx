@@ -71,9 +71,16 @@ export function AllSubjects({
   const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: t("show-all"),
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
+
+  const colTranslations = {
+    grades: {
+      grade: t("grades.grade"),
+      subject: t("grades.subject"),
+    },
+  };
 
   useEffect(() => {
     if (selectedStatus?.value === "all") {
@@ -166,7 +173,8 @@ export function AllSubjects({
                     setSubjectToDelete,
                     setOriginalSubject,
                     setDeleteConfirmOpen,
-                    setEditOpen
+                    setEditOpen,
+                    colTranslations
                   )}
                   data={currentData}
                 />
@@ -264,7 +272,8 @@ export function AllSubjects({
                   setSubjectToDelete,
                   setOriginalSubject,
                   setDeleteConfirmOpen,
-                  setEditOpen
+                  setEditOpen,
+                  colTranslations
                 )}
                 data={currentData}
               />

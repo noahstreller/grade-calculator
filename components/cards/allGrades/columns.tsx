@@ -1,6 +1,5 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { GradeWeightBadge } from "@/components/grade-weight-badge";
@@ -36,10 +35,9 @@ import { isMobile } from "react-device-detect";
 
 export function columns(
   refresh: Function,
-  setGradeToEdit: Function
+  setGradeToEdit: Function,
+  translations: any
 ): ColumnDef<GradeWithSubject>[] {
-  const { t } = createTranslation("common");
-
   return [
     {
       id: "subjectName",
@@ -50,7 +48,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.subject")}
+            {translations.grades.subject}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -97,7 +95,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.grade")}
+            {translations.grades.grade}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -129,7 +127,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Description
+            {translations.grades.description}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -176,7 +174,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.date")}
+            {translations.grades.date}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -211,7 +209,9 @@ export function columns(
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {translations.grades.actions.title}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
@@ -221,7 +221,7 @@ export function columns(
                 <DialogTrigger asChild>
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Edit className="size-4 text-muted-foreground" />
-                    <span>Edit grade</span>
+                    <span>{translations.grades.actions.edit}</span>
                   </div>
                 </DialogTrigger>
               </DropdownMenuItem>
@@ -239,7 +239,7 @@ export function columns(
               >
                 <div className="flex flex-row items-center justify-center gap-3">
                   <Trash className="size-4 text-muted-foreground" />
-                  <span>Delete grade</span>
+                  <span>{translations.grades.actions.delete}</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

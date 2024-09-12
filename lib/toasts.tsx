@@ -2,24 +2,13 @@ import { Grade, NewGrade } from "@/db/schema";
 import { Problem } from "@/lib/problem";
 import { addGrade } from "@/lib/services/grade-service";
 import { AlertTriangle } from "lucide-react";
-import createTranslation from "next-translate/createTranslation";
 import { toast } from "sonner";
 
-function t(key: string) {
-  const { t } = createTranslation("common");
-  return t(key);
-}
-
-function lang() {
-  const { lang } = createTranslation("common");
-  return lang;
-}
-
 export function addGradeToast(grade: NewGrade, subjectName: string) {
-  toast(t("grades.add-success"), {
+  toast("The grade was added", {
     description: `${grade.value} in ${subjectName}`,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });
@@ -29,14 +18,14 @@ export function editGradeToast(grade: NewGrade, subjectName: string) {
   toast("The grade was updated", {
     description: `${grade.value} in ${subjectName}`,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });
 }
 
 export function addSubjectToast(subject: string) {
-  toast(t("subjects.add-success"), {
+  toast("The subject was added", {
     description: subject,
     action: {
       label: "Got it",
@@ -66,10 +55,10 @@ export function editSubjectToast(subject: string) {
 }
 
 export function copySuccessToast(copiedContent: string) {
-  toast(t("actions.copy.success"), {
+  toast("Copied to clipboard", {
     description: copiedContent,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });
@@ -80,10 +69,10 @@ export function deleteGradeToast(
   subjectName: string,
   refresh: Function
 ) {
-  toast(t("actions.delete.success"), {
+  toast("The item was deleted", {
     description: grade.value,
     action: {
-      label: t("actions.undo"),
+      label: "Undo",
       onClick: async () => {
         await addGrade(grade);
         addGradeToast(grade, subjectName);
@@ -94,27 +83,29 @@ export function deleteGradeToast(
 }
 
 export function deleteSubjectToast(subject: string) {
-  toast(t("actions.delete.success"), {
+  toast("The item was deleted", {
     description: subject,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });
 }
 
 export function exportToast(method: "json" | "clipboard") {
-  toast(t("actions.export.success"), {
-    description: t(`actions.export.description-${method}`),
+  let message = method === "json" ? "Exported as JSON" : "Copied to clipboard";
+
+  toast("Data successfully exported", {
+    description: message,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });
 }
 
 export function importFailedToast() {
-  toast.error(t("errors.import-failed"));
+  toast.error("Import failed, check the data and try again.");
 }
 
 export function toastProblem(problem: Problem) {
@@ -127,7 +118,7 @@ export function toastProblem(problem: Problem) {
   toast(errorMessage, {
     description: problem.solution,
     action: {
-      label: t("actions.ok"),
+      label: "Got it.",
       onClick: () => void 0,
     },
   });

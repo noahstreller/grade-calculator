@@ -120,9 +120,9 @@ function RequiredGradesBody({
   return (
     <CardBoard>
       <h2>
-        If your next exam is weighted{" "}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
-        need:
+        {t("grades.simulatedWeight-part1")}{" "}
+        <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+        {t("grades.simulatedWeight-part2")}:
       </h2>
       {chunkPairs.length === 0 ? (
         <Alert>
@@ -132,7 +132,7 @@ function RequiredGradesBody({
             <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
           ) : (
             <AlertDescription>
-              {t("errors.not-enough-subjects-yet-failing_0")}
+              {t("errors.not-enough-subjects-yet-failing")}
             </AlertDescription>
           )}
         </Alert>
@@ -216,7 +216,11 @@ export function RequiredGrades({
         <div className="flex items-center space-x-2">
           <Switch checked={showPassing} onCheckedChange={setShowPassing} />
           <Label>
-            Show <span className="text-green-400">passing</span> grades
+            {t("grades.show-passing-grades-part1")}
+            <span className="text-green-400">
+              {t("grades.show-passing-grades-part2")}
+            </span>
+            {t("grades.show-passing-grades-part3")}
           </Label>
         </div>
       </CardHeader>
@@ -227,8 +231,7 @@ export function RequiredGrades({
           simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
         <CardDescription className="mt-4 mx-1">
-          If you know the weight of the next exam, you can apply that weight to
-          the required grades.
+          {t("grades.simulatedWeight-description")}
         </CardDescription>
         <div className="flex flex-row gap-3 max-w-full">
           <Input
@@ -331,9 +334,9 @@ function RequiredGradesBodyForSubject({
   return (
     <CardBoard>
       <h2>
-        If your next exam is weighted{" "}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
-        need:
+        {t("grades.simulatedWeight-part1")}
+        <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+        {t("grades.simulatedWeight-part2")}:
       </h2>
       <Card>
         <CardHeader>
@@ -413,8 +416,7 @@ export function RequiredGradesForSubject({
           simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
         <CardDescription className="mt-4 mx-1">
-          If you know the weight of the next exam, you can apply that weight to
-          the required grade.
+          {t("grades.simulatedWeight-description")}
         </CardDescription>
         <div className="flex flex-row gap-3 max-w-full">
           <Input
@@ -433,7 +435,7 @@ export function RequiredGradesForSubject({
               setSimulatedWeight(undefined);
             }}
           >
-            Reset
+            {t("actions.reset")}
           </Button>
         </div>
         {!getSimulatedWeight().valid && (

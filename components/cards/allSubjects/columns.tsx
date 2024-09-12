@@ -9,7 +9,6 @@ import {
   MoreHorizontal,
   Trash,
 } from "lucide-react";
-import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
@@ -36,10 +35,9 @@ export function columns(
   setSubjectToDelete: Function,
   setOriginalSubject: Function,
   setOpenDelete: Function,
-  setOpenEdit: Function
+  setOpenEdit: Function,
+  translations: any
 ): ColumnDef<AverageWithSubject>[] {
-  const { t, lang } = createTranslation("common");
-
   return [
     {
       id: "subjectName",
@@ -50,7 +48,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.subject")}
+            {translations.grades.subject}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -122,7 +120,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.grade")}
+            {translations.grades.grade}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />

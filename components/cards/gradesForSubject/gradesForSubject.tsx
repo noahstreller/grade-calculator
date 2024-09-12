@@ -63,9 +63,17 @@ export function GradesForSubject({
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
+
+  const colTranslations = {
+    grades: {
+      description: t("grades.description"),
+      grade: t("grades.grade"),
+      date: t("grades.date"),
+    },
+  };
 
   const getGradesForStatus = (status: PassingStatus | null) => {
     if (status?.value === "passing") {
@@ -118,7 +126,12 @@ export function GradesForSubject({
           ) : (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
               <DataTable
-                columns={columns(refresh, setOriginalGrade, isMobile)}
+                columns={columns(
+                  refresh,
+                  setOriginalGrade,
+                  isMobile,
+                  colTranslations
+                )}
                 data={getGradesForStatus(selectedStatus)}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
@@ -200,7 +213,12 @@ export function GradesForSubject({
               </DrawerFooter>
             </DrawerContent>
             <DataTable
-              columns={columns(refresh, setOriginalGrade, isMobile)}
+              columns={columns(
+                refresh,
+                setOriginalGrade,
+                isMobile,
+                colTranslations
+              )}
               data={getGradesForStatus(selectedStatus)}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}

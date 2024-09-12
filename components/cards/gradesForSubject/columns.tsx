@@ -1,6 +1,5 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { GradeWeightBadge } from "@/components/grade-weight-badge";
@@ -36,10 +35,9 @@ import {
 export function columns(
   refresh: Function,
   setGradeToEdit: Function,
-  isMobile: boolean
+  isMobile: boolean,
+  translations: any
 ): ColumnDef<GradeWithSubject>[] {
-  const { t } = createTranslation("common");
-
   return [
     {
       accessorKey: "grades.description",
@@ -49,7 +47,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Description
+            {translations.grades.description}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -94,7 +92,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.grade")}
+            {translations.grades.grade}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -128,7 +126,7 @@ export function columns(
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.date")}
+            {translations.grades.date}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />

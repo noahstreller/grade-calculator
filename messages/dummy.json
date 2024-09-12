@@ -6,13 +6,10 @@
   "grades": {
     "grade": "translated",
     "grades": "translated",
-    "grades_one": "translated",
-    "grades_other": "translated",
     "weight": "translated",
     "weight-placeholder": "translated",
     "date": "translated",
     "subject": "translated",
-    "actions": "translated",
     "copy": "translated",
     "notfound": "translated",
     "add": "translated",
@@ -23,7 +20,19 @@
     "all-grades-desc": "translated",
     "passing-grades": "translated",
     "failing-grades": "translated",
-    "change-details": "translated"
+    "change-details": "translated",
+    "description": "translated",
+    "actions": {
+      "edit": "translated",
+      "title": "translated",
+      "delete": "translated"
+    },
+    "simulatedWeight-part1": "translated",
+    "simulatedWeight-part2": "translated",
+    "simulatedWeight-description": "translated",
+    "show-passing-grades-part1": "translated",
+    "show-passing-grades-part2": "translated",
+    "show-passing-grades-part3": "translated"
   },
   "subjects": {
     "subject": "translated",
@@ -42,10 +51,14 @@
     "delete": {
       "prompt": "translated",
       "message": "translated"
-    }
+    },
+    "failing-title": "translated"
   },
   "filters": {
-    "filter-by-subject": "translated"
+    "filter-by-subject": "translated",
+    "show-all": "translated",
+    "passing": "translated",
+    "failing": "translated"
   },
   "preferences": {
     "title": "translated",
@@ -116,18 +129,11 @@
     "no-data-yet-desc": "translated",
     "not-enough-data-yet": "translated",
     "not-enough-data-yet-desc": "translated",
-    "not-enough-data-yet-desc_1": "translated",
-    "not-enough-data-yet-desc_3": "translated",
     "not-enough-data-yet-grade": "translated",
-    "not-enough-data-yet-grade_1": "translated",
     "not-enough-data-yet-failing": "translated",
-    "not-enough-data-yet-failing_0": "translated",
     "not-enough-subjects-yet-failing": "translated",
-    "not-enough-subjects-yet-failing_0": "translated",
     "not-enough-data-yet-passing": "translated",
-    "not-enough-data-yet-passing_0": "translated",
     "not-enough-data-yet-subject": "translated",
-    "not-enough-data-yet-subject_1": "translated",
     "max-lt-min": "translated",
     "pass-gt-max": "translated",
     "pass-lt-min": "translated",

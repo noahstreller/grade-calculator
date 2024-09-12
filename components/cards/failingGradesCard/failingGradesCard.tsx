@@ -1,5 +1,6 @@
 "use client";
 import { columns } from "@/components/cards/failingGradesCard/columns";
+import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -8,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DataTable } from "@/components/cards/failingGradesCard/data-table";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -19,6 +19,12 @@ export default function FailingGradesCard({
   data: AverageWithSubject[];
 }) {
   const t = useTranslations();
+  const colTranslations = {
+    grades: {
+      subject: t("grades.subject"),
+      grade: t("grades.grade"),
+    },
+  };
 
   return (
     <Card>
@@ -36,7 +42,7 @@ export default function FailingGradesCard({
             </AlertDescription>
           </Alert>
         ) : (
-          <DataTable columns={columns()} data={data} />
+          <DataTable columns={columns(colTranslations)} data={data} />
         )}
       </CardContent>
     </Card>

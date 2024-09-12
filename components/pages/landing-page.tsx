@@ -28,8 +28,8 @@ import {
   LineChartIcon,
   Sparkles,
 } from "lucide-react";
-import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -121,24 +121,38 @@ export function LandingPage() {
                       </CardHeader>
                       <CardContent className="flex flex-col gap-5">
                         <p>
-                          {t`landing-page.getting-started-about.cloud-desc-part1`}
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part1"
+                          )}
                           <Highlight colorName="yellow">
-                            {t`landing-page.getting-started-about.cloud-desc-part2`}
+                            {t(
+                              "landing-page.getting-started-about.cloud-desc-part2"
+                            )}
                           </Highlight>
-                          {t`landing-page.getting-started-about.cloud-desc-part3`}
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part3"
+                          )}
                           <Highlight colorName="yellow">
-                            {t`landing-page.getting-started-about.cloud-desc-part4`}
+                            {t(
+                              "landing-page.getting-started-about.cloud-desc-part4"
+                            )}
                           </Highlight>
-                          {t`landing-page.getting-started-about.cloud-desc-part5`}
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part5"
+                          )}
                         </p>
                         <p>
-                          {t`landing-page.getting-started-about.cloud-desc-part6`}
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part6"
+                          )}
                           <Highlight colorName="blue">
                             <a
                               target="_blank"
                               href="https://legacy.grades.nstr.dev"
                             >
-                              {t`landing-page.getting-started-about.cloud-desc-part7`}
+                              {t(
+                                "landing-page.getting-started-about.cloud-desc-part7"
+                              )}
                             </a>
                           </Highlight>
                           <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
@@ -146,8 +160,12 @@ export function LandingPage() {
                               <Link href={"/login"}>
                                 <Sparkles className="size-4 mr-2 flex-shrink-0" />
                                 {isMobile
-                                  ? t`landing-page.getting-started-about.to-the-app-short`
-                                  : t`landing-page.getting-started-about.to-the-app-long`}
+                                  ? t(
+                                      "landing-page.getting-started-about.to-the-app-short"
+                                    )
+                                  : t(
+                                      "landing-page.getting-started-about.to-the-app-long"
+                                    )}
                               </Link>
                             </Button>
                             <Button
@@ -158,8 +176,12 @@ export function LandingPage() {
                               <Link href={"https://legacy.grades.nstr.dev"}>
                                 <Globe className="size-4 mr-2 flex-shrink-0" />
                                 {isMobile
-                                  ? t`landing-page.getting-started-about.to-legacy-short`
-                                  : t`landing-page.getting-started-about.to-legacy-long`}
+                                  ? t(
+                                      "landing-page.getting-started-about.to-legacy-short"
+                                    )
+                                  : t(
+                                      "landing-page.getting-started-about.to-legacy-long"
+                                    )}
                               </Link>
                             </Button>
                           </div>
@@ -176,7 +198,7 @@ export function LandingPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="gap-5 flex flex-col">
-                        <p>{t`landing-page.about.source-code-description`}</p>
+                        <p>{t("landing-page.about.source-code-description")}</p>
                         <Button
                           variant={"secondary"}
                           className="shadow-lg"
@@ -203,27 +225,43 @@ export function LandingPage() {
                   <Card className="shadow-xl">
                     <CardHeader>
                       <CardTitle>
-                        {t`landing-page.getting-started-about.title`}
+                        {t("landing-page.getting-started-about.title")}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-5">
                       <p>
-                        {t`landing-page.getting-started-about.cloud-desc-part1`}
+                        {t(
+                          "landing-page.getting-started-about.cloud-desc-part1"
+                        )}
                         <Highlight colorName="yellow">
-                          {t`landing-page.getting-started-about.cloud-desc-part2`}
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part2"
+                          )}
                         </Highlight>
-                        {t`landing-page.getting-started-about.cloud-desc-part3`}
-                        <Highlight colorName="yellow">{t`landing-page.getting-started-about.cloud-desc-part4`}</Highlight>
-                        {t`landing-page.getting-started-about.cloud-desc-part5`}
+                        {t(
+                          "landing-page.getting-started-about.cloud-desc-part3"
+                        )}
+                        <Highlight colorName="yellow">
+                          {t(
+                            "landing-page.getting-started-about.cloud-desc-part4"
+                          )}
+                        </Highlight>
+                        {t(
+                          "landing-page.getting-started-about.cloud-desc-part5"
+                        )}
                       </p>
                       <p>
-                        {t`landing-page.getting-started-about.cloud-desc-part6`}
+                        {t(
+                          "landing-page.getting-started-about.cloud-desc-part6"
+                        )}
                         <Highlight colorName="blue">
                           <a
                             target="_blank"
                             href="https://legacy.grades.nstr.dev"
                           >
-                            {t`landing-page.getting-started-about.cloud-desc-part7`}
+                            {t(
+                              "landing-page.getting-started-about.cloud-desc-part7"
+                            )}
                           </a>
                         </Highlight>
                         <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
@@ -231,8 +269,12 @@ export function LandingPage() {
                             <Link href={"/login"}>
                               <Sparkles className="size-4 mr-2 flex-shrink-0" />
                               {isMobile
-                                ? t`landing-page.getting-started-about.to-the-app-short`
-                                : t`landing-page.getting-started-about.to-the-app-long`}
+                                ? t(
+                                    "landing-page.getting-started-about.to-the-app-short"
+                                  )
+                                : t(
+                                    "landing-page.getting-started-about.to-the-app-long"
+                                  )}
                             </Link>
                           </Button>
                           <Button
@@ -243,8 +285,12 @@ export function LandingPage() {
                             <Link href={"https://legacy.grades.nstr.dev"}>
                               <Globe className="size-4 mr-2 flex-shrink-0" />
                               {isMobile
-                                ? t`landing-page.getting-started-about.to-legacy-short`
-                                : t`landing-page.getting-started-about.to-legacy-long`}
+                                ? t(
+                                    "landing-page.getting-started-about.to-legacy-short"
+                                  )
+                                : t(
+                                    "landing-page.getting-started-about.to-legacy-long"
+                                  )}
                             </Link>
                           </Button>
                         </div>
@@ -253,7 +299,7 @@ export function LandingPage() {
                   </Card>
                   <Card className="shadow-md">
                     <CardHeader>
-                      <CardTitle>{t`landing-page.about.title`}</CardTitle>
+                      <CardTitle>{t("landing-page.about.title")}</CardTitle>
                     </CardHeader>
                     <CardContent className="gap-5 flex flex-col">
                       <p>
@@ -289,10 +335,12 @@ export function LandingPage() {
                   </Card>
                   <Card className="shadow-md mb-5">
                     <CardHeader>
-                      <CardTitle>{t`landing-page.about.source-code-label`}</CardTitle>
+                      <CardTitle>
+                        {t("landing-page.about.source-code-label")}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="gap-5 flex flex-col">
-                      <p>{t`landing-page.about.source-code-description`}</p>
+                      <p>{t("landing-page.about.source-code-description")}</p>
                       <Button
                         variant={"secondary"}
                         className="shadow-lg"
@@ -412,25 +460,29 @@ function GettingStartedTab() {
       <CardBoard>
         <Card>
           <CardHeader>
-            <CardTitle>{t`landing-page.getting-started-tab.title`}</CardTitle>
+            <CardTitle>{t("landing-page.getting-started-tab.title")}</CardTitle>
             <CardDescription>
-              {t`landing-page.getting-started-tab.description`}
+              {t("landing-page.getting-started-tab.description")}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-5">
             <p>
-              {t`landing-page.getting-started-about.cloud-desc-part1`}
-              <Highlight colorName="yellow">{t`landing-page.getting-started-about.cloud-desc-part2`}</Highlight>
-              {t`landing-page.getting-started-about.cloud-desc-part3`}
-              <Highlight colorName="yellow">{t`landing-page.getting-started-about.cloud-desc-part4`}</Highlight>
-              {t`landing-page.getting-started-about.cloud-desc-part5`}
+              {t("landing-page.getting-started-about.cloud-desc-part1")}
+              <Highlight colorName="yellow">
+                {t("landing-page.getting-started-about.cloud-desc-part2")}
+              </Highlight>
+              {t("landing-page.getting-started-about.cloud-desc-part3")}
+              <Highlight colorName="yellow">
+                {t("landing-page.getting-started-about.cloud-desc-part4")}
+              </Highlight>
+              {t("landing-page.getting-started-about.cloud-desc-part5")}
             </p>
             <p>
-              {t`landing-page.getting-started-about.cloud-desc-part6`}
+              {t("landing-page.getting-started-about.cloud-desc-part6")}
               <Highlight colorName="blue">
                 <a target="_blank" href="https://legacy.grades.nstr.dev">
-                  {t`landing-page.getting-started-about.cloud-desc-part7`}
+                  {t("landing-page.getting-started-about.cloud-desc-part7")}
                 </a>
               </Highlight>
               <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
@@ -438,8 +490,8 @@ function GettingStartedTab() {
                   <Link href={"/login"}>
                     <Sparkles className="size-4 mr-2 flex-shrink-0" />
                     {isMobile
-                      ? t`landing-page.getting-started-about.to-the-app-short`
-                      : t`landing-page.getting-started-about.to-the-app-long`}
+                      ? t("landing-page.getting-started-about.to-the-app-short")
+                      : t("landing-page.getting-started-about.to-the-app-long")}
                   </Link>
                 </Button>
                 <Button
@@ -450,8 +502,8 @@ function GettingStartedTab() {
                   <Link href={"https://legacy.grades.nstr.dev"}>
                     <Globe className="size-4 mr-2 flex-shrink-0" />
                     {isMobile
-                      ? t`landing-page.getting-started-about.to-legacy-short`
-                      : t`landing-page.getting-started-about.to-legacy-long`}
+                      ? t("landing-page.getting-started-about.to-legacy-short")
+                      : t("landing-page.getting-started-about.to-legacy-long")}
                   </Link>
                 </Button>
               </div>
@@ -460,14 +512,16 @@ function GettingStartedTab() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>{t`landing-page.screenshot-title`}</CardTitle>
-            <CardDescription>{t`landing-page.screenshot-desc`}</CardDescription>
+            <CardTitle>{t("landing-page.screenshot-title")}</CardTitle>
+            <CardDescription>
+              {t("landing-page.screenshot-desc")}
+            </CardDescription>
             <CardContent className="flex flex-col gap-4 p-3">
               {theme.resolvedTheme === "dark" ? (
                 <>
                   <Image
                     src={"/screenshot-dark.png"}
-                    alt={t`landing-page.screenshot-dark-mode`}
+                    alt={t("landing-page.screenshot-dark-mode")}
                     className="w-full border-2 border-muted rounded-md"
                     width="2213"
                     height="1941"
@@ -480,7 +534,7 @@ function GettingStartedTab() {
                       "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    {t`landing-page.open-image`}{" "}
+                    {t("landing-page.open-image")}{" "}
                     <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>
@@ -488,7 +542,7 @@ function GettingStartedTab() {
                 <>
                   <Image
                     src={"/screenshot-light.png"}
-                    alt={t`landing-page.screenshot-light-mode`}
+                    alt={t("landing-page.screenshot-light-mode")}
                     className="w-full border-2 border-muted rounded-md"
                     width="2213"
                     height="1941"
@@ -501,7 +555,7 @@ function GettingStartedTab() {
                       "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    {t`landing-page.open-image`}{" "}
+                    {t("landing-page.open-image")}{" "}
                     <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>

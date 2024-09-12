@@ -80,12 +80,13 @@ export function ViewArchiveButton() {
       setLoading(true);
       try {
         const data = catchProblem(await getAllArchivedata());
-        setArchiveData([
-          ...data.sort(
-            (a: ArchiveData, b: ArchiveData) =>
-              b.date.getTime() - a.date.getTime()
-          ),
-        ]);
+        if (data)
+          setArchiveData([
+            ...data.sort(
+              (a: ArchiveData, b: ArchiveData) =>
+                b.date.getTime() - a.date.getTime()
+            ),
+          ]);
       } finally {
         setLoading(false);
       }
