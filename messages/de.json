@@ -192,5 +192,8 @@
     "screenshot-light-mode": "Screenshot-Lichtmodus",
     "screenshot-dark-mode": "Screenshot Dunkelmodus",
     "screenshot-desc": "So sieht der Notenrechner aus."
+  },
+  "generic": {
+    "page": "Seite"
   }
 }

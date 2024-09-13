@@ -145,7 +145,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  {t("no-results")}{" "}
+                  {t("errors.no-results")}
                 </TableCell>
               </TableRow>
             )}
@@ -163,7 +163,7 @@ export function DataTable<TData, TValue>({
             <ArrowLeft size={16} />
           </Button>
           <span>
-            {t("page")} {table.getState().pagination.pageIndex + 1} of{" "}
+            {t("generic.page")} {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </span>
           <Button

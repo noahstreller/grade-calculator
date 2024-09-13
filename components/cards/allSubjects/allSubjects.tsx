@@ -80,6 +80,17 @@ export function AllSubjects({
       grade: t("grades.grade"),
       subject: t("grades.subject"),
     },
+    screenreader: {
+      openMenu: t("screenreader.open-menu"),
+    },
+    subjects: {
+      actions: {
+        title: t("subjects.actions.title"),
+        edit: t("subjects.actions.edit"),
+        delete: t("subjects.actions.delete"),
+        view: t("subjects.actions.view"),
+      },
+    },
   };
 
   useEffect(() => {
@@ -155,9 +166,11 @@ export function AllSubjects({
               <Dialog open={editOpen} onOpenChange={setEditOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>{t("edit-subject-0")}</DialogTitle>
+                    <DialogTitle>
+                      {t("subjects.actions.edit-title")}
+                    </DialogTitle>
                     <DialogDescription>
-                      {t("change-the-details-of-the-subject-0")}{" "}
+                      {t("subjects.actions.edit-desc")}{" "}
                     </DialogDescription>
                   </DialogHeader>
                   <EditSubjectForm
@@ -254,9 +267,9 @@ export function AllSubjects({
             <Drawer open={editOpen} onOpenChange={setEditOpen}>
               <DrawerContent className="sm:max-w-[425px]">
                 <DrawerHeader>
-                  <DrawerTitle>{t("edit-subject-0")}</DrawerTitle>
+                  <DrawerTitle>{t("subjects.actions.edit-title")}</DrawerTitle>
                   <DrawerDescription>
-                    {t("change-the-details-of-the-subject-0")}{" "}
+                    {t("subjects.actions.edit-desc")}
                   </DrawerDescription>
                 </DrawerHeader>
                 <EditSubjectForm
