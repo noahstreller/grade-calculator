@@ -3,13 +3,7 @@
   "typescript.preferences.autoImportFileExcludePatterns": ["@radix-ui"],
   "IDX.aI.enableInlineCompletion": true,
   "IDX.aI.enableCodebaseIndexing": true,
-  "i18n-ally.dirStructure": "",
-  "i18n-ally.extract.autoDetect": true,
-  "i18n-ally.extract.keygenStyle": "kebab-case",
-  "i18n-ally.fullReloadOnChanged": true,
-  "i18n-ally.keystyle": "nested",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "i18n-ally.localesPaths": ["i18n", "messages"],
-  "i18n-ally.enabledFrameworks": ["next-intl"],
-
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true
+  "i18n-ally.keystyle": "nested"
 }

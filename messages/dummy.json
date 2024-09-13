@@ -32,7 +32,12 @@
     "simulatedWeight-description": "translated",
     "show-passing-grades-part1": "translated",
     "show-passing-grades-part2": "translated",
-    "show-passing-grades-part3": "translated"
+    "show-passing-grades-part3": "translated",
+    "edit": {
+      "title": "translated",
+      "desc": "translated"
+    },
+    "academic-relevance-title": "translated"
   },
   "subjects": {
     "subject": "translated",
@@ -52,7 +57,19 @@
       "prompt": "translated",
       "message": "translated"
     },
-    "failing-title": "translated"
+    "failing-title": "translated",
+    "actions": {
+      "edit-title": "translated",
+      "edit-desc": "translated",
+      "title": "translated",
+      "edit": "translated",
+      "delete": "translated",
+      "view": "translated"
+    },
+    "grade-count": "translated",
+    "grade-count-weighted": "translated",
+    "grade-sum": "translated",
+    "grade-sum-weighted": "translated"
   },
   "filters": {
     "filter-by-subject": "translated",
@@ -137,7 +154,12 @@
     "max-lt-min": "translated",
     "pass-gt-max": "translated",
     "pass-lt-min": "translated",
-    "import-failed": "translated"
+    "import-failed": "translated",
+    "no-results": "translated",
+    "woops": "translated",
+    "not-enough-data-yet-subject-detail": "translated",
+    "subject-not-found": "translated",
+    "unauthenticated-subject-details": "translated"
   },
   "overview": {
     "title": "translated",
@@ -211,5 +233,25 @@
     "screenshot-light-mode": "translated",
     "screenshot-dark-mode": "translated",
     "screenshot-desc": "translated"
+  },
+  "generic": {
+    "page": "translated",
+    "home": "translated",
+    "name": "translated",
+    "id": "translated",
+    "no": "translated",
+    "true": "translated",
+    "yes": "translated",
+    "false": "translated"
+  },
+  "screenreader": {
+    "open-menu": "translated"
+  },
+  "auth": {
+    "login-now": "translated",
+    "return-home": "translated"
+  },
+  "subject-details": {
+    "title": "translated"
   }
 }

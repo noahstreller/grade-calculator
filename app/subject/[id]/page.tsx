@@ -115,11 +115,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">{t("home")}</Link>
+                <Link href="/">{t("generic.home")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>{t("subjects")}</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects.subject")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -128,16 +128,16 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
         </Breadcrumb>
         <Alert>
           <Bird className="h-4 w-4" />
-          <AlertTitle className="font-bold">Woops.</AlertTitle>
+          <AlertTitle className="font-bold">{t("errors.woops")}</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>{t("you_must_be_logged_in_to_view_subject_details")}</>
+            <>{t("errors.unauthenticated-subject-details")}</>
             <Button asChild>
               <Link
                 href={"/login"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <LogInIcon className="size-4 text-muted-foreground" />
-                {t("log_in_now")}{" "}
+                {t("auth.login-now")}
               </Link>
             </Button>
             <Button variant={"outline"} asChild>
@@ -146,7 +146,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                {t("go_home")}{" "}
+                {t("auth.return-home")}
               </Link>
             </Button>
           </AlertDescription>
@@ -160,11 +160,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">{t("home-0")}</Link>
+                <Link href="/">{t("generic.home")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>{t("subjects-0")}</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects.subject")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -173,16 +173,16 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
         </Breadcrumb>
         <Alert>
           <Bird className="h-4 w-4" />
-          <AlertTitle className="font-bold">Woops.</AlertTitle>
+          <AlertTitle className="font-bold">{t("errors.woops")}</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>{t("this_subject_contains_no_data_yet")}</>
+            <>{t("errors.not-enough-data-yet-subject-detail")}</>
             <Button variant={"outline"} asChild>
               <Link
                 href={"/"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                {t("return_home")}{" "}
+                {t("auth.return-home")}
               </Link>
             </Button>
           </AlertDescription>
@@ -196,11 +196,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/">{t("home-1")}</Link>
+                <Link href="/">{t("generic.home")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem>{t("subjects-1")}</BreadcrumbItem>
+            <BreadcrumbItem>{t("subjects.subject")}</BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -209,16 +209,16 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
         </Breadcrumb>
         <Alert>
           <Bird className="h-4 w-4" />
-          <AlertTitle className="font-bold">Woops.</AlertTitle>
+          <AlertTitle className="font-bold">{t("errors.woops")}</AlertTitle>
           <AlertDescription className="flex flex-col gap-4">
-            <>{t("we_cannot_find_the_subject_you_are_looking_for")}</>
+            <>{t("errors.subject-not-found")}</>
             <Button variant={"outline"} asChild>
               <Link
                 href={"/"}
                 className="flex flex-row gap-2 justify-center items-center"
               >
                 <HomeIcon className="size-4 text-muted-foreground" />
-                {t("return_home-0")}{" "}
+                {t("auth.return-home")}
               </Link>
             </Button>
           </AlertDescription>
@@ -269,11 +269,11 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="/">{t("home-2")}</Link>
+                  <Link href="/">{t("generic.home")}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
-              <BreadcrumbItem>{t("subjects-2")}</BreadcrumbItem>
+              <BreadcrumbItem>{t("subjects.subject")}</BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 {subject ? truncateText(subject.name!, 20).text : subjectId}
@@ -289,17 +289,19 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                       <CardTitle>
                         {truncateText(subject.name!, 20).text}
                       </CardTitle>
-                      <CardDescription>{t("subject_details")}</CardDescription>
+                      <CardDescription>
+                        {t("subject-details.title")}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <DetailRow title="ID" value={subject.id} />
+                      <DetailRow title={t("generic.id")} value={subject.id} />
                       <DetailRow
-                        title={t("name")}
+                        title={t("generic.name")}
                         value={truncateText(subject.name!, 40).text}
                       />
                       <DetailRowBoolean
                         variant="yes-no"
-                        title={t("passing")}
+                        title={t("filters.passing")}
                         value={doesGradePass(
                           average.gradeAverage!,
                           userPreferences.preferences!
@@ -307,22 +309,22 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                       />
                       <DetailRowBoolean
                         variant="yes-no"
-                        title={t("relevant_for_academic_promotion")}
+                        title={t("grades.academic-relevance-title")}
                         value={subject.weight === 1}
                       />
                       {average.gradeAmount === average.gradeWeightedAmount ? (
                         <DetailRow
-                          title={t("grade_count")}
+                          title={t("subjects.grade-count")}
                           value={average.gradeAmount}
                         />
                       ) : (
                         <>
                           <DetailRow
-                            title={t("grade_count-0")}
+                            title={t("subjects.grade-count")}
                             value={average.gradeAmount}
                           />
                           <DetailRow
-                            title={t("grade_count_weights_considered")}
+                            title={t("subjects.grade-count-weighted")}
                             value={average.gradeWeightedAmount}
                           />
                         </>
@@ -330,17 +332,17 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
 
                       {average.gradeSum === average.gradeWeightedSum ? (
                         <DetailRow
-                          title={t("grade_sum")}
+                          title={t("subjects.grade-sum")}
                           value={average.gradeSum}
                         />
                       ) : (
                         <>
                           <DetailRow
-                            title={t("grade_sum-0")}
+                            title={t("subjects.grade-sum")}
                             value={average.gradeSum}
                           />
                           <DetailRow
-                            title={t("grade_sum_weights_considered")}
+                            title={t("subjects.grade-sum-weighted")}
                             value={average.gradeWeightedSum}
                           />
                         </>
@@ -368,7 +370,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
                 )}
               </>
             ) : (
-              <div>{t("subject_not_found")}</div>
+              <div>{t("errors.subject-not-found")}</div>
             )}
           </CardBoard>
         </>

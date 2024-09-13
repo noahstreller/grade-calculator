@@ -32,7 +32,12 @@
     "simulatedWeight-description": "If you know the weight of the next exam (or the amount of exams), you can apply this number here.",
     "show-passing-grades-part1": "Show ",
     "show-passing-grades-part2": "passing",
-    "show-passing-grades-part3": " grades"
+    "show-passing-grades-part3": " grades",
+    "edit": {
+      "title": "Edit Grade",
+      "desc": "Change the grade details here"
+    },
+    "academic-relevance-title": "Relevant for academic promotion"
   },
   "subjects": {
     "subject": "Subject",
@@ -52,7 +57,19 @@
       "prompt": "Delete",
       "message": "Are you sure you want to delete this subject? This will also delete all grades associated. This action cannot be undone."
     },
-    "failing-title": "Subjects to revise"
+    "failing-title": "Subjects to revise",
+    "actions": {
+      "edit-title": "Edit subject",
+      "edit-desc": "Change the details of the subject",
+      "title": "Actions",
+      "edit": "Edit subject",
+      "delete": "Delete subject",
+      "view": "View details"
+    },
+    "grade-count": "Grade count",
+    "grade-count-weighted": "Grade count (weights considered)",
+    "grade-sum": "Grade sum",
+    "grade-sum-weighted": "Grade sum (weights considered)"
   },
   "preferences": {
     "title": "Preferences",
@@ -119,6 +136,7 @@
     "invalid-type": {
       "number": "This field must be a number"
     },
+    "no-results": "No results.",
     "no-data-yet": "No data yet",
     "no-data-yet-desc": "Add some subjects and grades first :>",
     "not-enough-data-yet": "Not enough data yet",
@@ -131,7 +149,11 @@
     "max-lt-min": "The maximum value must be greater than the minimum value",
     "pass-gt-max": "The passing grade must be less than the maximum grade",
     "pass-lt-min": "The passing grade must be greater than the minimum grade",
-    "import-failed": "Import failed, maybe the data is invalid"
+    "import-failed": "Import failed, maybe the data is invalid",
+    "unauthenticated-subject-details": "You must be logged in to view subject details",
+    "woops": "Woops.",
+    "not-enough-data-yet-subject-detail": "This subject looks pretty empty so far",
+    "subject-not-found": "We cannot find the subject you are looking for"
   },
   "overview": {
     "title": "Overview",
@@ -211,5 +233,25 @@
     "show-all": "Show all",
     "passing": "Passing",
     "failing": "Failing"
+  },
+  "generic": {
+    "page": "Page",
+    "home": "Home",
+    "name": "Name",
+    "id": "ID",
+    "yes": "Yes",
+    "true": "True",
+    "no": "No",
+    "false": "False"
+  },
+  "screenreader": {
+    "open-menu": "Open menu"
+  },
+  "auth": {
+    "login-now": "Log in now",
+    "return-home": "Go home"
+  },
+  "subject-details": {
+    "title": "Subject details"
   }
 }

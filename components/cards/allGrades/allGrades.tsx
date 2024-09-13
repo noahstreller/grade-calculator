@@ -132,10 +132,8 @@ export function AllGrades({
               />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit Grade</DialogTitle>
-                  <DialogDescription>
-                    Change the grade details here
-                  </DialogDescription>
+                  <DialogTitle>{t("grades.edit.title")}</DialogTitle>
+                  <DialogDescription>{t("grades.edit.desc")}</DialogDescription>
                 </DialogHeader>
                 <EditGradeForm
                   refresh={refresh}
@@ -167,7 +165,7 @@ export function AllGrades({
             <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -186,10 +184,8 @@ export function AllGrades({
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>Edit Grade</DrawerTitle>
-                <DrawerDescription>
-                  Change the grade details here
-                </DrawerDescription>
+                <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
+                <DrawerDescription>{t("grades.edit.desc")}</DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
                 refresh={refresh}
@@ -198,7 +194,7 @@ export function AllGrades({
               />
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>

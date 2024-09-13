@@ -147,12 +147,16 @@ export function columns(
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">
+                  {translations.screenreader.openMenu}
+                </span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {translations.subjects.actions.title}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <Link
@@ -160,7 +164,7 @@ export function columns(
                   href={`/subject/${average.subject.id}`}
                 >
                   <Eye className="size-4 text-muted-foreground" />
-                  View item
+                  {translations.subjects.actions.view}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -172,7 +176,7 @@ export function columns(
                 <DialogTrigger asChild>
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Edit className="size-4 text-muted-foreground" />
-                    <span>Edit subject</span>
+                    <span>{translations.subjects.actions.edit}</span>
                   </div>
                 </DialogTrigger>
               </DropdownMenuItem>
@@ -184,7 +188,7 @@ export function columns(
               >
                 <div className="flex flex-row items-center justify-center gap-3">
                   <Trash className="size-4 text-muted-foreground" />
-                  <span>Delete subject</span>
+                  <span>{translations.subjects.actions.delete}</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>
