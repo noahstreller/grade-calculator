@@ -37,7 +37,8 @@
       "title": "Edit Grade",
       "desc": "Change the grade details here"
     },
-    "academic-relevance-title": "Relevant for academic promotion"
+    "academic-relevance-title": "Relevant for academic promotion",
+    "badge-weight": "This grade is weighted <weight></weight>"
   },
   "subjects": {
     "subject": "Subject",
@@ -259,7 +260,9 @@
     "false": "False",
     "less-than": "<",
     "greater-than": ">",
-    "help-icon": "?"
+    "help-icon": "?",
+    "multiplication": "×",
+    "page-x-of-y": "Page <index></index> of <total></total>"
   },
   "screenreader": {
     "open-menu": "Open menu"

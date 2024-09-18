@@ -37,7 +37,8 @@
       "title": "translated",
       "desc": "translated"
     },
-    "academic-relevance-title": "translated"
+    "academic-relevance-title": "translated",
+    "badge-weight": "translated"
   },
   "subjects": {
     "subject": "translated",
@@ -69,7 +70,10 @@
     "grade-count": "translated",
     "grade-count-weighted": "translated",
     "grade-sum": "translated",
-    "grade-sum-weighted": "translated"
+    "grade-sum-weighted": "translated",
+    "badge-noweight-empty": "translated",
+    "badge-noweight-not-empty": "translated",
+    "badge-weight-not-empty": "translated"
   },
   "filters": {
     "filter-by-subject": "translated",
@@ -256,7 +260,9 @@
     "false": "translated",
     "greater-than": "translated",
     "less-than": "translated",
-    "help-icon": "translated"
+    "help-icon": "translated",
+    "multiplication": "translated",
+    "page-x-of-y": "translated"
   },
   "screenreader": {
     "open-menu": "translated"
