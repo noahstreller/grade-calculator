@@ -72,6 +72,11 @@ export function GradesForSubject({
       description: t("grades.description"),
       grade: t("grades.grade"),
       date: t("grades.date"),
+      actions: {
+        title: t("grades.actions.title"),
+        edit: t("grades.actions.edit"),
+        delete: t("grades.actions.delete"),
+      },
     },
   };
 
@@ -95,7 +100,7 @@ export function GradesForSubject({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Subject Grades</CardTitle>
+          <CardTitle>{t("subject-details.subject-grades.title")}</CardTitle>
           <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -138,9 +143,9 @@ export function GradesForSubject({
               />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit Grade</DialogTitle>
+                  <DialogTitle>{t("grades.edit.title")}</DialogTitle>
                   <DialogDescription>
-                    Change the grade details here
+                    {t("grades.change-details")}
                   </DialogDescription>
                 </DialogHeader>
                 <EditGradeForm
@@ -177,7 +182,7 @@ export function GradesForSubject({
             />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -196,9 +201,9 @@ export function GradesForSubject({
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>Edit Grade</DrawerTitle>
+                <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
                 <DrawerDescription>
-                  Change the grade details here
+                  {t("grades.change-details")}{" "}
                 </DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
@@ -208,7 +213,7 @@ export function GradesForSubject({
               />
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>

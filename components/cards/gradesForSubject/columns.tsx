@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { GradeWeightBadge } from "@/components/grade-weight-badge";
+import { RelativeTimeFormatted } from "@/components/relative-time-formatted";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -22,7 +23,6 @@ import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { truncateText } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
 import {
   ArrowDown,
   ArrowUp,
@@ -140,11 +140,12 @@ export function columns(
         );
       },
       cell: ({ row }) => {
-        let date = formatDistanceToNow(row.original.grades.date!, {
-          addSuffix: true,
-        });
+        return <RelativeTimeFormatted date1={row.original.grades.date!} now />;
+        // let date = formatDistanceToNow(row.original.grades.date!, {
+        //   addSuffix: true,
+        // });
 
-        return <p className="ml-2">{date}</p>;
+        // return <p className="ml-2">{date}</p>;
       },
     },
     {
@@ -156,12 +157,13 @@ export function columns(
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                {translations.grades.actions.title}
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
@@ -171,7 +173,7 @@ export function columns(
                 <DialogTrigger asChild>
                   <div className="flex flex-row items-center justify-center gap-3">
                     <Edit className="size-4 text-muted-foreground" />
-                    <span>Edit grade</span>
+                    <span>{translations.grades.actions.edit}</span>
                   </div>
                 </DialogTrigger>
               </DropdownMenuItem>
@@ -189,7 +191,7 @@ export function columns(
               >
                 <div className="flex flex-row items-center justify-center gap-3">
                   <Trash className="size-4 text-muted-foreground" />
-                  <span>Delete grade</span>
+                  <span>{translations.grades.actions.delete}</span>
                 </div>
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { GradeWeightBadge } from "@/components/grade-weight-badge";
+import { RelativeTimeFormatted } from "@/components/relative-time-formatted";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -22,7 +23,6 @@ import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
 import { truncateText } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
 import {
   ArrowDown,
   ArrowUp,
@@ -188,11 +188,12 @@ export function columns(
         );
       },
       cell: ({ row }) => {
-        let date = formatDistanceToNow(row.original.grades.date!, {
-          addSuffix: true,
-        });
+        return <RelativeTimeFormatted date1={row.original.grades.date!} now />;
+        // let date = formatDistanceToNow(row.original.grades.date!, {
+        //   addSuffix: true,
+        // });
 
-        return <p className="ml-2">{date}</p>;
+        // return <p className="ml-2">{date}</p>;
       },
     },
     {

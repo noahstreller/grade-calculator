@@ -272,6 +272,9 @@
     "return-home": "Go home"
   },
   "subject-details": {
-    "title": "Subject details"
+    "title": "Subject details",
+    "subject-grades": {
+      "title": "Subject Grades"
+    }
   }
 }
