@@ -20,6 +20,7 @@ import {
   truncateText,
 } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export function AccountSection() {
@@ -27,6 +28,8 @@ export function AccountSection() {
 
   const [disabled, setDisabled] = useState(true);
   const [refresher, setRefresher] = useState(0);
+
+  const t = useTranslations();
 
   const clearData = () => {
     clearUserData();
@@ -61,7 +64,7 @@ export function AccountSection() {
         </div>
       </div>
       <Button variant={"secondary"} onClick={() => signOut()}>
-        Sign out
+        {t("auth.logout")}
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -69,21 +72,22 @@ export function AccountSection() {
             variant={"destructive"}
             onClick={() => setRefresher(Math.random())}
           >
-            Delete Account
+            {t("actions.delete-account")}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Clear Account Data</AlertDialogTitle>
+            <AlertDialogTitle>
+              {t("actions.clear-account-data")}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure that you want to clear all of your account data? This
-              action cannot be undone.
+              {t("actions.clear-account-data-warning")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Nevermind</AlertDialogCancel>
+            <AlertDialogCancel>{t("generic.nevermind")}</AlertDialogCancel>
             <AlertDialogAction disabled={disabled} onClick={clearData}>
-              Do it.
+              {t("generic.doit")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
