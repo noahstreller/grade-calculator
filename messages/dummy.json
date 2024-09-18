@@ -272,6 +272,9 @@
     "return-home": "translated"
   },
   "subject-details": {
-    "title": "translated"
+    "title": "translated",
+    "subject-grades": {
+      "title": "translated"
+    }
   }
 }
