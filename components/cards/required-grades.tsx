@@ -162,7 +162,9 @@ function RequiredGradesBody({
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
                     <span className="text-muted-foreground text-4xl">
-                      {preferences?.passingInverse ? "<" : ">"}
+                      {preferences?.passingInverse
+                        ? t("generic.less-than")
+                        : t("generic.greater-than")}
                     </span>
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
@@ -240,7 +242,7 @@ export function RequiredGrades({
             onChange={(e) => {
               setSimulatedWeight(Number(e.target.value));
             }}
-            placeholder="Simulated weight"
+            placeholder={t("required-grades.simulated-weight")}
             className=" flex-shrink-1"
           />
           <Button
@@ -250,12 +252,12 @@ export function RequiredGrades({
               setSimulatedWeight(undefined);
             }}
           >
-            Reset
+            {t("actions.reset")}
           </Button>
         </div>
         {!getSimulatedWeight().valid && (
           <span className="text-red-400 text-xs">
-            Weight must be a positive number
+            {t("errors.must-be-positive")}
           </span>
         )}
       </CardContent>
@@ -357,7 +359,9 @@ function RequiredGradesBodyForSubject({
         <CardContent>
           <h1 className="text-2xl text-gray-400">
             <span className="text-muted-foreground text-4xl">
-              {preferences?.passingInverse ? "<" : ">"}
+              {preferences?.passingInverse
+                ? t("generic.less-than")
+                : t("generic.greater-than")}
             </span>
             <b className="text-5xl text-foreground">
               {round(getRequiredGradeToPass(averageData).result, 2)}
@@ -403,10 +407,8 @@ export function RequiredGradesForSubject({
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
-          <CardTitle>Required Grade</CardTitle>
-          <CardDescription>
-            The grade you need to pass this subject
-          </CardDescription>
+          <CardTitle>{t("required-grades.title")}</CardTitle>
+          <CardDescription>{t("required-grades.description")}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
@@ -425,7 +427,7 @@ export function RequiredGradesForSubject({
             onChange={(e) => {
               setSimulatedWeight(Number(e.target.value));
             }}
-            placeholder="Simulated weight"
+            placeholder={t("required-grades.simulated-weight")}
             className=" flex-shrink-1"
           />
           <Button
@@ -440,7 +442,7 @@ export function RequiredGradesForSubject({
         </div>
         {!getSimulatedWeight().valid && (
           <span className="text-red-400 text-xs">
-            Weight must be a positive number
+            {t("errors.must-be-positive")}
           </span>
         )}
       </CardContent>

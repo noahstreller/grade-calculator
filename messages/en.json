@@ -69,7 +69,10 @@
     "grade-count": "Grade count",
     "grade-count-weighted": "Grade count (weights considered)",
     "grade-sum": "Grade sum",
-    "grade-sum-weighted": "Grade sum (weights considered)"
+    "grade-sum-weighted": "Grade sum (weights considered)",
+    "badge-noweight-empty": "This subject contains <b>weightedAmount</b> grades",
+    "badge-noweight-not-empty": "This subject contains <weightedAmount></weightedAmount> {count, plural, =1 {grade} other {grades}} with a grade sum of <gradeSum></gradeSum>",
+    "badge-weight-not-empty": "This subject contains <averageGrade></averageGrade> {count, plural, =1 {grade} other {grades}} with a total weight of <weightedAmount></weightedAmount> and a grade sum of <gradeSum></gradeSum>"
   },
   "preferences": {
     "title": "Preferences",
@@ -153,11 +156,21 @@
     "unauthenticated-subject-details": "You must be logged in to view subject details",
     "woops": "Woops.",
     "not-enough-data-yet-subject-detail": "This subject looks pretty empty so far",
-    "subject-not-found": "We cannot find the subject you are looking for"
+    "subject-not-found": "We cannot find the subject you are looking for",
+    "must-be-positive": "Weight must be a positive number"
   },
   "overview": {
     "title": "Overview",
-    "description": "Here you can see an overview of your grades and subjects"
+    "description": "Here you can see an overview of your grades and subjects",
+    "lower-is-better": "Lower is better",
+    "higher-is-better": "Higher is better",
+    "passing-short": "Pass",
+    "passing-long": "Passing Grade",
+    "you-short": "You",
+    "you-long": "Your Average",
+    "subject-description": "This is an overview of your grades in this subject",
+    "subject-average-grade": "This reflects your average grade in this subject.",
+    "subject-average-title": "Subject Average"
   },
   "subject-overview": {
     "title": "Subject Overview",
@@ -172,7 +185,8 @@
     "description": "The grades you need to pass your subjects",
     "required": "to pass",
     "passed": "to keep passing",
-    "required-to-pass": "You need at least"
+    "required-to-pass": "You need at least",
+    "simulated-weight": "Simulated weight"
   },
   "landing-page": {
     "getting-started-about": {
@@ -242,7 +256,10 @@
     "yes": "Yes",
     "true": "True",
     "no": "No",
-    "false": "False"
+    "false": "False",
+    "less-than": "<",
+    "greater-than": ">",
+    "help-icon": "?"
   },
   "screenreader": {
     "open-menu": "Open menu"

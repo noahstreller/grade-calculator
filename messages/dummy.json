@@ -159,11 +159,21 @@
     "woops": "translated",
     "not-enough-data-yet-subject-detail": "translated",
     "subject-not-found": "translated",
-    "unauthenticated-subject-details": "translated"
+    "unauthenticated-subject-details": "translated",
+    "must-be-positive": "translated"
   },
   "overview": {
     "title": "translated",
-    "description": "translated"
+    "description": "translated",
+    "you-short": "translated",
+    "you-long": "translated",
+    "subject-description": "translated",
+    "subject-average-grade": "translated",
+    "subject-average-title": "translated",
+    "passing-short": "translated",
+    "passing-long": "translated",
+    "lower-is-better": "translated",
+    "higher-is-better": "translated"
   },
   "subject-overview": {
     "title": "translated",
@@ -178,7 +188,8 @@
     "description": "translated",
     "required": "translated",
     "passed": "translated",
-    "required-to-pass": "translated"
+    "required-to-pass": "translated",
+    "simulated-weight": "translated"
   },
   "landing-page": {
     "getting-started-about": {
@@ -242,7 +253,10 @@
     "no": "translated",
     "true": "translated",
     "yes": "translated",
-    "false": "translated"
+    "false": "translated",
+    "greater-than": "translated",
+    "less-than": "translated",
+    "help-icon": "translated"
   },
   "screenreader": {
     "open-menu": "translated"

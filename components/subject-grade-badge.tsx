@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { getStringForAmount, truncateText } from "@/lib/utils";
+import { truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { useTranslations } from "next-intl";
 
@@ -35,26 +35,22 @@ export const SubjectGradeBadge = ({
         </Badge>
       </PopoverTrigger>
       <PopoverContent className="w-fit max-w-96 text-wrap">
-        {averageGrade === weightedAmount ? (
-          averageGrade === 0 ? (
-            <>
-              This subject contains <b>{weightedAmount}</b> grades
-            </>
-          ) : (
-            <>
-              This subject contains <b>{weightedAmount}</b>{" "}
-              {getStringForAmount(averageGrade, "grade", "grades")} with a grade
-              sum of <b>{gradeSum}</b>
-            </>
-          )
-        ) : (
-          <>
-            This subject contains <b>{averageGrade}</b>{" "}
-            {getStringForAmount(averageGrade, "grade", "grades")} with a total
-            weight of <b>{weightedAmount}</b> and a grade sum of{" "}
-            <b>{gradeSum}</b>
-          </>
-        )}
+        {averageGrade === weightedAmount
+          ? averageGrade === 0
+            ? t.rich("subjects.badge-noweight-empty", {
+                b: () => <b>{weightedAmount}</b>,
+              })
+            : t.rich("subjects.badge-noweight-not-empty", {
+                weightedAmount: () => <b>{weightedAmount}</b>,
+                gradeSum: () => <b>{gradeSum}</b>,
+                count: averageGrade,
+              })
+          : t.rich("subjects.badge-weight-not-empty", {
+              averageGrade: () => <b>{averageGrade}</b>,
+              weightedAmount: () => <b>{weightedAmount}</b>,
+              gradeSum: () => <b>{gradeSum}</b>,
+              count: averageGrade,
+            })}
       </PopoverContent>
     </Popover>
   );
