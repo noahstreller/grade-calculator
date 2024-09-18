@@ -6,6 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { truncateText } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export const GradeWeightBadge = ({
   weight,
@@ -16,6 +17,7 @@ export const GradeWeightBadge = ({
   className?: string;
   hideOne?: boolean;
 }) => {
+  const t = useTranslations();
   const truncatedWeight = truncateText(weight.toString(), 5);
   return (
     !hideOne ||
@@ -23,11 +25,14 @@ export const GradeWeightBadge = ({
       <Popover>
         <PopoverTrigger className={className}>
           <Badge variant="secondary" className={className}>
-            {truncatedWeight.truncated ? null : "×"} {truncatedWeight.text}
+            {truncatedWeight.truncated ? null : t("generic.multiplication")}{" "}
+            {truncatedWeight.text}
           </Badge>
         </PopoverTrigger>
         <PopoverContent className="w-fit">
-          This grade is weighted <b>{weight}</b>
+          {t.rich("grades.badge-weight", {
+            weight: () => <b>{weight}</b>,
+          })}
         </PopoverContent>
       </Popover>
     ))
