@@ -153,7 +153,7 @@ function SubjectDetails({ subjectId }: { subjectId: string }) {
         </Alert>
       </div>
     );
-  if (dataState === "empty")
+  if (dataState === "empty" || (grades.length === 0 && dataState === "loaded"))
     return (
       <div>
         <Breadcrumb className="pl-2 pb-3">
