@@ -125,7 +125,10 @@
       "success": "Data successfully exported",
       "description-clipboard": "JSON was copied to clipboard",
       "description-json": "JSON exported as file"
-    }
+    },
+    "delete-account": "Delete Account",
+    "clear-account-data": "Clear Account Data",
+    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone."
   },
   "themes": {
     "toggle": "Change Theme",
@@ -262,14 +265,17 @@
     "greater-than": ">",
     "help-icon": "?",
     "multiplication": "×",
-    "page-x-of-y": "Page <index></index> of <total></total>"
+    "page-x-of-y": "Page <index></index> of <total></total>",
+    "nevermind": "Nevermind",
+    "doit": "Do it."
   },
   "screenreader": {
     "open-menu": "Open menu"
   },
   "auth": {
     "login-now": "Log in now",
-    "return-home": "Go home"
+    "return-home": "Go home",
+    "logout": "Sign out"
   },
   "subject-details": {
     "title": "Subject details",

@@ -131,7 +131,10 @@
       "success": "translated",
       "description-clipboard": "translated",
       "description-json": "translated"
-    }
+    },
+    "clear-account-data": "translated",
+    "clear-account-data-warning": "translated",
+    "delete-account": "translated"
   },
   "themes": {
     "toggle": "translated",
@@ -262,14 +265,17 @@
     "less-than": "translated",
     "help-icon": "translated",
     "multiplication": "translated",
-    "page-x-of-y": "translated"
+    "page-x-of-y": "translated",
+    "doit": "translated",
+    "nevermind": "translated"
   },
   "screenreader": {
     "open-menu": "translated"
   },
   "auth": {
     "login-now": "translated",
-    "return-home": "translated"
+    "return-home": "translated",
+    "logout": "translated"
   },
   "subject-details": {
     "title": "translated",
