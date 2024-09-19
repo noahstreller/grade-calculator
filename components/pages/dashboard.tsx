@@ -23,6 +23,7 @@ import {
 } from "@/lib/services/grade-service";
 import { AverageWithSubject } from "@/types/types";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
@@ -184,6 +185,7 @@ export default function Dashboard() {
 }
 
 function DashboardHeaderCard() {
+  const t = useTranslations();
   const categoryState = useCategory();
   const categoryCount = categoryState.categories.length;
   const categories = categoryState.categories;
@@ -191,38 +193,29 @@ function DashboardHeaderCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Dashboard</CardTitle>
-        <CardDescription>
-          The dashboard helps you get an overview of your averages from all your
-          categories.
-        </CardDescription>
+        <CardTitle>{t("dashboard.title")}</CardTitle>
+        <CardDescription>{t("dashboard.description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        {categoryCount < 10 ? (
-          <>
-            Showing <b>{categoryCount}</b> categories
-            <ul className="list-disc">
-              {categories
-                .sort((a, b) => a.name!.localeCompare(b.name!))
-                .map((category) => (
-                  <li className="list-inside" key={category.id}>
-                    {category.name}
-                  </li>
-                ))}
-            </ul>
-            {categoryCount >= 5 ? (
-              <p className="text-sm text-gray-500 mt-1">
-                Data storage does not grow on trees.
-              </p>
-            ) : null}
-          </>
-        ) : (
-          <>
-            You currently have <b>{categoryCount}</b> categories.
-            <p className="text-sm text-gray-500 mt-1">
-              Data storage does not grow on trees.
-            </p>
-          </>
+        {t.rich("dashboard.categorylist", {
+          categorycount: () => <b>{categoryCount}</b>,
+          count: categoryCount,
+        })}
+        {categoryCount < 10 && (
+          <ul className="list-disc">
+            {categories
+              .sort((a, b) => a.name!.localeCompare(b.name!))
+              .map((category) => (
+                <li className="list-inside" key={category.id}>
+                  {category.name}
+                </li>
+              ))}
+          </ul>
+        )}
+        {categoryCount >= 5 && (
+          <p className="text-sm text-gray-500 mt-1">
+            {t("warnings.storage-waste")}
+          </p>
         )}
       </CardContent>
     </Card>

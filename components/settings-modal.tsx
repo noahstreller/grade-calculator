@@ -676,7 +676,7 @@ export function SettingsModal({
                     className="hover:text-red-400 flex-shrink-0 flex flex-row gap-2 w-full"
                   >
                     <Trash2 className="size-4 text-inherit" />
-                    {t("categories..delete-data")}
+                    {t("categories.delete-data")}
                   </Button>
                 </ClearDataButton>
                 <NewSemesterButton expanded />

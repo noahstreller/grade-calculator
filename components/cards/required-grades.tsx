@@ -122,7 +122,7 @@ function RequiredGradesBody({
       <h2>
         {t("grades.simulatedWeight-part1")}{" "}
         <Highlight colorName="yellow">{simulatedWeight}</Highlight>
-        {t("grades.simulatedWeight-part2")}:
+        {t("grades.simulatedWeight-part2")}
       </h2>
       {chunkPairs.length === 0 ? (
         <Alert>
@@ -338,7 +338,7 @@ function RequiredGradesBodyForSubject({
       <h2>
         {t("grades.simulatedWeight-part1")}
         <Highlight colorName="yellow">{simulatedWeight}</Highlight>
-        {t("grades.simulatedWeight-part2")}:
+        {t("grades.simulatedWeight-part2")}
       </h2>
       <Card>
         <CardHeader>

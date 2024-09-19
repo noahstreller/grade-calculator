@@ -353,9 +353,7 @@
     "manage": {
       "description": "You can manage your categories in this section."
     },
-    "": {
-      "delete-data": "Delete category data"
-    }
+    "delete-data": "Delete category data"
   },
   "onboarding": {
     "title": "Onboarding",
@@ -429,6 +427,39 @@
     }
   },
   "warnings": {
-    "irreversible": "This action is irreversible"
+    "irreversible": "This action is irreversible",
+    "storage-waste": "Data storage does not grow on trees."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "The dashboard helps you get an overview of your averages from all your categories.",
+    "categorylist": "Showing data from <categorycount></categorycount> { count, plural, =1 {category} other {categories} }"
+  },
+  "privacy-policy": {
+    "subtitle": "This privacy policy will clarify how your data is stored, and which purpose it serves.",
+    "legal-note": "I am not really familiar with legal matters, there is probably a lot of stuff missing here. If you have any questions, feel free to contact me: <maillink>dev@nstr.dev</maillink>",
+    "what-is-collected": {
+      "title": "What data is collected?",
+      "username": "Your username <note>(that you use on the service provider you sign in with, e.g. Discord)</note>",
+      "email": "Your email address",
+      "avatar": "Your avatar",
+      "grades": "Your grades, subjects and settings <note>(anything you add on this web app)</note>"
+    },
+    "data-usage": {
+      "title": "How is your data used?",
+      "description": "Your data is used to provide you with the services offered on this web app. It is stored securely and will not be shared with any third party."
+    },
+    "storage": {
+      "title": "How is your data stored?",
+      "description": "Your data is stored in a database, hosted on a server located in Austria."
+    },
+    "deletion": {
+      "title": "Can I delete my account and all associated data?",
+      "description": "Yes, you can delete your account and all associated data at any time inside the web app. You can also request a data deletion by contacting me via email: <maillink></maillink>"
+    },
+    "security": {
+      "title": "Your code is not secure enough for my needs and I do not trust you with my data.",
+      "description": "You are free to use the legacy version of this web app, which does not store any data on a server."
+    }
   }
 }

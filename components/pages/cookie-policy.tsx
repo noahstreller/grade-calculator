@@ -30,9 +30,10 @@ export default function CookiePolicy() {
         </BreadcrumbList>
       </Breadcrumb>
       <h1 className="text-4xl font-bold leading-10">
-        {t("cookie-policy.title")}{" "}
+        {t("cookie-policy.title")}
+        {" - "}
         <span className="hidden lg:inline">
-          - <Highlight colorName="blue">grades.nstr.dev</Highlight>
+          <Highlight colorName="blue">grades.nstr.dev</Highlight>
         </span>
       </h1>
       <p>{t("cookie-policy.subtitle")}</p>

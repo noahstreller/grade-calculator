@@ -52,7 +52,9 @@ export function Onboarding() {
       <div className="fixed inset-0 flex flex-col items-center justify-start bg-background z-50 pt-8 overflow-scroll">
         <div className="items-center gap-8 flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight text-white-900 sm:text-6xl">
-            <span className="text-muted-foreground">{t("grades.grades")}</span>
+            <span className="text-muted-foreground">
+              {t("app.short-title")}
+            </span>
             <br />
             {t("onboarding.title")}
           </h1>
