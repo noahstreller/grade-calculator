@@ -30,21 +30,23 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { PreferenceTemplate, templates } from "@/templates";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const preferenceTemplates: PreferenceTemplate[] = templates;
-
-const FormSchema = z.object({
-  preferenceTemplate: z.string({
-    required_error: "Please select a template.",
-  }),
-});
 
 export function TemplateSelector({
   setSelectedTemplate,
 }: {
   setSelectedTemplate: (template: string) => void;
 }) {
+  const t = useTranslations();
+
+  const FormSchema = z.object({
+    preferenceTemplate: z.string({
+      required_error: t("errors.select-template"),
+    }),
+  });
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -63,9 +65,9 @@ export function TemplateSelector({
           name="preferenceTemplate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Template</FormLabel>
+              <FormLabel>{t("onboarding.templates.title")}</FormLabel>
               <FormDescription>
-                Select a template or use the advanced settings.
+                {t("onboarding.templates.description")}
               </FormDescription>
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
@@ -82,15 +84,17 @@ export function TemplateSelector({
                         ? preferenceTemplates.find(
                             (template) => template.id === field.value
                           )?.title
-                        : "Select template"}
+                        : t("onboarding.templates.select-prompt")}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0">
                   <Command>
-                    <CommandInput placeholder="Search template..." />
-                    <CommandEmpty>No template found.</CommandEmpty>
+                    <CommandInput
+                      placeholder={t("filters.filter-by-template")}
+                    />
+                    <CommandEmpty>{t("errors.no-template")}</CommandEmpty>
                     <ScrollArea className="h-fit max-h-[30vh] overflow-auto">
                       <CommandGroup>
                         {preferenceTemplates.map((template) => (
@@ -99,6 +103,7 @@ export function TemplateSelector({
                             key={template.id}
                             onSelect={() => {
                               form.setValue("preferenceTemplate", template.id);
+
                               setOpen(false);
                             }}
                           >
@@ -124,7 +129,7 @@ export function TemplateSelector({
         />
         <Button variant={"secondary"} type="submit">
           <Wrench className="size-4 text-muted-foreground mr-2" />
-          Apply template
+          {t("onboarding.templates.apply")}{" "}
         </Button>
       </form>
     </Form>

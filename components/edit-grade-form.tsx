@@ -189,7 +189,7 @@ export function EditGradeForm({
                           ).text
                         : loading
                         ? null
-                        : "Select subject"}
+                        : t("subjects.select-subject")}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -267,10 +267,10 @@ export function EditGradeForm({
           render={({ field }) => (
             <div className="flex flex-col gap-2">
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>{t("grades.description")}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Add a short description (optional)"
+                    placeholder={t("grades.description-prompt")}
                     {...field}
                   />
                 </FormControl>
@@ -296,7 +296,7 @@ export function EditGradeForm({
                 <Input
                   type="number"
                   step="any"
-                  placeholder="Enter weight"
+                  placeholder={t("grades.weight-placeholder")}
                   {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
@@ -330,7 +330,7 @@ export function EditGradeForm({
                       {date ? (
                         getDateOrDateTimeLong(date)
                       ) : (
-                        <span>Pick a date</span>
+                        <span>{t("grades.date-prompt")}</span>
                       )}
                     </Button>
                   </PopoverTrigger>

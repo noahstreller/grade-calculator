@@ -1,0 +1,354 @@
+{
+  "actions": {
+    "cancel": "",
+    "clear-account-data": "",
+    "clear-account-data-warning": "",
+    "clear-data": {
+      "message": "",
+      "prompt": ""
+    },
+    "clear-grades-only": "",
+    "copy": {
+      "prompt": "",
+      "success": ""
+    },
+    "danger-continue": "",
+    "delete-account": "",
+    "delete": {
+      "prompt": "",
+      "success": ""
+    },
+    "edit": {
+      "prompt": "",
+      "success": ""
+    },
+    "export": {
+      "description-clipboard": "",
+      "description-json": "",
+      "success": ""
+    },
+    "ok": "",
+    "reset": "",
+    "save": "",
+    "submit": "",
+    "undo": ""
+  },
+  "app": {
+    "description": "",
+    "title": "",
+    "short-title": ""
+  },
+  "auth": {
+    "login-now": "",
+    "logout": "",
+    "return-home": "",
+    "enter-email": "",
+    "magic-link": "",
+    "request-link": ""
+  },
+  "categories": {
+    "add": {
+      "description": "",
+      "title": ""
+    },
+    "delete": "",
+    "edit": {
+      "description": "",
+      "title": ""
+    },
+    "enter-name-prompt": "",
+    "name-label": "",
+    "to-change-label": "",
+    "": {
+      "delete-data": ""
+    },
+    "manage": {
+      "description": ""
+    }
+  },
+  "errors": {
+    "import-failed": "",
+    "invalid-type": {
+      "number": ""
+    },
+    "max-lt-min": "",
+    "message": "",
+    "must-be-positive": "",
+    "no-categories": "",
+    "no-data-yet": "",
+    "no-data-yet-desc": "",
+    "no-results": "",
+    "not-enough-data-yet": "",
+    "not-enough-data-yet-desc": "",
+    "not-enough-data-yet-failing": "",
+    "not-enough-data-yet-grade": "",
+    "not-enough-data-yet-passing": "",
+    "not-enough-data-yet-subject": "",
+    "not-enough-data-yet-subject-detail": "",
+    "not-enough-subjects-yet-failing": "",
+    "pass-gt-max": "",
+    "pass-lt-min": "",
+    "required": "",
+    "subject-not-found": "",
+    "unauthenticated-subject-details": "",
+    "woops": "",
+    "no-template": "",
+    "select-template": "",
+    "invalid-email-prompt": ""
+  },
+  "filters": {
+    "failing": "",
+    "filter-by-category": "",
+    "filter-by-subject": "",
+    "passing": "",
+    "show-all": "",
+    "filter-by-template": ""
+  },
+  "generic": {
+    "asterisk": "",
+    "doit": "",
+    "false": "",
+    "greater-than": "",
+    "help-icon": "",
+    "home": "",
+    "id": "",
+    "less-than": "",
+    "loading": "",
+    "multiplication": "",
+    "name": "",
+    "nevermind": "",
+    "no": "",
+    "page": "",
+    "page-x-of-y": "",
+    "time": {
+      "hours": "",
+      "minutes": "",
+      "seconds": ""
+    },
+    "true": "",
+    "yes": "",
+    "env": {
+      "development": "",
+      "production": ""
+    }
+  },
+  "grades": {
+    "academic-relevance-title": "",
+    "actions": {
+      "delete": "",
+      "edit": "",
+      "title": ""
+    },
+    "add": "",
+    "add-desc": "",
+    "add-placeholder": "",
+    "add-success": "",
+    "all-grades": "",
+    "all-grades-desc": "",
+    "badge-weight": "",
+    "change-details": "",
+    "copy": "",
+    "date": "",
+    "description": "",
+    "edit": {
+      "desc": "",
+      "title": ""
+    },
+    "failing-grades": "",
+    "grade": "",
+    "grades": "",
+    "notfound": "",
+    "passing-grades": "",
+    "show-passing-grades-part1": "",
+    "show-passing-grades-part2": "",
+    "show-passing-grades-part3": "",
+    "simulatedWeight-description": "",
+    "simulatedWeight-part1": "",
+    "simulatedWeight-part2": "",
+    "subject": "",
+    "weight": "",
+    "weight-placeholder": "",
+    "date-prompt": "",
+    "description-prompt": ""
+  },
+  "landing-page": {
+    "about": {
+      "credit-description-part1": "",
+      "credit-description-part2": "",
+      "credit-description-part3": "",
+      "credit-description-part4": "",
+      "credit-description-part5": "",
+      "description": "",
+      "description-label": "",
+      "short-description-part1": "",
+      "short-description-part2": "",
+      "short-description-part3": "",
+      "short-description-part4": "",
+      "short-description-part5": "",
+      "source-code-description": "",
+      "source-code-label": "",
+      "source-code-link": "",
+      "title": ""
+    },
+    "demo-card": {
+      "demo-averages": "",
+      "demo-calculator": "",
+      "demo-grades": "",
+      "description": "",
+      "title": ""
+    },
+    "getting-started-about": {
+      "cloud-desc-part1": "",
+      "cloud-desc-part2": "",
+      "cloud-desc-part3": "",
+      "cloud-desc-part4": "",
+      "cloud-desc-part5": "",
+      "cloud-desc-part6": "",
+      "cloud-desc-part7": "",
+      "title": "",
+      "to-legacy-long": "",
+      "to-legacy-short": "",
+      "to-the-app-long": "",
+      "to-the-app-short": ""
+    },
+    "getting-started-tab": {
+      "description": "",
+      "title": ""
+    },
+    "open-image": "",
+    "screenshot-dark-mode": "",
+    "screenshot-desc": "",
+    "screenshot-light-mode": "",
+    "screenshot-title": "",
+    "tabs": {
+      "getting-started": "",
+      "learn-more": ""
+    }
+  },
+  "overview": {
+    "description": "",
+    "higher-is-better": "",
+    "lower-is-better": "",
+    "passing-long": "",
+    "passing-short": "",
+    "subject-average-grade": "",
+    "subject-average-title": "",
+    "subject-description": "",
+    "title": "",
+    "you-long": "",
+    "you-short": ""
+  },
+  "preferences": {
+    "alert-description": "",
+    "alert-title": "",
+    "description": "",
+    "grade-decimals": "",
+    "grade-decimals-description": "",
+    "grade-decimals-placeholder": "",
+    "keep-modals-open": "",
+    "keep-modals-open-description": "",
+    "maximum-grade": "",
+    "maximum-grade-description": "",
+    "maximum-grade-placeholder": "",
+    "minimum-grade": "",
+    "minimum-grade-description": "",
+    "minimum-grade-placeholder": "",
+    "passing-grade": "",
+    "passing-grade-description": "",
+    "passing-grade-placeholder": "",
+    "passing-inverse": "",
+    "passing-inverse-description": "",
+    "title": "",
+    "quick-settings": ""
+  },
+  "required-grades": {
+    "description": "",
+    "passed": "",
+    "required": "",
+    "required-to-pass": "",
+    "simulated-weight": "",
+    "title": ""
+  },
+  "screenreader": {
+    "open-menu": ""
+  },
+  "subject-details": {
+    "subject-grades": {
+      "title": ""
+    },
+    "title": ""
+  },
+  "subject-overview": {
+    "description": "",
+    "grade-average": "",
+    "grade-average-desc": "",
+    "subject-average": "",
+    "subject-average-desc": "",
+    "title": ""
+  },
+  "subjects": {
+    "actions": {
+      "delete": "",
+      "edit": "",
+      "edit-desc": "",
+      "edit-title": "",
+      "title": "",
+      "view": ""
+    },
+    "add": "",
+    "add-desc": "",
+    "add-placeholder": "",
+    "add-success": "",
+    "all-subjects": "",
+    "all-subjects-desc": "",
+    "badge-noweight-empty": "",
+    "badge-noweight-not-empty": "",
+    "badge-weight-not-empty": "",
+    "delete": {
+      "message": "",
+      "prompt": ""
+    },
+    "failing-subjects": "",
+    "failing-subjects-desc": "",
+    "failing-title": "",
+    "grade-count": "",
+    "grade-count-weighted": "",
+    "grade-sum": "",
+    "grade-sum-weighted": "",
+    "notfound": "",
+    "passing-subjects": "",
+    "passing-subjects-desc": "",
+    "search": "",
+    "select-subject": "",
+    "subject": "",
+    "relevance": {
+      "description-excluded": "",
+      "description-included": "",
+      "title": ""
+    }
+  },
+  "themes": {
+    "dark": "",
+    "light": "",
+    "system": "",
+    "title": "",
+    "toggle": ""
+  },
+  "onboarding": {
+    "advanced-settings": "",
+    "advanced-settings-description": "",
+    "title": "",
+    "templates": {
+      "apply": "",
+      "description": "",
+      "select-prompt": "",
+      "title": ""
+    }
+  },
+  "external": {
+    "cookie-policy": "",
+    "legacy-version": "",
+    "privacy-policy": "",
+    "source-code": ""
+  }
+}
