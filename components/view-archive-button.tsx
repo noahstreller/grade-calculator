@@ -1,5 +1,6 @@
 "use client";
 
+import { RelativeTimeFormatted } from "@/components/relative-time-formatted";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,11 +42,12 @@ import {
 import { unarchiveCategory } from "@/lib/services/export-service";
 import { exportToJSONFile } from "@/lib/services/notAsyncLogic";
 import { getDateOrTime, truncateText } from "@/lib/utils";
-import { formatDistance } from "date-fns";
 import { Archive, Bird, DownloadIcon, FolderIcon, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export function ViewArchiveButton() {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
@@ -102,20 +104,19 @@ export function ViewArchiveButton() {
           variant={"secondary"}
         >
           <Archive className="size-4" />
-          <span>View archive</span>
+          <span>{t("semesters.archive.view")}</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Archive</DrawerTitle>
+          <DrawerTitle>{t("semesters.archive.title")}</DrawerTitle>
           {archiveData.length ? (
             <DrawerDescription>
-              You are now viewing the data you have archived. You can download
-              or delete it here.
+              {t("semesters.archive.description")}
             </DrawerDescription>
           ) : (
             <DrawerDescription>
-              You will be able to view archived data here.
+              {t("semesters.archive.description-empty")}
             </DrawerDescription>
           )}
         </DrawerHeader>
@@ -132,11 +133,12 @@ export function ViewArchiveButton() {
                       {truncateText(data.category, 20).text}
                     </CardTitle>
                     <CardDescription className="flex-row inline-flex gap-2">
-                      Archived: {getDateOrTime(data.date)} (
-                      {formatDistance(data.date, new Date(), {
-                        addSuffix: true,
+                      {t.rich("semesters.archive.dates", {
+                        absolutetime: () => getDateOrTime(data.date),
+                        relativetime: () => (
+                          <RelativeTimeFormatted date1={data.date} now />
+                        ),
                       })}
-                      )
                     </CardDescription>
                   </CardHeader>
                   {isTiny ? (
@@ -159,14 +161,14 @@ export function ViewArchiveButton() {
                     <CardContent className="flex flex-row-reverse gap-3">
                       <Button onClick={() => handleDownload(data.id)}>
                         <DownloadIcon className="size-4 mr-2" />
-                        Download
+                        {t("semesters.archive.download")}
                       </Button>
                       <Button
                         variant="secondary"
                         onClick={() => handleDelete(data.id)}
                       >
                         <Trash2 className="size-4 mr-2" />
-                        Delete
+                        {t("actions.delete.prompt")}
                       </Button>
                     </CardContent>
                   )}
@@ -184,15 +186,14 @@ export function ViewArchiveButton() {
               <Bird className="h-4 w-4" />
               <AlertTitle>Woops!</AlertTitle>
               <AlertDescription>
-                No data has been archived yet. You can archive categories by
-                starting a new term in the settings.
+                {t("errors.no-archived-data")}
               </AlertDescription>
             </Alert>
           </div>
         )}
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="secondary">Back</Button>
+            <Button variant="secondary">{t("generic.back")}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
@@ -202,20 +203,19 @@ export function ViewArchiveButton() {
       <DialogTrigger asChild>
         <Button className="w-full" variant={"secondary"}>
           <Archive className="size-4 mr-2" />
-          View archive
+          {t("semesters.archive.view")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Archive</DialogTitle>
+          <DialogTitle>{t("semesters.archive.title")}</DialogTitle>
           {archiveData.length ? (
             <DialogDescription>
-              You are now viewing the data you have archived. You can download
-              or delete it here.
+              {t("semesters.archive.description")}
             </DialogDescription>
           ) : (
             <DialogDescription>
-              You will be able to view archived data here.
+              {t("semesters.archive.description-empty")}
             </DialogDescription>
           )}
         </DialogHeader>
@@ -232,24 +232,25 @@ export function ViewArchiveButton() {
                       {truncateText(data.category, 20).text}
                     </CardTitle>
                     <CardDescription className="flex-row inline-flex gap-2">
-                      Archived: {getDateOrTime(data.date)} (
-                      {formatDistance(data.date, new Date(), {
-                        addSuffix: true,
+                      {t.rich("semesters.archive.dates", {
+                        absolutetime: () => getDateOrTime(data.date),
+                        relativetime: () => (
+                          <RelativeTimeFormatted date1={data.date} now />
+                        ),
                       })}
-                      )
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-row-reverse gap-3">
                     <Button onClick={() => handleDownload(data.id)}>
                       <DownloadIcon className="size-4 mr-2" />
-                      Download
+                      {t("semesters.archive.download")}
                     </Button>
                     <Button
                       variant="secondary"
                       onClick={() => handleDelete(data.id)}
                     >
                       <Trash2 className="size-4 mr-2" />
-                      Delete
+                      {t("actions.delete.prompt")}
                     </Button>
                   </CardContent>
                 </Card>
@@ -262,15 +263,12 @@ export function ViewArchiveButton() {
           <Alert>
             <Bird className="h-4 w-4" />
             <AlertTitle>Woops!</AlertTitle>
-            <AlertDescription>
-              No data has been archived yet. You can archive categories by
-              starting a new term in the settings.
-            </AlertDescription>
+            <AlertDescription>{t("errors.no-archived-data")} </AlertDescription>
           </Alert>
         )}
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">Back</Button>
+            <Button variant="secondary">{t("generic.back")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
