@@ -184,7 +184,7 @@ export function ViewArchiveButton() {
           <div className="mx-4">
             <Alert>
               <Bird className="h-4 w-4" />
-              <AlertTitle>Woops!</AlertTitle>
+              <AlertTitle>{t("errors.woops")}</AlertTitle>
               <AlertDescription>
                 {t("errors.no-archived-data")}
               </AlertDescription>
@@ -262,7 +262,7 @@ export function ViewArchiveButton() {
         ) : (
           <Alert>
             <Bird className="h-4 w-4" />
-            <AlertTitle>Woops!</AlertTitle>
+            <AlertTitle>{t("errors.woops")}</AlertTitle>
             <AlertDescription>{t("errors.no-archived-data")} </AlertDescription>
           </Alert>
         )}
