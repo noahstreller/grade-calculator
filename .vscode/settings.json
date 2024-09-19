@@ -9,7 +9,11 @@
   "i18n-ally.extract.ignoredByFiles": {
     "components\\cards\\grade-overview.tsx": ["3 5", "10 4"],
     "components\\ui\\asterisk.tsx": ["*"],
-    "components\\header.tsx": ["Logo"]
+    "components\\header.tsx": ["Logo"],
+    "components\\loadingscreen.tsx": [
+      "\r\n            Grade\r\n            ",
+      "\r\n            Calculator\r\n          "
+    ]
   },
   "i18n-ally.extract.ignored": [
     "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }"

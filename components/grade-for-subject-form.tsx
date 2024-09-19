@@ -157,10 +157,10 @@ export function CreateGradeFormForSubject({
           render={({ field }) => (
             <FormItem>
               <div className="flex flex-col gap-2">
-                <FormLabel>Description</FormLabel>
+                <FormLabel>{t("grades.description")}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Add a short description (optional)"
+                    placeholder={t("grades.description-prompt")}
                     {...field}
                   />
                 </FormControl>
@@ -214,7 +214,7 @@ export function CreateGradeFormForSubject({
                       {date ? (
                         getDateOrDateTimeLong(date)
                       ) : (
-                        <span>Pick a date (optional)</span>
+                        <span>{t("grades.date-prompt")}</span>
                       )}
                     </Button>
                   </PopoverTrigger>

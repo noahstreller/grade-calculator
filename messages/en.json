@@ -176,7 +176,10 @@
     "no-categories": "No Categories",
     "select-template": "Please select a template.",
     "no-template": "No template found.",
-    "invalid-email-prompt": "This must be a valid e-mail address"
+    "invalid-email-prompt": "This must be a valid e-mail address",
+    "something-broke": "Something broke.",
+    "try-again-or-contact": "Please try again, use a different account or contact <mailbutton></mailbutton> if the issue persists.",
+    "code": "Error Code:"
   },
   "overview": {
     "title": "Overview",
@@ -306,7 +309,24 @@
     "logout": "Sign out",
     "magic-link": "You can also request a magic link to sign in with your email address.",
     "enter-email": "Enter your email address",
-    "request-link": "Request Link"
+    "request-link": "Request Link",
+    "sign-in": "Sign in",
+    "login": "Login",
+    "sign-in-desc": "Sign in to your account using one of the providers below.",
+    "providers": {
+      "local": "Local",
+      "discord": "Discord",
+      "github": "GitHub",
+      "google": "Google",
+      "email": "E-Mail sign-in"
+    },
+    "legacy": {
+      "description": "Check out the legacy version, if you prefer saving your data locally."
+    },
+    "sent-mail": "Sent",
+    "check-spam": "Make sure to check your spam folder, if you did not receive it.",
+    "sent-mail-desc": "Your <highlight>magic link</highlight> is on the way! Check your inbox.",
+    "sent-mail-might-take-a-moment": "It may take a moment to arrive."
   },
   "subject-details": {
     "title": "Subject details",
@@ -350,5 +370,20 @@
     "cookie-policy": "Cookie Policy",
     "legacy-version": "Legacy Version",
     "source-code": "Source Code"
-  }
+  },
+  "data-management": {
+    "title": "Manage data",
+    "replace": "Replace existing data",
+    "import": {
+      "title": "Import data",
+      "clipboard": "Clipboard",
+      "json": "JSON-File"
+    },
+    "export": {
+      "clipboard": "Clipboard",
+      "title": "Export data",
+      "json": "JSON-File"
+    }
+  },
+  "emails": {}
 }
