@@ -7,7 +7,8 @@
   "i18n-ally.localesPaths": ["i18n", "messages"],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.extract.ignoredByFiles": {
-    "components\\cards\\grade-overview.tsx": ["3 5", "10 4"]
+    "components\\cards\\grade-overview.tsx": ["3 5", "10 4"],
+    "components\\ui\\asterisk.tsx": ["*"]
   },
   "i18n-ally.extract.ignored": [
     "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }"

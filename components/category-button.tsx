@@ -24,12 +24,14 @@ import {
 } from "@/components/ui/drawer";
 import { FolderPen, FolderPlus } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
 export function CategoryButton({ action }: { action: "create" | "edit" }) {
   const [open, setOpen] = useState<boolean>(false);
   const session = useSession();
+  const t = useTranslations();
 
   if (session.status !== "authenticated") return null;
 
@@ -43,16 +45,15 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">
-            <DrawerTitle>Add category</DrawerTitle>
+            <DrawerTitle>{t("categories.add.title")}</DrawerTitle>
             <DrawerDescription>
-              Categories separate your grades. Useful if you attend multiple
-              schools.
+              {t("categories.add.description")}
             </DrawerDescription>
           </DrawerHeader>
           <CreateCategoryForm setOpen={setOpen} />
           <DrawerFooter className="pt-2">
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t("actions.cancel")}</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
@@ -66,10 +67,9 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add category</DialogTitle>
+            <DialogTitle>{t("categories.add.title")}</DialogTitle>
             <DialogDescription>
-              Categories separate your grades. Useful if you attend multiple
-              schools.
+              {t("categories.add.description")}
             </DialogDescription>
           </DialogHeader>
           <CreateCategoryForm setOpen={setOpen} />
@@ -86,16 +86,15 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader className="text-left">
-            <DrawerTitle>Edit category</DrawerTitle>
+            <DrawerTitle>{t("categories.edit.title")}</DrawerTitle>
             <DrawerDescription>
-              Edit or delete your categories. You cannot delete the currently
-              selected category.
+              {t("categories.edit.description")}
             </DrawerDescription>
           </DrawerHeader>
           <EditCategoryForm setOpen={setOpen} />
           <DrawerFooter className="pt-2">
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t("actions.cancel")}</Button>
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
@@ -109,10 +108,9 @@ export function CategoryButton({ action }: { action: "create" | "edit" }) {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit category</DialogTitle>
+            <DialogTitle>{t("categories.edit.title")}</DialogTitle>
             <DialogDescription>
-              Edit or delete your categories. You cannot delete the currently
-              selected category.
+              {t("categories.edit.description")}
             </DialogDescription>
           </DialogHeader>
           <EditCategoryForm setOpen={setOpen} />
