@@ -101,11 +101,13 @@ export function CreateCategoryForm({ setOpen }: { setOpen: Function }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Category Name
-                <Asterisk className="ml-1" />
+                {t("categories.name-label")} <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
-                <Input placeholder={"Enter category"} {...field} />
+                <Input
+                  placeholder={t("categories.enter-name-prompt")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -209,8 +211,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>
-                Category to change
-                <Asterisk className="ml-1" />
+                {t("categories.to-change-label")} <Asterisk className="ml-1" />
               </FormLabel>
               <Popover open={selectorOpen} onOpenChange={setSelectorOpen}>
                 <PopoverTrigger asChild>
@@ -226,7 +227,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
                       {loading && (
                         <div className="flex flex-row gap-2 items-center">
                           <LoadingSpinner />
-                          Loading...
+                          {t("generic.loading")}
                         </div>
                       )}
                       {field.value
@@ -238,7 +239,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
                           ).text
                         : loading
                         ? null
-                        : "Select subject"}
+                        : t("subjects.select-subject")}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -249,7 +250,9 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
                     <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
                       <CommandGroup>
                         {categoryState.categories.length === 0 ? (
-                          <CommandItem disabled>No Categories</CommandItem>
+                          <CommandItem disabled>
+                            {t("errors.no-categories")}
+                          </CommandItem>
                         ) : (
                           categoryState.categories.map((category) => (
                             <CommandItem
@@ -288,11 +291,13 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Category Name
-                <Asterisk className="ml-1" />
+                {t("categories.name-label")} <Asterisk className="ml-1" />
               </FormLabel>
               <FormControl>
-                <Input placeholder={"Enter category"} {...field} />
+                <Input
+                  placeholder={t("categories.enter-name-prompt")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -314,7 +319,7 @@ export function EditCategoryForm({ setOpen }: { setOpen: Function }) {
             }
             onClick={handleDelete}
           >
-            {submitting ? <LoadingSpinner /> : "Delete Category"}
+            {submitting ? <LoadingSpinner /> : t("categories.delete")}
           </Button>
         </div>
       </form>

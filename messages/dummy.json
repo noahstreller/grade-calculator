@@ -73,13 +73,15 @@
     "grade-sum-weighted": "translated",
     "badge-noweight-empty": "translated",
     "badge-noweight-not-empty": "translated",
-    "badge-weight-not-empty": "translated"
+    "badge-weight-not-empty": "translated",
+    "select-subject": "translated"
   },
   "filters": {
     "filter-by-subject": "translated",
     "show-all": "translated",
     "passing": "translated",
-    "failing": "translated"
+    "failing": "translated",
+    "filter-by-category": "translated"
   },
   "preferences": {
     "title": "translated",
@@ -167,7 +169,8 @@
     "not-enough-data-yet-subject-detail": "translated",
     "subject-not-found": "translated",
     "unauthenticated-subject-details": "translated",
-    "must-be-positive": "translated"
+    "must-be-positive": "translated",
+    "no-categories": "translated"
   },
   "overview": {
     "title": "translated",
@@ -267,7 +270,14 @@
     "multiplication": "translated",
     "page-x-of-y": "translated",
     "doit": "translated",
-    "nevermind": "translated"
+    "nevermind": "translated",
+    "asterisk": "translated",
+    "time": {
+      "hours": "translated",
+      "minutes": "translated",
+      "seconds": "translated"
+    },
+    "loading": "translated"
   },
   "screenreader": {
     "open-menu": "translated"
@@ -282,5 +292,19 @@
     "subject-grades": {
       "title": "translated"
     }
+  },
+  "categories": {
+    "add": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "edit": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "delete": "translated",
+    "enter-name-prompt": "translated",
+    "name-label": "translated",
+    "to-change-label": "translated"
   }
 }
