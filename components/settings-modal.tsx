@@ -614,14 +614,14 @@ export function SettingsFormForOnboarding({
           ) : (
             <>
               <SaveIcon className="size-4 mr-2" />
-              Save
+              {t("actions.save")}
             </>
           )}
         </Button>
 
         <Button className="w-full" variant="outline" onClick={onReset}>
           <RotateCcwIcon className="size-4 mr-2 text-muted-foreground" />
-          Reset
+          {t("actions.reset")}
         </Button>
       </form>
     </Form>
@@ -638,6 +638,7 @@ export function SettingsModal({
   const session = useSession();
   const [open, setOpen] = useState<boolean>(false);
   const { isMobile } = useDevice();
+  const t = useTranslations();
 
   return session.status === "authenticated" ? (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -656,14 +657,16 @@ export function SettingsModal({
             <Separator />
             <div className="my-5 flex flex-col gap-2">
               <SheetDescription>
-                You can manage your categories in this section.
+                {t("categories.manage.description")}
               </SheetDescription>
               <CategoryGroup />
             </div>
             <Separator />
 
             <div className="my-5 flex flex-col gap-2">
-              <SheetDescription>Quick settings</SheetDescription>
+              <SheetDescription>
+                {t("preferences.quick-settings")}
+              </SheetDescription>
               <div className="flex flex-col gap-2 justify-start">
                 <ThemeSwitcher expanded />
                 <ImportExportButton expanded />
@@ -673,7 +676,7 @@ export function SettingsModal({
                     className="hover:text-red-400 flex-shrink-0 flex flex-row gap-2 w-full"
                   >
                     <Trash2 className="size-4 text-inherit" />
-                    Delete category data
+                    {t("categories..delete-data")}
                   </Button>
                 </ClearDataButton>
                 <NewSemesterButton expanded />

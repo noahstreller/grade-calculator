@@ -4,6 +4,7 @@ import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useCategory } from "@/components/category-provider";
 import { usePreferences } from "@/components/preferences-provider";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -45,7 +46,6 @@ import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
 import { ScrollArea } from "./ui/scroll-area";
-import { useCategory } from "@/components/category-provider";
 
 export function CreateGradeForm({
   refresh,
@@ -174,7 +174,7 @@ export function CreateGradeForm({
                           ).text
                         : loading
                         ? null
-                        : "Select subject"}
+                        : t("subjects.select-subject")}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -252,10 +252,10 @@ export function CreateGradeForm({
           render={({ field }) => (
             <FormItem>
               <div className="flex flex-col gap-2">
-                <FormLabel>Description</FormLabel>
+                <FormLabel>{t("grades.description")}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Add a short description (optional)"
+                    placeholder={t("grades.description-prompt")}
                     {...field}
                   />
                 </FormControl>
@@ -309,7 +309,7 @@ export function CreateGradeForm({
                       {date ? (
                         getDateOrDateTimeLong(date)
                       ) : (
-                        <span>Pick a date (optional)</span>
+                        <span>{t("grades.date-prompt")}</span>
                       )}
                     </Button>
                   </PopoverTrigger>

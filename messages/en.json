@@ -1,6 +1,7 @@
 {
   "app": {
     "title": "Grade Calculator",
+    "short-title": "Grades",
     "description": "A simple grade calculator for students."
   },
   "grades": {
@@ -38,7 +39,9 @@
       "desc": "Change the grade details here"
     },
     "academic-relevance-title": "Relevant for academic promotion",
-    "badge-weight": "This grade is weighted <weight></weight>"
+    "badge-weight": "This grade is weighted <weight></weight>",
+    "description-prompt": "Add a short description (optional)",
+    "date-prompt": "Pick a date (optional)"
   },
   "subjects": {
     "subject": "Subject",
@@ -74,7 +77,12 @@
     "badge-noweight-empty": "This subject contains <b>weightedAmount</b> grades",
     "badge-noweight-not-empty": "This subject contains <weightedAmount></weightedAmount> {count, plural, =1 {grade} other {grades}} with a grade sum of <gradeSum></gradeSum>",
     "badge-weight-not-empty": "This subject contains <averageGrade></averageGrade> {count, plural, =1 {grade} other {grades}} with a total weight of <weightedAmount></weightedAmount> and a grade sum of <gradeSum></gradeSum>",
-    "select-subject": "Select subject"
+    "select-subject": "Select subject",
+    "relevance": {
+      "title": "Relevant for academic promotion",
+      "description-included": "This subject will be <highlight>included</highlight> while calculating the total average",
+      "description-excluded": "This subject will be <highlight>ignored</highlight> while calculating the total average"
+    }
   },
   "preferences": {
     "title": "Preferences",
@@ -96,7 +104,8 @@
     "passing-inverse": "Inverse Grade System",
     "passing-inverse-description": "If enabled, the lower grades are considered better",
     "alert-title": "Important!",
-    "alert-description": "Unsaved changes will be discarded if you close this sheet, please save them below."
+    "alert-description": "Unsaved changes will be discarded if you close this sheet, please save them below.",
+    "quick-settings": "Quick settings"
   },
   "actions": {
     "copy": {
@@ -129,7 +138,8 @@
     },
     "delete-account": "Delete Account",
     "clear-account-data": "Clear Account Data",
-    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone."
+    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone.",
+    "clear-grades-only": "Clear grades only"
   },
   "themes": {
     "toggle": "Change Theme",
@@ -163,7 +173,10 @@
     "not-enough-data-yet-subject-detail": "This subject looks pretty empty so far",
     "subject-not-found": "We cannot find the subject you are looking for",
     "must-be-positive": "Weight must be a positive number",
-    "no-categories": "No Categories"
+    "no-categories": "No Categories",
+    "select-template": "Please select a template.",
+    "no-template": "No template found.",
+    "invalid-email-prompt": "This must be a valid e-mail address"
   },
   "overview": {
     "title": "Overview",
@@ -253,7 +266,8 @@
     "show-all": "Show all",
     "passing": "Passing",
     "failing": "Failing",
-    "filter-by-category": "Filter by categories"
+    "filter-by-category": "Filter by categories",
+    "filter-by-template": "Search template..."
   },
   "generic": {
     "page": "Page",
@@ -277,7 +291,11 @@
       "minutes": "{{count, plural, =1 {Minute} other {Minutes}}}",
       "seconds": "{{count, plural, =1 {Second} other {Seconds}}}"
     },
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "env": {
+      "production": "Production",
+      "development": "Development"
+    }
   },
   "screenreader": {
     "open-menu": "Open menu"
@@ -285,7 +303,10 @@
   "auth": {
     "login-now": "Log in now",
     "return-home": "Go home",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "magic-link": "You can also request a magic link to sign in with your email address.",
+    "enter-email": "Enter your email address",
+    "request-link": "Request Link"
   },
   "subject-details": {
     "title": "Subject details",
@@ -305,6 +326,29 @@
     "name-label": "Category Name",
     "enter-name-prompt": "Enter category",
     "to-change-label": "Category to change",
-    "delete": "Delete Category"
+    "delete": "Delete Category",
+    "manage": {
+      "description": "You can manage your categories in this section."
+    },
+    "": {
+      "delete-data": "Delete category data"
+    }
+  },
+  "onboarding": {
+    "title": "Onboarding",
+    "advanced-settings": "Advanced Settings",
+    "advanced-settings-description": "Hit <highlight>Save</highlight> to apply your changes and complete the onboarding. You can change this in the settings at any time.",
+    "templates": {
+      "title": "Template",
+      "description": "Select a template or use the advanced settings.",
+      "select-prompt": "Select template",
+      "apply": "Apply template"
+    }
+  },
+  "external": {
+    "privacy-policy": "Privacy Policy",
+    "cookie-policy": "Cookie Policy",
+    "legacy-version": "Legacy Version",
+    "source-code": "Source Code"
   }
 }

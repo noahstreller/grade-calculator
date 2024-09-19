@@ -1,7 +1,8 @@
 {
   "app": {
     "title": "translated",
-    "description": "translated"
+    "description": "translated",
+    "short-title": "translated"
   },
   "grades": {
     "grade": "translated",
@@ -38,7 +39,9 @@
       "desc": "translated"
     },
     "academic-relevance-title": "translated",
-    "badge-weight": "translated"
+    "badge-weight": "translated",
+    "date-prompt": "translated",
+    "description-prompt": "translated"
   },
   "subjects": {
     "subject": "translated",
@@ -74,14 +77,20 @@
     "badge-noweight-empty": "translated",
     "badge-noweight-not-empty": "translated",
     "badge-weight-not-empty": "translated",
-    "select-subject": "translated"
+    "select-subject": "translated",
+    "relevance": {
+      "description-excluded": "translated",
+      "description-included": "translated",
+      "title": "translated"
+    }
   },
   "filters": {
     "filter-by-subject": "translated",
     "show-all": "translated",
     "passing": "translated",
     "failing": "translated",
-    "filter-by-category": "translated"
+    "filter-by-category": "translated",
+    "filter-by-template": "translated"
   },
   "preferences": {
     "title": "translated",
@@ -103,7 +112,8 @@
     "passing-inverse": "translated",
     "passing-inverse-description": "translated",
     "alert-title": "translated",
-    "alert-description": "translated"
+    "alert-description": "translated",
+    "quick-settings": "translated"
   },
   "actions": {
     "copy": {
@@ -136,7 +146,8 @@
     },
     "clear-account-data": "translated",
     "clear-account-data-warning": "translated",
-    "delete-account": "translated"
+    "delete-account": "translated",
+    "clear-grades-only": "translated"
   },
   "themes": {
     "toggle": "translated",
@@ -170,7 +181,10 @@
     "subject-not-found": "translated",
     "unauthenticated-subject-details": "translated",
     "must-be-positive": "translated",
-    "no-categories": "translated"
+    "no-categories": "translated",
+    "no-template": "translated",
+    "select-template": "translated",
+    "invalid-email-prompt": "translated"
   },
   "overview": {
     "title": "translated",
@@ -277,7 +291,11 @@
       "minutes": "translated",
       "seconds": "translated"
     },
-    "loading": "translated"
+    "loading": "translated",
+    "env": {
+      "development": "translated",
+      "production": "translated"
+    }
   },
   "screenreader": {
     "open-menu": "translated"
@@ -285,7 +303,10 @@
   "auth": {
     "login-now": "translated",
     "return-home": "translated",
-    "logout": "translated"
+    "logout": "translated",
+    "enter-email": "translated",
+    "magic-link": "translated",
+    "request-link": "translated"
   },
   "subject-details": {
     "title": "translated",
@@ -305,6 +326,29 @@
     "delete": "translated",
     "enter-name-prompt": "translated",
     "name-label": "translated",
-    "to-change-label": "translated"
+    "to-change-label": "translated",
+    "": {
+      "delete-data": "translated"
+    },
+    "manage": {
+      "description": "translated"
+    }
+  },
+  "onboarding": {
+    "advanced-settings": "translated",
+    "advanced-settings-description": "translated",
+    "title": "translated",
+    "templates": {
+      "apply": "translated",
+      "description": "translated",
+      "select-prompt": "translated",
+      "title": "translated"
+    }
+  },
+  "external": {
+    "cookie-policy": "translated",
+    "legacy-version": "translated",
+    "privacy-policy": "translated",
+    "source-code": "translated"
   }
 }

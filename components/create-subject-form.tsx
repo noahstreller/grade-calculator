@@ -118,22 +118,20 @@ export function CreateSubjectForm({
             <FormItem className="flex flex-row items-center gap-1 justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
                 <FormLabel className="text-base">
-                  Relevant for academic promotion
+                  {t("subjects.relevance.title")}
                 </FormLabel>
                 <FormDescription>
-                  {field.value ? (
-                    <>
-                      This subject will be{" "}
-                      <Highlight colorName="green">included</Highlight> while
-                      calculating the total average
-                    </>
-                  ) : (
-                    <>
-                      This subject will be{" "}
-                      <Highlight colorName="red">ignored</Highlight> while
-                      calculating the total average
-                    </>
-                  )}
+                  {field.value
+                    ? t.rich("subjects.relevance.description-included", {
+                        highlight: (children) => (
+                          <Highlight colorName="green">{children}</Highlight>
+                        ),
+                      })
+                    : t.rich("subjects.relevance.description-excluded", {
+                        highlight: (children) => (
+                          <Highlight colorName="red">{children}</Highlight>
+                        ),
+                      })}
                 </FormDescription>
               </div>
               <FormControl>
