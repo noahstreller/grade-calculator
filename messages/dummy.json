@@ -187,7 +187,8 @@
     "invalid-email-prompt": "translated",
     "code": "translated",
     "something-broke": "translated",
-    "try-again-or-contact": "translated"
+    "try-again-or-contact": "translated",
+    "no-archived-data": "translated"
   },
   "overview": {
     "title": "translated",
@@ -299,7 +300,8 @@
     "env": {
       "development": "translated",
       "production": "translated"
-    }
+    },
+    "back": "translated"
   },
   "screenreader": {
     "open-menu": "translated"
@@ -416,6 +418,14 @@
         },
         "title": "translated"
       }
+    },
+    "archive": {
+      "dates": "translated",
+      "description": "translated",
+      "description-empty": "translated",
+      "title": "translated",
+      "view": "translated",
+      "download": "translated"
     }
   },
   "warnings": {

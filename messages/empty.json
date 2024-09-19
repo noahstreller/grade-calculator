@@ -114,7 +114,8 @@
     "invalid-email-prompt": "",
     "code": "",
     "something-broke": "",
-    "try-again-or-contact": ""
+    "try-again-or-contact": "",
+    "no-archived-data": ""
   },
   "filters": {
     "failing": "",
@@ -150,7 +151,8 @@
     "env": {
       "development": "",
       "production": ""
-    }
+    },
+    "back": ""
   },
   "grades": {
     "academic-relevance-title": "",
@@ -416,6 +418,14 @@
         },
         "title": ""
       }
+    },
+    "archive": {
+      "dates": "",
+      "description": "",
+      "description-empty": "",
+      "title": "",
+      "view": "",
+      "download": ""
     }
   },
   "warnings": {

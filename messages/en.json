@@ -179,7 +179,8 @@
     "invalid-email-prompt": "This must be a valid e-mail address",
     "something-broke": "Something broke.",
     "try-again-or-contact": "Please try again, use a different account or contact <mailbutton></mailbutton> if the issue persists.",
-    "code": "Error Code:"
+    "code": "Error Code:",
+    "no-archived-data": "No data has been archived yet. You can archive categories by starting a new term in the settings."
   },
   "overview": {
     "title": "Overview",
@@ -299,7 +300,8 @@
     "env": {
       "production": "Production",
       "development": "Development"
-    }
+    },
+    "back": "Back"
   },
   "screenreader": {
     "open-menu": "Open menu"
@@ -416,6 +418,14 @@
           "archive": "<highlight>Archive</highlight> your current data"
         }
       }
+    },
+    "archive": {
+      "view": "View archive",
+      "title": "Archive",
+      "description": "You are now viewing the data you have archived. You can download or delete it here.",
+      "description-empty": "You will be able to view archived data here.",
+      "dates": "Archived: <absolutetime></absolutetime> (<relativetime></relativetime>)",
+      "download": "Download"
     }
   },
   "warnings": {
