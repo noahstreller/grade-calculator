@@ -184,7 +184,10 @@
     "no-categories": "translated",
     "no-template": "translated",
     "select-template": "translated",
-    "invalid-email-prompt": "translated"
+    "invalid-email-prompt": "translated",
+    "code": "translated",
+    "something-broke": "translated",
+    "try-again-or-contact": "translated"
   },
   "overview": {
     "title": "translated",
@@ -306,7 +309,24 @@
     "logout": "translated",
     "enter-email": "translated",
     "magic-link": "translated",
-    "request-link": "translated"
+    "request-link": "translated",
+    "check-spam": "translated",
+    "legacy": {
+      "description": "translated"
+    },
+    "login": "translated",
+    "providers": {
+      "discord": "translated",
+      "email": "translated",
+      "github": "translated",
+      "google": "translated",
+      "local": "translated"
+    },
+    "sent-mail": "translated",
+    "sent-mail-desc": "translated",
+    "sent-mail-might-take-a-moment": "translated",
+    "sign-in": "translated",
+    "sign-in-desc": "translated"
   },
   "subject-details": {
     "title": "translated",
@@ -350,5 +370,20 @@
     "legacy-version": "translated",
     "privacy-policy": "translated",
     "source-code": "translated"
-  }
+  },
+  "data-management": {
+    "export": {
+      "clipboard": "translated",
+      "title": "translated",
+      "json": "translated"
+    },
+    "import": {
+      "clipboard": "translated",
+      "title": "translated",
+      "json": "translated"
+    },
+    "replace": "translated",
+    "title": "translated"
+  },
+  "emails": {}
 }

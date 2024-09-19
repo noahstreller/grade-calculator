@@ -44,7 +44,24 @@
     "return-home": "",
     "enter-email": "",
     "magic-link": "",
-    "request-link": ""
+    "request-link": "",
+    "check-spam": "",
+    "legacy": {
+      "description": ""
+    },
+    "login": "",
+    "providers": {
+      "discord": "",
+      "email": "",
+      "github": "",
+      "google": "",
+      "local": ""
+    },
+    "sent-mail": "",
+    "sent-mail-desc": "",
+    "sent-mail-might-take-a-moment": "",
+    "sign-in": "",
+    "sign-in-desc": ""
   },
   "categories": {
     "add": {
@@ -94,7 +111,10 @@
     "woops": "",
     "no-template": "",
     "select-template": "",
-    "invalid-email-prompt": ""
+    "invalid-email-prompt": "",
+    "code": "",
+    "something-broke": "",
+    "try-again-or-contact": ""
   },
   "filters": {
     "failing": "",
@@ -350,5 +370,20 @@
     "legacy-version": "",
     "privacy-policy": "",
     "source-code": ""
-  }
+  },
+  "data-management": {
+    "export": {
+      "clipboard": "",
+      "title": "",
+      "json": ""
+    },
+    "import": {
+      "clipboard": "",
+      "title": "",
+      "json": ""
+    },
+    "replace": "",
+    "title": ""
+  },
+  "emails": {}
 }

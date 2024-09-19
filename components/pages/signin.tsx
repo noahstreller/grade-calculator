@@ -29,6 +29,7 @@ import {
   ShieldEllipsis,
 } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ import { useEffect, useState } from "react";
 export function SignInPageComponent() {
   const session = useSession();
   const router = useRouter();
+  const t = useTranslations();
   const params = useSearchParams();
   const [error, setError] = useState<string | null>(params.get("error"));
 
@@ -53,13 +55,13 @@ export function SignInPageComponent() {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("generic.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/login">Login</Link>
+              <Link href="/login">{t("auth.login")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
@@ -70,10 +72,8 @@ export function SignInPageComponent() {
           {error && <AuthError error={error} />}
           <Card className="transition-all">
             <CardHeader>
-              <CardTitle>Sign In</CardTitle>
-              <CardDescription>
-                Sign in to your account using one of the providers below.
-              </CardDescription>
+              <CardTitle>{t("auth.sign-in")}</CardTitle>
+              <CardDescription>{t("auth.sign-in-desc")}</CardDescription>
             </CardHeader>
             <CardContent className="gap-4 flex flex-col">
               {(process.env.NODE_ENV === "development" ||
@@ -85,7 +85,8 @@ export function SignInPageComponent() {
                     signIn("local");
                   }}
                 >
-                  <Container className="m-2 size-5" /> Local
+                  <Container className="m-2 size-5" />{" "}
+                  {t("auth.providers.local")}
                 </Button>
               )}
               {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME && (
@@ -106,7 +107,8 @@ export function SignInPageComponent() {
                   signIn("discord");
                 }}
               >
-                <SiDiscord className="m-2 size-5" /> Discord
+                <SiDiscord className="m-2 size-5" />{" "}
+                {t("auth.providers.discord")}
               </Button>
               <Button
                 className="w-full"
@@ -114,7 +116,7 @@ export function SignInPageComponent() {
                   signIn("github");
                 }}
               >
-                <SiGithub className="m-2 size-5" /> GitHub
+                <SiGithub className="m-2 size-5" /> {t("auth.providers.github")}
               </Button>
               <Button
                 className="w-full"
@@ -122,19 +124,16 @@ export function SignInPageComponent() {
                   signIn("google");
                 }}
               >
-                <SiGoogle className="m-2 size-5" /> Google
+                <SiGoogle className="m-2 size-5" /> {t("auth.providers.google")}
               </Button>
               <Separator />
               <EmailLoginForm />
               <Separator />
-              <CardDescription>
-                Check out the legacy version, if you prefer saving your data
-                locally.
-              </CardDescription>
+              <CardDescription>{t("auth.legacy.description")}</CardDescription>
               <Button variant={"secondary"} asChild>
                 <Link href="https://legacy.grades.nstr.dev">
                   <Globe className="size-4 mr-2" />
-                  Legacy Version
+                  {t("external.legacy-version")}
                 </Link>
               </Button>
             </CardContent>
@@ -143,10 +142,8 @@ export function SignInPageComponent() {
       ) : (
         <Card className="transition-all">
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
-              Sign in to your account using one of the providers below.
-            </CardDescription>
+            <CardTitle>{t("auth.sign-in")}</CardTitle>
+            <CardDescription>{t("auth.sign-in-desc")} </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center items-center">
             <LoadingSpinner />
@@ -158,47 +155,47 @@ export function SignInPageComponent() {
 }
 
 export function SentEmailComponent() {
+  const t = useTranslations();
   return (
     <div className="flex flex-col gap-5 h-fit w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4">
       <Breadcrumb className="pl-2">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/">Home</Link>
+              <Link href="/">{t("generic.home")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/login">Login</Link>
+              <Link href="/login">{t("auth.login")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/login/sent">Sent</Link>
+              <Link href="/login/sent">{t("auth.sent-mail")}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <Card className="transition-all">
         <CardHeader>
-          <CardTitle>E-Mail sign-in</CardTitle>
-          <CardDescription>
-            Make sure to check your spam folder, if you did not receive it.
-          </CardDescription>
+          <CardTitle>{t("auth.providers.email")}</CardTitle>
+          <CardDescription>{t("auth.check-spam")} </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-row items-center gap-2">
             <MailCheck className="size-5 flex-shrink-0" />
             <p>
-              Your <Highlight>magic link</Highlight> is on the way! Check your
-              Inbox.
+              {t.rich("auth.sent-mail-desc", {
+                highlight: (children) => <Highlight>{children}</Highlight>,
+              })}
             </p>
           </div>
           <p className="text-muted-foreground flex flex-row gap-2 items-center">
             <Clock className="size-5 flex-shrink-0" />
-            It may take a moment to arrive.
+            {t("auth.sent-mail-might-take-a-moment")}
           </p>
         </CardContent>
       </Card>
@@ -207,19 +204,28 @@ export function SentEmailComponent() {
 }
 
 function AuthError({ error }: { error: string }) {
+  const t = useTranslations();
   return (
     <Alert className="border-red-400 border-2 shadow-lg">
       <Bird className="size-4" />
       <div className="flex flex-col gap-2">
-        <AlertTitle>Something broke.</AlertTitle>
+        <AlertTitle>{t("errors.something-broke")}</AlertTitle>
         <Separator />
         <AlertDescription className="space-y-1">
-          Please try again, use a different account or contact{" "}
-          <Button asChild variant={"link"} className="m-0 p-0 h-fit font-bold">
-            <Link href="mailto:dev@nstr.dev">dev@nstr.dev</Link>
-          </Button>{" "}
-          if the issue persists.
-          <p className="text-muted-foreground font-mono">Error Code: {error}</p>
+          {t.rich("errors.try-again-or-contact", {
+            mailbutton: () => (
+              <Button
+                asChild
+                variant={"link"}
+                className="m-0 p-0 h-fit font-bold"
+              >
+                <Link href="mailto:dev@nstr.dev">dev@nstr.dev</Link>
+              </Button>
+            ),
+          })}
+          <p className="text-muted-foreground font-mono">
+            {t("errors.code")} {error}
+          </p>
         </AlertDescription>
       </div>
     </Alert>
