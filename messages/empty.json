@@ -256,7 +256,8 @@
     "subject-description": "",
     "title": "",
     "you-long": "",
-    "you-short": ""
+    "you-short": "",
+    "total-average": ""
   },
   "preferences": {
     "alert-description": "",
@@ -385,5 +386,39 @@
     "replace": "",
     "title": ""
   },
-  "emails": {}
+  "emails": {},
+  "cookie-policy": {
+    "i-dont-want-cookies": {
+      "how-to-clear-cookies": "",
+      "legacy-ad": "",
+      "title": ""
+    },
+    "legal-note": "",
+    "subtitle": "",
+    "title": "",
+    "what-is-saved": {
+      "cookieConsent": "",
+      "justification": "",
+      "nextauth-callback-url": "",
+      "session-and-csrf-tokens": "",
+      "title": ""
+    }
+  },
+  "semesters": {
+    "actions": {
+      "create": {
+        "description": "",
+        "options": {
+          "archive": "",
+          "export-to-file": "",
+          "keep-grades": "",
+          "keep-subjects": ""
+        },
+        "title": ""
+      }
+    }
+  },
+  "warnings": {
+    "irreversible": ""
+  }
 }

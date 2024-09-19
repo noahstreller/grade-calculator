@@ -200,7 +200,8 @@
     "passing-short": "translated",
     "passing-long": "translated",
     "lower-is-better": "translated",
-    "higher-is-better": "translated"
+    "higher-is-better": "translated",
+    "total-average": "translated"
   },
   "subject-overview": {
     "title": "translated",
@@ -385,5 +386,39 @@
     "replace": "translated",
     "title": "translated"
   },
-  "emails": {}
+  "emails": {},
+  "cookie-policy": {
+    "i-dont-want-cookies": {
+      "how-to-clear-cookies": "translated",
+      "legacy-ad": "translated",
+      "title": "translated"
+    },
+    "legal-note": "translated",
+    "subtitle": "translated",
+    "title": "translated",
+    "what-is-saved": {
+      "cookieConsent": "translated",
+      "justification": "translated",
+      "nextauth-callback-url": "translated",
+      "session-and-csrf-tokens": "translated",
+      "title": "translated"
+    }
+  },
+  "semesters": {
+    "actions": {
+      "create": {
+        "description": "translated",
+        "options": {
+          "archive": "translated",
+          "export-to-file": "translated",
+          "keep-grades": "translated",
+          "keep-subjects": "translated"
+        },
+        "title": "translated"
+      }
+    }
+  },
+  "warnings": {
+    "irreversible": "translated"
+  }
 }

@@ -35,6 +35,7 @@ import {
   clearUserSubjectsGrades,
 } from "@/lib/services/user-service";
 import { CalendarPlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export const NewSemesterButton = ({
@@ -42,6 +43,7 @@ export const NewSemesterButton = ({
 }: {
   expanded?: boolean;
 }) => {
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [keepSubjects, setKeepSubjectsState] = useState<boolean>(true);
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
@@ -89,41 +91,53 @@ export const NewSemesterButton = ({
           variant={"secondary"}
         >
           <CalendarPlus className="size-4" />
-          <span>New Term</span>
+          <span>{t("semesters.actions.create.title")}</span>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>New Term</DrawerTitle>
+          <DrawerTitle>{t("semesters.actions.create.title")}</DrawerTitle>
           <DrawerDescription>
-            You can start a new term and export your current grades, as well as
-            decide what data you wish to keep
+            {t("semesters.actions.create.description")}
           </DrawerDescription>
         </DrawerHeader>
         <div className="m-5 flex flex-col gap-6">
           <div className="flex flex-row items-center gap-4">
             <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
             <Label>
-              Keep current <Highlight colorName="yellow">subjects</Highlight>
+              {t.rich("semesters.actions.create.options.keep-subjects", {
+                highlight: (children) => (
+                  <Highlight colorName="yellow">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
             <Label>
-              Keep current <Highlight>grades</Highlight>
+              {t.rich("semesters.actions.create.options.keep-grades", {
+                highlight: (children) => <Highlight>{children}</Highlight>,
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={exportData} onCheckedChange={setExportData} />
             <Label>
-              Export your current data to a{" "}
-              <Highlight colorName="blue">file</Highlight>
+              {t.rich("semesters.actions.create.options.export-to-file", {
+                highlight: (children) => (
+                  <Highlight colorName="blue">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={archiveData} onCheckedChange={setArchiveData} />
             <Label>
-              <Highlight colorName="blue">Archive</Highlight> your current data
+              {t.rich("semesters.actions.create.options.archive", {
+                highlight: (children) => (
+                  <Highlight colorName="blue">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
         </div>
@@ -131,7 +145,7 @@ export const NewSemesterButton = ({
         <DrawerFooter>
           {!(exportData || archiveData || keepGrades) && (
             <span className="text-muted-foreground self-center">
-              This action is irreversible
+              {t("warnings.irreversible")}
             </span>
           )}
           <Button
@@ -142,10 +156,10 @@ export const NewSemesterButton = ({
             }
             onClick={handleSubmit}
           >
-            Do it!
+            {t("generic.doit")}
           </Button>
           <DrawerClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("actions.cancel")}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
@@ -155,52 +169,64 @@ export const NewSemesterButton = ({
       <DialogTrigger asChild>
         <Button className="w-full" variant={"secondary"}>
           <CalendarPlus className="size-4 mr-2" />
-          New Term
+          {t("semesters.actions.create.title")}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Term</DialogTitle>
+          <DialogTitle>{t("semesters.actions.create.title")}</DialogTitle>
           <DialogDescription>
-            You can start a new term and export your current grades, as well as
-            decide what data you wish to keep
+            {t("semesters.actions.create.description")}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-6">
           <div className="flex flex-row items-center gap-4">
             <Switch checked={keepSubjects} onCheckedChange={setKeepSubjects} />
             <Label>
-              Keep current <Highlight colorName="yellow">subjects</Highlight>
+              {t.rich("semesters.actions.create.options.keep-subjects", {
+                highlight: (children) => (
+                  <Highlight colorName="yellow">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={keepGrades} onCheckedChange={setKeepGrades} />
             <Label>
-              Keep current <Highlight>grades</Highlight>
+              {t.rich("semesters.actions.create.options.keep-grades", {
+                highlight: (children) => <Highlight>{children}</Highlight>,
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={exportData} onCheckedChange={setExportData} />
             <Label>
-              Export your current data to a{" "}
-              <Highlight colorName="blue">file</Highlight>
+              {t.rich("semesters.actions.create.options.export-to-file", {
+                highlight: (children) => (
+                  <Highlight colorName="blue">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch checked={archiveData} onCheckedChange={setArchiveData} />
             <Label>
-              <Highlight colorName="blue">Archive</Highlight> your current data
+              {t.rich("semesters.actions.create.options.archive", {
+                highlight: (children) => (
+                  <Highlight colorName="blue">{children}</Highlight>
+                ),
+              })}
             </Label>
           </div>
         </div>
         <DialogFooter>
           {!(exportData || archiveData || keepGrades) && (
             <span className="text-muted-foreground self-center">
-              This action is irreversible
+              {t("warnings.irreversible")}
             </span>
           )}
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("actions.cancel")}</Button>
           </DialogClose>
           <Button
             variant={
@@ -210,7 +236,7 @@ export const NewSemesterButton = ({
             }
             onClick={handleSubmit}
           >
-            Do it!
+            {t("generic.doit")}
           </Button>
         </DialogFooter>
       </DialogContent>
