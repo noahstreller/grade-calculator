@@ -76,9 +76,7 @@
     "enter-name-prompt": "",
     "name-label": "",
     "to-change-label": "",
-    "": {
-      "delete-data": ""
-    },
+    "delete-data": "",
     "manage": {
       "description": ""
     }
@@ -429,6 +427,39 @@
     }
   },
   "warnings": {
-    "irreversible": ""
+    "irreversible": "",
+    "storage-waste": ""
+  },
+  "dashboard": {
+    "categorylist": "",
+    "description": "",
+    "title": ""
+  },
+  "privacy-policy": {
+    "data-usage": {
+      "description": "",
+      "title": ""
+    },
+    "deletion": {
+      "description": "",
+      "title": ""
+    },
+    "legal-note": "",
+    "security": {
+      "description": "",
+      "title": ""
+    },
+    "storage": {
+      "description": "",
+      "title": ""
+    },
+    "subtitle": "",
+    "what-is-collected": {
+      "avatar": "",
+      "email": "",
+      "grades": "",
+      "title": "",
+      "username": ""
+    }
   }
 }

@@ -16,6 +16,7 @@
     ]
   },
   "i18n-ally.extract.ignored": [
-    "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }"
+    "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }",
+    "Noah"
   ]
 }

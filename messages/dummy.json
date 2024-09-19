@@ -350,9 +350,7 @@
     "enter-name-prompt": "translated",
     "name-label": "translated",
     "to-change-label": "translated",
-    "": {
-      "delete-data": "translated"
-    },
+    "delete-data": "translated",
     "manage": {
       "description": "translated"
     }
@@ -429,6 +427,39 @@
     }
   },
   "warnings": {
-    "irreversible": "translated"
+    "irreversible": "translated",
+    "storage-waste": "translated"
+  },
+  "dashboard": {
+    "categorylist": "translated",
+    "description": "translated",
+    "title": "translated"
+  },
+  "privacy-policy": {
+    "data-usage": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "deletion": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "legal-note": "translated",
+    "security": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "storage": {
+      "description": "translated",
+      "title": "translated"
+    },
+    "subtitle": "translated",
+    "what-is-collected": {
+      "avatar": "translated",
+      "email": "translated",
+      "grades": "translated",
+      "title": "translated",
+      "username": "translated"
+    }
   }
 }
