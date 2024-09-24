@@ -272,7 +272,8 @@
     "passing": "Passing",
     "failing": "Failing",
     "filter-by-category": "Filter by categories",
-    "filter-by-template": "Search template..."
+    "filter-by-template": "Search template...",
+    "filter-by-language": "Filter by language"
   },
   "generic": {
     "page": "Page",
