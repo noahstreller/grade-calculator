@@ -82,7 +82,9 @@ export default function PrivacyPolicy() {
       </h2>
       <p>
         Yes, you can delete your account and all associated data at any time
-        inside the web app. You can also request a data deletion by contacting
+        inside the web app, by clicking on <b>Settings</b>, and then choosing{" "}
+        <b>Delete Account</b>. This will <b>immediately remove all your data</b>{" "}
+        and is irreversible! You can also request a data deletion by contacting
         me via email:{" "}
         <Highlight colorName="blue">
           <Link href="mailto:dev@nstr.dev">dev@nstr.dev</Link>
