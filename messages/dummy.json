@@ -90,7 +90,8 @@
     "passing": "translated",
     "failing": "translated",
     "filter-by-category": "translated",
-    "filter-by-template": "translated"
+    "filter-by-template": "translated",
+    "filter-by-language": "translated"
   },
   "preferences": {
     "title": "translated",

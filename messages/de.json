@@ -5,7 +5,8 @@
     "filter-by-subject": "Nach Fach filtern",
     "filter-by-template": "Vorlage suchen...",
     "passing": "Bestanden",
-    "show-all": "Alle anzeigen"
+    "show-all": "Alle anzeigen",
+    "filter-by-language": "Nach Sprache filtern"
   },
   "generic": {
     "asterisk": "*",

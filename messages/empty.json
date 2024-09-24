@@ -121,7 +121,8 @@
     "filter-by-subject": "",
     "passing": "",
     "show-all": "",
-    "filter-by-template": ""
+    "filter-by-template": "",
+    "filter-by-language": ""
   },
   "generic": {
     "asterisk": "",
