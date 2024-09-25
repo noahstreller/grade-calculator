@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { CategoryGroup } from "@/components/category-group";
+import { LanguageSelectionLandingPage } from "@/components/language-selection";
 import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -96,6 +97,7 @@ export default function HeaderComponent() {
             </Button>
           </ClearDataButton>
           <ImportExportButton />
+          <LanguageSelectionLandingPage />
           <ThemeSwitcher />
         </div>
         <SettingsModal
