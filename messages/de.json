@@ -40,7 +40,7 @@
     "reload": "Aktualisieren"
   },
   "grades": {
-    "academic-relevance-title": "Relevant für die akademische Förderung",
+    "academic-relevance-title": "Versetzungs-/Promotionsfach",
     "add-placeholder": "Note eingeben",
     "add-success": "Die Note wurde hinzugefügt",
     "all-grades": "Alle Noten",
@@ -247,7 +247,7 @@
     "subject-grades": {
       "title": "Fachnoten"
     },
-    "title": "Fachdetails"
+    "title": "Fach-Details"
   },
   "subjects": {
     "actions": {
@@ -277,7 +277,7 @@
     "relevance": {
       "description-excluded": "Dieses Fach wird bei der Berechnung des Gesamtdurchschnitts <highlight>ignoriert</highlight>",
       "description-included": "Dieses Fach wird bei der Berechnung des Gesamtdurchschnitts <highlight>einbezogen</highlight>",
-      "title": "Relevant für die akademische Förderung"
+      "title": "Versetzungs-/Promotionsfach"
     },
     "badge-weight-not-empty": "Dieses Fach enthält <averageGrade></averageGrade> {count, plural, =1 {Note} other {Noten}} mit einer Gesamtgewichtung von <weightedAmount></weightedAmount> und einer Notensumme von <gradeSum></gradeSum>",
     "delete": {
@@ -443,7 +443,7 @@
     "something-broke": "Etwas ist schiefgelaufen.",
     "subject-not-found": "Wir können das gesuchte Fach nicht finden",
     "try-again-or-contact": "Bitte versuche es erneut, nutze ein anderes Konto oder kontaktiere <mailbutton></mailbutton>, wenn das Problem weiterhin besteht.",
-    "unauthenticated-subject-details": "Du musst angemeldet sein, um die Fachdaten zu sehen",
+    "unauthenticated-subject-details": "Du musst angemeldet sein, um die Fach-Details zu sehen",
     "woops": "Hoppla."
   },
   "external": {
