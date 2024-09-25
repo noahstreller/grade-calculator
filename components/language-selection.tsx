@@ -35,7 +35,13 @@ const languages: Language[] = [
 
 const findByKey = (key: string) => languages.find((l) => l.key === key);
 
-export function LanguageSelection({ className }: { className?: string }) {
+export function LanguageSelection({
+  autoRefresh = false,
+  className,
+}: {
+  autoRefresh?: boolean;
+  className?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Language>();
   const locale = useLocale();
