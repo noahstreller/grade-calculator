@@ -89,6 +89,7 @@ export default function PrivacyPolicy() {
               <Link href="mailto:dev@nstr.dev">dev@nstr.dev</Link>
             </Highlight>
           ),
+          b: (children: string) => <b>{children}</b>,
         })}
       </p>
 
