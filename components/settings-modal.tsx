@@ -7,7 +7,7 @@ import { AccountSection } from "@/components/account-section";
 import { CategoryGroup } from "@/components/category-group";
 import { ClearDataButton } from "@/components/clear-data-button";
 import { ImportExportButton } from "@/components/import-export-button";
-import { LanguageSelection } from "@/components/language-selection";
+import { LanguageGroup } from "@/components/language-selection";
 import { NewSemesterButton } from "@/components/new-semester-button";
 import { usePreferences } from "@/components/preferences-provider";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -682,7 +682,6 @@ export function SettingsModal({
                 </ClearDataButton>
                 <NewSemesterButton expanded />
                 <ViewArchiveButton />
-                <LanguageSelection />
               </div>
             </div>
             <Separator />
@@ -691,11 +690,12 @@ export function SettingsModal({
           <div className="my-5 flex-1 space-y-3">
             <NewSemesterButton />
             <ViewArchiveButton />
-            <LanguageSelection />
           </div>
         )}
         <Separator />
         <AccountSection />
+        <Separator />
+        <LanguageGroup />
         <Separator />
         <SettingsModalForm translations={translations} setOpen={setOpen} />
       </SheetContent>

@@ -13,6 +13,12 @@
     "components\\loadingscreen.tsx": [
       "\r\n            Grade\r\n            ",
       "\r\n            Calculator\r\n          "
+    ],
+    "components\\cookie-consent.tsx": [
+      "cookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+    ],
+    "components\\language-selection.tsx": [
+      "locale=${\r\n      selected?.key ?? \"en\"\r\n    }; expires=Fri, 31 Dec 9999 23:59:59 GMT"
     ]
   },
   "i18n-ally.extract.ignored": [

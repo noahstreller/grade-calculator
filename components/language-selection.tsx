@@ -15,9 +15,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { SheetDescription } from "@/components/ui/sheet";
 import { cn, truncateText } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, LanguagesIcon, RefreshCw } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 
@@ -43,29 +45,37 @@ export function LanguageSelection({ className }: { className?: string }) {
     setSelected(findByKey(locale) ?? findByKey("en"));
   }, [locale]);
 
+  useEffect(() => {
+    if (selected?.key === undefined) return;
+    if (document.cookie.includes("locale=" + selected?.key)) return;
+
+    console.log("applying selected", selected);
+    document.cookie = `locale=${
+      selected?.key ?? "en"
+    }; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+  }, [selected]);
+
   if (isDesktop) {
     return (
-      <div className="pt-4">
-        <Label>Language selection</Label>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className={cn("w-full justify-between", className)}
-            >
-              {selected?.name}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0" align="start">
-            <LanguageList
-              setOpen={setOpen}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn("w-full justify-between", className)}
+          >
+            <LanguagesIcon className="mr-2 size-4" />
+            {selected?.name}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0" align="start">
+          <LanguageList
+            setOpen={setOpen}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        </PopoverContent>
+      </Popover>
     );
   }
 
@@ -76,6 +86,7 @@ export function LanguageSelection({ className }: { className?: string }) {
         className={cn("w-full justify-between", className)}
       >
         <Button variant="outline">
+          <LanguagesIcon className="mr-2 size-4" />
           {selected?.name}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -131,5 +142,28 @@ function LanguageList({
         </CommandGroup>
       </CommandList>
     </Command>
+  );
+}
+
+export function LanguageGroup() {
+  const t = useTranslations();
+  const router = useRouter();
+  return (
+    <div className="flex flex-col gap-3 my-4">
+      <Label>{t("generic.language")}</Label>
+      <SheetDescription>
+        {t("preferences.language.description")}
+      </SheetDescription>
+      <div className="flex-row flex w-full gap-3">
+        <LanguageSelection />
+        <Button
+          className="w-1/2"
+          variant={"secondary"}
+          onClick={() => router.refresh()}
+        >
+          <RefreshCw className="size-4 mr-2" /> {t("generic.reload")}
+        </Button>
+      </div>
+    </div>
   );
 }
