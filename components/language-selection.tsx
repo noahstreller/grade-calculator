@@ -18,6 +18,7 @@ import {
 import { SheetDescription } from "@/components/ui/sheet";
 import { cn, truncateText } from "@/lib/utils";
 import { Check, ChevronsUpDown, LanguagesIcon, RefreshCw } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -45,6 +46,7 @@ export function LanguageSelection({
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Language>();
   const locale = useLocale();
+  const router = useRouter();
   const isDesktop = !isMobile;
 
   useEffect(() => {
@@ -55,11 +57,14 @@ export function LanguageSelection({
     if (selected?.key === undefined) return;
     if (document.cookie.includes("locale=" + selected?.key)) return;
 
-    console.log("applying selected", selected);
     document.cookie = `locale=${
       selected?.key ?? "en"
     }; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-  }, [selected]);
+
+    if (autoRefresh) {
+      router.refresh();
+    }
+  }, [autoRefresh, router, selected]);
 
   if (isDesktop) {
     return (
@@ -172,4 +177,11 @@ export function LanguageGroup() {
       </div>
     </div>
   );
+}
+
+export function LanguageSelectionLandingPage() {
+  const session = useSession();
+  if (session.status === "loading") return null;
+  if (session.status === "authenticated") return null;
+  return <LanguageSelection autoRefresh />;
 }
