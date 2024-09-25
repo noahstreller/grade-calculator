@@ -105,7 +105,10 @@
     "passing-inverse-description": "If enabled, the lower grades are considered better",
     "alert-title": "Important!",
     "alert-description": "Unsaved changes will be discarded if you close this sheet, please save them below.",
-    "quick-settings": "Quick settings"
+    "quick-settings": "Adjust your quick settings",
+    "language": {
+      "description": "This setting will apply as soon as you refresh the page (or click on the reload button)"
+    }
   },
   "actions": {
     "copy": {
@@ -302,7 +305,9 @@
       "production": "Production",
       "development": "Development"
     },
-    "back": "Back"
+    "back": "Back",
+    "language": "Language",
+    "reload": "Reload"
   },
   "screenreader": {
     "open-menu": "Open menu"
@@ -403,6 +408,10 @@
       "title": "I don't want cookies!",
       "how-to-clear-cookies": "To prevent cookies from being stored, you can disable cookies in your browser settings and clear the cookies off your device.",
       "legacy-ad": "Alternatively, you are free to use the legacy version of this web app, which does not store any cookies. Note that the legacy version is not actively developed."
+    },
+    "popup": {
+      "title": "We use cookies",
+      "description": "We only use cookies <highlight>necessary</highlight> for this site to work. For more information, please check <link>our cookie policy</link>."
     }
   },
   "semesters": {

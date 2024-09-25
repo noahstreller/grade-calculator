@@ -35,7 +35,9 @@
       "seconds": "{{count, plural, =1 {Sekunde} other {Sekunden}}}"
     },
     "true": "Wahr",
-    "yes": "Ja"
+    "yes": "Ja",
+    "language": "Sprache (Language)",
+    "reload": "Aktualisieren"
   },
   "grades": {
     "academic-relevance-title": "Relevant für die akademische Förderung",
@@ -176,7 +178,10 @@
     "passing-inverse": "Inverses Notensystem",
     "passing-inverse-description": "Wenn aktiviert, sind niedrigere Noten besser",
     "quick-settings": "Schnelleinstellungen",
-    "title": "Präferenzen"
+    "title": "Präferenzen",
+    "language": {
+      "description": "Diese Einstellung wird übernommen, sobald du die Seite aktualisierst (oder der Aktualisieren-Button betätigt wird)"
+    }
   },
   "privacy-policy": {
     "data-usage": {
@@ -382,6 +387,10 @@
       "nextauth-callback-url": "<code>next-auth.callback-url (session)</code>: Dieses Cookie wird verwendet, um nach der Anmeldung zur App zurückzuleiten.",
       "session-and-csrf-tokens": "<code>next-auth.csrf-token (session)</code> und <code>next-auth.session-token (persistent)</code>: Diese Cookies werden zur Authentifizierung verwendet.",
       "title": "Welche Cookies werden gespeichert?"
+    },
+    "popup": {
+      "description": "Wir verwenden nur Cookies, die <highlight>notwendig</highlight> sind, damit diese Website funktioniert. \nWeitere Informationen findest du in <link>unseren Cookie-Richtlinien</link>.",
+      "title": "Wir verwenden Cookies"
     }
   },
   "dashboard": {
