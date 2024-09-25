@@ -184,7 +184,7 @@
       "description": "Deine Daten werden verwendet, um dir die auf dieser Web-App angebotenen Dienste bereitzustellen. Sie werden sicher gespeichert und nicht an Dritte weitergegeben."
     },
     "deletion": {
-      "description": "Ja, du kannst dein Konto und alle zugehörigen Daten jederzeit in der Web-App löschen. Du kannst auch eine Datenlöschung beantragen, indem du mich per E-Mail kontaktierst: <maillink></maillink>",
+      "description": "Ja, Du kannst dein Konto und alle zugehörigen Daten jederzeit in der Web-App löschen, indem Du auf <b>Einstellungen</b> klickst und dann <b>Konto löschen</b> wählst. \nDadurch werden <b>unmittelbar all deine Daten gelöscht</b>. Dies kann nicht rückgängig gemacht werden! \nDu kannst auch eine Datenlöschung beantragen, indem du mich per E-Mail kontaktierst: <maillink></maillink>",
       "title": "Kann ich mein Konto und alle zugehörigen Daten löschen?"
     },
     "legal-note": "Ich bin nicht wirklich in rechtlichen Angelegenheiten bewandert, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
