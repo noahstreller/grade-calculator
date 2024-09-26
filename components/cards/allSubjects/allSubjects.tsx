@@ -211,8 +211,8 @@ export function AllSubjects({
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader className="text-left">
-              <DrawerTitle>{t("grades.add")}</DrawerTitle>
-              <DrawerDescription>{t("grades.add-desc")}</DrawerDescription>
+              <DrawerTitle>{t("subjects.add")}</DrawerTitle>
+              <DrawerDescription>{t("subjects.add-desc")}</DrawerDescription>
             </DrawerHeader>
             <CreateSubjectForm refresh={refresh} setOpen={setOpen} />
             <DrawerFooter className="pt-2">
