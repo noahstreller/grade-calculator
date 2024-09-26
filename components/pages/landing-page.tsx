@@ -519,7 +519,7 @@ function GettingStartedTab() {
                       "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    {t("landing-page.open-image")}{" "}
+                    {t("landing-page.open-image")}
                     <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>
@@ -540,7 +540,7 @@ function GettingStartedTab() {
                       "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    {t("landing-page.open-image")}{" "}
+                    {t("landing-page.open-image")}
                     <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>
