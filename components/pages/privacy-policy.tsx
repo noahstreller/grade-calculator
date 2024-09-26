@@ -38,7 +38,7 @@ export default function PrivacyPolicy() {
       </h1>
       <p>{t("privacy-policy.subtitle")}</p>
       <p className="text-sm text-muted-foreground">
-        {t.rich("cookie-policy.legal-note", {
+        {t.rich("privacy-policy.legal-note", {
           maillink: () => (
             <Highlight colorName="blue">
               <Link href="mailto:dev@nstr.dev">dev@nstr.dev</Link>
