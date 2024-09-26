@@ -39,6 +39,74 @@
       "purpose": "monochrome"
     }
   ],
+  "screenshots": [
+    {
+      "src": "/mobilescreenshots/addgrade.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/addsubject.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/allgrades.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/allsubjects.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/gradeoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/newterm.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/requiredgrades.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/settings.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/settings2.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectdetails.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    }
+  ],
   "id": "dev.nstr.gradecalculator",
   "lang": "en",
   "orientation": "any"
