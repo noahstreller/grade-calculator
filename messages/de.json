@@ -196,7 +196,7 @@
   },
   "required-grades": {
     "description": "Die Noten, die du zum Bestehen deiner Fächer brauchst",
-    "passed": "Bestanden halten",
+    "passed": "um weiterhin zu bestehen",
     "required": "zum Bestehen",
     "simulated-weight": "Simulierte Gewichtung",
     "title": "Erforderliche Noten"
