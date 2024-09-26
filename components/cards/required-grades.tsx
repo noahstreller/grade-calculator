@@ -12,7 +12,7 @@ import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { Average, AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import {
@@ -33,7 +33,7 @@ function RequiredGradesBody({
   showPassing: boolean;
   simulatedWeight: number;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences;
 
   const { isMobile } = useDevice();
@@ -120,9 +120,11 @@ function RequiredGradesBody({
   return (
     <CardBoard>
       <h2>
-        If your next exam is weighted{" "}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
-        need:
+        {t.rich("grades.simulatedWeight-label", {
+          weight: () => (
+            <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+          ),
+        })}
       </h2>
       {chunkPairs.length === 0 ? (
         <Alert>
@@ -132,7 +134,7 @@ function RequiredGradesBody({
             <AlertDescription>{t("errors.no-data-yet-desc")}</AlertDescription>
           ) : (
             <AlertDescription>
-              {t("errors.not-enough-subjects-yet-failing_0")}
+              {t("errors.not-enough-subjects-yet-failing")}
             </AlertDescription>
           )}
         </Alert>
@@ -162,7 +164,9 @@ function RequiredGradesBody({
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
                     <span className="text-muted-foreground text-4xl">
-                      {preferences?.passingInverse ? "<" : ">"}
+                      {preferences?.passingInverse
+                        ? t("generic.less-than")
+                        : t("generic.greater-than")}
                     </span>
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
@@ -196,7 +200,7 @@ export function RequiredGrades({
   className?: string;
   showPassingGrades?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
@@ -216,7 +220,9 @@ export function RequiredGrades({
         <div className="flex items-center space-x-2">
           <Switch checked={showPassing} onCheckedChange={setShowPassing} />
           <Label>
-            Show <span className="text-green-400">passing</span> grades
+            {t.rich("grades.show-passing-grades", {
+              green: (text) => <span className="text-green-400">{text}</span>,
+            })}
           </Label>
         </div>
       </CardHeader>
@@ -227,8 +233,7 @@ export function RequiredGrades({
           simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
         <CardDescription className="mt-4 mx-1">
-          If you know the weight of the next exam, you can apply that weight to
-          the required grades.
+          {t("grades.simulatedWeight-description")}
         </CardDescription>
         <div className="flex flex-row gap-3 max-w-full">
           <Input
@@ -237,7 +242,7 @@ export function RequiredGrades({
             onChange={(e) => {
               setSimulatedWeight(Number(e.target.value));
             }}
-            placeholder="Simulated weight"
+            placeholder={t("required-grades.simulated-weight")}
             className=" flex-shrink-1"
           />
           <Button
@@ -247,12 +252,12 @@ export function RequiredGrades({
               setSimulatedWeight(undefined);
             }}
           >
-            Reset
+            {t("actions.reset")}
           </Button>
         </div>
         {!getSimulatedWeight().valid && (
           <span className="text-red-400 text-xs">
-            Weight must be a positive number
+            {t("errors.must-be-positive")}
           </span>
         )}
       </CardContent>
@@ -269,7 +274,7 @@ function RequiredGradesBodyForSubject({
   simulatedWeight: number;
   subject: Subject;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences;
 
   const { isMobile } = useDevice();
@@ -331,9 +336,11 @@ function RequiredGradesBodyForSubject({
   return (
     <CardBoard>
       <h2>
-        If your next exam is weighted{" "}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>, you will
-        need:
+        {t.rich("grades.simulatedWeight-label", {
+          weight: () => (
+            <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+          ),
+        })}
       </h2>
       <Card>
         <CardHeader>
@@ -354,7 +361,9 @@ function RequiredGradesBodyForSubject({
         <CardContent>
           <h1 className="text-2xl text-gray-400">
             <span className="text-muted-foreground text-4xl">
-              {preferences?.passingInverse ? "<" : ">"}
+              {preferences?.passingInverse
+                ? t("generic.less-than")
+                : t("generic.greater-than")}
             </span>
             <b className="text-5xl text-foreground">
               {round(getRequiredGradeToPass(averageData).result, 2)}
@@ -386,7 +395,7 @@ export function RequiredGradesForSubject({
   className?: string;
   showPassingGrades?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
 
@@ -400,10 +409,8 @@ export function RequiredGradesForSubject({
     <Card className={className}>
       <CardHeader className="flex-row justify-between">
         <div>
-          <CardTitle>Required Grade</CardTitle>
-          <CardDescription>
-            The grade you need to pass this subject
-          </CardDescription>
+          <CardTitle>{t("required-grades.title")}</CardTitle>
+          <CardDescription>{t("required-grades.description")}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
@@ -413,8 +420,7 @@ export function RequiredGradesForSubject({
           simulatedWeight={getSimulatedWeight().simulatedWeight}
         />
         <CardDescription className="mt-4 mx-1">
-          If you know the weight of the next exam, you can apply that weight to
-          the required grade.
+          {t("grades.simulatedWeight-description")}
         </CardDescription>
         <div className="flex flex-row gap-3 max-w-full">
           <Input
@@ -423,7 +429,7 @@ export function RequiredGradesForSubject({
             onChange={(e) => {
               setSimulatedWeight(Number(e.target.value));
             }}
-            placeholder="Simulated weight"
+            placeholder={t("required-grades.simulated-weight")}
             className=" flex-shrink-1"
           />
           <Button
@@ -433,12 +439,12 @@ export function RequiredGradesForSubject({
               setSimulatedWeight(undefined);
             }}
           >
-            Reset
+            {t("actions.reset")}
           </Button>
         </div>
         {!getSimulatedWeight().valid && (
           <span className="text-red-400 text-xs">
-            Weight must be a positive number
+            {t("errors.must-be-positive")}
           </span>
         )}
       </CardContent>

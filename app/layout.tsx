@@ -8,6 +8,8 @@ import { Onboarding } from "@/components/pages/onboarding";
 import { ToasterWrapper } from "@/components/toaster-wrapper";
 import { cn } from "@/lib/utils";
 import type { Metadata, Viewport } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Author } from "next/dist/lib/metadata/types/metadata-types";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -101,13 +103,15 @@ const maintenance: MaintenanceType = {
   maintenance: false,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
   return (
-    <html lang="en">
+    <html lang={locale}>
       {process.env.NODE_ENV === "production" &&
         process.env.UMAMI_SCRIPT_URL &&
         process.env.UMAMI_DATA_WEBSITE_ID && (
@@ -122,17 +126,19 @@ export default function RootLayout({
           <Maintenance maintenance={maintenance} />
         ) : (
           <Providers>
-            <HeaderComponent />
-            <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
-              <main className="min-h-screen w-full flex flex-col items-center">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <LoadingScreen />
-            <Onboarding />
-            <CookieConsent />
-            <ToasterWrapper />
+            <NextIntlClientProvider messages={messages}>
+              <HeaderComponent />
+              <div className="mt-[5rem] bg-background text-foreground flex flex-col items-center ">
+                <main className="min-h-screen w-full flex flex-col items-center">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <LoadingScreen />
+              <Onboarding />
+              <CookieConsent />
+              <ToasterWrapper />
+            </NextIntlClientProvider>
           </Providers>
         )}
       </body>

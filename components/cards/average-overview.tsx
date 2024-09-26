@@ -24,7 +24,7 @@ import {
 import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { Bird } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -46,7 +46,7 @@ export function AverageOverview({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
 
   let subjectAverage = (gradeAverage: AverageWithSubject) => {
@@ -75,7 +75,7 @@ export function AverageOverview({
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                Grade
+                {t("grades.grade")}
               </span>
               <ColoredGrade
                 className="text-left font-bold"
@@ -84,7 +84,7 @@ export function AverageOverview({
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                Subject
+                {t("subjects.subject")}
               </span>
               <span className="font-bold text-muted-foreground">
                 {truncateText(payload[0].payload.subject.name, 20).text}
@@ -92,7 +92,7 @@ export function AverageOverview({
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                Grade Count
+                {t("subjects.grade-count")}
               </span>
               <span className="font-bold text-muted-foreground">
                 {payload[0].payload.average.gradeAmount}
@@ -159,14 +159,12 @@ export function AverageOverview({
         {subjectAverages === gradeAverages ? (
           <Card className="outline outline-border outline-4">
             <CardHeader className="flex-row gap-3 font-bold">
-              Your Average
+              {t("overview.you-long")}
               <Popover>
                 <PopoverTrigger>
-                  <Badge variant="outline">?</Badge>
+                  <Badge variant="outline">{t("generic.help-icon")}</Badge>
                 </PopoverTrigger>
-                <PopoverContent>
-                  This reflects your average grade in all subjects.
-                </PopoverContent>
+                <PopoverContent>{t("overview.total-average")} </PopoverContent>
               </Popover>
             </CardHeader>
             <CardContent>
@@ -193,7 +191,7 @@ export function AverageOverview({
                   {t("subject-overview.subject-average")}
                   <Popover>
                     <PopoverTrigger>
-                      <Badge variant="outline">?</Badge>
+                      <Badge variant="outline">{t("generic.help-icon")}</Badge>
                     </PopoverTrigger>
                     <PopoverContent>
                       {t("subject-overview.subject-average-desc")}
@@ -221,7 +219,7 @@ export function AverageOverview({
                   {t("subject-overview.grade-average")}
                   <Popover>
                     <PopoverTrigger>
-                      <Badge variant="outline">?</Badge>
+                      <Badge variant="outline">{t("generic.help-icon")}</Badge>
                     </PopoverTrigger>
                     <PopoverContent>
                       {t("subject-overview.grade-average-desc")}

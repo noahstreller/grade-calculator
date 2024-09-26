@@ -54,7 +54,7 @@ export function ClearDataButton({
               {translations.cancel}
             </Button>
             <Button onClick={clearGrades} variant="secondary">
-              Clear grades only
+              {translations.actions.clearGradesOnly}
             </Button>
             <Button variant="destructive" onClick={clearData}>
               {translations.dangerContinue}

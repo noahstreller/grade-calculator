@@ -20,7 +20,7 @@ import { Subject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import { updateSubject } from "@/lib/services/subject-service";
 import { editSubjectToast } from "@/lib/toasts";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Asterisk } from "./ui/asterisk";
 import { Input } from "./ui/input";
@@ -34,7 +34,7 @@ export function EditSubjectForm({
   setOpen: Function;
   originalSubject: Subject | undefined;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const [submitting, setSubmitting] = useState(false);
 
   type FormValues = {
@@ -114,22 +114,20 @@ export function EditSubjectForm({
             <FormItem className="flex flex-row items-center gap-1 justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
                 <FormLabel className="text-base">
-                  Relevant for academic promotion
+                  {t("subjects.relevance.title")}
                 </FormLabel>
                 <FormDescription>
-                  {field.value ? (
-                    <>
-                      This subject will be{" "}
-                      <Highlight colorName="green">included</Highlight> while
-                      calculating the total average
-                    </>
-                  ) : (
-                    <>
-                      This subject will be{" "}
-                      <Highlight colorName="red">ignored</Highlight> while
-                      calculating the total average
-                    </>
-                  )}
+                  {field.value
+                    ? t.rich("subjects.relevance.description-included", {
+                        highlight: (children) => (
+                          <Highlight colorName="green">{children}</Highlight>
+                        ),
+                      })
+                    : t.rich("subjects.relevance.description-excluded", {
+                        highlight: (children) => (
+                          <Highlight colorName="red">{children}</Highlight>
+                        ),
+                      })}
                 </FormDescription>
               </div>
               <FormControl>

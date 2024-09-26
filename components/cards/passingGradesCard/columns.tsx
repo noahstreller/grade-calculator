@@ -1,7 +1,6 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
-import createTranslation from "next-translate/createTranslation";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
@@ -14,9 +13,7 @@ import {
 import { cn, truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import { isMobile } from "react-device-detect";
-export function columns(): ColumnDef<AverageWithSubject>[] {
-  const { t } = createTranslation("common");
-
+export function columns(translations: any): ColumnDef<AverageWithSubject>[] {
   return [
     {
       id: "subjectName",
@@ -27,7 +24,7 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.subject")}
+            {translations.grades.subject}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -99,7 +96,7 @@ export function columns(): ColumnDef<AverageWithSubject>[] {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            {t("grades.grade")}
+            {translations.grades.grade}
             {column.getIsSorted() ? (
               column.getIsSorted() === "asc" ? (
                 <ArrowUp className="ml-2 h-4 w-4" />

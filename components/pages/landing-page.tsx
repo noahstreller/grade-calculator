@@ -28,6 +28,7 @@ import {
   LineChartIcon,
   Sparkles,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,13 +41,14 @@ export function LandingPage() {
   }, []);
 
   const { isMobile } = useDevice();
+  const t = useTranslations();
 
   const PAGE_TABS = [
     {
       title: (
         <div className="flex flex-row items-center gap-2">
           <Sparkles className="size-4" />
-          Getting started
+          {t("landing-page.tabs.getting-started")}
         </div>
       ),
       value: "start",
@@ -56,16 +58,16 @@ export function LandingPage() {
       title: (
         <div className="flex flex-row items-center gap-2">
           <Info className="size-4" />
-          Learn more
+          {t("landing-page.tabs.learn-more")}
         </div>
       ),
       value: "about",
       content: (
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>About this project</CardTitle>
+            <CardTitle>{t("landing-page.about.title")}</CardTitle>
             <CardDescription>
-              Some boring additional information about this project.
+              {t("landing-page.about.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -75,74 +77,88 @@ export function LandingPage() {
                   <CardBoard>
                     <Card className="shadow-md">
                       <CardHeader>
-                        <CardTitle>Description</CardTitle>
+                        <CardTitle>
+                          {t("landing-page.about.description-label")}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="gap-5 flex flex-col">
                         <p>
-                          This project is a grade calculator / dashboard. It
-                          allows for some customization; for example, you are
-                          able to define the grading scale yourself. As of right
-                          now, it{" "}
-                          <Highlight colorName="green">
-                            supports only numeric scales
-                          </Highlight>{" "}
-                          and{" "}
-                          <Highlight colorName="red">
-                            does not support letter grades
-                          </Highlight>
-                          .
+                          {t.rich("landing-page.about.short-description", {
+                            green: (text) => (
+                              <Highlight colorName="green">{text}</Highlight>
+                            ),
+                            red: (text) => (
+                              <Highlight colorName="red">{text}</Highlight>
+                            ),
+                          })}
                         </p>
                         <p>
-                          This project uses some components from{" "}
-                          <Highlight colorName="blue">
-                            <a target="_blank" href="https://ui.shadcn.com">
-                              shadcn/ui
-                            </a>
-                          </Highlight>{" "}
-                          and{" "}
-                          <Highlight colorName="blue">
-                            <a
-                              target="_blank"
-                              href="https://ui.aceternity.com/components"
-                            >
-                              Aceternity UI
-                            </a>
-                          </Highlight>
-                          .
+                          {t.rich("landing-page.about.credit-description", {
+                            shadcn: (text) => (
+                              <Highlight colorName="blue">
+                                <a target="_blank" href="https://ui.shadcn.com">
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                            aceternity: (text) => (
+                              <Highlight colorName="blue">
+                                <a
+                                  target="_blank"
+                                  href="https://ui.aceternity.com/components"
+                                >
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                          })}
                         </p>
                       </CardContent>
                     </Card>
                     <Card className="shadow-xl">
                       <CardHeader>
-                        <CardTitle>Getting started</CardTitle>
+                        <CardTitle>
+                          {t("landing-page.getting-started-about.title")}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="flex flex-col gap-5">
                         <p>
-                          This grade calculator features a{" "}
-                          <Highlight colorName="yellow">cloud synced</Highlight>
-                          , and a{" "}
-                          <Highlight colorName="yellow">legacy</Highlight>{" "}
-                          version, which stores all data locally in your
-                          browser.
+                          {t.rich(
+                            "landing-page.getting-started-about.cloud-desc",
+                            {
+                              yellow: (text) => (
+                                <Highlight colorName="yellow">{text}</Highlight>
+                              ),
+                            }
+                          )}
                         </p>
                         <p>
-                          To use the cloud synced version, you need to
-                          authenticate first. To access the legacy version,{" "}
-                          <Highlight colorName="blue">
-                            <a
-                              target="_blank"
-                              href="https://legacy.grades.nstr.dev"
-                            >
-                              click here
-                            </a>
-                          </Highlight>
+                          {t.rich(
+                            "landing-page.getting-started-about.cloud-desc-link",
+                            {
+                              link: (text) => (
+                                <Highlight colorName="blue">
+                                  <a
+                                    target="_blank"
+                                    href="https://legacy.grades.nstr.dev"
+                                  >
+                                    {text}
+                                  </a>
+                                </Highlight>
+                              ),
+                            }
+                          )}
                           <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                             <Button className="w-full shadow-md" asChild>
                               <Link href={"/login"}>
                                 <Sparkles className="size-4 mr-2 flex-shrink-0" />
                                 {isMobile
-                                  ? "To the app"
-                                  : "Continue to the app"}
+                                  ? t(
+                                      "landing-page.getting-started-about.to-the-app-short"
+                                    )
+                                  : t(
+                                      "landing-page.getting-started-about.to-the-app-long"
+                                    )}
                               </Link>
                             </Button>
                             <Button
@@ -152,7 +168,13 @@ export function LandingPage() {
                             >
                               <Link href={"https://legacy.grades.nstr.dev"}>
                                 <Globe className="size-4 mr-2 flex-shrink-0" />
-                                {isMobile ? "Legacy" : "Use the legacy version"}
+                                {isMobile
+                                  ? t(
+                                      "landing-page.getting-started-about.to-legacy-short"
+                                    )
+                                  : t(
+                                      "landing-page.getting-started-about.to-legacy-long"
+                                    )}
                               </Link>
                             </Button>
                           </div>
@@ -164,13 +186,12 @@ export function LandingPage() {
                     <CardStack items={REVIEW_CARDS} offset={7} />
                     <Card className="shadow-md">
                       <CardHeader>
-                        <CardTitle>Source Code</CardTitle>
+                        <CardTitle>
+                          {t("landing-page.about.source-code-label")}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="gap-5 flex flex-col">
-                        <p>
-                          You can find the source code for this project on
-                          GitHub.
-                        </p>
+                        <p>{t("landing-page.about.source-code-description")}</p>
                         <Button
                           variant={"secondary"}
                           className="shadow-lg"
@@ -182,7 +203,7 @@ export function LandingPage() {
                             }
                           >
                             <SiGithub className="size-4 m-2" />
-                            View on GitHub
+                            {t("landing-page.about.source-code-link")}
                           </Link>
                         </Button>
                       </CardContent>
@@ -196,31 +217,48 @@ export function LandingPage() {
                 <CardBoard>
                   <Card className="shadow-xl">
                     <CardHeader>
-                      <CardTitle>Getting started</CardTitle>
+                      <CardTitle>
+                        {t("landing-page.getting-started-about.title")}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-5">
                       <p>
-                        This grade calculator features a{" "}
-                        <Highlight colorName="yellow">cloud synced</Highlight>,
-                        and a <Highlight colorName="yellow">legacy</Highlight>{" "}
-                        version, which stores all data locally in your browser.
+                        {t.rich(
+                          "landing-page.getting-started-about.cloud-desc",
+                          {
+                            yellow: (text) => (
+                              <Highlight colorName="yellow">{text}</Highlight>
+                            ),
+                          }
+                        )}
                       </p>
                       <p>
-                        To use the cloud synced version, you need to
-                        authenticate first. To access the legacy version,{" "}
-                        <Highlight colorName="blue">
-                          <a
-                            target="_blank"
-                            href="https://legacy.grades.nstr.dev"
-                          >
-                            click here
-                          </a>
-                        </Highlight>
+                        {t.rich(
+                          "landing-page.getting-started-about.cloud-desc-link",
+                          {
+                            link: (text) => (
+                              <Highlight colorName="blue">
+                                <a
+                                  target="_blank"
+                                  href="https://legacy.grades.nstr.dev"
+                                >
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                          }
+                        )}
                         <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                           <Button className="w-full shadow-md" asChild>
                             <Link href={"/login"}>
                               <Sparkles className="size-4 mr-2 flex-shrink-0" />
-                              {isMobile ? "To the app" : "Continue to the app"}
+                              {isMobile
+                                ? t(
+                                    "landing-page.getting-started-about.to-the-app-short"
+                                  )
+                                : t(
+                                    "landing-page.getting-started-about.to-the-app-long"
+                                  )}
                             </Link>
                           </Button>
                           <Button
@@ -230,7 +268,13 @@ export function LandingPage() {
                           >
                             <Link href={"https://legacy.grades.nstr.dev"}>
                               <Globe className="size-4 mr-2 flex-shrink-0" />
-                              {isMobile ? "Legacy" : "Use the legacy version"}
+                              {isMobile
+                                ? t(
+                                    "landing-page.getting-started-about.to-legacy-short"
+                                  )
+                                : t(
+                                    "landing-page.getting-started-about.to-legacy-long"
+                                  )}
                             </Link>
                           </Button>
                         </div>
@@ -239,51 +283,50 @@ export function LandingPage() {
                   </Card>
                   <Card className="shadow-md">
                     <CardHeader>
-                      <CardTitle>About this project</CardTitle>
+                      <CardTitle>{t("landing-page.about.title")}</CardTitle>
                     </CardHeader>
                     <CardContent className="gap-5 flex flex-col">
                       <p>
-                        This project is a grade calculator / dashboard. It
-                        allows for some customization; for example, you are able
-                        to define the grading scale yourself. As of right now,
-                        it{" "}
-                        <Highlight colorName="green">
-                          supports only numeric scales
-                        </Highlight>{" "}
-                        and{" "}
-                        <Highlight colorName="red">
-                          does not support letter grades
-                        </Highlight>
-                        .
+                        {t.rich("landing-page.about.short-description", {
+                          green: (text) => (
+                            <Highlight colorName="green">{text}</Highlight>
+                          ),
+                          red: (text) => (
+                            <Highlight colorName="red">{text}</Highlight>
+                          ),
+                        })}
                       </p>
                       <p>
-                        This project uses some components from{" "}
-                        <Highlight colorName="blue">
-                          <a target="_blank" href="https://ui.shadcn.com">
-                            shadcn/ui
-                          </a>
-                        </Highlight>{" "}
-                        and{" "}
-                        <Highlight colorName="blue">
-                          <a
-                            target="_blank"
-                            href="https://ui.aceternity.com/components"
-                          >
-                            Aceternity UI
-                          </a>
-                        </Highlight>
-                        .
+                        {t.rich("landing-page.about.credit-description", {
+                          shadcn: (text) => (
+                            <Highlight colorName="blue">
+                              <a target="_blank" href="https://ui.shadcn.com">
+                                {text}
+                              </a>
+                            </Highlight>
+                          ),
+                          aceternity: (text) => (
+                            <Highlight colorName="blue">
+                              <a
+                                target="_blank"
+                                href="https://ui.aceternity.com/components"
+                              >
+                                {text}
+                              </a>
+                            </Highlight>
+                          ),
+                        })}
                       </p>
                     </CardContent>
                   </Card>
                   <Card className="shadow-md mb-5">
                     <CardHeader>
-                      <CardTitle>Source Code</CardTitle>
+                      <CardTitle>
+                        {t("landing-page.about.source-code-label")}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="gap-5 flex flex-col">
-                      <p>
-                        You can find the source code for this project on GitHub.
-                      </p>
+                      <p>{t("landing-page.about.source-code-description")}</p>
                       <Button
                         variant={"secondary"}
                         className="shadow-lg"
@@ -295,7 +338,7 @@ export function LandingPage() {
                           }
                         >
                           <SiGithub className="size-4 m-2" />
-                          View on GitHub
+                          {t("landing-page.about.source-code-link")}
                         </Link>
                       </Button>
                     </CardContent>
@@ -397,38 +440,43 @@ function GettingStartedTab() {
   const { isMobile } = useDevice();
   const theme = useTheme();
   const router = useRouter();
+  const t = useTranslations();
   return (
     <CardBoard row={!isMobile}>
       <CardBoard>
         <Card>
           <CardHeader>
-            <CardTitle>Get started now</CardTitle>
+            <CardTitle>{t("landing-page.getting-started-tab.title")}</CardTitle>
             <CardDescription>
-              You can start using the grade calculator right away.
+              {t("landing-page.getting-started-tab.description")}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-5">
             <p>
-              This grade calculator features a{" "}
-              <Highlight colorName="yellow">cloud synced</Highlight>, and a{" "}
-              <Highlight colorName="yellow">legacy</Highlight> version, which
-              stores all data locally in your browser. The legacy version is
-              unmaintained and will not receive any updates.
+              {t.rich("landing-page.getting-started-about.cloud-desc", {
+                yellow: (text) => (
+                  <Highlight colorName="yellow">{text}</Highlight>
+                ),
+              })}
             </p>
             <p>
-              To use the cloud synced version, you need to authenticate first.
-              To access the legacy version,{" "}
-              <Highlight colorName="blue">
-                <a target="_blank" href="https://legacy.grades.nstr.dev">
-                  click here
-                </a>
-              </Highlight>
+              {t.rich("landing-page.getting-started-about.cloud-desc-link", {
+                link: (text) => (
+                  <Highlight colorName="blue">
+                    <a target="_blank" href="https://legacy.grades.nstr.dev">
+                      {text}
+                    </a>
+                  </Highlight>
+                ),
+              })}
               <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                 <Button className="w-full shadow-md" asChild>
                   <Link href={"/login"}>
                     <Sparkles className="size-4 mr-2 flex-shrink-0" />
-                    {isMobile ? "To the app" : "Continue to the app"}
+                    {isMobile
+                      ? t("landing-page.getting-started-about.to-the-app-short")
+                      : t("landing-page.getting-started-about.to-the-app-long")}
                   </Link>
                 </Button>
                 <Button
@@ -438,7 +486,9 @@ function GettingStartedTab() {
                 >
                   <Link href={"https://legacy.grades.nstr.dev"}>
                     <Globe className="size-4 mr-2 flex-shrink-0" />
-                    {isMobile ? "Legacy" : "Use the legacy version"}
+                    {isMobile
+                      ? t("landing-page.getting-started-about.to-legacy-short")
+                      : t("landing-page.getting-started-about.to-legacy-long")}
                   </Link>
                 </Button>
               </div>
@@ -447,16 +497,16 @@ function GettingStartedTab() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Screenshot</CardTitle>
+            <CardTitle>{t("landing-page.screenshot-title")}</CardTitle>
             <CardDescription>
-              This is what the grade calculator looks like.
+              {t("landing-page.screenshot-desc")}
             </CardDescription>
             <CardContent className="flex flex-col gap-4 p-3">
               {theme.resolvedTheme === "dark" ? (
                 <>
                   <Image
                     src={"/screenshot-dark.png"}
-                    alt={"Screenshot Dark Mode"}
+                    alt={t("landing-page.screenshot-dark-mode")}
                     className="w-full border-2 border-muted rounded-md"
                     width="2213"
                     height="1941"
@@ -466,17 +516,18 @@ function GettingStartedTab() {
                     target="_blank"
                     className={cn(
                       buttonVariants({ variant: "link" }),
-                      "flex flex-row gap-2 w-fit justify-center",
+                      "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    Open image <ExternalLinkIcon className="size-4" />
+                    {t("landing-page.open-image")}
+                    <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>
               ) : (
                 <>
                   <Image
                     src={"/screenshot-light.png"}
-                    alt={"Screenshot Light Mode"}
+                    alt={t("landing-page.screenshot-light-mode")}
                     className="w-full border-2 border-muted rounded-md"
                     width="2213"
                     height="1941"
@@ -486,10 +537,11 @@ function GettingStartedTab() {
                     target="_blank"
                     className={cn(
                       buttonVariants({ variant: "link" }),
-                      "flex flex-row gap-2 w-fit justify-center",
+                      "flex flex-row gap-2 w-fit justify-center"
                     )}
                   >
-                    Open image <ExternalLinkIcon className="size-4" />
+                    {t("landing-page.open-image")}
+                    <ExternalLinkIcon className="size-4" />
                   </Link>
                 </>
               )}
@@ -508,12 +560,13 @@ type DemoType = {
 };
 
 const Demos = () => {
+  const t = useTranslations();
   const demos: DemoType[] = [
     {
       title: (
         <span className="flex flex-row gap-2 justify-center items-center">
           <LineChartIcon className="size-4 text-muted-foreground" />
-          Grades
+          {t("landing-page.demo-card.demo-grades")}
         </span>
       ),
       value: "grade-overview",
@@ -522,7 +575,7 @@ const Demos = () => {
       title: (
         <span className="flex flex-row gap-2 justify-center items-center">
           <GroupIcon className="size-4 text-muted-foreground" />
-          Averages
+          {t("landing-page.demo-card.demo-averages")}
         </span>
       ),
       value: "average-overview",
@@ -531,7 +584,7 @@ const Demos = () => {
       title: (
         <span className="flex flex-row gap-2 justify-center items-center">
           <CalculatorIcon className="size-4 text-muted-foreground" />
-          Calculator
+          {t("landing-page.demo-card.demo-calculator")}
         </span>
       ),
       value: "required-grades",
@@ -543,8 +596,10 @@ const Demos = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Demo</CardTitle>
-        <CardDescription>You can try out different demos here.</CardDescription>
+        <CardTitle>{t("landing-page.demo-card.title")}</CardTitle>
+        <CardDescription>
+          {t("landing-page.demo-card.description")}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <DemoSwitcher

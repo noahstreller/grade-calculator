@@ -20,6 +20,7 @@ import { Category } from "@/db/schema";
 import { cn, truncateText } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 
@@ -99,6 +100,7 @@ function CategoryList({
   setOpen: (open: boolean) => void;
   setSelectedCategory: (category: Category) => void;
 }) {
+  const t = useTranslations();
   const sortedCategories = () => {
     return categories.sort((a, b) => {
       return a.name!.localeCompare(b.name!);
@@ -106,9 +108,9 @@ function CategoryList({
   };
   return (
     <Command>
-      <CommandInput placeholder="Filter by categories" />
+      <CommandInput placeholder={t("filters.filter-by-category")} />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>{t("errors.no-results")}</CommandEmpty>
         <CommandGroup>
           {sortedCategories().map((category) => (
             <CommandItem

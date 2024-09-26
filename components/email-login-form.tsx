@@ -12,12 +12,14 @@ import { LoadingSpinner } from "@/components/ui/spinner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export function EmailLoginForm() {
   const [submitting, setSubmitting] = useState(false);
+  const t = useTranslations();
 
   type FormValues = {
     email: string;
@@ -26,11 +28,11 @@ export function EmailLoginForm() {
   const FormSchema = z.object({
     email: z
       .string({
-        required_error: "This must be a valid e-mail address",
+        required_error: t("errors.invalid-email-prompt"),
       })
-      .email({ message: "This must be a valid e-mail address" })
+      .email({ message: t("errors.invalid-email-prompt") })
       .trim()
-      .min(1, { message: "This must be a valid e-mail address" })
+      .min(1, { message: t("errors.invalid-email-prompt") })
       .max(255),
   });
 
@@ -46,9 +48,7 @@ export function EmailLoginForm() {
 
   return (
     <>
-      <CardDescription>
-        You can also request a magic link to sign in with your email address.
-      </CardDescription>
+      <CardDescription>{t("auth.magic-link")}</CardDescription>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -57,7 +57,7 @@ export function EmailLoginForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Enter your email address" {...field} />
+                  <Input placeholder={t("auth.enter-email")} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -69,7 +69,7 @@ export function EmailLoginForm() {
               <LoadingSpinner />
             ) : (
               <>
-                <Mail className="m-2 size-5" /> Request Link
+                <Mail className="m-2 size-4" /> {t("auth.request-link")}
               </>
             )}
           </Button>

@@ -30,6 +30,7 @@ import {
   FolderOutput,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function ImportExportButton({
@@ -67,23 +68,24 @@ function CompactImportExportButton({
   purge: boolean;
   setPurge: (value: boolean) => void;
 }) {
+  const t = useTranslations();
   return (
     <div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" className="flex-shrink-0">
             <Database className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
-            <span className="sr-only">Manage data</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Manage data</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("data-management.title")}</DropdownMenuLabel>
           <DropdownMenuCheckboxItem checked={purge} onCheckedChange={setPurge}>
-            Replace existing data
+            {t("data-management.replace")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <FolderInput className="size-4 mr-2" /> Import data
+              <FolderInput className="size-4 mr-2" />
+              {t("data-management.import.title")}
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -93,7 +95,7 @@ function CompactImportExportButton({
                   }
                 >
                   <ClipboardPaste className="size-4 mr-2" />
-                  Clipboard
+                  {t("data-management.import.clipboard")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
@@ -101,7 +103,7 @@ function CompactImportExportButton({
                   }
                 >
                   <FileOutput className="size-4 mr-2" />
-                  JSON-File
+                  {t("data-management.import.json")}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -109,7 +111,7 @@ function CompactImportExportButton({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <FolderOutput className="size-4 mr-2" />
-              Export data
+              {t("data-management.export.title")}
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -124,7 +126,7 @@ function CompactImportExportButton({
                   }
                 >
                   <ClipboardCopy className="size-4 mr-2" />
-                  Clipboard
+                  {t("data-management.export.clipboard")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={async () =>
@@ -138,7 +140,7 @@ function CompactImportExportButton({
                   }
                 >
                   <FileInput className="size-4 mr-2" />
-                  JSON-File
+                  {t("data-management.export.json")}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -157,6 +159,7 @@ function ExpandedImportExportButton({
   purge: boolean;
   setPurge: (value: boolean) => void;
 }) {
+  const t = useTranslations();
   return (
     <div>
       <DropdownMenu>
@@ -166,17 +169,18 @@ function ExpandedImportExportButton({
             className="flex-1 flex-shrink-0 w-full flex flex-row gap-2"
           >
             <Database className="size-4 text-inherit" />
-            Manage data
+            {t("data-management.title")}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Manage data</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("data-management.title")}</DropdownMenuLabel>
           <DropdownMenuCheckboxItem checked={purge} onCheckedChange={setPurge}>
-            Replace existing data
+            {t("data-management.replace")}
           </DropdownMenuCheckboxItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <FolderInput className="size-4 mr-2" /> Import data
+              <FolderInput className="size-4 mr-2" />
+              {t("data-management.import.title")}
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -186,7 +190,7 @@ function ExpandedImportExportButton({
                   }
                 >
                   <ClipboardPaste className="size-4 mr-2" />
-                  Clipboard
+                  {t("data-management.import.clipboard")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
@@ -194,7 +198,7 @@ function ExpandedImportExportButton({
                   }
                 >
                   <FileOutput className="size-4 mr-2" />
-                  JSON-File
+                  {t("data-management.import.json")}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -202,7 +206,7 @@ function ExpandedImportExportButton({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <FolderOutput className="size-4 mr-2" />
-              Export data
+              {t("data-management.export.title")}
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
@@ -217,7 +221,7 @@ function ExpandedImportExportButton({
                   }
                 >
                   <ClipboardCopy className="size-4 mr-2" />
-                  Clipboard
+                  {t("data-management.export.clipboard")}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={async () =>
@@ -231,7 +235,7 @@ function ExpandedImportExportButton({
                   }
                 >
                   <FileInput className="size-4 mr-2" />
-                  JSON-File
+                  {t("data-management.export.json")}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

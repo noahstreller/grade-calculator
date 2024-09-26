@@ -2,6 +2,7 @@
 import { Highlight } from "@/components/ui/card-stack";
 import { cn } from "@/lib/utils";
 import { CheckIcon, CookieIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
@@ -11,6 +12,7 @@ export default function CookieConsent({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
+  const t = useTranslations();
 
   const accept = () => {
     setIsOpen(false);
@@ -57,17 +59,23 @@ export default function CookieConsent({
       <div className="bg-secondary rounded-md m-2">
         <div className="grid gap-2">
           <div className="border-b border-border h-14 flex items-center justify-between p-4">
-            <h1 className="text-lg font-medium">We use cookies</h1>
+            <h1 className="text-lg font-medium">
+              {t("cookie-policy.popup.title")}
+            </h1>
             <CookieIcon className="h-[1.2rem] w-[1.2rem]" />
           </div>
           <div className="p-4">
             <p className="text-sm font-normal">
-              We only use cookies{" "}
-              <Highlight colorName="yellow">necessary</Highlight> for this site
-              to work. For more information, please check{" "}
-              <Link href="/cookies" className="underline">
-                our cookie policy.
-              </Link>
+              {t.rich("cookie-policy.popup.description", {
+                highlight: (text) => (
+                  <Highlight colorName="yellow">{text}</Highlight>
+                ),
+                link: (text) => (
+                  <Link href="/cookies" className="underline">
+                    {text}
+                  </Link>
+                ),
+              })}
             </p>
           </div>
           <div className="flex gap-2 p-4 py-5 border-t border-border bg-background/20">

@@ -34,7 +34,7 @@ import { Grade, GradeWithSubject } from "@/db/schema";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { Bird, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -48,8 +48,21 @@ export function AllGrades({
   setData: Function;
   refresh: Function;
 }) {
-  const { t, lang } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
+  const colTranslations = {
+    grades: {
+      date: t("grades.date"),
+      grade: t("grades.grade"),
+      subject: t("grades.subject"),
+      description: t("grades.description"),
+      actions: {
+        title: t("grades.actions.title"),
+        edit: t("grades.actions.edit"),
+        delete: t("grades.actions.delete"),
+      },
+    },
+  };
 
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -61,7 +74,7 @@ export function AllGrades({
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
 
@@ -112,17 +125,15 @@ export function AllGrades({
           ) : (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
               <DataTable
-                columns={columns(refresh, setOriginalGrade)}
+                columns={columns(refresh, setOriginalGrade, colTranslations)}
                 data={getGradesForStatus(selectedStatus)}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit Grade</DialogTitle>
-                  <DialogDescription>
-                    Change the grade details here
-                  </DialogDescription>
+                  <DialogTitle>{t("grades.edit.title")}</DialogTitle>
+                  <DialogDescription>{t("grades.edit.desc")}</DialogDescription>
                 </DialogHeader>
                 <EditGradeForm
                   refresh={refresh}
@@ -154,7 +165,7 @@ export function AllGrades({
             <CreateGradeForm refresh={refresh} setDrawerOpen={setOpen} />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -173,10 +184,8 @@ export function AllGrades({
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>Edit Grade</DrawerTitle>
-                <DrawerDescription>
-                  Change the grade details here
-                </DrawerDescription>
+                <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
+                <DrawerDescription>{t("grades.edit.desc")}</DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
                 refresh={refresh}
@@ -185,12 +194,12 @@ export function AllGrades({
               />
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>
             <DataTable
-              columns={columns(refresh, setOriginalGrade)}
+              columns={columns(refresh, setOriginalGrade, colTranslations)}
               data={getGradesForStatus(selectedStatus)}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}
