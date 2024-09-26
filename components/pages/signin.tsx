@@ -107,7 +107,7 @@ export function SignInPageComponent() {
                   signIn("discord");
                 }}
               >
-                <SiDiscord className="mr-2 size-4" />{" "}
+                <SiDiscord className="mr-2 size-4" />
                 {t("auth.providers.discord")}
               </Button>
               <Button
@@ -116,7 +116,7 @@ export function SignInPageComponent() {
                   signIn("github");
                 }}
               >
-                <SiGithub className="mr-2 size-4" />{" "}
+                <SiGithub className="mr-2 size-4" />
                 {t("auth.providers.github")}
               </Button>
               <Button
@@ -125,7 +125,7 @@ export function SignInPageComponent() {
                   signIn("google");
                 }}
               >
-                <SiGoogle className="mr-2 size-4" />{" "}
+                <SiGoogle className="mr-2 size-4" />
                 {t("auth.providers.google")}
               </Button>
               <Separator />

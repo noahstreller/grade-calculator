@@ -38,7 +38,7 @@ export async function Footer() {
               : "https://github.com/noahstreller/grade-calculator"
           }
         >
-          <GitBranch className="mr-2 size-4" />{" "}
+          <GitBranch className="mr-2 size-4" />
           {process.env.VERCEL_ENV === "production"
             ? process.env.npm_package_version || t("generic.env.production")
             : process.env.npm_package_version || t("generic.env.development")}

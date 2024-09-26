@@ -75,7 +75,7 @@ export function AverageOverview({
           <div className="grid grid-cols-2 gap-2">
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                {t("grades.grade")}{" "}
+                {t("grades.grade")}
               </span>
               <ColoredGrade
                 className="text-left font-bold"
@@ -84,7 +84,7 @@ export function AverageOverview({
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                {t("subjects.subject")}{" "}
+                {t("subjects.subject")}
               </span>
               <span className="font-bold text-muted-foreground">
                 {truncateText(payload[0].payload.subject.name, 20).text}
@@ -92,7 +92,7 @@ export function AverageOverview({
             </div>
             <div className="flex flex-col">
               <span className="text-[0.70rem] uppercase text-muted-foreground">
-                {t("subjects.grade-count")}{" "}
+                {t("subjects.grade-count")}
               </span>
               <span className="font-bold text-muted-foreground">
                 {payload[0].payload.average.gradeAmount}
@@ -159,7 +159,7 @@ export function AverageOverview({
         {subjectAverages === gradeAverages ? (
           <Card className="outline outline-border outline-4">
             <CardHeader className="flex-row gap-3 font-bold">
-              {t("overview.you-long")}{" "}
+              {t("overview.you-long")}
               <Popover>
                 <PopoverTrigger>
                   <Badge variant="outline">{t("generic.help-icon")}</Badge>

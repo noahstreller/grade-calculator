@@ -203,7 +203,7 @@ export function GradesForSubject({
               <DrawerHeader className="text-left">
                 <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
                 <DrawerDescription>
-                  {t("grades.change-details")}{" "}
+                  {t("grades.change-details")}
                 </DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
