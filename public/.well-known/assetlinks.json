@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.nstr.grades.twa",
+      "sha256_cert_fingerprints": [
+        "AA:F7:A5:01:37:1A:B0:07:99:2C:29:F3:FE:01:EC:D5:3A:F9:23:B1:66:40:1C:14:AB:CB:43:79:67:57:D3:D7"
+      ]
+    }
+  }
+]
