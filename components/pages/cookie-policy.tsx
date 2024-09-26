@@ -31,10 +31,6 @@ export default function CookiePolicy() {
       </Breadcrumb>
       <h1 className="text-4xl font-bold leading-10">
         {t("cookie-policy.title")}
-        {" - "}
-        <span className="hidden lg:inline">
-          <Highlight colorName="blue">grades.nstr.dev</Highlight>
-        </span>
       </h1>
       <p>{t("cookie-policy.subtitle")}</p>
       <p className="text-sm text-muted-foreground">
@@ -71,6 +67,15 @@ export default function CookiePolicy() {
         </li>
         <li>
           {t.rich("cookie-policy.what-is-saved.session-and-csrf-tokens", {
+            code: (children: any) => (
+              <code className="text-muted-foreground font-bold">
+                {children}
+              </code>
+            ),
+          })}
+        </li>
+        <li>
+          {t.rich("cookie-policy.what-is-saved.locale", {
             code: (children: any) => (
               <code className="text-muted-foreground font-bold">
                 {children}
