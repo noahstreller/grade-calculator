@@ -92,7 +92,6 @@ export default function PrivacyPolicy() {
           b: (children) => <b>{children}</b>,
         })}
       </p>
-
       <h2 className="text-2xl font-bold">
         {t("privacy-policy.security.title")}
       </h2>
