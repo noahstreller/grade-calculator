@@ -109,5 +109,6 @@
   ],
   "id": "dev.nstr.gradecalculator",
   "lang": "en",
-  "orientation": "any"
+  "orientation": "any",
+  "categories": ["education", "utilities"]
 }
