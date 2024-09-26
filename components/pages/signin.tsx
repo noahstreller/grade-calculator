@@ -85,7 +85,7 @@ export function SignInPageComponent() {
                     signIn("local");
                   }}
                 >
-                  <Container className="m-2 size-5" />{" "}
+                  <Container className="mr-2 size-4" />
                   {t("auth.providers.local")}
                 </Button>
               )}
@@ -97,7 +97,7 @@ export function SignInPageComponent() {
                     signIn("custom");
                   }}
                 >
-                  <ShieldEllipsis className="m-2 size-5" />
+                  <ShieldEllipsis className="m-2 size-4" />
                   {process.env.NEXT_PUBLIC_CUSTOM_OAUTH_NAME}
                 </Button>
               )}
@@ -107,7 +107,7 @@ export function SignInPageComponent() {
                   signIn("discord");
                 }}
               >
-                <SiDiscord className="m-2 size-5" />{" "}
+                <SiDiscord className="mr-2 size-4" />{" "}
                 {t("auth.providers.discord")}
               </Button>
               <Button
@@ -116,7 +116,8 @@ export function SignInPageComponent() {
                   signIn("github");
                 }}
               >
-                <SiGithub className="m-2 size-5" /> {t("auth.providers.github")}
+                <SiGithub className="mr-2 size-4" />{" "}
+                {t("auth.providers.github")}
               </Button>
               <Button
                 className="w-full"
@@ -124,7 +125,8 @@ export function SignInPageComponent() {
                   signIn("google");
                 }}
               >
-                <SiGoogle className="m-2 size-5" /> {t("auth.providers.google")}
+                <SiGoogle className="mr-2 size-4" />{" "}
+                {t("auth.providers.google")}
               </Button>
               <Separator />
               <EmailLoginForm />
@@ -186,7 +188,7 @@ export function SentEmailComponent() {
         </CardHeader>
         <CardContent className="flex flex-col justify-center items-center gap-4">
           <div className="flex flex-row items-center gap-2">
-            <MailCheck className="size-5 flex-shrink-0" />
+            <MailCheck className="size-4 flex-shrink-0" />
             <p>
               {t.rich("auth.sent-mail-desc", {
                 highlight: (children) => <Highlight>{children}</Highlight>,
@@ -194,7 +196,7 @@ export function SentEmailComponent() {
             </p>
           </div>
           <p className="text-muted-foreground flex flex-row gap-2 items-center">
-            <Clock className="size-5 flex-shrink-0" />
+            <Clock className="size-4 flex-shrink-0" />
             {t("auth.sent-mail-might-take-a-moment")}
           </p>
         </CardContent>
