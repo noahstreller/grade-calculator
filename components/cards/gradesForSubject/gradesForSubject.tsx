@@ -34,7 +34,7 @@ import { Grade, GradeWithSubject, Subject } from "@/db/schema";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { Bird, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
@@ -50,7 +50,7 @@ export function GradesForSubject({
   refresh: Function;
   subject: Subject;
 }) {
-  const { t, lang } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
 
   const [open, setOpen] = useState(false);
@@ -63,9 +63,22 @@ export function GradesForSubject({
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
+
+  const colTranslations = {
+    grades: {
+      description: t("grades.description"),
+      grade: t("grades.grade"),
+      date: t("grades.date"),
+      actions: {
+        title: t("grades.actions.title"),
+        edit: t("grades.actions.edit"),
+        delete: t("grades.actions.delete"),
+      },
+    },
+  };
 
   const getGradesForStatus = (status: PassingStatus | null) => {
     if (status?.value === "passing") {
@@ -87,7 +100,7 @@ export function GradesForSubject({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Subject Grades</CardTitle>
+          <CardTitle>{t("subject-details.subject-grades.title")}</CardTitle>
           <CardDescription>{t("grades.all-grades-desc")}</CardDescription>
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -118,16 +131,21 @@ export function GradesForSubject({
           ) : (
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
               <DataTable
-                columns={columns(refresh, setOriginalGrade, isMobile)}
+                columns={columns(
+                  refresh,
+                  setOriginalGrade,
+                  isMobile,
+                  colTranslations
+                )}
                 data={getGradesForStatus(selectedStatus)}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit Grade</DialogTitle>
+                  <DialogTitle>{t("grades.edit.title")}</DialogTitle>
                   <DialogDescription>
-                    Change the grade details here
+                    {t("grades.change-details")}
                   </DialogDescription>
                 </DialogHeader>
                 <EditGradeForm
@@ -164,7 +182,7 @@ export function GradesForSubject({
             />
             <DrawerFooter className="pt-2">
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">{t("actions.cancel")}</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
@@ -183,9 +201,9 @@ export function GradesForSubject({
           <Drawer open={editOpen} onOpenChange={setEditOpen}>
             <DrawerContent>
               <DrawerHeader className="text-left">
-                <DrawerTitle>Edit Grade</DrawerTitle>
+                <DrawerTitle>{t("grades.edit.title")}</DrawerTitle>
                 <DrawerDescription>
-                  Change the grade details here
+                  {t("grades.change-details")}
                 </DrawerDescription>
               </DrawerHeader>
               <EditGradeForm
@@ -195,12 +213,17 @@ export function GradesForSubject({
               />
               <DrawerFooter className="pt-2">
                 <DrawerClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                  <Button variant="outline">{t("actions.cancel")}</Button>
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>
             <DataTable
-              columns={columns(refresh, setOriginalGrade, isMobile)}
+              columns={columns(
+                refresh,
+                setOriginalGrade,
+                isMobile,
+                colTranslations
+              )}
               data={getGradesForStatus(selectedStatus)}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}

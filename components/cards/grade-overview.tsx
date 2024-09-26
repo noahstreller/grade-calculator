@@ -3,7 +3,6 @@ import { ColoredGrade } from "@/components/colored-grade";
 import { usePreferences } from "@/components/preferences-provider";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,27 +12,20 @@ import {
 } from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
 import {
-  Command,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { GradeWithSubject } from "@/db/schema";
 import { useDevice } from "@/lib/hooks/useMediaQuery";
 import {
   doesGradePass,
   getTotalGradeAverages,
 } from "@/lib/services/notAsyncLogic";
-import { cn, getDateOrTime, round, truncateText } from "@/lib/utils";
+import { getDateOrTime, round, truncateText } from "@/lib/utils";
 import { Average, AverageWithSubject } from "@/types/types";
-import { Bird, Check, ChevronsUpDown, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { Bird } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   Label,
@@ -59,7 +51,7 @@ export function GradeOverview({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
   const [subject, setSubject] = useState<string | null>(null);
   const [subjectsOpen, setSubjectsOpen] = useState(false);
@@ -106,7 +98,7 @@ export function GradeOverview({
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Grade
+                  {t("grades.grade")}
                 </span>
                 <ColoredGrade
                   grade={payload[0].value}
@@ -115,7 +107,7 @@ export function GradeOverview({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Subject
+                  {t("subjects.subject")}
                 </span>
                 <span className="font-bold text-muted-foreground text-wrap break-words">
                   {label
@@ -125,7 +117,7 @@ export function GradeOverview({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Date
+                  {t("grades.date")}
                 </span>
                 <span className="font-bold text-muted-foreground">
                   {label
@@ -135,7 +127,7 @@ export function GradeOverview({
               </div>
               <div className="flex flex-col col-span-2 text-wrap">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Description
+                  {t("grades.description")}
                 </span>
                 <div className="font-bold text-muted-foreground text-wrap whitespace-normal break-words lg:max-w-full">
                   {label
@@ -148,7 +140,7 @@ export function GradeOverview({
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Grade
+                  {t("grades.grade")}
                 </span>
                 <ColoredGrade
                   grade={payload[0].value}
@@ -157,7 +149,7 @@ export function GradeOverview({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Subject
+                  {t("subjects.subject")}
                 </span>
                 <span className="font-bold text-muted-foreground text-wrap break-words">
                   {label
@@ -167,7 +159,7 @@ export function GradeOverview({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Date
+                  {t("grades.date")}
                 </span>
                 <span className="font-bold text-muted-foreground">
                   {label
@@ -227,15 +219,19 @@ export function GradeOverview({
                 tick={false}
                 label={
                   preferences.passingInverse
-                    ? "Lower is better"
-                    : "Higher is better"
+                    ? t("overview.lower-is-better")
+                    : t("overview.higher-is-better")
                 }
               />
               <ReferenceLine
                 y={preferences.passingGrade!}
                 label={
                   <Label
-                    value={isMobile ? "Pass" : "Passing Grade"}
+                    value={
+                      isMobile
+                        ? t("overview.passing-short")
+                        : t("overview.passing-long")
+                    }
                     dx={isMobile ? 50 : 100}
                     opacity={0.8}
                     dy={
@@ -253,7 +249,11 @@ export function GradeOverview({
                 y={getTotalGradeAverages(data)}
                 label={
                   <Label
-                    value={isMobile ? "You" : "Your Average"}
+                    value={
+                      isMobile
+                        ? t("overview.you-short")
+                        : t("overview.you-long")
+                    }
                     opacity={0.6}
                     dx={isMobile ? -50 : -100}
                     z={0}
@@ -282,73 +282,6 @@ export function GradeOverview({
           </ResponsiveContainer>
         </CardContent>
       )}
-      <CardContent>
-        <Popover open={subjectsOpen} onOpenChange={setSubjectsOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              className={cn(
-                "w-full justify-between",
-                !subject && "text-muted-foreground"
-              )}
-            >
-              {subject ? (
-                truncateText(subject ?? "", 35).text
-              ) : (
-                <>
-                  <FilterX className="size-4 mr-2" /> Showing all subjects
-                </>
-              )}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-full p-0 flex flex-row">
-            <Command>
-              <CommandInput placeholder={t("subjects.search")} />
-              <ScrollArea className="h-fit max-h-[50vh] overflow-auto">
-                <CommandGroup>
-                  <CommandItem
-                    onSelect={() => {
-                      setSubjectsOpen(false);
-                      setSubject(null);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        null === subject ? "opacity-100" : "opacity-0"
-                      )}
-                    />
-                    All Subjects
-                  </CommandItem>
-
-                  {getSubjects().map((mappedSubject) => (
-                    <CommandItem
-                      value={mappedSubject}
-                      key={mappedSubject}
-                      onSelect={() => {
-                        setSubjectsOpen(false);
-                        setSubject(mappedSubject);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          mappedSubject === subject
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                      {truncateText(mappedSubject, 35).text}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </ScrollArea>
-            </Command>
-          </PopoverContent>
-        </Popover>
-      </CardContent>
       <CardContent>
         <CardBoard>
           <CardBoard row>
@@ -453,7 +386,7 @@ export function GradeOverviewForSubject({
   className?: string;
   animate?: boolean;
 }) {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences().preferences!;
 
   let getGrade = (grade: GradeWithSubject) => {
@@ -485,7 +418,7 @@ export function GradeOverviewForSubject({
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Grade
+                  {t("grades.grade")}
                 </span>
                 <ColoredGrade
                   grade={payload[0].value}
@@ -494,7 +427,7 @@ export function GradeOverviewForSubject({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Subject
+                  {t("subjects.subject")}
                 </span>
                 <span className="font-bold text-muted-foreground text-wrap break-words">
                   {label
@@ -504,7 +437,7 @@ export function GradeOverviewForSubject({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Date
+                  {t("grades.date")}
                 </span>
                 <span className="font-bold text-muted-foreground">
                   {label
@@ -514,7 +447,7 @@ export function GradeOverviewForSubject({
               </div>
               <div className="flex flex-col col-span-2 text-wrap">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Description
+                  {t("grades.description")}
                 </span>
                 <div className="font-bold text-muted-foreground text-wrap whitespace-normal break-words lg:max-w-full">
                   {label
@@ -527,7 +460,7 @@ export function GradeOverviewForSubject({
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Grade
+                  {t("grades.grade")}
                 </span>
                 <ColoredGrade
                   grade={payload[0].value}
@@ -536,7 +469,7 @@ export function GradeOverviewForSubject({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Subject
+                  {t("subjects.subject")}
                 </span>
                 <span className="font-bold text-muted-foreground text-wrap break-words">
                   {label
@@ -546,7 +479,7 @@ export function GradeOverviewForSubject({
               </div>
               <div className="flex flex-col">
                 <span className="text-[0.70rem] uppercase text-muted-foreground">
-                  Date
+                  {t("grades.date")}
                 </span>
                 <span className="font-bold text-muted-foreground">
                   {label
@@ -567,9 +500,7 @@ export function GradeOverviewForSubject({
     <Card className={className}>
       <CardHeader>
         <CardTitle>{t("overview.title")}</CardTitle>
-        <CardDescription>
-          This is an overview of your grades in this subject
-        </CardDescription>
+        <CardDescription>{t("overview.subject-description")} </CardDescription>
       </CardHeader>
       {data.length === 0 ? (
         <CardContent>
@@ -608,15 +539,19 @@ export function GradeOverviewForSubject({
                 tick={false}
                 label={
                   preferences.passingInverse
-                    ? "Lower is better"
-                    : "Higher is better"
+                    ? t("overview.lower-is-better")
+                    : t("overview.higher-is-better")
                 }
               />
               <ReferenceLine
                 y={preferences.passingGrade!}
                 label={
                   <Label
-                    value={isMobile ? "Pass" : "Passing Grade"}
+                    value={
+                      isMobile
+                        ? t("overview.passing-short")
+                        : t("overview.passing-long")
+                    }
                     dx={isMobile ? 50 : 100}
                     opacity={0.8}
                     dy={
@@ -634,7 +569,11 @@ export function GradeOverviewForSubject({
                 y={getTotalGradeAverages(data)}
                 label={
                   <Label
-                    value={isMobile ? "You" : "Your Average"}
+                    value={
+                      isMobile
+                        ? t("overview.you-short")
+                        : t("overview.you-long")
+                    }
                     opacity={0.6}
                     dx={isMobile ? -50 : -100}
                     z={0}
@@ -710,13 +649,13 @@ export function GradeOverviewForSubject({
           </CardBoard>
           <Card>
             <CardHeader className="flex-row gap-3">
-              Subject Average
+              {t("overview.subject-average-title")}
               <Popover>
                 <PopoverTrigger>
-                  <Badge variant="outline">?</Badge>
+                  <Badge variant="outline">{t("generic.help-icon")}</Badge>
                 </PopoverTrigger>
                 <PopoverContent>
-                  This reflects your average grade in this subject.
+                  {t("overview.subject-average-grade")}
                 </PopoverContent>
               </Popover>
             </CardHeader>

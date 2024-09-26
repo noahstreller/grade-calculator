@@ -14,11 +14,11 @@ import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { PreferencesTranslations } from "@/lib/translationObjects";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function Onboarding() {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
   const preferences = usePreferences();
   const { isMobile, isTablet, isDesktop } = useDevice();
 
@@ -52,9 +52,11 @@ export function Onboarding() {
       <div className="fixed inset-0 flex flex-col items-center justify-start bg-background z-50 pt-8 overflow-scroll">
         <div className="items-center gap-8 flex flex-col">
           <h1 className="text-4xl font-bold tracking-tight text-white-900 sm:text-6xl">
-            <span className="text-muted-foreground">Grades</span>
+            <span className="text-muted-foreground">
+              {t("app.short-title")}
+            </span>
             <br />
-            Onboarding
+            {t("onboarding.title")}
           </h1>
         </div>
         <div
@@ -76,11 +78,13 @@ export function Onboarding() {
             {selectedTemplate && (
               <Card className={cn(isMobile ? "max-w-80" : "max-w-md")}>
                 <CardHeader>
-                  <CardTitle>Advanced Settings</CardTitle>
+                  <CardTitle>{t("onboarding.advanced-settings")}</CardTitle>
                   <CardDescription>
-                    Hit <Highlight>Save</Highlight> to apply your changes and
-                    complete the onboarding.
-                    <br /> You can change this in the settings at any time.
+                    {t.rich("onboarding.advanced-settings-description", {
+                      highlight: (children) => (
+                        <Highlight>{children}</Highlight>
+                      ),
+                    })}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

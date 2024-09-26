@@ -41,7 +41,7 @@ import { deleteSubjectToast } from "@/lib/toasts";
 import { AverageWithSubject } from "@/types/types";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Bird, FilterX } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export function AllSubjects({
@@ -57,7 +57,7 @@ export function AllSubjects({
   setData: Function;
   refresh: Function;
 }) {
-  const { t, lang } = useTranslation("common");
+  const t = useTranslations();
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
   const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
@@ -71,9 +71,27 @@ export function AllSubjects({
   const [originalSubject, setOriginalSubject] = useState<Subject | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
     value: "all",
-    label: "Show all",
+    label: t("filters.show-all"),
     icon: <FilterX className="size-4 mr-2" />,
   });
+
+  const colTranslations = {
+    grades: {
+      grade: t("grades.grade"),
+      subject: t("grades.subject"),
+    },
+    screenreader: {
+      openMenu: t("screenreader.open-menu"),
+    },
+    subjects: {
+      actions: {
+        title: t("subjects.actions.title"),
+        edit: t("subjects.actions.edit"),
+        delete: t("subjects.actions.delete"),
+        view: t("subjects.actions.view"),
+      },
+    },
+  };
 
   useEffect(() => {
     if (selectedStatus?.value === "all") {
@@ -148,9 +166,11 @@ export function AllSubjects({
               <Dialog open={editOpen} onOpenChange={setEditOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Edit Subject</DialogTitle>
+                    <DialogTitle>
+                      {t("subjects.actions.edit-title")}
+                    </DialogTitle>
                     <DialogDescription>
-                      Change the details of the subject
+                      {t("subjects.actions.edit-desc")}
                     </DialogDescription>
                   </DialogHeader>
                   <EditSubjectForm
@@ -166,7 +186,8 @@ export function AllSubjects({
                     setSubjectToDelete,
                     setOriginalSubject,
                     setDeleteConfirmOpen,
-                    setEditOpen
+                    setEditOpen,
+                    colTranslations
                   )}
                   data={currentData}
                 />
@@ -246,9 +267,9 @@ export function AllSubjects({
             <Drawer open={editOpen} onOpenChange={setEditOpen}>
               <DrawerContent className="sm:max-w-[425px]">
                 <DrawerHeader>
-                  <DrawerTitle>Edit Subject</DrawerTitle>
+                  <DrawerTitle>{t("subjects.actions.edit-title")}</DrawerTitle>
                   <DrawerDescription>
-                    Change the details of the subject
+                    {t("subjects.actions.edit-desc")}
                   </DrawerDescription>
                 </DrawerHeader>
                 <EditSubjectForm
@@ -264,7 +285,8 @@ export function AllSubjects({
                   setSubjectToDelete,
                   setOriginalSubject,
                   setDeleteConfirmOpen,
-                  setEditOpen
+                  setEditOpen,
+                  colTranslations
                 )}
                 data={currentData}
               />

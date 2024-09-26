@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { CategoryGroup } from "@/components/category-group";
+import { LanguageSelectionLandingPage } from "@/components/language-selection";
 import { LoggedInAvatar } from "@/components/logged-in-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,7 +8,7 @@ import {
   PreferencesTranslations,
 } from "@/lib/translationObjects";
 import { Trash2 } from "lucide-react";
-import useTranslation from "next-translate/useTranslation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { isMobile } from "react-device-detect";
 import { ClearDataButton } from "./clear-data-button";
@@ -17,13 +18,16 @@ import { SettingsModal } from "./settings-modal";
 import { ThemeSwitcher } from "./theme-switcher";
 
 export default function HeaderComponent() {
-  const { t } = useTranslation("common");
+  const t = useTranslations();
 
   const clearDataTranslations: ClearDataTranslations = {
     prompt: t("actions.clear-data.prompt"),
     message: t("actions.clear-data.message"),
     cancel: t("actions.cancel"),
     dangerContinue: t("actions.danger-continue"),
+    actions: {
+      clearGradesOnly: t("actions.clear-grades-only"),
+    },
   };
 
   const preferencesTranslations: PreferencesTranslations = {
@@ -72,7 +76,7 @@ export default function HeaderComponent() {
             "hidden xs:inline-block  sm:hidden text-3xl font-bold text-foreground whitespace-nowrap select-none"
           }
         >
-          Grades
+          {t("app.short-title")}
         </h1>
       </Link>
       {isMobile ? null : (
@@ -90,10 +94,10 @@ export default function HeaderComponent() {
               className="hover:text-red-400"
             >
               <Trash2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all text-inherit" />
-              <span className="sr-only">Delete all data</span>
             </Button>
           </ClearDataButton>
           <ImportExportButton />
+          <LanguageSelectionLandingPage />
           <ThemeSwitcher />
         </div>
         <SettingsModal

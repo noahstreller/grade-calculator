@@ -1,0 +1,457 @@
+{
+  "filters": {
+    "failing": "Nicht bestanden",
+    "filter-by-category": "Nach Kategorien filtern",
+    "filter-by-subject": "Nach Fach filtern",
+    "filter-by-template": "Vorlage suchen...",
+    "passing": "Bestanden",
+    "show-all": "Alle anzeigen",
+    "filter-by-language": "Nach Sprache filtern"
+  },
+  "generic": {
+    "asterisk": "*",
+    "back": "Zurück",
+    "doit": "Mach es.",
+    "env": {
+      "development": "Entwicklung",
+      "production": "Produktion"
+    },
+    "false": "Falsch",
+    "greater-than": ">",
+    "help-icon": "?",
+    "home": "Startseite",
+    "id": "ID",
+    "less-than": "<",
+    "loading": "Lädt...",
+    "multiplication": "×",
+    "name": "Name",
+    "nevermind": "Vergiss es",
+    "no": "Nein",
+    "page": "Seite",
+    "page-x-of-y": "Seite <index></index> von <total></total>",
+    "time": {
+      "hours": "{count, plural, =1 {Stunde} other {Stunden}}",
+      "minutes": "{count, plural, =1 {Minute} other {Minuten}}",
+      "seconds": "{count, plural, =1 {Sekunde} other {Sekunden}}"
+    },
+    "true": "Wahr",
+    "yes": "Ja",
+    "language": "Sprache (Language)",
+    "reload": "Aktualisieren"
+  },
+  "grades": {
+    "academic-relevance-title": "Versetzungs-/Promotionsfach",
+    "add-placeholder": "Note eingeben",
+    "add-success": "Die Note wurde hinzugefügt",
+    "all-grades": "Alle Noten",
+    "all-grades-desc": "Alle aktuellen Noten sind hier aufgelistet",
+    "badge-weight": "Diese Note wird mit <weight></weight> gewichtet",
+    "change-details": "Ändere hier die Notendetails",
+    "copy": "Kopieren",
+    "date": "Datum",
+    "date-prompt": "Wähle ein Datum (optional)",
+    "description": "Beschreibung",
+    "description-prompt": "Füge eine kurze Beschreibung hinzu (optional)",
+    "edit": {
+      "desc": "Ändere hier die Notendetails",
+      "title": "Note bearbeiten"
+    },
+    "failing-grades": "Nicht bestandene Noten",
+    "grade": "Note",
+    "grades": "{count, plural, =1 {Note} other {Noten}}",
+    "notfound": "Keine Noten gefunden",
+    "passing-grades": "Bestandene Noten",
+    "simulatedWeight-description": "Wenn du die Gewichtung der nächsten Prüfung (oder die Anzahl der Prüfungen) kennst, kannst du dies hier eingeben.",
+    "simulatedWeight-label": "Wenn deine nächste Prüfung mit <weight></weight> gewichtet wird, benötigst du die folgende Note:",
+    "subject": "Fach",
+    "weight": "Gewichtung",
+    "weight-placeholder": "Gewichtung eingeben (optional)",
+    "actions": {
+      "delete": "Note löschen",
+      "edit": "Note bearbeiten",
+      "title": "Aktionen"
+    },
+    "add": "Note hinzufügen",
+    "add-desc": "Füge eine neue Note zur Liste hinzu",
+    "show-passing-grades": "<green>Bestehende</green> Fächer"
+  },
+  "landing-page": {
+    "about": {
+      "credit-description": "Dieses Projekt verwendet einige Komponenten von <shadcn>shadcn/ui</shadcn> und <aceternity>Aceternity-UI</aceternity>.",
+      "description": "Einige zusätzliche Informationen zu diesem Projekt.",
+      "description-label": "Beschreibung",
+      "short-description": "Dieses Projekt ist ein Notenrechner/Dashboard. Es bietet einige Anpassungsmöglichkeiten; du kannst zum Beispiel die Notenskala selbst definieren. Momentan unterstützt es nur <green>numerische Skalen</green> und keine <red>Buchstabennoten</red>.",
+      "source-code-description": "Du findest den Quellcode dieses Projekts auf GitHub.",
+      "source-code-label": "Quellcode",
+      "source-code-link": "Auf GitHub ansehen",
+      "title": "Über dieses Projekt"
+    },
+    "demo-card": {
+      "demo-averages": "Durchschnitte",
+      "demo-calculator": "Rechner",
+      "demo-grades": "Noten",
+      "description": "Hier kannst du verschiedene Demos ausprobieren.",
+      "title": "Demo"
+    },
+    "getting-started-about": {
+      "cloud-desc": "Dieser Notenrechner bietet eine <yellow>cloud-synchronisierte</yellow> und eine <yellow>Legacy-Version</yellow>, die alle Daten lokal in deinem Browser speichert.",
+      "cloud-desc-link": "Um die Cloud-Version zu nutzen, musst du dich zuerst anmelden. Um auf die Legacy-Version zuzugreifen, <link>klicke hier</link>.",
+      "title": "Erste Schritte",
+      "to-legacy-long": "Nutze die Legacy-Version",
+      "to-legacy-short": "Legacy",
+      "to-the-app-long": "Weiter zur App",
+      "to-the-app-short": "Zur App"
+    },
+    "getting-started-tab": {
+      "description": "Du kannst sofort mit dem Notenrechner loslegen",
+      "title": "Erste Schritte"
+    },
+    "open-image": "Bild öffnen",
+    "screenshot-dark-mode": "Screenshot Dunkelmodus",
+    "screenshot-desc": "So sieht der Notenrechner aus.",
+    "screenshot-light-mode": "Screenshot Lichtmodus",
+    "screenshot-title": "Screenshot",
+    "tabs": {
+      "getting-started": "Erste Schritte",
+      "learn-more": "Mehr erfahren"
+    }
+  },
+  "onboarding": {
+    "advanced-settings": "Erweiterte Einstellungen",
+    "advanced-settings-description": "Klicke auf <highlight>Speichern</highlight>, um deine Änderungen zu übernehmen und das Onboarding abzuschliessen. Du kannst dies jederzeit in den Einstellungen ändern.",
+    "templates": {
+      "apply": "Vorlage anwenden",
+      "description": "Wähle eine Vorlage oder nutze die erweiterten Einstellungen.",
+      "select-prompt": "Vorlage auswählen",
+      "title": "Vorlage"
+    },
+    "title": "Onboarding"
+  },
+  "overview": {
+    "passing-short": "Bestanden",
+    "subject-average-grade": "Das spiegelt deinen Durchschnitt in diesem Fach wider.",
+    "subject-average-title": "Fachdurchschnitt",
+    "subject-description": "Eine Übersicht über deine Noten in diesem Fach",
+    "title": "Überblick",
+    "total-average": "Das spiegelt deinen Gesamtdurchschnitt in allen Fächern wider.",
+    "you-long": "Dein Durchschnitt",
+    "you-short": "Du",
+    "description": "Hier siehst du eine Übersicht deiner Noten und Fächer",
+    "higher-is-better": "Höher ist besser",
+    "lower-is-better": "Niedriger ist besser",
+    "passing-long": "Bestanden"
+  },
+  "preferences": {
+    "alert-description": "Nicht gespeicherte Änderungen werden verworfen, wenn du dieses Fenster schliesst. Speichere sie unten.",
+    "alert-title": "Wichtig!",
+    "description": "Wenn deine Noten deinen neuen Präferenzen widersprechen, werden sie entsprechend angepasst.",
+    "grade-decimals": "Dezimalstellen der Noten",
+    "grade-decimals-description": "Wie viele Dezimalstellen du in deinen Noten sehen möchtest",
+    "grade-decimals-placeholder": "Anzahl der Dezimalstellen eingeben",
+    "keep-modals-open": "Modals offen lassen",
+    "keep-modals-open-description": "Wenn aktiviert, bleiben die Modals nach dem Abschicken eines Formulars offen",
+    "maximum-grade": "Höchstnote",
+    "maximum-grade-description": "Die höchste Note, die du bekommen kannst",
+    "maximum-grade-placeholder": "Höchstnote eingeben",
+    "minimum-grade": "Mindestnote",
+    "minimum-grade-description": "Die niedrigste Note, die du bekommen kannst",
+    "minimum-grade-placeholder": "Mindestnote eingeben",
+    "passing-grade": "Bestanden",
+    "passing-grade-description": "Die Note, die du zum Bestehen brauchst",
+    "passing-grade-placeholder": "Bestandene Note eingeben",
+    "passing-inverse": "Inverses Notensystem",
+    "passing-inverse-description": "Wenn aktiviert, sind niedrigere Noten besser",
+    "quick-settings": "Schnelleinstellungen",
+    "title": "Präferenzen",
+    "language": {
+      "description": "Diese Einstellung wird übernommen, sobald du die Seite aktualisierst (oder der Aktualisieren-Button betätigt wird)"
+    }
+  },
+  "privacy-policy": {
+    "data-usage": {
+      "title": "Wie werden deine Daten verwendet?",
+      "description": "Deine Daten werden verwendet, um dir die auf dieser Web-App angebotenen Dienste bereitzustellen. Sie werden sicher gespeichert und nicht an Dritte weitergegeben."
+    },
+    "deletion": {
+      "description": "Ja, Du kannst dein Konto und alle zugehörigen Daten jederzeit in der Web-App löschen, indem Du auf <b>Einstellungen</b> klickst und dann <b>Konto löschen</b> wählst. \nDadurch werden <b>unmittelbar all deine Daten gelöscht</b>. Dies kann nicht rückgängig gemacht werden! \nDu kannst auch eine Datenlöschung beantragen, indem du mich per E-Mail kontaktierst: <maillink></maillink>",
+      "title": "Kann ich mein Konto und alle zugehörigen Daten löschen?"
+    },
+    "legal-note": "Ich kenne mich in rechtlichen Angelegenheiten nicht wirklich aus, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
+    "security": {
+      "description": "Du kannst die Legacy-Version dieser Web-App verwenden, die keine Daten auf einem Server speichert.",
+      "title": "Dein Code ist nicht sicher genug für meine Bedürfnisse, und ich vertraue dir meine Daten nicht an."
+    },
+    "storage": {
+      "description": "Deine Daten werden in einer Datenbank auf einem Server in Österreich gespeichert.",
+      "title": "Wie werden deine Daten gespeichert?"
+    },
+    "subtitle": "Diese Datenschutzerklärung erklärt, wie deine Daten gespeichert werden und zu welchem Zweck.",
+    "what-is-collected": {
+      "avatar": "Dein Avatar",
+      "email": "Deine E-Mail-Adresse",
+      "grades": "Deine Noten, Fächer und Einstellungen <note>(alles, was du zu dieser Web-App hinzufügst)</note>",
+      "title": "Welche Daten werden erhoben?",
+      "username": "Dein Benutzername <note>(den du beim Anbieter nutzt, bei dem du dich anmeldest, z. B. Discord)</note>"
+    }
+  },
+  "required-grades": {
+    "description": "Die Noten, die du zum Bestehen deiner Fächer brauchst",
+    "passed": "um weiterhin zu bestehen",
+    "required": "zum Bestehen",
+    "simulated-weight": "Simulierte Gewichtung",
+    "title": "Erforderliche Noten"
+  },
+  "screenreader": {
+    "open-menu": "Menü öffnen"
+  },
+  "semesters": {
+    "actions": {
+      "create": {
+        "description": "Du kannst ein neues Semester beginnen und deine aktuellen Noten exportieren sowie entscheiden, welche Daten du behalten möchtest",
+        "options": {
+          "archive": "<highlight>Archivieren</highlight> deiner aktuellen Daten",
+          "export-to-file": "Exportiere deine aktuellen Daten in eine <highlight>Datei</highlight>",
+          "keep-grades": "Behalte die aktuellen <highlight>Noten</highlight>",
+          "keep-subjects": "Behalte die aktuellen <highlight>Fächer</highlight>"
+        },
+        "title": "Neues Semester"
+      }
+    },
+    "archive": {
+      "download": "Herunterladen",
+      "title": "Archiv",
+      "view": "Archiv ansehen",
+      "dates": "Archiviert: <absolutetime></absolutetime> (<relativetime></relativetime>)",
+      "description": "Du siehst nun die archivierten Daten. Du kannst sie hier herunterladen oder löschen.",
+      "description-empty": "Hier kannst du archivierte Daten einsehen."
+    }
+  },
+  "subject-details": {
+    "subject-grades": {
+      "title": "Fachnoten"
+    },
+    "title": "Fach-Details"
+  },
+  "subjects": {
+    "actions": {
+      "title": "Aktionen",
+      "view": "Details anzeigen",
+      "delete": "Fach löschen",
+      "edit": "Fach bearbeiten",
+      "edit-desc": "Ändere die Details des Fachs",
+      "edit-title": "Fach bearbeiten"
+    },
+    "add": "Fach hinzufügen",
+    "add-desc": "Füge der Liste ein neues Fach hinzu",
+    "add-placeholder": "Fach eingeben",
+    "add-success": "Das Fach wurde hinzugefügt",
+    "all-subjects": "Alle Fächer",
+    "all-subjects-desc": "Alle Fächer sind hier aufgelistet",
+    "badge-noweight-empty": "Dieses Fach enthält <b>weightedAmount</b> Noten",
+    "badge-noweight-not-empty": "Dieses Fach enthält <weightedAmount></weightedAmount> {count, plural, =1 {Note} other {Noten}} mit einer Notensumme von <gradeSum></gradeSum>",
+    "failing-title": "Zu überarbeitende Fächer",
+    "grade-count": "Anzahl Noten",
+    "grade-count-weighted": "Anzahl Noten (inkl. Gewichtung)",
+    "grade-sum": "Notensumme",
+    "grade-sum-weighted": "Notensumme (inkl. Gewichtung)",
+    "notfound": "Keine Fächer gefunden. Bitte füge zuerst ein Fach hinzu",
+    "passing-subjects": "Bestandene Fächer",
+    "passing-subjects-desc": "Dies sind die Fächer, in denen du bestehst. Mach weiter so!",
+    "relevance": {
+      "description-excluded": "Dieses Fach wird bei der Berechnung des Gesamtdurchschnitts <highlight>ignoriert</highlight>",
+      "description-included": "Dieses Fach wird bei der Berechnung des Gesamtdurchschnitts <highlight>einbezogen</highlight>",
+      "title": "Versetzungs-/Promotionsfach"
+    },
+    "badge-weight-not-empty": "Dieses Fach enthält <averageGrade></averageGrade> {count, plural, =1 {Note} other {Noten}} mit einer Gesamtgewichtung von <weightedAmount></weightedAmount> und einer Notensumme von <gradeSum></gradeSum>",
+    "delete": {
+      "message": "Möchtest du dieses Fach wirklich löschen? Dadurch werden auch alle zugehörigen Noten gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "prompt": "Löschen"
+    },
+    "failing-subjects": "Nicht bestandene Fächer",
+    "failing-subjects-desc": "Dies sind die Fächer, in denen du nicht bestehst. Darauf solltest du dich konzentrieren.",
+    "search": "Fächer suchen",
+    "select-subject": "Fach auswählen",
+    "subject": "Fach"
+  },
+  "actions": {
+    "cancel": "Abbrechen",
+    "clear-account-data": "Kontodaten löschen",
+    "clear-account-data-warning": "Bist du sicher, dass du alle deine Kontodaten löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "clear-data": {
+      "message": "Bist du sicher, dass du alle Fächer und Noten in dieser Kategorie löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden. Deine Einstellungen bleiben erhalten.",
+      "prompt": "Alle Daten löschen"
+    },
+    "clear-grades-only": "Nur Noten löschen",
+    "copy": {
+      "prompt": "Kopieren",
+      "success": "Kopiert"
+    },
+    "danger-continue": "Verstanden, weiter",
+    "delete-account": "Konto löschen",
+    "delete": {
+      "prompt": "Löschen",
+      "success": "Das Element wurde gelöscht"
+    },
+    "edit": {
+      "prompt": "Bearbeiten",
+      "success": "Das Element wurde bearbeitet"
+    },
+    "export": {
+      "description-clipboard": "JSON wurde in die Zwischenablage kopiert",
+      "description-json": "JSON als Datei exportiert",
+      "success": "Daten erfolgreich exportiert"
+    },
+    "ok": "Verstanden",
+    "reset": "Zurücksetzen",
+    "save": "Speichern",
+    "submit": "Absenden",
+    "undo": "Rückgängig"
+  },
+  "app": {
+    "description": "Ein einfacher Notenrechner für Schüler und Studenten.",
+    "short-title": "Noten",
+    "title": "Notenrechner"
+  },
+  "auth": {
+    "check-spam": "Überprüfe deinen Spam-Ordner, wenn du keine E-Mail erhalten hast.",
+    "enter-email": "E-Mail-Adresse eingeben",
+    "legacy": {
+      "description": "Wenn du deine Daten lieber lokal speichern möchtest, kannst du die Legacy-Version verwenden."
+    },
+    "login": "Anmelden",
+    "login-now": "Jetzt anmelden",
+    "logout": "Abmelden",
+    "magic-link": "Du kannst auch einen magischen Link anfordern, um dich mit deiner E-Mail-Adresse anzumelden.",
+    "providers": {
+      "discord": "Discord",
+      "email": "E-Mail-Anmeldung",
+      "github": "GitHub",
+      "google": "Google",
+      "local": "Lokal"
+    },
+    "request-link": "Link anfordern",
+    "return-home": "Zurück zur Startseite",
+    "sent-mail": "Versendet",
+    "sent-mail-desc": "Dein <highlight>magischer Link</highlight> ist unterwegs! Überprüfe deinen Posteingang.",
+    "sent-mail-might-take-a-moment": "Es kann einen Moment dauern, bis er ankommt.",
+    "sign-in": "Anmelden",
+    "sign-in-desc": "Melde dich mit einem der untenstehenden Anbieter an."
+  },
+  "categories": {
+    "add": {
+      "description": "Kategorien helfen dir, deine Noten zu trennen. Nützlich, wenn du mehrere Schulen besuchst.",
+      "title": "Kategorie hinzufügen"
+    },
+    "delete": "Kategorie löschen",
+    "delete-data": "Kategoriedaten löschen",
+    "edit": {
+      "description": "Bearbeite oder lösche deine Kategorien. Du kannst die aktuell ausgewählte Kategorie nicht löschen.",
+      "title": "Kategorie bearbeiten"
+    },
+    "enter-name-prompt": "Kategorie-Namen eingeben",
+    "manage": {
+      "description": "Verwalte deine Kategorien in diesem Abschnitt."
+    },
+    "name-label": "Kategorie-Name",
+    "to-change-label": "Kategorie ändern"
+  },
+  "cookie-policy": {
+    "i-dont-want-cookies": {
+      "how-to-clear-cookies": "Um zu verhindern, dass Cookies gespeichert werden, kannst du sie in deinen Browsereinstellungen deaktivieren und die Cookies von deinem Gerät löschen.",
+      "legacy-ad": "Alternativ kannst du die Legacy-Version dieser Web-App verwenden, die keine Cookies speichert. Beachte, dass die Legacy-Version nicht weiterentwickelt wird.",
+      "title": "Ich möchte keine Cookies!"
+    },
+    "legal-note": "Ich kenne mich in rechtlichen Angelegenheiten nicht wirklich aus, hier fehlt wahrscheinlich einiges. Wenn du Fragen hast, kannst du mich gerne kontaktieren: <maillink>dev@nstr.dev</maillink>",
+    "subtitle": "Diese Cookie-Richtlinie erklärt, welche Cookies gespeichert werden und zu welchem Zweck.",
+    "title": "Cookie-Richtlinie",
+    "what-is-saved": {
+      "cookieConsent": "<code>cookieConsent (persistent)</code>: Dieses Cookie wird verwendet, um das Cookie-Zustimmungsbanner anzuzeigen.",
+      "justification": "Diese Cookies sind notwendig für die ordnungsgemässe Funktion der Web-App. Alle Cookies werden von uns verwaltet und nicht an Dritte weitergegeben. Es werden keine Tracking- oder Analyse-Cookies verwendet. Sowohl dauerhafte als auch Sitzungscookies werden genutzt.",
+      "nextauth-callback-url": "<code>next-auth.callback-url (session)</code>: Dieses Cookie wird verwendet, um nach der Anmeldung zur App zurückzuleiten.",
+      "session-and-csrf-tokens": "<code>next-auth.csrf-token (session)</code> und <code>next-auth.session-token (persistent)</code>: Diese Cookies werden zur Authentifizierung verwendet.",
+      "title": "Welche Cookies werden gespeichert?"
+    },
+    "popup": {
+      "description": "Wir verwenden nur Cookies, die <highlight>notwendig</highlight> sind, damit diese Website funktioniert. \nWeitere Informationen findest du in <link>unseren Cookie-Richtlinien</link>.",
+      "title": "Wir verwenden Cookies"
+    }
+  },
+  "dashboard": {
+    "categorylist": "Zeigt Daten von <categorycount></categorycount> { count, plural, =1 {Kategorie} other {Kategorien} }",
+    "description": "Das Dashboard gibt dir einen Überblick über deine Durchschnittswerte aus allen Kategorien.",
+    "title": "Dashboard"
+  },
+  "data-management": {
+    "export": {
+      "clipboard": "Zwischenablage",
+      "json": "JSON-Datei",
+      "title": "Daten exportieren"
+    },
+    "import": {
+      "clipboard": "Zwischenablage",
+      "json": "JSON-Datei",
+      "title": "Daten importieren"
+    },
+    "replace": "Vorhandene Daten ersetzen",
+    "title": "Datenverwaltung"
+  },
+  "errors": {
+    "code": "Fehlercode:",
+    "import-failed": "Import fehlgeschlagen, möglicherweise sind die Daten ungültig",
+    "invalid-email-prompt": "Das muss eine gültige E-Mail-Adresse sein",
+    "invalid-type": {
+      "number": "Dieses Feld muss eine Zahl sein"
+    },
+    "max-lt-min": "Der Maximalwert muss grösser als der Minimalwert sein",
+    "message": "Ein Fehler ist aufgetreten",
+    "must-be-positive": "Die Gewichtung muss eine positive Zahl sein",
+    "no-archived-data": "Es wurden noch keine Daten archiviert. Du kannst Kategorien archivieren, indem du einen neuen Begriff in den Einstellungen beginnst.",
+    "no-categories": "Keine Kategorien",
+    "no-data-yet": "Noch keine Daten",
+    "no-data-yet-desc": "Füge zuerst ein paar Fächer und Noten hinzu :>",
+    "no-results": "Keine Ergebnisse.",
+    "no-template": "Keine Vorlage gefunden.",
+    "not-enough-data-yet": "Noch nicht genügend Daten",
+    "not-enough-data-yet-desc": "{count, plural, =1 {Füge mindestens eine Note hinzu, um dieses Diagramm zu sehen} =3 {Füge mindestens eine Note aus 3 verschiedenen Fächern hinzu, um dieses Diagramm zu sehen} other {Nicht genug Noten, um dieses Diagramm zu sehen}}",
+    "not-enough-data-yet-failing": "Noch keine nicht bestandenen Noten :)",
+    "not-enough-data-yet-grade": "{count, plural, =1 {Füge mindestens eine Note hinzu, um diese Tabelle zu sehen} other {Noch nicht genug Noten}}",
+    "not-enough-data-yet-passing": "Noch keine bestandenen Noten :(",
+    "not-enough-data-yet-subject": "Füge mindestens ein Fach hinzu, um diese Tabelle zu sehen",
+    "not-enough-data-yet-subject-detail": "Dieses Fach sieht bisher ziemlich leer aus",
+    "not-enough-subjects-yet-failing": "Noch keine nicht bestandenen Fächer :)",
+    "pass-gt-max": "Die bestandene Note muss unter der Höchstnote liegen",
+    "pass-lt-min": "Die bestandene Note muss über der Mindestnote liegen",
+    "required": "Dieses Feld ist erforderlich",
+    "select-template": "Bitte wähle eine Vorlage.",
+    "something-broke": "Etwas ist schiefgelaufen.",
+    "subject-not-found": "Wir können das gesuchte Fach nicht finden",
+    "try-again-or-contact": "Bitte versuche es erneut, nutze ein anderes Konto oder kontaktiere <mailbutton></mailbutton>, wenn das Problem weiterhin besteht.",
+    "unauthenticated-subject-details": "Du musst angemeldet sein, um die Fach-Details zu sehen",
+    "woops": "Hoppla."
+  },
+  "external": {
+    "cookie-policy": "Cookie-Richtlinie",
+    "legacy-version": "Legacy-Version",
+    "privacy-policy": "Datenschutzrichtlinie",
+    "source-code": "Quellcode"
+  },
+  "subject-overview": {
+    "description": "Hier siehst du eine Übersicht deiner Fächer",
+    "grade-average": "Notendurchschnitt",
+    "grade-average-desc": "Das wird aus allen deinen Noten berechnet, ohne Gewichtungen zu berücksichtigen",
+    "subject-average": "Gesamtdurchschnitt",
+    "subject-average-desc": "Das wird aus den Durchschnittsnoten deiner Fächer unter Berücksichtigung aller Gewichtungen berechnet",
+    "title": "Fachübersicht"
+  },
+  "themes": {
+    "dark": "Dunkel",
+    "light": "Hell",
+    "system": "System",
+    "title": "Design",
+    "toggle": "Design ändern"
+  },
+  "warnings": {
+    "irreversible": "Diese Aktion ist unwiderruflich",
+    "storage-waste": "Datenspeicher wachsen nicht auf Bäumen."
+  }
+}

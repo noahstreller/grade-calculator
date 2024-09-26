@@ -1,8 +1,9 @@
+![Banner](https://github.com/noahstreller/grade-calculator/blob/main/public/feature-banner.png?raw=true)
+
 # Grade Calculator - nstr.dev
 
 ![Status](https://status.cloud.nstr.dev/api/badge/1/status)
 ![Status](https://status.cloud.nstr.dev/api/badge/1/uptime/48)
-
 
 This is a grade calculator / dashboard that I built to have a better overview of my current academic performance. I was tired of always having to calculate the grade required to pass a subject. And to be honest, the grade dashboard of my school kinda sucks. The UI is horrible, and it doesn't show enough information for my needs. That's why I developed my own dashboard.
 

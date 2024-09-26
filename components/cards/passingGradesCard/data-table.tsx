@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -40,8 +41,9 @@ export function DataTable<TData, TValue>({
     { id: "grade", desc: true },
   ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
+    []
   );
+  const t = useTranslations();
   const table = useReactTable({
     initialState: {
       pagination: {
@@ -66,7 +68,7 @@ export function DataTable<TData, TValue>({
     <>
       <div className="w-full flex items-center py-4">
         <Input
-          placeholder="Filter by subject"
+          placeholder={t("filters.filter-by-subject")}
           value={
             (table.getColumn("subjectName")?.getFilterValue() as string) ?? ""
           }
@@ -88,7 +90,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -107,7 +109,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -119,7 +121,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("errors.no-results")}
                 </TableCell>
               </TableRow>
             )}
@@ -137,8 +139,10 @@ export function DataTable<TData, TValue>({
             <ArrowLeft size={16} />
           </Button>
           <span>
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
-            {table.getPageCount()}
+            {t.rich("generic.page-x-of-y", {
+              index: () => <>{table.getState().pagination.pageIndex + 1}</>,
+              total: () => <>{table.getPageCount()}</>,
+            })}
           </span>
           <Button
             variant="outline"

@@ -1,0 +1,458 @@
+{
+  "app": {
+    "title": "Grade Calculator",
+    "short-title": "Grades",
+    "description": "A simple grade calculator for students."
+  },
+  "grades": {
+    "grade": "Grade",
+    "grades": "{count, plural, =1 {Grade} other {Grades}}",
+    "weight": "Weight",
+    "weight-placeholder": "Enter weight (optional)",
+    "date": "Date",
+    "subject": "Subject",
+    "copy": "Copy",
+    "notfound": "No grades found",
+    "add": "Add Grade",
+    "add-desc": "Add a new grade to the list",
+    "add-success": "The grade was added",
+    "add-placeholder": "Enter grade",
+    "all-grades": "All Grades",
+    "all-grades-desc": "All recent grades are listed here",
+    "passing-grades": "Passing Grades",
+    "failing-grades": "Failing Grades",
+    "change-details": "Change the grade details here",
+    "description": "Description",
+    "actions": {
+      "title": "Actions",
+      "edit": "Edit grade",
+      "delete": "Delete grade"
+    },
+    "simulatedWeight-label": "If your next exam is weighted <weight></weight>, you will need:",
+    "simulatedWeight-description": "If you know the weight of the next exam (or the amount of exams), you can apply this number here.",
+    "edit": {
+      "title": "Edit Grade",
+      "desc": "Change the grade details here"
+    },
+    "academic-relevance-title": "Relevant for academic promotion",
+    "badge-weight": "This grade is weighted <weight></weight>",
+    "description-prompt": "Add a short description (optional)",
+    "date-prompt": "Pick a date (optional)",
+    "show-passing-grades": "Show <green>passing</green> grades"
+  },
+  "subjects": {
+    "subject": "Subject",
+    "add": "Add Subject",
+    "add-desc": "Add a new subject to the list",
+    "add-success": "The subject was added",
+    "add-placeholder": "Enter subject",
+    "notfound": "No subjects found, please add a subject first",
+    "search": "Search Subjects",
+    "all-subjects": "All Subjects",
+    "all-subjects-desc": "All subjects are listed here",
+    "passing-subjects": "Passing Subjects",
+    "passing-subjects-desc": "These are the subjects you are passing. Keep up the good work!",
+    "failing-subjects": "Failing Subjects",
+    "failing-subjects-desc": "These are the subjects you are failing. Therefore the subjects you should focus on.",
+    "delete": {
+      "prompt": "Delete",
+      "message": "Are you sure you want to delete this subject? This will also delete all grades associated. This action cannot be undone."
+    },
+    "failing-title": "Subjects to revise",
+    "actions": {
+      "edit-title": "Edit subject",
+      "edit-desc": "Change the details of the subject",
+      "title": "Actions",
+      "edit": "Edit subject",
+      "delete": "Delete subject",
+      "view": "View details"
+    },
+    "grade-count": "Grade count",
+    "grade-count-weighted": "Grade count (weights considered)",
+    "grade-sum": "Grade sum",
+    "grade-sum-weighted": "Grade sum (weights considered)",
+    "badge-noweight-empty": "This subject contains <b>weightedAmount</b> grades",
+    "badge-noweight-not-empty": "This subject contains <weightedAmount></weightedAmount> {count, plural, =1 {grade} other {grades}} with a grade sum of <gradeSum></gradeSum>",
+    "badge-weight-not-empty": "This subject contains <averageGrade></averageGrade> {count, plural, =1 {grade} other {grades}} with a total weight of <weightedAmount></weightedAmount> and a grade sum of <gradeSum></gradeSum>",
+    "select-subject": "Select subject",
+    "relevance": {
+      "title": "Relevant for academic promotion",
+      "description-included": "This subject will be <highlight>included</highlight> while calculating the total average",
+      "description-excluded": "This subject will be <highlight>ignored</highlight> while calculating the total average"
+    }
+  },
+  "preferences": {
+    "title": "Preferences",
+    "description": "If grades conflict with your new preferences, they will be adjusted accordingly.",
+    "grade-decimals": "Grade Decimals",
+    "grade-decimals-description": "How many decimals you want to see in your grades",
+    "grade-decimals-placeholder": "Enter number of decimals",
+    "keep-modals-open": "Keep Modals Open",
+    "keep-modals-open-description": "If enabled, modals will stay open after submitting a form",
+    "minimum-grade": "Minimum Grade",
+    "minimum-grade-description": "The lowest grade you can get",
+    "minimum-grade-placeholder": "Enter minimum grade",
+    "maximum-grade": "Maximum Grade",
+    "maximum-grade-description": "The highest grade you can get",
+    "maximum-grade-placeholder": "Enter maximum grade",
+    "passing-grade": "Passing Grade",
+    "passing-grade-description": "The grade you need to pass",
+    "passing-grade-placeholder": "Enter passing grade",
+    "passing-inverse": "Inverse Grade System",
+    "passing-inverse-description": "If enabled, the lower grades are considered better",
+    "alert-title": "Important!",
+    "alert-description": "Unsaved changes will be discarded if you close this sheet, please save them below.",
+    "quick-settings": "Adjust your quick settings",
+    "language": {
+      "description": "This setting will apply as soon as you refresh the page (or click on the reload button)"
+    }
+  },
+  "actions": {
+    "copy": {
+      "prompt": "Copy to clipboard",
+      "success": "Copied to clipboard"
+    },
+    "delete": {
+      "prompt": "Delete",
+      "success": "The item was deleted"
+    },
+    "edit": {
+      "prompt": "Edit",
+      "success": "The item was edited"
+    },
+    "danger-continue": "I understand, continue",
+    "cancel": "Cancel",
+    "ok": "Got it",
+    "submit": "Submit",
+    "undo": "Undo",
+    "reset": "Reset",
+    "save": "Save",
+    "clear-data": {
+      "prompt": "Clear all data",
+      "message": "Are you sure you want to delete all subjects and grades in this category? This action cannot be undone. Don't worry, your preferences will be kept."
+    },
+    "export": {
+      "success": "Data successfully exported",
+      "description-clipboard": "JSON was copied to clipboard",
+      "description-json": "JSON exported as file"
+    },
+    "delete-account": "Delete Account",
+    "clear-account-data": "Clear Account Data",
+    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone.",
+    "clear-grades-only": "Clear grades only"
+  },
+  "themes": {
+    "toggle": "Change Theme",
+    "title": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "errors": {
+    "required": "This field is required",
+    "message": "An error occurred",
+    "invalid-type": {
+      "number": "This field must be a number"
+    },
+    "no-results": "No results.",
+    "no-data-yet": "No data yet",
+    "no-data-yet-desc": "Add some subjects and grades first :>",
+    "not-enough-data-yet": "Not enough data yet",
+    "not-enough-data-yet-desc": "{count, plural, =1 {Add at least one grade to view this graph} =3 {Add at least one grade from 3 different subjects to view this graph} other {Not enough grades to view this graph}}",
+    "not-enough-data-yet-grade": "{count, plural, =1 {Add at least one grade to view this table} other {Not enough grades yet}}",
+    "not-enough-data-yet-failing": "No failing grades so far :)",
+    "not-enough-subjects-yet-failing": "No failing subjects so far :)",
+    "not-enough-data-yet-passing": "No passing grades so far :(",
+    "not-enough-data-yet-subject": "Add at least one subject to view this table",
+    "max-lt-min": "The maximum value must be greater than the minimum value",
+    "pass-gt-max": "The passing grade must be less than the maximum grade",
+    "pass-lt-min": "The passing grade must be greater than the minimum grade",
+    "import-failed": "Import failed, maybe the data is invalid",
+    "unauthenticated-subject-details": "You must be logged in to view subject details",
+    "woops": "Woops.",
+    "not-enough-data-yet-subject-detail": "This subject looks pretty empty so far",
+    "subject-not-found": "We cannot find the subject you are looking for",
+    "must-be-positive": "Weight must be a positive number",
+    "no-categories": "No Categories",
+    "select-template": "Please select a template.",
+    "no-template": "No template found.",
+    "invalid-email-prompt": "This must be a valid e-mail address",
+    "something-broke": "Something broke.",
+    "try-again-or-contact": "Please try again, use a different account or contact <mailbutton></mailbutton> if the issue persists.",
+    "code": "Error Code:",
+    "no-archived-data": "No data has been archived yet. You can archive categories by starting a new term in the settings."
+  },
+  "overview": {
+    "title": "Overview",
+    "description": "Here you can see an overview of your grades and subjects",
+    "lower-is-better": "Lower is better",
+    "higher-is-better": "Higher is better",
+    "passing-short": "Pass",
+    "passing-long": "Passing Grade",
+    "you-short": "You",
+    "you-long": "Your Average",
+    "subject-description": "This is an overview of your grades in this subject",
+    "subject-average-grade": "This reflects your average grade in this subject.",
+    "subject-average-title": "Subject Average",
+    "total-average": "This reflects your average grade in all subjects."
+  },
+  "subject-overview": {
+    "title": "Subject Overview",
+    "description": "Here you can see an overview of your subjects",
+    "subject-average": "Total Average",
+    "grade-average": "Grade Average",
+    "grade-average-desc": "This is calculated from all your grades, not considering weights",
+    "subject-average-desc": "This is calculated from your subject grade averages, considering all weights"
+  },
+  "required-grades": {
+    "title": "Required Grades",
+    "description": "The grades you need to pass your subjects",
+    "required": "to pass",
+    "passed": "to keep passing",
+    "simulated-weight": "Simulated weight"
+  },
+  "landing-page": {
+    "getting-started-about": {
+      "title": "Getting Started",
+      "to-the-app-short": "To the app",
+      "to-the-app-long": "Continue to the app",
+      "to-legacy-short": "Legacy",
+      "to-legacy-long": "Use the legacy version",
+      "cloud-desc": "This grade calculator features a <yellow>cloud synced</yellow> and a <yellow>legacy</yellow> version, which stores all data locally in your browser.",
+      "cloud-desc-link": "To use the cloud version, you must must log in first. To access the legacy version, <link>click here</link>."
+    },
+    "tabs": {
+      "getting-started": "Getting Started",
+      "learn-more": "Learn More"
+    },
+    "getting-started-tab": {
+      "title": "Getting Started",
+      "description": "You can start using the grade calculator right away"
+    },
+    "about": {
+      "title": "About this project",
+      "description": "Some boring additional information about this project.",
+      "description-label": "Description",
+      "short-description": "This project is a grade calculator / dashboard. It allows for some customization; for example, you are able to define the grading scale yourself. As of right now, it supports only <green>numeric scales</green> and does not support <red>letter grades</red>.",
+      "credit-description": "This project uses some components from <shadcn>shadcn/ui</shadcn> and <aceternity>Aceternity-UI</aceternity>.",
+      "source-code-label": "Source Code",
+      "source-code-description": "You can find the source code for this project on GitHub.",
+      "source-code-link": "View on GitHub"
+    },
+    "demo-card": {
+      "title": "Demo",
+      "description": "You can try out different demos here.",
+      "demo-grades": "Grades",
+      "demo-averages": "Averages",
+      "demo-calculator": "Calculator"
+    },
+    "open-image": "Open image",
+    "screenshot-title": "Screenshot",
+    "screenshot-light-mode": "Screenshot Light Mode",
+    "screenshot-dark-mode": "Screenshot Dark Mode",
+    "screenshot-desc": "This is what the grade calculator looks like."
+  },
+  "filters": {
+    "filter-by-subject": "Filter by subject",
+    "show-all": "Show all",
+    "passing": "Passing",
+    "failing": "Failing",
+    "filter-by-category": "Filter by categories",
+    "filter-by-template": "Search template...",
+    "filter-by-language": "Filter by language"
+  },
+  "generic": {
+    "page": "Page",
+    "home": "Home",
+    "name": "Name",
+    "id": "ID",
+    "yes": "Yes",
+    "true": "True",
+    "no": "No",
+    "false": "False",
+    "less-than": "<",
+    "greater-than": ">",
+    "help-icon": "?",
+    "multiplication": "×",
+    "page-x-of-y": "Page <index></index> of <total></total>",
+    "nevermind": "Nevermind",
+    "doit": "Do it.",
+    "asterisk": "*",
+    "time": {
+      "hours": "{count, plural, =1 {Hour} other {Hours}}",
+      "minutes": "{count, plural, =1 {Minute} other {Minutes}}",
+      "seconds": "{count, plural, =1 {Second} other {Seconds}}"
+    },
+    "loading": "Loading...",
+    "env": {
+      "production": "Production",
+      "development": "Development"
+    },
+    "back": "Back",
+    "language": "Language",
+    "reload": "Reload"
+  },
+  "screenreader": {
+    "open-menu": "Open menu"
+  },
+  "auth": {
+    "login-now": "Log in now",
+    "return-home": "Go home",
+    "logout": "Sign out",
+    "magic-link": "You can also request a magic link to sign in with your email address.",
+    "enter-email": "Enter your email address",
+    "request-link": "Request Link",
+    "sign-in": "Sign in",
+    "login": "Login",
+    "sign-in-desc": "Sign in to your account using one of the providers below.",
+    "providers": {
+      "local": "Local",
+      "discord": "Discord",
+      "github": "GitHub",
+      "google": "Google",
+      "email": "E-Mail sign-in"
+    },
+    "legacy": {
+      "description": "Check out the legacy version, if you prefer saving your data locally."
+    },
+    "sent-mail": "Sent",
+    "check-spam": "Make sure to check your spam folder, if you did not receive it.",
+    "sent-mail-desc": "Your <highlight>magic link</highlight> is on the way! Check your inbox.",
+    "sent-mail-might-take-a-moment": "It may take a moment to arrive."
+  },
+  "subject-details": {
+    "title": "Subject details",
+    "subject-grades": {
+      "title": "Subject Grades"
+    }
+  },
+  "categories": {
+    "add": {
+      "title": "Add category",
+      "description": "Categories separate your grades. Useful if you attend multiple schools."
+    },
+    "edit": {
+      "title": "Edit category",
+      "description": "Edit or delete your categories. You cannot delete the currently selected category."
+    },
+    "name-label": "Category Name",
+    "enter-name-prompt": "Enter category",
+    "to-change-label": "Category to change",
+    "delete": "Delete Category",
+    "manage": {
+      "description": "You can manage your categories in this section."
+    },
+    "delete-data": "Delete category data"
+  },
+  "onboarding": {
+    "title": "Onboarding",
+    "advanced-settings": "Advanced Settings",
+    "advanced-settings-description": "Hit <highlight>Save</highlight> to apply your changes and complete the onboarding. You can change this in the settings at any time.",
+    "templates": {
+      "title": "Template",
+      "description": "Select a template or use the advanced settings.",
+      "select-prompt": "Select template",
+      "apply": "Apply template"
+    }
+  },
+  "external": {
+    "privacy-policy": "Privacy Policy",
+    "cookie-policy": "Cookie Policy",
+    "legacy-version": "Legacy Version",
+    "source-code": "Source Code"
+  },
+  "data-management": {
+    "title": "Manage data",
+    "replace": "Replace existing data",
+    "import": {
+      "title": "Import data",
+      "clipboard": "Clipboard",
+      "json": "JSON-File"
+    },
+    "export": {
+      "clipboard": "Clipboard",
+      "title": "Export data",
+      "json": "JSON-File"
+    }
+  },
+  "emails": {},
+  "cookie-policy": {
+    "title": "Cookie Policy",
+    "subtitle": "This cookie policy will clarify what cookies are saved and what purpose they serve.",
+    "legal-note": "I am not really familiar with legal matters, there is probably a lot of stuff missing here. If you have any questions, feel free to contact me: <maillink>dev@nstr.dev</maillink>",
+    "what-is-saved": {
+      "title": "What cookies are saved?",
+      "cookieConsent": "<code>cookieConsent (persistent)</code>: This cookie is used to display the cookie consent banner.",
+      "nextauth-callback-url": "<code>next-auth.callback-url (session)</code>: This cookie is used to redirect back to the app after logging in.",
+      "session-and-csrf-tokens": "<code>next-auth.csrf-token (session)</code> and <code>next-auth.session-token (persistent)</code>: These cookies are used for authentication.",
+      "justification": "These cookies are necessary for the web app to function properly. All cookies are administered by us and are not shared with third parties. We do not use any tracking or analytics cookies. Both persistent and session cookies are used."
+    },
+    "i-dont-want-cookies": {
+      "title": "I don't want cookies!",
+      "how-to-clear-cookies": "To prevent cookies from being stored, you can disable cookies in your browser settings and clear the cookies off your device.",
+      "legacy-ad": "Alternatively, you are free to use the legacy version of this web app, which does not store any cookies. Note that the legacy version is not actively developed."
+    },
+    "popup": {
+      "title": "We use cookies",
+      "description": "We only use cookies <highlight>necessary</highlight> for this site to work. For more information, please check <link>our cookie policy</link>."
+    }
+  },
+  "semesters": {
+    "actions": {
+      "create": {
+        "title": "New Term",
+        "description": "You can start a new term and export your current grades, as well as decide what data you wish to keep",
+        "options": {
+          "keep-subjects": "Keep current <highlight>subjects</highlight>",
+          "keep-grades": "Keep current <highlight>grades</highlight>",
+          "export-to-file": "Export your current data to a <highlight>file</highlight>",
+          "archive": "<highlight>Archive</highlight> your current data"
+        }
+      }
+    },
+    "archive": {
+      "view": "View archive",
+      "title": "Archive",
+      "description": "You are now viewing the data you have archived. You can download or delete it here.",
+      "description-empty": "You will be able to view archived data here.",
+      "dates": "Archived: <absolutetime></absolutetime> (<relativetime></relativetime>)",
+      "download": "Download"
+    }
+  },
+  "warnings": {
+    "irreversible": "This action is irreversible",
+    "storage-waste": "Data storage does not grow on trees."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "The dashboard helps you get an overview of your averages from all your categories.",
+    "categorylist": "Showing data from <categorycount></categorycount> { count, plural, =1 {category} other {categories} }"
+  },
+  "privacy-policy": {
+    "subtitle": "This privacy policy will clarify how your data is stored, and which purpose it serves.",
+    "legal-note": "I am not really familiar with legal matters, there is probably a lot of stuff missing here. If you have any questions, feel free to contact me: <maillink>dev@nstr.dev</maillink>",
+    "what-is-collected": {
+      "title": "What data is collected?",
+      "username": "Your username <note>(that you use on the service provider you sign in with, e.g. Discord)</note>",
+      "email": "Your email address",
+      "avatar": "Your avatar",
+      "grades": "Your grades, subjects and settings <note>(anything you add on this web app)</note>"
+    },
+    "data-usage": {
+      "title": "How is your data used?",
+      "description": "Your data is used to provide you with the services offered on this web app. It is stored securely and will not be shared with any third party."
+    },
+    "storage": {
+      "title": "How is your data stored?",
+      "description": "Your data is stored in a database, hosted on a server located in Austria."
+    },
+    "deletion": {
+      "title": "Can I delete my account and all associated data?",
+      "description": "Yes, you can delete your account and all associated data at any time inside the web app, by clicking on <b>Settings</b>, and then choosing <b>Delete Account</b>. This will <b>immediately remove all your data</b> and is irreversible! You can also request a data deletion by contacting me via email: <maillink></maillink>"
+    },
+    "security": {
+      "title": "Your code is not secure enough for my needs and I do not trust you with my data.",
+      "description": "You are free to use the legacy version of this web app, which does not store any data on a server."
+    }
+  }
+}
