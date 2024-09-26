@@ -129,7 +129,7 @@ export function TemplateSelector({
         />
         <Button variant={"secondary"} type="submit">
           <Wrench className="size-4 text-muted-foreground mr-2" />
-          {t("onboarding.templates.apply")}{" "}
+          {t("onboarding.templates.apply")}
         </Button>
       </form>
     </Form>

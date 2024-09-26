@@ -279,9 +279,9 @@
     "doit": "Do it.",
     "asterisk": "*",
     "time": {
-      "hours": "{{count, plural, =1 {Hour} other {Hours}}}",
-      "minutes": "{{count, plural, =1 {Minute} other {Minutes}}}",
-      "seconds": "{{count, plural, =1 {Second} other {Seconds}}}"
+      "hours": "{count, plural, =1 {Hour} other {Hours}}",
+      "minutes": "{count, plural, =1 {Minute} other {Minutes}}",
+      "seconds": "{count, plural, =1 {Second} other {Seconds}}"
     },
     "loading": "Loading...",
     "env": {

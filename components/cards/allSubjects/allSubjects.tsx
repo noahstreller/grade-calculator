@@ -170,7 +170,7 @@ export function AllSubjects({
                       {t("subjects.actions.edit-title")}
                     </DialogTitle>
                     <DialogDescription>
-                      {t("subjects.actions.edit-desc")}{" "}
+                      {t("subjects.actions.edit-desc")}
                     </DialogDescription>
                   </DialogHeader>
                   <EditSubjectForm

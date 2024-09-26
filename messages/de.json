@@ -30,9 +30,9 @@
     "page": "Seite",
     "page-x-of-y": "Seite <index></index> von <total></total>",
     "time": {
-      "hours": "{{count, plural, =1 {Stunde} other {Stunden}}}",
-      "minutes": "{{count, plural, =1 {Minute} other {Minuten}}}",
-      "seconds": "{{count, plural, =1 {Sekunde} other {Sekunden}}}"
+      "hours": "{count, plural, =1 {Stunde} other {Stunden}}",
+      "minutes": "{count, plural, =1 {Minute} other {Minuten}}",
+      "seconds": "{count, plural, =1 {Sekunde} other {Sekunden}}"
     },
     "true": "Wahr",
     "yes": "Ja",
