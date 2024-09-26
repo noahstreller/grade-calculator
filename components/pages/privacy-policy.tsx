@@ -31,10 +31,6 @@ export default function PrivacyPolicy() {
       </Breadcrumb>
       <h1 className="text-4xl font-bold leading-10">
         {t("external.privacy-policy")}
-        {" - "}
-        <span className="hidden lg:inline">
-          <Highlight colorName="blue">grades.nstr.dev</Highlight>
-        </span>
       </h1>
       <p>{t("privacy-policy.subtitle")}</p>
       <p className="text-sm text-muted-foreground">
