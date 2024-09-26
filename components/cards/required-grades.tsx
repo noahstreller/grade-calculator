@@ -120,9 +120,11 @@ function RequiredGradesBody({
   return (
     <CardBoard>
       <h2>
-        {t("grades.simulatedWeight-part1")}{" "}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>
-        {t("grades.simulatedWeight-part2")}
+        {t.rich("grades.simulatedWeight-label", {
+          weight: () => (
+            <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+          ),
+        })}
       </h2>
       {chunkPairs.length === 0 ? (
         <Alert>
@@ -218,11 +220,9 @@ export function RequiredGrades({
         <div className="flex items-center space-x-2">
           <Switch checked={showPassing} onCheckedChange={setShowPassing} />
           <Label>
-            {t("grades.show-passing-grades-part1")}
-            <span className="text-green-400">
-              {t("grades.show-passing-grades-part2")}
-            </span>
-            {t("grades.show-passing-grades-part3")}
+            {t.rich("grades.show-passing-grades", {
+              green: (text) => <span className="text-green-400">{text}</span>,
+            })}
           </Label>
         </div>
       </CardHeader>
@@ -336,9 +336,11 @@ function RequiredGradesBodyForSubject({
   return (
     <CardBoard>
       <h2>
-        {t("grades.simulatedWeight-part1")}
-        <Highlight colorName="yellow">{simulatedWeight}</Highlight>
-        {t("grades.simulatedWeight-part2")}
+        {t.rich("grades.simulatedWeight-label", {
+          weight: () => (
+            <Highlight colorName="yellow">{simulatedWeight}</Highlight>
+          ),
+        })}
       </h2>
       <Card>
         <CardHeader>

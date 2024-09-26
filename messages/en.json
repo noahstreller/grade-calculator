@@ -28,12 +28,8 @@
       "edit": "Edit grade",
       "delete": "Delete grade"
     },
-    "simulatedWeight-part1": "If your next exam is weighted",
-    "simulatedWeight-part2": ", you will need:",
+    "simulatedWeight-label": "If your next exam is weighted <weight></weight>, you will need:",
     "simulatedWeight-description": "If you know the weight of the next exam (or the amount of exams), you can apply this number here.",
-    "show-passing-grades-part1": "Show ",
-    "show-passing-grades-part2": "passing",
-    "show-passing-grades-part3": " grades",
     "edit": {
       "title": "Edit Grade",
       "desc": "Change the grade details here"
@@ -41,7 +37,8 @@
     "academic-relevance-title": "Relevant for academic promotion",
     "badge-weight": "This grade is weighted <weight></weight>",
     "description-prompt": "Add a short description (optional)",
-    "date-prompt": "Pick a date (optional)"
+    "date-prompt": "Pick a date (optional)",
+    "show-passing-grades": "Show <green>passing</green> grades"
   },
   "subjects": {
     "subject": "Subject",
@@ -212,7 +209,6 @@
     "description": "The grades you need to pass your subjects",
     "required": "to pass",
     "passed": "to keep passing",
-    "required-to-pass": "You need at least",
     "simulated-weight": "Simulated weight"
   },
   "landing-page": {
@@ -222,13 +218,8 @@
       "to-the-app-long": "Continue to the app",
       "to-legacy-short": "Legacy",
       "to-legacy-long": "Use the legacy version",
-      "cloud-desc-part1": "This grade calculator features a ",
-      "cloud-desc-part2": "cloud synced",
-      "cloud-desc-part3": " and a ",
-      "cloud-desc-part4": "legacy",
-      "cloud-desc-part5": " version, which stores all data locally in your browser.",
-      "cloud-desc-part6": "To use the cloud version, you must must log in first. To access the legacy version, ",
-      "cloud-desc-part7": "click here."
+      "cloud-desc": "This grade calculator features a <yellow>cloud synced</yellow> and a <yellow>legacy</yellow> version, which stores all data locally in your browser.",
+      "cloud-desc-link": "To use the cloud version, you must must log in first. To access the legacy version, <link>click here</link>."
     },
     "tabs": {
       "getting-started": "Getting Started",
@@ -242,16 +233,8 @@
       "title": "About this project",
       "description": "Some boring additional information about this project.",
       "description-label": "Description",
-      "short-description-part1": "This project is a grade calculator / dashboard. It allows for some customization; for example, you are                          able to define the grading scale yourself. As of right now, it ",
-      "short-description-part2": "supports only numeric scales",
-      "short-description-part3": " and ",
-      "short-description-part4": "does not support letter grades",
-      "short-description-part5": ".",
-      "credit-description-part1": "This project uses some components from ",
-      "credit-description-part2": "shadcn/ui",
-      "credit-description-part3": " and ",
-      "credit-description-part4": "Aceternity UI",
-      "credit-description-part5": ".",
+      "short-description": "This project is a grade calculator / dashboard. It allows for some customization; for example, you are able to define the grading scale yourself. As of right now, it supports only <green>numeric scales</green> and does not support <red>letter grades</red>.",
+      "credit-description": "This project uses some components from <shadcn>shadcn/ui</shadcn> and <aceternity>Aceternity-UI</aceternity>.",
       "source-code-label": "Source Code",
       "source-code-description": "You can find the source code for this project on GitHub.",
       "source-code-link": "View on GitHub"

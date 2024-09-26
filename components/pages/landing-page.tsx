@@ -83,33 +83,35 @@ export function LandingPage() {
                       </CardHeader>
                       <CardContent className="gap-5 flex flex-col">
                         <p>
-                          {t("landing-page.about.short-description-part1")}
-                          <Highlight colorName="green">
-                            {t("landing-page.about.short-description-part2")}
-                          </Highlight>
-                          {t("landing-page.about.short-description-part3")}
-                          <Highlight colorName="red">
-                            {t("landing-page.about.short-description-part4")}
-                          </Highlight>
-                          {t("landing-page.about.short-description-part5")}
+                          {t.rich("landing-page.about.short-description", {
+                            green: (text) => (
+                              <Highlight colorName="green">{text}</Highlight>
+                            ),
+                            red: (text) => (
+                              <Highlight colorName="red">{text}</Highlight>
+                            ),
+                          })}
                         </p>
                         <p>
-                          {t("landing-page.about.credit-description-part1")}
-                          <Highlight colorName="blue">
-                            <a target="_blank" href="https://ui.shadcn.com">
-                              {t("landing-page.about.credit-description-part2")}
-                            </a>
-                          </Highlight>
-                          {t("landing-page.about.credit-description-part3")}
-                          <Highlight colorName="blue">
-                            <a
-                              target="_blank"
-                              href="https://ui.aceternity.com/components"
-                            >
-                              {t("landing-page.about.credit-description-part4")}
-                            </a>
-                          </Highlight>
-                          {t("landing-page.about.credit-description-part5")}
+                          {t.rich("landing-page.about.credit-description", {
+                            shadcn: (text) => (
+                              <Highlight colorName="blue">
+                                <a target="_blank" href="https://ui.shadcn.com">
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                            aceternity: (text) => (
+                              <Highlight colorName="blue">
+                                <a
+                                  target="_blank"
+                                  href="https://ui.aceternity.com/components"
+                                >
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                          })}
                         </p>
                       </CardContent>
                     </Card>
@@ -121,40 +123,31 @@ export function LandingPage() {
                       </CardHeader>
                       <CardContent className="flex flex-col gap-5">
                         <p>
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part1"
-                          )}
-                          <Highlight colorName="yellow">
-                            {t(
-                              "landing-page.getting-started-about.cloud-desc-part2"
-                            )}
-                          </Highlight>
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part3"
-                          )}
-                          <Highlight colorName="yellow">
-                            {t(
-                              "landing-page.getting-started-about.cloud-desc-part4"
-                            )}
-                          </Highlight>
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part5"
+                          {t.rich(
+                            "landing-page.getting-started-about.cloud-desc",
+                            {
+                              yellow: (text) => (
+                                <Highlight colorName="yellow">{text}</Highlight>
+                              ),
+                            }
                           )}
                         </p>
                         <p>
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part6"
+                          {t.rich(
+                            "landing-page.getting-started-about.cloud-desc-link",
+                            {
+                              link: (text) => (
+                                <Highlight colorName="blue">
+                                  <a
+                                    target="_blank"
+                                    href="https://legacy.grades.nstr.dev"
+                                  >
+                                    {text}
+                                  </a>
+                                </Highlight>
+                              ),
+                            }
                           )}
-                          <Highlight colorName="blue">
-                            <a
-                              target="_blank"
-                              href="https://legacy.grades.nstr.dev"
-                            >
-                              {t(
-                                "landing-page.getting-started-about.cloud-desc-part7"
-                              )}
-                            </a>
-                          </Highlight>
                           <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                             <Button className="w-full shadow-md" asChild>
                               <Link href={"/login"}>
@@ -230,40 +223,31 @@ export function LandingPage() {
                     </CardHeader>
                     <CardContent className="flex flex-col gap-5">
                       <p>
-                        {t(
-                          "landing-page.getting-started-about.cloud-desc-part1"
-                        )}
-                        <Highlight colorName="yellow">
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part2"
-                          )}
-                        </Highlight>
-                        {t(
-                          "landing-page.getting-started-about.cloud-desc-part3"
-                        )}
-                        <Highlight colorName="yellow">
-                          {t(
-                            "landing-page.getting-started-about.cloud-desc-part4"
-                          )}
-                        </Highlight>
-                        {t(
-                          "landing-page.getting-started-about.cloud-desc-part5"
+                        {t.rich(
+                          "landing-page.getting-started-about.cloud-desc",
+                          {
+                            yellow: (text) => (
+                              <Highlight colorName="yellow">{text}</Highlight>
+                            ),
+                          }
                         )}
                       </p>
                       <p>
-                        {t(
-                          "landing-page.getting-started-about.cloud-desc-part6"
+                        {t.rich(
+                          "landing-page.getting-started-about.cloud-desc-link",
+                          {
+                            link: (text) => (
+                              <Highlight colorName="blue">
+                                <a
+                                  target="_blank"
+                                  href="https://legacy.grades.nstr.dev"
+                                >
+                                  {text}
+                                </a>
+                              </Highlight>
+                            ),
+                          }
                         )}
-                        <Highlight colorName="blue">
-                          <a
-                            target="_blank"
-                            href="https://legacy.grades.nstr.dev"
-                          >
-                            {t(
-                              "landing-page.getting-started-about.cloud-desc-part7"
-                            )}
-                          </a>
-                        </Highlight>
                         <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                           <Button className="w-full shadow-md" asChild>
                             <Link href={"/login"}>
@@ -303,33 +287,35 @@ export function LandingPage() {
                     </CardHeader>
                     <CardContent className="gap-5 flex flex-col">
                       <p>
-                        {t("landing-page.about.short-description-part1")}
-                        <Highlight colorName="green">
-                          {t("landing-page.about.short-description-part2")}
-                        </Highlight>
-                        {t("landing-page.about.short-description-part3")}
-                        <Highlight colorName="red">
-                          {t("landing-page.about.short-description-part4")}
-                        </Highlight>
-                        {t("landing-page.about.short-description-part5")}
+                        {t.rich("landing-page.about.short-description", {
+                          green: (text) => (
+                            <Highlight colorName="green">{text}</Highlight>
+                          ),
+                          red: (text) => (
+                            <Highlight colorName="red">{text}</Highlight>
+                          ),
+                        })}
                       </p>
                       <p>
-                        {t("landing-page.about.credit-description-part1")}
-                        <Highlight colorName="blue">
-                          <a target="_blank" href="https://ui.shadcn.com">
-                            {t("landing-page.about.credit-description-part2")}
-                          </a>
-                        </Highlight>
-                        {t("landing-page.about.credit-description-part3")}
-                        <Highlight colorName="blue">
-                          <a
-                            target="_blank"
-                            href="https://ui.aceternity.com/components"
-                          >
-                            {t("landing-page.about.credit-description-part4")}
-                          </a>
-                        </Highlight>
-                        {t("landing-page.about.credit-description-part5")}
+                        {t.rich("landing-page.about.credit-description", {
+                          shadcn: (text) => (
+                            <Highlight colorName="blue">
+                              <a target="_blank" href="https://ui.shadcn.com">
+                                {text}
+                              </a>
+                            </Highlight>
+                          ),
+                          aceternity: (text) => (
+                            <Highlight colorName="blue">
+                              <a
+                                target="_blank"
+                                href="https://ui.aceternity.com/components"
+                              >
+                                {text}
+                              </a>
+                            </Highlight>
+                          ),
+                        })}
                       </p>
                     </CardContent>
                   </Card>
@@ -468,23 +454,22 @@ function GettingStartedTab() {
 
           <CardContent className="flex flex-col gap-5">
             <p>
-              {t("landing-page.getting-started-about.cloud-desc-part1")}
-              <Highlight colorName="yellow">
-                {t("landing-page.getting-started-about.cloud-desc-part2")}
-              </Highlight>
-              {t("landing-page.getting-started-about.cloud-desc-part3")}
-              <Highlight colorName="yellow">
-                {t("landing-page.getting-started-about.cloud-desc-part4")}
-              </Highlight>
-              {t("landing-page.getting-started-about.cloud-desc-part5")}
+              {t.rich("landing-page.getting-started-about.cloud-desc", {
+                yellow: (text) => (
+                  <Highlight colorName="yellow">{text}</Highlight>
+                ),
+              })}
             </p>
             <p>
-              {t("landing-page.getting-started-about.cloud-desc-part6")}
-              <Highlight colorName="blue">
-                <a target="_blank" href="https://legacy.grades.nstr.dev">
-                  {t("landing-page.getting-started-about.cloud-desc-part7")}
-                </a>
-              </Highlight>
+              {t.rich("landing-page.getting-started-about.cloud-desc-link", {
+                link: (text) => (
+                  <Highlight colorName="blue">
+                    <a target="_blank" href="https://legacy.grades.nstr.dev">
+                      {text}
+                    </a>
+                  </Highlight>
+                ),
+              })}
               <div className="flex justify-center gap-5 mt-5 xl:flex-row flex-col">
                 <Button className="w-full shadow-md" asChild>
                   <Link href={"/login"}>
