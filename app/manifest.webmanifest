@@ -150,5 +150,6 @@
       "name": "Cookie Policy",
       "url": "/cookies"
     }
-  ]
+  ],
+  "display_override": ["window-controls-overlay"]
 }
