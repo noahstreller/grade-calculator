@@ -41,6 +41,36 @@
   ],
   "screenshots": [
     {
+      "src": "/mobilescreenshots/gradeoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/requiredgrades.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/newterm.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectdetails.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
       "src": "/mobilescreenshots/addgrade.jpg",
       "sizes": "1440x2560",
       "type": "image/jpg",
@@ -65,24 +95,6 @@
       "platform": "mobile"
     },
     {
-      "src": "/mobilescreenshots/gradeoverview.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/newterm.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/requiredgrades.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
       "src": "/mobilescreenshots/settings.jpg",
       "sizes": "1440x2560",
       "type": "image/jpg",
@@ -90,18 +102,6 @@
     },
     {
       "src": "/mobilescreenshots/settings2.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/subjectdetails.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/subjectoverview.jpg",
       "sizes": "1440x2560",
       "type": "image/jpg",
       "platform": "mobile"
