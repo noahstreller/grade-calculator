@@ -353,7 +353,7 @@ export function LandingPage() {
     },
   ];
   return (
-    <div className="w-screen h-fit">
+    <div className="w-full h-fit">
       <div className="[perspective:1000px] h-full relative b flex flex-col mx-auto w-11/12">
         <Tabs tabs={PAGE_TABS} />
       </div>
