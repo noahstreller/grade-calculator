@@ -109,6 +109,28 @@
   ],
   "id": "dev.nstr.gradecalculator",
   "lang": "en",
-  "orientation": "any",
-  "categories": ["education", "utilities"]
+  "orientation": "natural",
+  "categories": ["education", "utilities"],
+  "iarc_rating_id": "12dd8f14-2aa0-41df-8eb4-b3eea3e1eecb",
+  "edge_side_panel": {
+    "preferred_width": 600
+  },
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Dashboard View",
+      "url": "/dashboard"
+    },
+    {
+      "name": "Privacy Policy",
+      "url": "/privacy"
+    },
+    {
+      "name": "Cookie Policy",
+      "url": "/cookies"
+    }
+  ]
 }
