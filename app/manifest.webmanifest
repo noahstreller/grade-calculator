@@ -105,6 +105,24 @@
       "sizes": "1440x2560",
       "type": "image/jpg",
       "platform": "mobile"
+    },
+    {
+      "src": "/desktopscreenshots/overview-dark.jpg",
+      "sizes": "2257x1832",
+      "type": "image/jpg",
+      "platform": "desktop"
+    },
+    {
+      "src": "/desktopscreenshots/overview-light.jpg",
+      "sizes": "2257x1832",
+      "type": "image/jpg",
+      "platform": "desktop"
+    },
+    {
+      "src": "/desktopscreenshots/dashboard-light.jpg",
+      "sizes": "2257x1488",
+      "type": "image/jpg",
+      "platform": "desktop"
     }
   ],
   "id": "dev.nstr.gradecalculator",
