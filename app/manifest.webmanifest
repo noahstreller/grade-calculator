@@ -107,21 +107,21 @@
       "platform": "mobile"
     },
     {
-      "src": "/desktopscreenshots/overview-dark.jpg",
+      "src": "/desktopscreenshots/overview-dark.png",
       "sizes": "2257x1832",
-      "type": "image/jpg",
+      "type": "image/png",
       "platform": "desktop"
     },
     {
-      "src": "/desktopscreenshots/overview-light.jpg",
+      "src": "/desktopscreenshots/overview-light.png",
       "sizes": "2257x1832",
-      "type": "image/jpg",
+      "type": "image/png",
       "platform": "desktop"
     },
     {
-      "src": "/desktopscreenshots/dashboard-light.jpg",
+      "src": "/desktopscreenshots/dashboard-light.png",
       "sizes": "2257x1488",
-      "type": "image/jpg",
+      "type": "image/png",
       "platform": "desktop"
     }
   ],
