@@ -41,6 +41,36 @@
   ],
   "screenshots": [
     {
+      "src": "/mobilescreenshots/gradeoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectoverview.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/requiredgrades.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/newterm.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
+      "src": "/mobilescreenshots/subjectdetails.jpg",
+      "sizes": "1440x2560",
+      "type": "image/jpg",
+      "platform": "mobile"
+    },
+    {
       "src": "/mobilescreenshots/addgrade.jpg",
       "sizes": "1440x2560",
       "type": "image/jpg",
@@ -65,24 +95,6 @@
       "platform": "mobile"
     },
     {
-      "src": "/mobilescreenshots/gradeoverview.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/newterm.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
-      "src": "/mobilescreenshots/requiredgrades.jpg",
-      "sizes": "1440x2560",
-      "type": "image/jpg",
-      "platform": "mobile"
-    },
-    {
       "src": "/mobilescreenshots/settings.jpg",
       "sizes": "1440x2560",
       "type": "image/jpg",
@@ -95,20 +107,49 @@
       "platform": "mobile"
     },
     {
-      "src": "/mobilescreenshots/subjectdetails.jpg",
-      "sizes": "1440x2560",
+      "src": "/desktopscreenshots/overview-dark.jpg",
+      "sizes": "2257x1832",
       "type": "image/jpg",
-      "platform": "mobile"
+      "platform": "desktop"
     },
     {
-      "src": "/mobilescreenshots/subjectoverview.jpg",
-      "sizes": "1440x2560",
+      "src": "/desktopscreenshots/overview-light.jpg",
+      "sizes": "2257x1832",
       "type": "image/jpg",
-      "platform": "mobile"
+      "platform": "desktop"
+    },
+    {
+      "src": "/desktopscreenshots/dashboard-light.jpg",
+      "sizes": "2257x1488",
+      "type": "image/jpg",
+      "platform": "desktop"
     }
   ],
   "id": "dev.nstr.gradecalculator",
   "lang": "en",
-  "orientation": "any",
-  "categories": ["education", "utilities"]
+  "orientation": "natural",
+  "categories": ["education", "utilities"],
+  "iarc_rating_id": "12dd8f14-2aa0-41df-8eb4-b3eea3e1eecb",
+  "edge_side_panel": {
+    "preferred_width": 600
+  },
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Dashboard View",
+      "url": "/dashboard"
+    },
+    {
+      "name": "Privacy Policy",
+      "url": "/privacy"
+    },
+    {
+      "name": "Cookie Policy",
+      "url": "/cookies"
+    }
+  ],
+  "display_override": ["window-controls-overlay"]
 }
