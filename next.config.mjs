@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
-const createNextIntlPlugin = require("next-intl/plugin");
+import withSerwistInit from "@serwist/next";
+import createNextIntlPlugin from "next-intl/plugin";
+
 const withNextIntl = createNextIntlPlugin();
-const withSerwist = require("@serwist/next").default({
+const withSerwist = withSerwistInit({
   swSrc: "app/sw.ts",
   swDest: "public/sw.js",
   disable: process.env.NODE_ENV === "development",
 });
 
-module.exports = withSerwist(
+export default withSerwist(
   withNextIntl({
     reactStrictMode: false,
   })
