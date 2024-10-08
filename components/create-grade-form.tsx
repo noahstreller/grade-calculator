@@ -128,11 +128,7 @@ export function CreateGradeForm({
       );
     }
     refresh();
-    if (
-      !preferences?.newEntitySheetShouldStayOpen ??
-      !defaultPreferences.newEntitySheetShouldStayOpen
-    )
-      setDrawerOpen(false);
+    if (!preferences?.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
 
   return (
