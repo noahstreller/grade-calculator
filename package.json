@@ -27,7 +27,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@serwist/next": "^8.4.4",
+    "@serwist/next": "^9.0.9",
     "@serwist/precaching": "^8.4.4",
     "@serwist/sw": "^8.4.4",
     "@tanstack/react-table": "^8.11.7",
