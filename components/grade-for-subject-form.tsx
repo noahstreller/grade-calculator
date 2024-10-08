@@ -98,11 +98,7 @@ export function CreateGradeFormForSubject({
       addGradeToast(grade, subject.name ?? "");
     }
     refresh();
-    if (
-      !preferences?.newEntitySheetShouldStayOpen ??
-      !defaultPreferences.newEntitySheetShouldStayOpen
-    )
-      setDrawerOpen(false);
+    if (!preferences?.newEntitySheetShouldStayOpen) setDrawerOpen(false);
   }
 
   return (
