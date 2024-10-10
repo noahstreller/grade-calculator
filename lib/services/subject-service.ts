@@ -10,12 +10,14 @@ import {
   updateSubjectInDb,
 } from "@/lib/repositories/subject-repo";
 import { getUserId, setUserId } from "@/lib/services/service-util";
+import pino from "pino";
 
 export async function getAllSubjects(
   categoryId?: number | undefined
 ): Promise<Subject[] | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting all subjects for user=" + userId);
     return await getAllSubjectsFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -31,6 +33,7 @@ export async function getSubjectById(
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting subject by id=" + subjectId + " for user=" + userId);
     return await getSubjectByIdFromDb(subjectId, userId);
   } catch (e: any) {
     return getProblem({
@@ -47,6 +50,9 @@ export async function getSubjectByName(
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
+    pino().info(
+      "Getting subject by name=" + subjectName + " for user=" + userId
+    );
     return await getSubjectByNameFromDb(subjectName, userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -62,6 +68,14 @@ export async function addSubject(
 ): Promise<number | Problem> {
   try {
     newSubject = await setUserId(newSubject);
+    pino().info(
+      "Adding subject=" +
+        newSubject.name +
+        " with weight=" +
+        newSubject.weight +
+        " for user=" +
+        newSubject.userId
+    );
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
     return getProblem({
@@ -83,7 +97,25 @@ export async function getSubjectIdElseAdd(
       userId,
       newSubject.category_fk!
     );
-    if (subject) return subject.id;
+    if (subject) {
+      pino().info(
+        "Omitted adding subject=" +
+          newSubject.name +
+          " which already exists as subject=" +
+          subject.id +
+          " for user=" +
+          userId
+      );
+      return subject.id;
+    }
+    pino().info(
+      "Adding subject=" +
+        newSubject.name +
+        " with weight=" +
+        newSubject.weight +
+        " for user=" +
+        userId
+    );
     return await addSubjectToDb(newSubject);
   } catch (e: any) {
     return getProblem({
@@ -123,11 +155,26 @@ export async function getSubjectByIdByNameBySubject(
 ): Promise<Subject | Problem> {
   try {
     if (typeof subject === "string") {
+      pino().info(
+        "Getting subject by name=" +
+          subject +
+          " for user=" +
+          (await getUserId())
+      );
       return catchProblem(await getSubjectByName(subject, categoryId));
     }
     if (typeof subject === "number") {
+      pino().info(
+        "Getting subject by id=" + subject + " for user=" + (await getUserId())
+      );
       return catchProblem(await getSubjectById(subject));
     }
+    pino().info(
+      "Getting subject by (self) subject=" +
+        subject.id +
+        " for user=" +
+        (await getUserId())
+    );
     return subject;
   } catch (e: any) {
     return getProblem({
@@ -146,6 +193,9 @@ export async function deleteSubject(
       await getSubjectByIdByNameBySubject(subject)
     );
     const userId = await getUserId();
+    pino().info(
+      "Deleting subject=" + resolvedSubject.id + " for user=" + userId
+    );
     return await deleteSubjectFromDb(resolvedSubject, userId);
   } catch (e: any) {
     return getProblem({
@@ -161,6 +211,7 @@ export async function updateSubject(
 ): Promise<string | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Updating subject=" + subject.id + " for user=" + userId);
     return await updateSubjectInDb(subject, userId);
   } catch (e: any) {
     return getProblem({

@@ -12,10 +12,12 @@ import {
   updateCategoryInDb,
 } from "@/lib/repositories/category-repo";
 import { getUserId } from "@/lib/services/service-util";
+import pino from "pino";
 
 export async function getAllCategories(): Promise<Category[] | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting all categories for user=" + userId);
     return await getAllCategoriesFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -29,6 +31,7 @@ export async function getAllCategories(): Promise<Category[] | Problem> {
 export async function getCategoryById(id: number): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting category by id=" + id + " for user=" + userId);
     return await getCategoryByIdFromDb(id, userId);
   } catch (e: any) {
     return getProblem({
@@ -42,6 +45,7 @@ export async function getCategoryById(id: number): Promise<Category | Problem> {
 export async function getCurrentCategory(): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting currently selected category for user=" + userId);
     return await getCurrentCategoryFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -59,8 +63,12 @@ export async function getCurrentCategoryElseInsert(): Promise<
     const userId = await getUserId();
     const current = await getCurrentCategoryFromDb(userId);
     if (current) {
+      pino().info(
+        "Returning current category=" + current.id + " for user=" + userId
+      );
       return current;
     }
+    pino().info("Inserting default category for user: " + userId);
     return await insertCategoryIntoDb("Default", true, userId);
   } catch (e: any) {
     return getProblem({
@@ -77,6 +85,14 @@ export async function insertCategory(
 ): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
+    pino().info(
+      "Inserting category=" +
+        name +
+        " with selected=" +
+        selected +
+        " for user=" +
+        userId
+    );
     return await insertCategoryIntoDb(name, selected, userId);
   } catch (e: any) {
     return getProblem({
@@ -92,6 +108,7 @@ export async function updateCategory(
 ): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Updating category=" + category.id + " for user=" + userId);
     return await updateCategoryInDb(category, userId);
   } catch (e: any) {
     return getProblem({
@@ -105,6 +122,7 @@ export async function updateCategory(
 export async function deleteCategory(id: number): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Deleting category by id=" + id + " for user=" + userId);
     return await deleteCategoryFromDb(id, userId);
   } catch (e: any) {
     return getProblem({
@@ -118,6 +136,7 @@ export async function deleteCategory(id: number): Promise<Category | Problem> {
 export async function selectCategory(id: number): Promise<boolean | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Selecting category by id=" + id + " for user=" + userId);
     return await changeSelectedCategoryInDb(id, userId);
   } catch (e: any) {
     return getProblem({
