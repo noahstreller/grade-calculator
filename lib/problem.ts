@@ -29,7 +29,7 @@ export function getProblem(problem: Problem): Problem {
   const finalMessage = errorMessages[problem.errorCode as ErrorCode];
   problem = { ...problem, finalMessage };
   // console.warn(problem);
-  pino().info(problem);
+  pino().error(problem);
 
   return problem;
 }
