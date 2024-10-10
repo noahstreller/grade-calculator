@@ -1,6 +1,6 @@
 {
   "name": "grade-calculator",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "private": false,
   "scripts": {
     "dev": "next dev",
@@ -49,6 +49,7 @@
     "next-intl": "^3.19.1",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.13",
+    "pino": "^9.4.0",
     "postgres": "^3.4.4",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.0",
@@ -56,7 +57,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.50.0",
     "recharts": "^2.11.0",
-    "sharp": "^0.33.4",
+    "sharp": "^0.33.5",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

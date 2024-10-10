@@ -23,6 +23,7 @@ import {
   getAllSubjects,
   getSubjectIdElseAdd,
 } from "@/lib/services/subject-service";
+import pino from "pino";
 
 import zlib from "zlib";
 
@@ -93,7 +94,7 @@ export async function archiveCategory(data: ExportableData): Promise<string> {
       let result = buffer.toString("base64");
       await insertArchivedata(result, data.category);
     } else {
-      console.error(err);
+      pino().error(err);
     }
   });
   return "Category archived";
