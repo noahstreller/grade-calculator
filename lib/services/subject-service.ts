@@ -17,7 +17,7 @@ export async function getAllSubjects(
 ): Promise<Subject[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting all subjects for user=" + userId);
+    pino().debug("Getting all subjects for user=" + userId);
     return await getAllSubjectsFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -33,7 +33,7 @@ export async function getSubjectById(
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting subject by id=" + subjectId + " for user=" + userId);
+    pino().debug("Getting subject by id=" + subjectId + " for user=" + userId);
     return await getSubjectByIdFromDb(subjectId, userId);
   } catch (e: any) {
     return getProblem({
@@ -50,7 +50,7 @@ export async function getSubjectByName(
 ): Promise<Subject | Problem> {
   try {
     const userId = await getUserId();
-    pino().info(
+    pino().debug(
       "Getting subject by name=" + subjectName + " for user=" + userId
     );
     return await getSubjectByNameFromDb(subjectName, userId, categoryId);
@@ -155,7 +155,7 @@ export async function getSubjectByIdByNameBySubject(
 ): Promise<Subject | Problem> {
   try {
     if (typeof subject === "string") {
-      pino().info(
+      pino().debug(
         "Getting subject by name=" +
           subject +
           " for user=" +
@@ -164,12 +164,12 @@ export async function getSubjectByIdByNameBySubject(
       return catchProblem(await getSubjectByName(subject, categoryId));
     }
     if (typeof subject === "number") {
-      pino().info(
+      pino().debug(
         "Getting subject by id=" + subject + " for user=" + (await getUserId())
       );
       return catchProblem(await getSubjectById(subject));
     }
-    pino().info(
+    pino().debug(
       "Getting subject by (self) subject=" +
         subject.id +
         " for user=" +

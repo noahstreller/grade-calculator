@@ -17,7 +17,7 @@ import pino from "pino";
 export async function getAllCategories(): Promise<Category[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting all categories for user=" + userId);
+    pino().debug("Getting all categories for user=" + userId);
     return await getAllCategoriesFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -31,7 +31,7 @@ export async function getAllCategories(): Promise<Category[] | Problem> {
 export async function getCategoryById(id: number): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting category by id=" + id + " for user=" + userId);
+    pino().debug("Getting category by id=" + id + " for user=" + userId);
     return await getCategoryByIdFromDb(id, userId);
   } catch (e: any) {
     return getProblem({
@@ -45,7 +45,7 @@ export async function getCategoryById(id: number): Promise<Category | Problem> {
 export async function getCurrentCategory(): Promise<Category | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting currently selected category for user=" + userId);
+    pino().debug("Getting currently selected category for user=" + userId);
     return await getCurrentCategoryFromDb(userId);
   } catch (e: any) {
     return getProblem({

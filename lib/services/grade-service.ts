@@ -26,7 +26,7 @@ export async function getAllGrades(
 ): Promise<Grade[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting all grades for user=" + userId);
+    pino().debug("Getting all grades for user=" + userId);
     return await getAllGradesFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -42,7 +42,7 @@ export async function getAllGradesWithSubject(
 ): Promise<GradeWithSubject[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting all grades with subjects for user=" + userId);
+    pino().debug("Getting all grades with subjects for user=" + userId);
     return await getAllGradesWithSubjectFromDb(userId, categoryId);
   } catch (e: any) {
     return getProblem({
@@ -59,7 +59,7 @@ export async function getGradesBySubject(
 ): Promise<Grade[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info(
+    pino().debug(
       "Getting grades for subject=" + subject + " for user=" + userId
     );
     return await getGradesBySubjectFromDb(subject, userId, categoryId);
@@ -79,14 +79,14 @@ export async function getGradesBySubjectWithSubject(
   try {
     const userId = await getUserId();
     if (typeof subject === "object") {
-      pino().info(
+      pino().debug(
         "Getting grades with subjects for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().info(
+      pino().debug(
         "Getting grades with subjects for subject=" +
           subject +
           " for user=" +
@@ -160,14 +160,14 @@ export async function getGradeAverageWithSubjectBySubject(
     };
 
     if (typeof subject === "object") {
-      pino().info(
+      pino().debug(
         "Getting grade average with subject for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().info(
+      pino().debug(
         "Getting grade average with subject for subject=" +
           subject +
           " for user=" +
@@ -217,14 +217,14 @@ export async function getGradeAverageBySubject(
       };
     };
     if (typeof subject === "object") {
-      pino().info(
+      pino().debug(
         "Getting grade average for subject=" +
           subject.id +
           " for user=" +
           userId
       );
     } else {
-      pino().info(
+      pino().debug(
         "Getting grade average for subject=" + subject + " for user=" + userId
       );
     }
@@ -254,7 +254,7 @@ export async function getAllGradeAverages(
       return averages;
     };
 
-    pino().info("Getting all grade averages for category=" + categoryId);
+    pino().debug("Getting all grade averages for category=" + categoryId);
 
     return average();
   } catch (e: any) {
@@ -284,7 +284,7 @@ export async function getAllGradeAveragesWithSubject(
       return averages;
     };
 
-    pino().info(
+    pino().debug(
       "Getting all grade averages with subjects for category=" + categoryId
     );
 

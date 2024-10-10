@@ -116,7 +116,7 @@ export async function getRefreshToken(
   userId: string
 ): Promise<string | Empty | Problem> {
   try {
-    pino().info("Getting refresh token for user=" + userId);
+    pino().debug("Getting refresh token for user=" + userId);
     return await getRefreshTokenFromDb(userId);
   } catch (e: any) {
     return getProblem({
