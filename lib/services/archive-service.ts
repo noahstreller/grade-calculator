@@ -14,7 +14,7 @@ import pino from "pino";
 export async function getAllArchivedata(): Promise<ArchiveData[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting all archive data for user=" + userId);
+    pino().debug("Getting all archive data for user=" + userId);
     return await getAllArchivedataFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -30,7 +30,7 @@ export async function getArchivedataById(
 ): Promise<ArchiveData | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting archive data by id=" + id + " for user=" + userId);
+    pino().debug("Getting archive data by id=" + id + " for user=" + userId);
     return await getArchivedataByIdFromDb(id, userId);
   } catch (e: any) {
     return getProblem({
