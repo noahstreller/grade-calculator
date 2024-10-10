@@ -63,7 +63,7 @@ export async function getCurrentCategoryElseInsert(): Promise<
     const userId = await getUserId();
     const current = await getCurrentCategoryFromDb(userId);
     if (current) {
-      pino().info(
+      pino().debug(
         "Returning current category=" + current.id + " for user=" + userId
       );
       return current;
@@ -136,7 +136,7 @@ export async function deleteCategory(id: number): Promise<Category | Problem> {
 export async function selectCategory(id: number): Promise<boolean | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Selecting category by id=" + id + " for user=" + userId);
+    pino().debug("Selecting category by id=" + id + " for user=" + userId);
     return await changeSelectedCategoryInDb(id, userId);
   } catch (e: any) {
     return getProblem({
