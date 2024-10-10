@@ -1,3 +1,5 @@
+"use server";
+
 import { ArchiveData } from "@/db/schema";
 import { getProblem, Problem } from "@/lib/problem";
 import {
@@ -7,10 +9,12 @@ import {
   insertArchivedataIntoDb,
 } from "@/lib/repositories/archive-repo";
 import { getUserId } from "@/lib/services/service-util";
+import pino from "pino";
 
 export async function getAllArchivedata(): Promise<ArchiveData[] | Problem> {
   try {
     const userId = await getUserId();
+    pino().info("Getting all archive data for user " + userId);
     return await getAllArchivedataFromDb(userId);
   } catch (e: any) {
     return getProblem({
