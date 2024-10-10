@@ -1,6 +1,7 @@
 import { toastProblem } from "@/lib/toasts";
 import { Empty } from "@/types/types";
 import { signOut } from "next-auth/react";
+import { pino } from "pino";
 
 export type Problem = {
   errorMessage?: string | Empty;
@@ -27,7 +28,8 @@ const errorMessages: { [key in ErrorCode]?: string } = {
 export function getProblem(problem: Problem): Problem {
   const finalMessage = errorMessages[problem.errorCode as ErrorCode];
   problem = { ...problem, finalMessage };
-  console.warn(problem);
+  // console.warn(problem);
+  pino().info(problem);
 
   return problem;
 }
