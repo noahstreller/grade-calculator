@@ -1,6 +1,6 @@
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { drizzle } from "drizzle-orm/postgres-js";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
+import pino from "pino";
 import postgres from "postgres";
 
 // Fix for "sorry, too many clients already"
@@ -20,7 +20,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 async function after() {
-  await migrate(db, { migrationsFolder: "drizzle" });
+  // await migrate(db, { migrationsFolder: "drizzle" });
+  pino().debug("Skipping DB migrations");
 }
 
 after();
