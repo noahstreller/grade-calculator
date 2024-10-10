@@ -14,7 +14,7 @@ import pino from "pino";
 export async function getPreferences(): Promise<Preferences[] | Problem> {
   try {
     const userId = await getUserId();
-    pino().info("Getting preferences for user=" + userId);
+    pino().debug("Getting preferences for user=" + userId);
     return await getPreferencesFromDb(userId);
   } catch (e: any) {
     return getProblem({
@@ -32,12 +32,12 @@ export async function getPreferencesElseGetDefault(): Promise<
     const userId = await getUserId();
     let result = await getPreferencesFromDb(userId);
     if (result.length === 1) {
-      pino().info(
+      pino().debug(
         "Getting preferences=" + result[0].id + " for user=" + userId
       );
       return { preferences: result[0], isDefault: false };
     }
-    pino().info("Getting default preferences for user=" + userId);
+    pino().debug("Getting default preferences for user=" + userId);
     return { preferences: getDefaultPreferences(), isDefault: true };
   } catch (e: any) {
     return getProblem({
