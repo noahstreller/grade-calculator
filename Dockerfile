@@ -1,19 +1,13 @@
 # Base image
 FROM node:18-alpine
 
-# Create and use a non-root user, install dependencies, and prepare the environment
-RUN addgroup -S nonroot && adduser -S nonroot -G nonroot \
-  && apk add --no-cache libc6-compat
-
-# Switch to non-root user
-USER nonroot
-
 # Set working directory
 WORKDIR /app
 
 # Copy application files and install dependencies, then build the application
-COPY ./ /app
-RUN npm ci \
+COPY / /app
+RUN apk add --no-cache libc6-compat \
+  && npm ci \
   && npm run build
 
 # Set environment variables
