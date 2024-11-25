@@ -43,11 +43,11 @@ export function AllGrades({
   data,
   setData,
   refresh,
-}: {
+}: Readonly<{
   data: GradeWithSubject[];
   setData: Function;
   refresh: Function;
-}) {
+}>) {
   const t = useTranslations();
   const preferences = usePreferences().preferences!;
   const colTranslations = {
@@ -68,8 +68,6 @@ export function AllGrades({
   const [editOpen, setEditOpen] = useState(false);
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
-  const isTablet = useMediaQuery(MediaQueries.xl) && !isDesktop;
-  const isMobile = !isTablet && !isDesktop;
 
   const [originalGrade, setOriginalGrade] = useState<Grade | undefined>();
   const [selectedStatus, setSelectedStatus] = useState<PassingStatus | null>({
