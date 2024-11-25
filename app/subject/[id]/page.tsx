@@ -41,11 +41,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function SubjectPage({ params }: { params: { id: string } }) {
+export default function SubjectPage({
+  params,
+}: Readonly<{
+  params: { id: string };
+}>) {
   return <SubjectDetails subjectId={params.id} />;
 }
 
-function SubjectDetails({ subjectId }: { subjectId: string }) {
+function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
   const session = useSession();
   const router = useRouter();
   const { isMobile, isTablet, isDesktop } = useDevice();
