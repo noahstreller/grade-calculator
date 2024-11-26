@@ -1,6 +1,4 @@
 "use client";
-import { ColumnDef } from "@tanstack/react-table";
-
 import { ColoredGrade } from "@/components/colored-grade";
 import { GradeWeightBadge } from "@/components/grade-weight-badge";
 import { RelativeTimeFormatted } from "@/components/relative-time-formatted";
@@ -22,15 +20,9 @@ import {
 import { GradeWithSubject } from "@/db/schema";
 import { deleteGradeByGrade } from "@/lib/services/grade-service";
 import { deleteGradeToast } from "@/lib/toasts";
-import { truncateText } from "@/lib/utils";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  Edit,
-  MoreHorizontal,
-  Trash,
-} from "lucide-react";
+import { getSortedColumnIcon, truncateText } from "@/lib/utils";
+import { ColumnDef } from "@tanstack/react-table";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import { isMobile } from "react-device-detect";
 
 export function columns(
@@ -49,15 +41,7 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.subject}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },
@@ -96,15 +80,7 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.grade}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },
@@ -128,15 +104,7 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.description}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },
@@ -175,15 +143,7 @@ export function columns(
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.date}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },
