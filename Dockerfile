@@ -6,9 +6,8 @@ WORKDIR /app
 
 # Copy application files and install dependencies, then build the application
 COPY / /app
-RUN apk add --no-cache libc6-compat \
-  && npm ci \
-  && npm run build
+RUN apk add --no-cache libc6-compat && npm ci
+RUN npm run build
 
 # Set environment variables
 ENV NODE_ENV=production \
