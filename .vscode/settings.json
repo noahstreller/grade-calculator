@@ -24,5 +24,9 @@
   "i18n-ally.extract.ignored": [
     "${truncatedGrade} ${\r\n            hideText\r\n              ? \"\"\r\n              : t(\"grades.grades\", { count: average.average?.gradeAmount })\r\n          }",
     "Noah"
-  ]
+  ],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "https-sonarqube-cloud-nstr-dev",
+    "projectKey": "noahstreller_grade-calculator_82dd3c4f-6188-433f-838c-8ce4d84da62e"
+  }
 }

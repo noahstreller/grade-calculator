@@ -1,6 +1,5 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
 import { ColoredGrade } from "@/components/colored-grade";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
@@ -10,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn, truncateText } from "@/lib/utils";
+import { cn, getSortedColumnIcon, truncateText } from "@/lib/utils";
 import { AverageWithSubject, Empty } from "@/types/types";
 import { isMobile } from "react-device-detect";
 export function columns(translations: any): ColumnDef<AverageWithSubject>[] {
@@ -25,20 +24,12 @@ export function columns(translations: any): ColumnDef<AverageWithSubject>[] {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.subject}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },
       cell: ({ row }) => {
-        let subject: string = row.original.subject.name || "";
+        let subject: string = row.original.subject.name ?? "";
         let isIrrelevant: boolean = row.original.subject.weight === 0;
         let truncated: boolean = truncateText(
           subject,
@@ -97,15 +88,7 @@ export function columns(translations: any): ColumnDef<AverageWithSubject>[] {
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             {translations.grades.grade}
-            {column.getIsSorted() ? (
-              column.getIsSorted() === "asc" ? (
-                <ArrowUp className="ml-2 h-4 w-4" />
-              ) : (
-                <ArrowDown className="ml-2 h-4 w-4" />
-              )
-            ) : (
-              <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground/50" />
-            )}
+            {getSortedColumnIcon(column)}
           </Button>
         );
       },

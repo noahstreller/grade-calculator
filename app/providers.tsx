@@ -4,7 +4,11 @@ import { PreferencesProvider } from "@/components/preferences-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <ThemeProvider
       attribute="class"
