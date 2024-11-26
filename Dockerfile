@@ -5,8 +5,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY / /app
 
-RUN npm ci
-RUN npm run build;
+RUN npm ci && npm run build;
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
