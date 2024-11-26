@@ -1,25 +1,35 @@
-# Base image
+
 FROM node:18-alpine
 
-RUN apk add --no-cache libc6-compat 
-
-# Set working directory
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy application files and install dependencies, then build the application
+
+# Install dependencies based on the preferred package manager
 COPY / /app
-
 RUN npm ci
-RUN npm run build
 
-# Set environment variables
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
-ENV HOSTNAME="0.0.0.0"
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# Expose the application port
+RUN npm run build;
+
+
+
+
+ENV NODE_ENV production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+ENV NEXT_TELEMETRY_DISABLED 1
+
+
+
+
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+ENV PORT 3000
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD HOSTNAME="0.0.0.0" npm start
