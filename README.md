@@ -11,6 +11,8 @@
 - 🕰️ [Legacy version](https://legacy.grades.nstr.dev)
 - 📋 [Backlog and issues](https://links.nstr.dev/projects-grades)
 - ✅ [Status page](https://status.cloud.nstr.dev/status/grades)
+- ⚖️ [Privacy policy](http://grades.nstr.dev/privacy)
+- 🍪 [Cookie policy](https://grades.nstr.dev/cookies)
 
 This is a grade calculator / dashboard that I built to have a better overview of my current academic performance. I was tired of always having to calculate the grade required to pass a subject. And to be honest, the grade dashboard of my school kinda sucks. The UI is horrible, and it doesn't show enough information for my needs. That's why I developed my own dashboard.
 
