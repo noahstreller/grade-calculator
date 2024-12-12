@@ -25,6 +25,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { MediaQueries, useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { catchProblem } from "@/lib/problem";
+import { getArchiveCount } from "@/lib/services/archive-service";
 import {
   archiveCategory,
   prepareDataForExport,
@@ -36,7 +38,7 @@ import {
 } from "@/lib/services/user-service";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const NewSemesterButton = ({
   expanded = true,
@@ -49,6 +51,7 @@ export const NewSemesterButton = ({
   const [keepGrades, setKeepGradesState] = useState<boolean>(false);
   const [exportData, setExportData] = useState<boolean>(true);
   const [archiveData, setArchiveData] = useState<boolean>(true);
+  const [currentArchiveCount, setCurrentArchiveCount] = useState<number>(0);
   const categoryState = useCategory();
 
   const isDesktop = useMediaQuery(MediaQueries.xxl);
@@ -64,6 +67,14 @@ export const NewSemesterButton = ({
     if (value) setKeepSubjectsState(true);
     setKeepGradesState(value);
   };
+
+  useEffect(() => {
+    const fetchArchiveCount = async () => {
+      const count = await getArchiveCount();
+      setCurrentArchiveCount(catchProblem(count));
+    };
+    fetchArchiveCount();
+  }, [isOpen]);
 
   const handleSubmit = async () => {
     try {
@@ -131,13 +142,24 @@ export const NewSemesterButton = ({
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
-            <Switch checked={archiveData} onCheckedChange={setArchiveData} />
+            <Switch
+              checked={archiveData && currentArchiveCount < 5}
+              disabled={currentArchiveCount >= 5}
+              onCheckedChange={setArchiveData}
+            />
             <Label>
               {t.rich("semesters.actions.create.options.archive", {
                 highlight: (children) => (
                   <Highlight colorName="blue">{children}</Highlight>
                 ),
               })}
+              <span className="ml-5 tracking-wide">
+                <Highlight
+                  colorName={currentArchiveCount >= 5 ? "red" : "green"}
+                >
+                  {currentArchiveCount} / 5
+                </Highlight>
+              </span>
             </Label>
           </div>
         </div>
@@ -209,13 +231,24 @@ export const NewSemesterButton = ({
             </Label>
           </div>
           <div className="flex flex-row items-center gap-4">
-            <Switch checked={archiveData} onCheckedChange={setArchiveData} />
+            <Switch
+              checked={archiveData && currentArchiveCount < 5}
+              disabled={currentArchiveCount >= 5}
+              onCheckedChange={setArchiveData}
+            />
             <Label>
               {t.rich("semesters.actions.create.options.archive", {
                 highlight: (children) => (
                   <Highlight colorName="blue">{children}</Highlight>
                 ),
               })}
+              <span className="ml-5 tracking-wide">
+                <Highlight
+                  colorName={currentArchiveCount >= 5 ? "red" : "green"}
+                >
+                  {currentArchiveCount} / 5
+                </Highlight>
+              </span>
             </Label>
           </div>
         </div>

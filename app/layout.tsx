@@ -100,7 +100,7 @@ export const viewport: Viewport = {
 };
 
 const maintenance: MaintenanceType = {
-  maintenance: false,
+  maintenance: process.env.MAINTENANCE === "true",
 };
 
 export default async function RootLayout({
