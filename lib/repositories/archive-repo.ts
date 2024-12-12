@@ -13,6 +13,15 @@ export async function getAllArchivedataFromDb(userId: string) {
   return result;
 }
 
+export async function getArchiveCountFromDb(userId: string) {
+  const result = await db
+    .select()
+    .from(archivedata)
+    .where(eq(archivedata.userId, userId))
+    .execute();
+  return result.length;
+}
+
 export async function getArchivedataByIdFromDb(id: number, userId: string) {
   const result = await db
     .select()
