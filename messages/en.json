@@ -352,7 +352,8 @@
       "title": "Template",
       "description": "Select a template or use the advanced settings.",
       "select-prompt": "Select template",
-      "apply": "Apply template"
+      "apply": "Apply template",
+      "request": "Request template"
     }
   },
   "external": {
