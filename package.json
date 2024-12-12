@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "upgrade": "npm i next@latest react@latest react-dom@latest eslint-config-next@latest @types/react @types/react-dom",
-    "viewdb": "npx drizzle-kit studio"
+    "viewdb": "npx drizzle-kit studio",
+    "postinstall": "npx react-flagpack"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.8.2",
@@ -56,6 +57,7 @@
     "react-day-picker": "^8.10.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
+    "react-flagpack": "^2.0.6",
     "react-hook-form": "^7.50.0",
     "recharts": "^2.11.0",
     "sharp": "^0.33.5",

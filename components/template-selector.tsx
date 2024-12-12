@@ -1,7 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown, Wrench } from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  MessageCircleQuestion,
+  Wrench,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -31,6 +36,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { PreferenceTemplate, templates } from "@/templates";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useState } from "react";
 
 const preferenceTemplates: PreferenceTemplate[] = templates;
@@ -80,11 +86,27 @@ export function TemplateSelector({
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value
-                        ? preferenceTemplates.find(
-                            (template) => template.id === field.value
-                          )?.title
-                        : t("onboarding.templates.select-prompt")}
+                      {field.value ? (
+                        <span className="flex gap-2 items-center">
+                          <span className="text-muted-foreground flex items-center">
+                            {
+                              preferenceTemplates.find(
+                                (template) => template.id === field.value
+                              )?.icon
+                            }
+                          </span>
+
+                          <span>
+                            {
+                              preferenceTemplates.find(
+                                (template) => template.id === field.value
+                              )?.title
+                            }
+                          </span>
+                        </span>
+                      ) : (
+                        t("onboarding.templates.select-prompt")
+                      )}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
@@ -103,7 +125,6 @@ export function TemplateSelector({
                             key={template.id}
                             onSelect={() => {
                               form.setValue("preferenceTemplate", template.id);
-
                               setOpen(false);
                             }}
                           >
@@ -115,7 +136,12 @@ export function TemplateSelector({
                                   : "opacity-0"
                               )}
                             />
-                            {template.title}
+                            <span className="flex gap-2 items-center">
+                              <span className="text-muted-foreground flex items-center justify-center">
+                                {template.icon}
+                              </span>
+                              <span>{template.title}</span>
+                            </span>
                           </CommandItem>
                         ))}
                       </CommandGroup>
@@ -127,10 +153,21 @@ export function TemplateSelector({
             </FormItem>
           )}
         />
-        <Button variant={"secondary"} type="submit">
-          <Wrench className="size-4 text-muted-foreground mr-2" />
-          {t("onboarding.templates.apply")}
-        </Button>
+        <div className="flex flex-col md:flex-row gap-2">
+          <Button variant={"secondary"} type="submit">
+            <Wrench className="size-4 text-muted-foreground mr-2" />
+            {t("onboarding.templates.apply")}
+          </Button>
+          <Link
+            target="_blank"
+            href="https://github.com/noahstreller/grade-calculator/issues/new/choose"
+          >
+            <Button variant={"outline"} type="button">
+              <MessageCircleQuestion className="size-4 text-muted-foreground mr-2" />
+              {t("onboarding.templates.request")}
+            </Button>
+          </Link>
+        </div>
       </form>
     </Form>
   );

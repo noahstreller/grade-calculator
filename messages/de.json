@@ -123,7 +123,8 @@
       "apply": "Vorlage anwenden",
       "description": "Wähle eine Vorlage oder nutze die erweiterten Einstellungen.",
       "select-prompt": "Vorlage auswählen",
-      "title": "Vorlage"
+      "title": "Vorlage",
+      "request": "Vorlage anfordern"
     },
     "title": "Onboarding"
   },
