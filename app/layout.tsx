@@ -122,7 +122,7 @@ export default async function RootLayout({
           />
         )}
       <body className={cn(inter.className)}>
-        {maintenance.maintenance || process.env.MAINTENANCE ? (
+        {maintenance.maintenance ? (
           <Maintenance maintenance={maintenance} />
         ) : (
           <Providers>
