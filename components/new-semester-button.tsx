@@ -143,8 +143,8 @@ export const NewSemesterButton = ({
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch
-              checked={archiveData && currentArchiveCount < 5}
-              disabled={currentArchiveCount >= 5}
+              checked={archiveData && currentArchiveCount < 8}
+              disabled={currentArchiveCount >= 8}
               onCheckedChange={setArchiveData}
             />
             <Label>
@@ -155,15 +155,14 @@ export const NewSemesterButton = ({
               })}
               <span className="ml-5 tracking-wide">
                 <Highlight
-                  colorName={currentArchiveCount >= 5 ? "red" : "green"}
+                  colorName={currentArchiveCount >= 8 ? "red" : "green"}
                 >
-                  {currentArchiveCount} / 5
+                  {currentArchiveCount} / 8
                 </Highlight>
               </span>
             </Label>
           </div>
         </div>
-
         <DrawerFooter>
           {!(exportData || archiveData || keepGrades) && (
             <span className="text-muted-foreground self-center">
@@ -232,8 +231,8 @@ export const NewSemesterButton = ({
           </div>
           <div className="flex flex-row items-center gap-4">
             <Switch
-              checked={archiveData && currentArchiveCount < 5}
-              disabled={currentArchiveCount >= 5}
+              checked={archiveData && currentArchiveCount < 8}
+              disabled={currentArchiveCount >= 8}
               onCheckedChange={setArchiveData}
             />
             <Label>
@@ -244,9 +243,9 @@ export const NewSemesterButton = ({
               })}
               <span className="ml-5 tracking-wide">
                 <Highlight
-                  colorName={currentArchiveCount >= 5 ? "red" : "green"}
+                  colorName={currentArchiveCount >= 8 ? "red" : "green"}
                 >
-                  {currentArchiveCount} / 5
+                  {currentArchiveCount} / 8
                 </Highlight>
               </span>
             </Label>
