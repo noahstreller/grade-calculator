@@ -11,6 +11,7 @@ import { CardBoard } from "@/components/ui/cardboard";
 import Grade from "@/lib/entities/grade";
 import { GradeAverage } from "@/lib/entities/gradeAverage";
 import Subjects from "@/lib/entities/subject";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function GradeAverageCalculator() {
@@ -19,6 +20,7 @@ export default function GradeAverageCalculator() {
   const [failingData, setFailingData] = useState<GradeAverage[]>([]);
   const [passingData, setPassingData] = useState<GradeAverage[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const searchParams = useSearchParams();
 
   function refreshGrades() {
     let grades = Grade.get();
@@ -48,12 +50,15 @@ export default function GradeAverageCalculator() {
   }
 
   useEffect(() => {
-    Subjects.load();
-    Grade.load();
-    refreshAll();
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (new URLSearchParams(params).has("corrupted")) {
+      Subjects.load();
+      Grade.load();
+      refreshAll();
+    }
     setLoaded(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return loaded ? (
     <>

@@ -2,27 +2,37 @@
 import { restoreBackup } from "@/lib/storageUtils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
 
 export function CorruptedDataDialog() {
   const [isOpen, setIsOpen] = useState(false);
-  
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
-  function close(){
+  function close() {
     setIsOpen(false);
     router.push(pathname, { scroll: false });
   }
 
-  function restore(){
+  function restore() {
     restoreBackup();
     window.location.href = pathname;
-}
+  }
 
   useEffect(() => {
-    if (new URLSearchParams(searchParams).has("corrupted")) {
+    const params = new URLSearchParams(Array.from(searchParams.entries()));
+    if (new URLSearchParams(params).has("corrupted")) {
       setIsOpen(true);
     }
   }, [searchParams]);
@@ -37,13 +47,19 @@ export function CorruptedDataDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={(e)=>{close(); }}>
+          <AlertDialogCancel
+            onClick={(e) => {
+              close();
+            }}
+          >
             Got it.
           </AlertDialogCancel>
-          <AlertDialogAction onClick={(e)=>{
-            restore();
-          }}>
-           Restore backup
+          <AlertDialogAction
+            onClick={(e) => {
+              restore();
+            }}
+          >
+            Restore backup
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
