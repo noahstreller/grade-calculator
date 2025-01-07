@@ -28,5 +28,6 @@
   "sonarlint.connectedMode.project": {
     "connectionId": "https-sonarqube-cloud-nstr-dev",
     "projectKey": "noahstreller_grade-calculator_82dd3c4f-6188-433f-838c-8ce4d84da62e"
-  }
+  },
+  "javascript.preferences.importModuleSpecifier": "non-relative"
 }

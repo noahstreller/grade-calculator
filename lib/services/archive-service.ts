@@ -5,6 +5,7 @@ import { getProblem, Problem } from "@/lib/problem";
 import {
   deleteArchivedataFromDb,
   getAllArchivedataFromDb,
+  getArchiveCountFromDb,
   getArchivedataByIdFromDb,
   insertArchivedataIntoDb,
 } from "@/lib/repositories/archive-repo";
@@ -41,12 +42,30 @@ export async function getArchivedataById(
   }
 }
 
+export async function getArchiveCount(): Promise<number | Problem> {
+  try {
+    const userId = await getUserId();
+    pino().debug("Getting archive count for user=" + userId);
+    return await getArchiveCountFromDb(userId);
+  } catch (e: any) {
+    return getProblem({
+      errorMessage: e.message,
+      errorCode: e.code,
+      detail: e.detail,
+    }) satisfies Problem;
+  }
+}
+
 export async function insertArchivedata(
   data: string,
   category: string
 ): Promise<ArchiveData | Problem> {
   try {
     const userId = await getUserId();
+    let currentCount = await getArchiveCountFromDb(userId);
+    if (currentCount >= 8) {
+      throw new Error("Maximum number of archives reached");
+    }
     pino().info(
       "Inserting compressed archive data=" + data + " for user=" + userId
     );
