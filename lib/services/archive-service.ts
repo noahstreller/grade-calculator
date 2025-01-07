@@ -63,7 +63,7 @@ export async function insertArchivedata(
   try {
     const userId = await getUserId();
     let currentCount = await getArchiveCountFromDb(userId);
-    if (currentCount >= 5) {
+    if (currentCount >= 8) {
       throw new Error("Maximum number of archives reached");
     }
     pino().info(
