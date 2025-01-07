@@ -100,7 +100,17 @@ export const viewport: Viewport = {
 };
 
 const maintenance: MaintenanceType = {
-  maintenance: false,
+  maintenance: process.env.MAINTENANCE_ACTIVE === "true",
+  until:
+    process.env.MAINTENANCE_UNTIL === "" ||
+    process.env.MAINTENANCE_UNTIL === undefined
+      ? undefined
+      : new Date(process.env.MAINTENANCE_UNTIL),
+  message:
+    process.env.MAINTENANCE_MESSAGE === "" ||
+    process.env.MAINTENANCE_MESSAGE === undefined
+      ? undefined
+      : process.env.MAINTENANCE_MESSAGE,
 };
 
 export default async function RootLayout({
@@ -122,7 +132,7 @@ export default async function RootLayout({
           />
         )}
       <body className={cn(inter.className)}>
-        {maintenance.maintenance || process.env.MAINTENANCE ? (
+        {maintenance.maintenance ? (
           <Maintenance maintenance={maintenance} />
         ) : (
           <Providers>

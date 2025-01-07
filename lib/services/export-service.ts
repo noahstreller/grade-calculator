@@ -102,7 +102,7 @@ export async function archiveCategory(data: ExportableData): Promise<string> {
 
 export async function unarchiveCategory(data: string): Promise<ExportableData> {
   let decodedData = Buffer.from(data, "base64");
-  let result = zlib.gunzipSync(decodedData);
+  let result = zlib.gunzipSync(new Uint8Array(decodedData));
   return JSON.parse(result.toString());
 }
 
@@ -112,16 +112,10 @@ export async function importData(
   categoryId?: number | undefined
 ) {
   if (data.preferences) savePreferences(data.preferences);
-  // const nonUniqueSubjectsFromGrades = data.grades.map((grade) => {
-  //   return { name: grade.subjects.name, weight: 1 };
-  // });
   const nonUniqueSubjectsFromSubjects = data.subjects.map((subject) => {
     return { name: subject.name, weight: subject.weight };
   });
-  const nonUniqueSubjects = [
-    // ...nonUniqueSubjectsFromGrades,
-    ...nonUniqueSubjectsFromSubjects,
-  ];
+  const nonUniqueSubjects = [...nonUniqueSubjectsFromSubjects];
   const uniqueSubjects = [...new Set(nonUniqueSubjects)];
   const subjectWithIds = await Promise.all(
     uniqueSubjects.map(async (iteratingSubject) => {
