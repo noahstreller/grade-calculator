@@ -429,7 +429,15 @@
     "subject-not-found": "Wir können das gesuchte Fach nicht finden",
     "try-again-or-contact": "Bitte versuche es erneut, nutze ein anderes Konto oder kontaktiere <mailbutton></mailbutton>, wenn das Problem weiterhin besteht.",
     "unauthenticated-subject-details": "Du musst angemeldet sein, um die Fach-Details zu sehen",
-    "woops": "Hoppla."
+    "woops": "Hoppla.",
+    "not-found": {
+      "back": "Zurück zur Startseite",
+      "description": "Wie sind wir hier gelandet?",
+      "title": "<mutebold>404</mutebold> - Seite nicht gefunden",
+      "message": "Du bist auf <red>unbekanntes Terrain</red> gestossen. Aber leider können wir die gesuchte Seite nicht finden.",
+      "dashboard": "Zum Dashboard",
+      "login": "Zum Login"
+    }
   },
   "external": {
     "cookie-policy": "Cookie-Richtlinie",
