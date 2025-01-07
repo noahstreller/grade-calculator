@@ -224,6 +224,10 @@ function DashboardHeaderCard() {
 }
 
 const Redirect = ({ path }: { path: string }) => {
-  useRouter().push(path);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(path);
+  }, [path, router]);
   return <LoadingSpinner />;
 };
