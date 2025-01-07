@@ -6,7 +6,6 @@ import { GradeOverview } from "@/components/cards/grade-overview";
 import PassingGradesCard from "@/components/cards/passingGradesCard/passingGradesCard";
 import { RequiredGrades } from "@/components/cards/required-grades";
 import { useCategory } from "@/components/category-provider";
-import { LandingPage } from "@/components/pages/landing-page";
 import {
   Card,
   CardContent,
@@ -15,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CardBoard } from "@/components/ui/cardboard";
+import { LoadingSpinner } from "@/components/ui/spinner";
 import { GradeWithSubject } from "@/db/schema";
 import { catchProblem } from "@/lib/problem";
 import {
@@ -24,6 +24,7 @@ import {
 import { AverageWithSubject } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
@@ -125,7 +126,7 @@ export default function Dashboard() {
   }, [session, categoryState.categories]);
 
   return session.status === "unauthenticated" ? (
-    <LandingPage />
+    <Redirect path="/" />
   ) : loaded ? (
     <>
       <CardBoard className="flex xl:hidden">
@@ -221,3 +222,12 @@ function DashboardHeaderCard() {
     </Card>
   );
 }
+
+const Redirect = ({ path }: { path: string }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(path);
+  }, [path, router]);
+  return <LoadingSpinner />;
+};

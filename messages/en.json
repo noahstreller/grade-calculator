@@ -149,6 +149,14 @@
     "system": "System"
   },
   "errors": {
+    "not-found": {
+      "title": "<mutebold>404</mutebold> - Page not found",
+      "description": "How did we get here?",
+      "back": "Return home",
+      "login": "Go to login",
+      "dashboard": "Go to dashboard",
+      "message": "You have struck <red>uncharted territory</red>. Unfortunately, we cannot find the page you are looking for."
+    },
     "required": "This field is required",
     "message": "An error occurred",
     "invalid-type": {
