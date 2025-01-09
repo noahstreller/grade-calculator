@@ -93,6 +93,15 @@ function RequiredGradesBody({
     return truncateText(subject, 20).text;
   };
 
+  const shouldShowGtLt = (requiredGrade: number) => {
+    const result =
+      (requiredGrade !== preferences?.maximumGrade &&
+        !preferences?.passingInverse) ||
+      (requiredGrade !== preferences?.minimumGrade &&
+        preferences?.passingInverse);
+    return result;
+  };
+
   const [chunkPairs, setChunkPairs] = useState<Array<any>>([]);
 
   useEffect(() => {
@@ -163,11 +172,13 @@ function RequiredGradesBody({
                 </CardHeader>
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
-                    <span className="text-muted-foreground text-4xl">
-                      {preferences?.passingInverse
-                        ? t("generic.less-than")
-                        : t("generic.greater-than")}
-                    </span>
+                    {shouldShowGtLt(getRequiredGradeToPass(average).result) && (
+                      <span className="text-muted-foreground text-4xl">
+                        {preferences?.passingInverse
+                          ? t("generic.less-than")
+                          : t("generic.greater-than")}
+                      </span>
+                    )}
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
                     </b>
