@@ -10,6 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { LanguageSelection } from "@/components/language-selection";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -66,6 +67,11 @@ export function TemplateSelector({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormItem className="flex flex-col">
+          <FormLabel>{t("generic.language")}</FormLabel>
+          <LanguageSelection autoRefresh />
+        </FormItem>
+
         <FormField
           control={form.control}
           name="preferenceTemplate"
@@ -153,7 +159,7 @@ export function TemplateSelector({
             </FormItem>
           )}
         />
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col justify-between md:flex-row gap-2">
           <Button variant={"secondary"} type="submit">
             <Wrench className="size-4 text-muted-foreground mr-2" />
             {t("onboarding.templates.apply")}
@@ -162,7 +168,7 @@ export function TemplateSelector({
             target="_blank"
             href="https://github.com/noahstreller/grade-calculator/issues/new/choose"
           >
-            <Button variant={"outline"} type="button">
+            <Button variant={"outline"} type="button" className="w-full">
               <MessageCircleQuestion className="size-4 text-muted-foreground mr-2" />
               {t("onboarding.templates.request")}
             </Button>
