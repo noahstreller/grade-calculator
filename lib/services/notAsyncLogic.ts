@@ -7,12 +7,15 @@ import { AverageWithSubject, Empty } from "@/types/types";
 
 export function doesGradePass(
   grade: number,
-  preferences: Preferences
+  preferences: Preferences,
+  simulatedGoalGrade?: number | Empty
 ): boolean {
+  console.log("doesGradePass", grade, preferences, simulatedGoalGrade);
+  const passing = simulatedGoalGrade || preferences?.passingGrade!;
   if (preferences.passingInverse) {
-    return grade <= preferences.passingGrade!;
+    return grade <= passing;
   }
-  return grade >= preferences.passingGrade!;
+  return grade >= passing;
 }
 
 export function getSubjectAverages(averages: AverageWithSubject[]): number {
