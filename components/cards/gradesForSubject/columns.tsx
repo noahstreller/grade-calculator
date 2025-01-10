@@ -140,7 +140,7 @@ export function columns(
                 }}
               >
                 <DialogTrigger asChild>
-                  <div className="flex flex-row items-center justify-center gap-3">
+                  <div className="w-full flex flex-row items-center justify-start gap-3">
                     <Edit className="size-4 text-muted-foreground" />
                     <span>{translations.grades.actions.edit}</span>
                   </div>
@@ -158,7 +158,7 @@ export function columns(
                   refresh();
                 }}
               >
-                <div className="flex flex-row items-center justify-center gap-3">
+                <div className="w-full flex flex-row items-center justify-start gap-3">
                   <Trash className="size-4 text-muted-foreground" />
                   <span>{translations.grades.actions.delete}</span>
                 </div>
