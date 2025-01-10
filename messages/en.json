@@ -38,7 +38,8 @@
     "badge-weight": "This grade is weighted <weight></weight>",
     "description-prompt": "Add a short description (optional)",
     "date-prompt": "Pick a date (optional)",
-    "show-passing-grades": "Show <green>passing</green> grades"
+    "show-passing-grades": "Show <green>passing</green> grades",
+    "simulatedGoal-description": "In case you want to check the required grade for a result other than the passing grade, you can apply the goal result here."
   },
   "subjects": {
     "subject": "Subject",
@@ -217,7 +218,9 @@
     "description": "The grades you need to pass your subjects",
     "required": "to pass",
     "passed": "to keep passing",
-    "simulated-weight": "Simulated weight"
+    "simulated-weight": "Simulated weight",
+    "advanced-options": "Advanced options",
+    "simulated-goal-grade": "Simulated grade goal"
   },
   "landing-page": {
     "getting-started-about": {

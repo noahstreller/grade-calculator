@@ -73,7 +73,8 @@
     },
     "add": "Note hinzufügen",
     "add-desc": "Füge eine neue Note zur Liste hinzu",
-    "show-passing-grades": "<green>Bestehende</green> Fächer"
+    "show-passing-grades": "<green>Bestehende</green> Fächer",
+    "simulatedGoal-description": "Falls du die erforderliche Note für ein anderes Ergebnis als die bestandene Note überprüfen willst, gib das Zielergebnis hier ein."
   },
   "landing-page": {
     "about": {
@@ -200,7 +201,9 @@
     "passed": "um weiterhin zu bestehen",
     "required": "zum Bestehen",
     "simulated-weight": "Simulierte Gewichtung",
-    "title": "Erforderliche Noten"
+    "title": "Erforderliche Noten",
+    "advanced-options": "Erweiterte Optionen",
+    "simulated-goal-grade": "Simuliertes Notenziel"
   },
   "screenreader": {
     "open-menu": "Menü öffnen"
