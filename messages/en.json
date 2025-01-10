@@ -138,8 +138,9 @@
       "description-json": "JSON exported as file"
     },
     "delete-account": "Delete Account",
-    "clear-account-data": "Clear Account Data",
-    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone.",
+    "clear-account-data": "Delete all account data",
+    "acknowledge": "I acknowledge",
+    "clear-account-data-warning": "Are you sure that you want to delete all of your account data? This action cannot be undone. You will still be able to register again with the same social login provider or email.",
     "clear-grades-only": "Clear grades only"
   },
   "themes": {
