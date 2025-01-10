@@ -1,7 +1,6 @@
 "use client";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -12,6 +11,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { clearUserData } from "@/lib/services/user-service";
 import {
   getInitials,
@@ -26,8 +27,8 @@ import { useEffect, useState } from "react";
 export function AccountSection() {
   const session = useSession();
 
+  const [acknowledged, setAcknowledged] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [refresher, setRefresher] = useState(0);
 
   const t = useTranslations();
 
@@ -37,9 +38,8 @@ export function AccountSection() {
   };
 
   useEffect(() => {
-    setDisabled(true);
-    setTimeout(() => setDisabled(false), 5000);
-  }, [refresher]);
+    setDisabled(!acknowledged);
+  }, [acknowledged]);
 
   return (
     <div className="py-5 flex flex-col gap-3">
@@ -70,7 +70,7 @@ export function AccountSection() {
         <AlertDialogTrigger asChild>
           <Button
             variant={"destructive"}
-            onClick={() => setRefresher(Math.random())}
+            onClick={() => setAcknowledged(false)}
           >
             {t("actions.delete-account")}
           </Button>
@@ -83,12 +83,28 @@ export function AccountSection() {
             <AlertDialogDescription>
               {t("actions.clear-account-data-warning")}
             </AlertDialogDescription>
+            <div className="flex flex-row gap-4 items-center pt-4">
+              <Checkbox
+                id="account-deletion-acknowledge"
+                checked={acknowledged}
+                onCheckedChange={(checked) => {
+                  setAcknowledged(checked === true);
+                }}
+              />
+              <Label htmlFor="account-deletion-acknowledge">
+                <b>{t("actions.acknowledge")}</b>
+              </Label>
+            </div>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t("generic.nevermind")}</AlertDialogCancel>
-            <AlertDialogAction disabled={disabled} onClick={clearData}>
+            <Button
+              disabled={disabled}
+              onClick={clearData}
+              variant={"destructive"}
+            >
               {t("generic.doit")}
-            </AlertDialogAction>
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
