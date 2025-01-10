@@ -309,7 +309,8 @@
     "reset": "Zurücksetzen",
     "save": "Speichern",
     "submit": "Absenden",
-    "undo": "Rückgängig"
+    "undo": "Rückgängig",
+    "acknowledge": "Ich hab's verstanden"
   },
   "app": {
     "description": "Ein einfacher Notenrechner für Schüler und Studenten.",
