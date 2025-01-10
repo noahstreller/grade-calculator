@@ -10,7 +10,6 @@ export function doesGradePass(
   preferences: Preferences,
   simulatedGoalGrade?: number | Empty
 ): boolean {
-  console.log("doesGradePass", grade, preferences, simulatedGoalGrade);
   const passing = simulatedGoalGrade || preferences?.passingGrade!;
   if (preferences.passingInverse) {
     return grade <= passing;
