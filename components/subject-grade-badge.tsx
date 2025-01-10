@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { truncateText } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
 import { AverageWithSubject } from "@/types/types";
 import { useTranslations } from "next-intl";
 
@@ -38,18 +38,18 @@ export const SubjectGradeBadge = ({
         {averageGrade === weightedAmount
           ? averageGrade === 0
             ? t.rich("subjects.badge-noweight-empty", {
-                b: () => <b>{weightedAmount}</b>,
+                b: () => <b>{round(weightedAmount, 5)}</b>,
               })
             : t.rich("subjects.badge-noweight-not-empty", {
-                weightedAmount: () => <b>{weightedAmount}</b>,
-                gradeSum: () => <b>{gradeSum}</b>,
-                count: averageGrade,
+                weightedAmount: () => <b>{round(weightedAmount, 5)}</b>,
+                gradeSum: () => <b>{round(gradeSum, 5)}</b>,
+                count: round(averageGrade, 5),
               })
           : t.rich("subjects.badge-weight-not-empty", {
-              averageGrade: () => <b>{averageGrade}</b>,
-              weightedAmount: () => <b>{weightedAmount}</b>,
-              gradeSum: () => <b>{gradeSum}</b>,
-              count: averageGrade,
+              averageGrade: () => <b>{round(averageGrade, 5)}</b>,
+              weightedAmount: () => <b>{round(weightedAmount, 5)}</b>,
+              gradeSum: () => <b>{round(gradeSum, 5)}</b>,
+              count: round(averageGrade, 5),
             })}
       </PopoverContent>
     </Popover>

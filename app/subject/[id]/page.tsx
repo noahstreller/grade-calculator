@@ -32,7 +32,7 @@ import {
 } from "@/lib/services/grade-service";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { getSubjectById } from "@/lib/services/subject-service";
-import { truncateText } from "@/lib/utils";
+import { round, truncateText } from "@/lib/utils";
 import { Average } from "@/types/types";
 import { Bird, HomeIcon, LogInIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -319,17 +319,17 @@ function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
                       {average.gradeAmount === average.gradeWeightedAmount ? (
                         <DetailRow
                           title={t("subjects.grade-count")}
-                          value={average.gradeAmount}
+                          value={round(average.gradeAmount, 5)}
                         />
                       ) : (
                         <>
                           <DetailRow
                             title={t("subjects.grade-count")}
-                            value={average.gradeAmount}
+                            value={round(average.gradeAmount, 5)}
                           />
                           <DetailRow
                             title={t("subjects.grade-count-weighted")}
-                            value={average.gradeWeightedAmount}
+                            value={round(average.gradeWeightedAmount, 5)}
                           />
                         </>
                       )}
@@ -337,17 +337,17 @@ function SubjectDetails({ subjectId }: Readonly<{ subjectId: string }>) {
                       {average.gradeSum === average.gradeWeightedSum ? (
                         <DetailRow
                           title={t("subjects.grade-sum")}
-                          value={average.gradeSum}
+                          value={round(average.gradeSum!, 5)}
                         />
                       ) : (
                         <>
                           <DetailRow
                             title={t("subjects.grade-sum")}
-                            value={average.gradeSum}
+                            value={round(average.gradeSum!, 5)}
                           />
                           <DetailRow
                             title={t("subjects.grade-sum-weighted")}
-                            value={average.gradeWeightedSum}
+                            value={round(average.gradeWeightedSum!, 5)}
                           />
                         </>
                       )}
