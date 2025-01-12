@@ -73,7 +73,8 @@
     },
     "add": "Note hinzufügen",
     "add-desc": "Füge eine neue Note zur Liste hinzu",
-    "show-passing-grades": "<green>Bestehende</green> Fächer"
+    "show-passing-grades": "<green>Bestehende</green> Fächer",
+    "simulatedGoal-description": "Falls du die erforderliche Note für ein anderes Ergebnis als die bestandene Note überprüfen willst, gib das Zielergebnis hier ein."
   },
   "landing-page": {
     "about": {
@@ -123,7 +124,8 @@
       "apply": "Vorlage anwenden",
       "description": "Wähle eine Vorlage oder nutze die erweiterten Einstellungen.",
       "select-prompt": "Vorlage auswählen",
-      "title": "Vorlage"
+      "title": "Vorlage",
+      "request": "Vorlage anfordern"
     },
     "title": "Onboarding"
   },
@@ -199,7 +201,9 @@
     "passed": "um weiterhin zu bestehen",
     "required": "zum Bestehen",
     "simulated-weight": "Simulierte Gewichtung",
-    "title": "Erforderliche Noten"
+    "title": "Erforderliche Noten",
+    "advanced-options": "Erweiterte Optionen",
+    "simulated-goal-grade": "Simuliertes Notenziel"
   },
   "screenreader": {
     "open-menu": "Menü öffnen"
@@ -305,7 +309,8 @@
     "reset": "Zurücksetzen",
     "save": "Speichern",
     "submit": "Absenden",
-    "undo": "Rückgängig"
+    "undo": "Rückgängig",
+    "acknowledge": "Ich hab's verstanden"
   },
   "app": {
     "description": "Ein einfacher Notenrechner für Schüler und Studenten.",
@@ -428,7 +433,15 @@
     "subject-not-found": "Wir können das gesuchte Fach nicht finden",
     "try-again-or-contact": "Bitte versuche es erneut, nutze ein anderes Konto oder kontaktiere <mailbutton></mailbutton>, wenn das Problem weiterhin besteht.",
     "unauthenticated-subject-details": "Du musst angemeldet sein, um die Fach-Details zu sehen",
-    "woops": "Hoppla."
+    "woops": "Hoppla.",
+    "not-found": {
+      "back": "Zurück zur Startseite",
+      "description": "Wie sind wir hier gelandet?",
+      "title": "<mutebold>404</mutebold> - Seite nicht gefunden",
+      "message": "Du bist auf <red>unbekanntes Terrain</red> gestossen. Aber leider können wir die gesuchte Seite nicht finden.",
+      "dashboard": "Zum Dashboard",
+      "login": "Zum Login"
+    }
   },
   "external": {
     "cookie-policy": "Cookie-Richtlinie",

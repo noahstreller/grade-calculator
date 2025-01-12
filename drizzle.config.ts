@@ -7,9 +7,9 @@ process.env.NODE_ENV === "development" &&
 export default {
   schema: "./db/schema.ts",
   out: "./drizzle",
-  driver: "pg", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString:
+    url:
       process.env.POSTGRES_URL ?? "postgres://admin:admin@localhost/verceldb",
   },
 } satisfies Config;

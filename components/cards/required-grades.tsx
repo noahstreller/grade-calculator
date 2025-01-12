@@ -1,6 +1,12 @@
 "use client";
 import { usePreferences } from "@/components/preferences-provider";
 import { SubjectGradeBadge } from "@/components/subject-grade-badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Highlight } from "@/components/ui/card-stack";
 import { Input } from "@/components/ui/input";
@@ -11,7 +17,7 @@ import { useDevice } from "@/lib/hooks/useMediaQuery";
 import { doesGradePass } from "@/lib/services/notAsyncLogic";
 import { round, truncateText } from "@/lib/utils";
 import { Average, AverageWithSubject } from "@/types/types";
-import { Bird } from "lucide-react";
+import { Bird, TargetIcon, WeightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
@@ -28,10 +34,12 @@ function RequiredGradesBody({
   averageData,
   showPassing,
   simulatedWeight,
+  simulatedGoalGrade,
 }: {
   averageData: AverageWithSubject[];
   showPassing: boolean;
   simulatedWeight: number;
+  simulatedGoalGrade?: number | undefined;
 }) {
   const t = useTranslations();
   const preferences = usePreferences().preferences;
@@ -42,6 +50,14 @@ function RequiredGradesBody({
     average: AverageWithSubject
   ): { result: number; overflowCounts: number } => {
     if (
+      simulatedGoalGrade! >= preferences?.maximumGrade! ||
+      (simulatedGoalGrade! <= preferences?.minimumGrade! &&
+        preferences?.passingInverse)
+    ) {
+      return { result: Infinity, overflowCounts: Infinity };
+    }
+
+    if (
       preferences?.maximumGrade === preferences?.passingGrade ||
       (preferences?.minimumGrade === preferences?.passingGrade &&
         preferences?.passingInverse)
@@ -50,7 +66,7 @@ function RequiredGradesBody({
     let sum = average.average?.gradeWeightedSum!;
     let weight = simulatedWeight;
     let count = average.average?.gradeWeightedAmount! + weight;
-    let passing = preferences?.passingGrade!;
+    let passing = simulatedGoalGrade || preferences?.passingGrade!;
     let max = preferences?.maximumGrade!;
     let min = preferences?.minimumGrade!;
     let result = (passing * count - sum) / weight;
@@ -71,6 +87,7 @@ function RequiredGradesBody({
 
   const getGradeOverflowString = (overflowCounts: number) => {
     let result = "";
+    if (overflowCounts === Infinity) return " 🥲";
     if (overflowCounts < 0) {
       if (overflowCounts < -10)
         return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
@@ -91,6 +108,15 @@ function RequiredGradesBody({
   const truncateForPage = (subject: string | null): string => {
     if (subject === null) return "";
     return truncateText(subject, 20).text;
+  };
+
+  const shouldShowGtLt = (requiredGrade: number) => {
+    const result =
+      (requiredGrade !== preferences?.maximumGrade &&
+        !preferences?.passingInverse) ||
+      (requiredGrade !== preferences?.minimumGrade &&
+        preferences?.passingInverse);
+    return result;
   };
 
   const [chunkPairs, setChunkPairs] = useState<Array<any>>([]);
@@ -115,7 +141,14 @@ function RequiredGradesBody({
     };
 
     setChunkPairs([...chunkIntoPieces(averageData, isMobile ? 1 : 2)]);
-  }, [averageData, isMobile, showPassing, preferences]);
+  }, [
+    averageData,
+    isMobile,
+    showPassing,
+    preferences,
+    simulatedWeight,
+    simulatedGoalGrade,
+  ]);
 
   return (
     <CardBoard>
@@ -148,7 +181,8 @@ function RequiredGradesBody({
                     {average.subject &&
                     doesGradePass(
                       average.average?.gradeAverage!,
-                      preferences!
+                      preferences!,
+                      simulatedGoalGrade
                     ) ? (
                       <b className="text-green-400 mr-2">
                         {truncateForPage(average.subject.name)}
@@ -163,11 +197,13 @@ function RequiredGradesBody({
                 </CardHeader>
                 <CardContent>
                   <h1 className="text-2xl text-gray-400">
-                    <span className="text-muted-foreground text-4xl">
-                      {preferences?.passingInverse
-                        ? t("generic.less-than")
-                        : t("generic.greater-than")}
-                    </span>
+                    {shouldShowGtLt(getRequiredGradeToPass(average).result) && (
+                      <span className="text-muted-foreground text-4xl">
+                        {preferences?.passingInverse
+                          ? t("generic.less-than")
+                          : t("generic.greater-than")}
+                      </span>
+                    )}
                     <b className="text-5xl text-foreground">
                       {round(getRequiredGradeToPass(average).result, 2)}
                     </b>
@@ -177,7 +213,11 @@ function RequiredGradesBody({
                         )
                       : null}
                     <br />
-                    {doesGradePass(average.average?.gradeAverage!, preferences!)
+                    {doesGradePass(
+                      average.average?.gradeAverage!,
+                      preferences!,
+                      simulatedGoalGrade
+                    )
                       ? t("required-grades.passed")
                       : t("required-grades.required")}
                   </h1>
@@ -203,6 +243,9 @@ export function RequiredGrades({
   const t = useTranslations();
   const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
+  const [simulatedGoalGrade, setSimulatedGoalGrade] = useState<
+    number | undefined
+  >();
 
   const getSimulatedWeight = () => {
     if (!simulatedWeight) return { simulatedWeight: 1, valid: true };
@@ -231,35 +274,89 @@ export function RequiredGrades({
           averageData={averageData}
           showPassing={showPassing}
           simulatedWeight={getSimulatedWeight().simulatedWeight}
+          simulatedGoalGrade={simulatedGoalGrade}
         />
-        <CardDescription className="mt-4 mx-1">
-          {t("grades.simulatedWeight-description")}
-        </CardDescription>
-        <div className="flex flex-row gap-3 max-w-full">
-          <Input
-            value={simulatedWeight || ""}
-            type="number"
-            onChange={(e) => {
-              setSimulatedWeight(Number(e.target.value));
-            }}
-            placeholder={t("required-grades.simulated-weight")}
-            className=" flex-shrink-1"
-          />
-          <Button
-            variant="outline"
-            className="flex-shrink-0"
-            onClick={() => {
-              setSimulatedWeight(undefined);
-            }}
-          >
-            {t("actions.reset")}
-          </Button>
-        </div>
-        {!getSimulatedWeight().valid && (
-          <span className="text-red-400 text-xs">
-            {t("errors.must-be-positive")}
-          </span>
-        )}
+        <Accordion
+          type="single"
+          className="[&>div]:border-none mt-3"
+          collapsible
+        >
+          <AccordionItem value="adv-opt">
+            <AccordionTrigger>
+              {t("required-grades.advanced-options")}
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3 p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <TargetIcon className="size-4 text-muted-foreground" />
+                  <Label>{t("required-grades.simulated-goal-grade")}</Label>
+                </div>
+                <CardDescription className="">
+                  {t("grades.simulatedGoal-description")}
+                </CardDescription>
+                <div className="flex flex-row gap-3 max-w-full">
+                  <Input
+                    value={simulatedGoalGrade || ""}
+                    type="number"
+                    onChange={(e) => {
+                      setSimulatedGoalGrade(Number(e.target.value));
+                    }}
+                    placeholder={t("required-grades.simulated-goal-grade")}
+                    className=" flex-shrink-1"
+                  />
+                  <Button
+                    variant="outline"
+                    className="flex-shrink-0"
+                    onClick={() => {
+                      setSimulatedGoalGrade(undefined);
+                    }}
+                  >
+                    {t("actions.reset")}
+                  </Button>
+                </div>
+                {!getSimulatedWeight().valid && (
+                  <span className="text-red-400 text-xs">
+                    {t("errors.must-be-positive")}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col gap-3 p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <WeightIcon className="size-4 text-muted-foreground" />
+                  <Label>{t("required-grades.simulated-weight")}</Label>
+                </div>
+                <CardDescription className="">
+                  {t("grades.simulatedWeight-description")}
+                </CardDescription>
+                <div className="flex flex-row gap-3 max-w-full">
+                  <Input
+                    value={simulatedWeight || ""}
+                    type="number"
+                    onChange={(e) => {
+                      setSimulatedWeight(Number(e.target.value));
+                    }}
+                    placeholder={t("required-grades.simulated-weight")}
+                    className=" flex-shrink-1"
+                  />
+                  <Button
+                    variant="outline"
+                    className="flex-shrink-0"
+                    onClick={() => {
+                      setSimulatedWeight(undefined);
+                    }}
+                  >
+                    {t("actions.reset")}
+                  </Button>
+                </div>
+                {!getSimulatedWeight().valid && (
+                  <span className="text-red-400 text-xs">
+                    {t("errors.must-be-positive")}
+                  </span>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardContent>
     </Card>
   );
@@ -269,19 +366,26 @@ function RequiredGradesBodyForSubject({
   averageData,
   simulatedWeight,
   subject,
+  simulatedGoalGrade,
 }: {
   averageData: Average;
   simulatedWeight: number;
   subject: Subject;
+  simulatedGoalGrade?: number | undefined;
 }) {
   const t = useTranslations();
   const preferences = usePreferences().preferences;
 
-  const { isMobile } = useDevice();
-
   const getRequiredGradeToPass = (
     average: Average
   ): { result: number; overflowCounts: number } => {
+    if (
+      simulatedGoalGrade! >= preferences?.maximumGrade! ||
+      (simulatedGoalGrade! <= preferences?.minimumGrade! &&
+        preferences?.passingInverse)
+    )
+      return { result: Infinity, overflowCounts: Infinity };
+
     if (
       preferences?.maximumGrade === preferences?.passingGrade ||
       (preferences?.minimumGrade === preferences?.passingGrade &&
@@ -291,7 +395,7 @@ function RequiredGradesBodyForSubject({
     let sum = average.gradeWeightedSum!;
     let weight = simulatedWeight;
     let count = average.gradeWeightedAmount! + weight;
-    let passing = preferences?.passingGrade!;
+    let passing = simulatedGoalGrade || preferences?.passingGrade!;
     let max = preferences?.maximumGrade!;
     let min = preferences?.minimumGrade!;
     let result = (passing * count - sum) / weight;
@@ -312,6 +416,7 @@ function RequiredGradesBodyForSubject({
 
   const getGradeOverflowString = (overflowCounts: number) => {
     let result = "";
+    if (overflowCounts === Infinity) return " 🥲";
     if (overflowCounts < 0) {
       if (overflowCounts < -10)
         return ` + ${-overflowCounts} × ${preferences?.minimumGrade}`;
@@ -346,7 +451,11 @@ function RequiredGradesBodyForSubject({
         <CardHeader>
           <h2>
             {subject &&
-            doesGradePass(averageData?.gradeAverage!, preferences!) ? (
+            doesGradePass(
+              averageData?.gradeAverage!,
+              preferences!,
+              simulatedGoalGrade
+            ) ? (
               <b className="text-green-400 mr-2">
                 {truncateForPage(subject.name)}
               </b>
@@ -374,7 +483,11 @@ function RequiredGradesBodyForSubject({
                 )
               : null}
             <br />
-            {doesGradePass(averageData.gradeAverage!, preferences!)
+            {doesGradePass(
+              averageData.gradeAverage!,
+              preferences!,
+              simulatedGoalGrade
+            )
               ? t("required-grades.passed")
               : t("required-grades.required")}
           </h1>
@@ -396,8 +509,10 @@ export function RequiredGradesForSubject({
   showPassingGrades?: boolean;
 }) {
   const t = useTranslations();
-  const [showPassing, setShowPassing] = useState<boolean>(showPassingGrades);
   const [simulatedWeight, setSimulatedWeight] = useState<number | undefined>();
+  const [simulatedGoalGrade, setSimulatedGoalGrade] = useState<
+    number | undefined
+  >();
 
   const getSimulatedWeight = () => {
     if (!simulatedWeight) return { simulatedWeight: 1, valid: true };
@@ -418,35 +533,90 @@ export function RequiredGradesForSubject({
           averageData={averageData}
           subject={subject}
           simulatedWeight={getSimulatedWeight().simulatedWeight}
+          simulatedGoalGrade={simulatedGoalGrade}
         />
-        <CardDescription className="mt-4 mx-1">
-          {t("grades.simulatedWeight-description")}
-        </CardDescription>
-        <div className="flex flex-row gap-3 max-w-full">
-          <Input
-            value={simulatedWeight || ""}
-            type="number"
-            onChange={(e) => {
-              setSimulatedWeight(Number(e.target.value));
-            }}
-            placeholder={t("required-grades.simulated-weight")}
-            className=" flex-shrink-1"
-          />
-          <Button
-            variant="outline"
-            className="flex-shrink-0"
-            onClick={() => {
-              setSimulatedWeight(undefined);
-            }}
-          >
-            {t("actions.reset")}
-          </Button>
-        </div>
-        {!getSimulatedWeight().valid && (
-          <span className="text-red-400 text-xs">
-            {t("errors.must-be-positive")}
-          </span>
-        )}
+
+        <Accordion
+          type="single"
+          className="[&>div]:border-none mt-3"
+          collapsible
+        >
+          <AccordionItem value="adv-opt">
+            <AccordionTrigger>
+              {t("required-grades.advanced-options")}
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3 p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <TargetIcon className="size-4 text-muted-foreground" />
+                  <Label>{t("required-grades.simulated-goal-grade")}</Label>
+                </div>
+                <CardDescription className="">
+                  {t("grades.simulatedGoal-description")}
+                </CardDescription>
+                <div className="flex flex-row gap-3 max-w-full">
+                  <Input
+                    value={simulatedGoalGrade || ""}
+                    type="number"
+                    onChange={(e) => {
+                      setSimulatedGoalGrade(Number(e.target.value));
+                    }}
+                    placeholder={t("required-grades.simulated-goal-grade")}
+                    className=" flex-shrink-1"
+                  />
+                  <Button
+                    variant="outline"
+                    className="flex-shrink-0"
+                    onClick={() => {
+                      setSimulatedGoalGrade(undefined);
+                    }}
+                  >
+                    {t("actions.reset")}
+                  </Button>
+                </div>
+                {!getSimulatedWeight().valid && (
+                  <span className="text-red-400 text-xs">
+                    {t("errors.must-be-positive")}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col gap-3 p-2">
+                <div className="flex flex-row items-center gap-2">
+                  <WeightIcon className="size-4 text-muted-foreground" />
+                  <Label>{t("required-grades.simulated-weight")}</Label>
+                </div>
+                <CardDescription className="">
+                  {t("grades.simulatedWeight-description")}
+                </CardDescription>
+                <div className="flex flex-row gap-3 max-w-full">
+                  <Input
+                    value={simulatedWeight || ""}
+                    type="number"
+                    onChange={(e) => {
+                      setSimulatedWeight(Number(e.target.value));
+                    }}
+                    placeholder={t("required-grades.simulated-weight")}
+                    className=" flex-shrink-1"
+                  />
+                  <Button
+                    variant="outline"
+                    className="flex-shrink-0"
+                    onClick={() => {
+                      setSimulatedWeight(undefined);
+                    }}
+                  >
+                    {t("actions.reset")}
+                  </Button>
+                </div>
+                {!getSimulatedWeight().valid && (
+                  <span className="text-red-400 text-xs">
+                    {t("errors.must-be-positive")}
+                  </span>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardContent>
     </Card>
   );

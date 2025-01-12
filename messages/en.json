@@ -38,7 +38,8 @@
     "badge-weight": "This grade is weighted <weight></weight>",
     "description-prompt": "Add a short description (optional)",
     "date-prompt": "Pick a date (optional)",
-    "show-passing-grades": "Show <green>passing</green> grades"
+    "show-passing-grades": "Show <green>passing</green> grades",
+    "simulatedGoal-description": "In case you want to check the required grade for a result other than the passing grade, you can apply the goal result here."
   },
   "subjects": {
     "subject": "Subject",
@@ -137,8 +138,9 @@
       "description-json": "JSON exported as file"
     },
     "delete-account": "Delete Account",
-    "clear-account-data": "Clear Account Data",
-    "clear-account-data-warning": "Are you sure that you want to clear all of your account data? This action cannot be undone.",
+    "clear-account-data": "Delete all account data",
+    "acknowledge": "I acknowledge",
+    "clear-account-data-warning": "Are you sure that you want to delete all of your account data? This action cannot be undone. You will still be able to register again with the same social login provider or email.",
     "clear-grades-only": "Clear grades only"
   },
   "themes": {
@@ -149,6 +151,14 @@
     "system": "System"
   },
   "errors": {
+    "not-found": {
+      "title": "<mutebold>404</mutebold> - Page not found",
+      "description": "How did we get here?",
+      "back": "Return home",
+      "login": "Go to login",
+      "dashboard": "Go to dashboard",
+      "message": "You have struck <red>uncharted territory</red>. Unfortunately, we cannot find the page you are looking for."
+    },
     "required": "This field is required",
     "message": "An error occurred",
     "invalid-type": {
@@ -209,7 +219,9 @@
     "description": "The grades you need to pass your subjects",
     "required": "to pass",
     "passed": "to keep passing",
-    "simulated-weight": "Simulated weight"
+    "simulated-weight": "Simulated weight",
+    "advanced-options": "Advanced options",
+    "simulated-goal-grade": "Simulated grade goal"
   },
   "landing-page": {
     "getting-started-about": {
@@ -352,7 +364,8 @@
       "title": "Template",
       "description": "Select a template or use the advanced settings.",
       "select-prompt": "Select template",
-      "apply": "Apply template"
+      "apply": "Apply template",
+      "request": "Request template"
     }
   },
   "external": {

@@ -10,7 +10,7 @@ services:
     healthcheck:
       interval: 10s
       retries: 10
-      test: "pg_isready -U admin -d admin"
+      test: "pg_isready -U admin -d verceldb"
       timeout: 2s
     image: "postgres:12.17-alpine"
     restart: unless-stopped
