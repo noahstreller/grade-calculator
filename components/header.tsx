@@ -54,7 +54,7 @@ export default function HeaderComponent() {
   };
 
   return (
-    <header className="h-[64px] py-[10px] px-[20px] flex justify-between fixed top-0 left-0 w-[100dvw] bg-transparent z-[10] backdrop-blur-[20px]">
+    <header className="header-mask h-[64px] py-[10px] px-[20px] flex justify-between fixed top-0 left-0 w-[100dvw] z-[10] ">
       <Link
         href="/"
         className="flex items-center text-center opacity-80 gap-1 hover:opacity-100 hover:translate-x-[10px] transition-all"
