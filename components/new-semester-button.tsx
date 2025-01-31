@@ -33,8 +33,8 @@ import {
 } from "@/lib/services/export-service";
 import { exportToJSONFile } from "@/lib/services/notAsyncLogic";
 import {
-  clearUserGrades,
-  clearUserSubjectsGrades,
+  clearUserGradesByCategory,
+  clearUserSubjectsGradesByCategory,
 } from "@/lib/services/user-service";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -86,8 +86,10 @@ export const NewSemesterButton = ({
       if (archiveData) {
         await archiveCategory(data);
       }
-      if (!keepSubjects) await clearUserSubjectsGrades();
-      if (!keepGrades && keepSubjects) await clearUserGrades();
+      if (!keepSubjects)
+        await clearUserSubjectsGradesByCategory(categoryState.category?.id!);
+      if (!keepGrades && keepSubjects)
+        await clearUserGradesByCategory(categoryState.category?.id!);
     } finally {
       setIsOpen(false);
       window.location.reload();
